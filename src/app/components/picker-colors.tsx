@@ -70,7 +70,7 @@ export default function PickerColors({
     updateCanvas();
   };
 
-  const getConstrainedPosition = (x: number, y: number) => {
+  const getConstrainedPosition = useCallback((x: number, y: number) => {
     if (!imageRef.current) return { x, y };
 
     const rect = imageRef.current.getBoundingClientRect();
@@ -78,27 +78,59 @@ export default function PickerColors({
       x: Math.max(0, Math.min(x, rect.width)),
       y: Math.max(0, Math.min(y, rect.height)),
     };
-  };
+  }, []);
+
+  // Convert normalized coordinates to actual display coordinates
+  const getDisplayPosition = useCallback(
+    (normalizedX: number, normalizedY: number) => {
+      if (!imageRef.current) return { x: normalizedX, y: normalizedY };
+
+      const rect = imageRef.current.getBoundingClientRect();
+      return {
+        x: (normalizedX / 384) * rect.width,
+        y:
+          (normalizedY / 384) *
+          (rect.width *
+            (imageRef.current.naturalHeight / imageRef.current.naturalWidth)),
+      };
+    },
+    [],
+  );
+
+  // Convert display coordinates to normalized coordinates
+  const getNormalizedPosition = useCallback(
+    (displayX: number, displayY: number) => {
+      if (!imageRef.current) return { x: displayX, y: displayY };
+
+      const rect = imageRef.current.getBoundingClientRect();
+      const aspectRatio =
+        imageRef.current.naturalHeight / imageRef.current.naturalWidth;
+      return {
+        x: (displayX / rect.width) * 384,
+        y: (displayY / (rect.width * aspectRatio)) * 384,
+      };
+    },
+    [],
+  );
 
   // Initialize default color points
   useEffect(() => {
     if (image && colorPoints.length === 0) {
       if (initialPoints && initialPoints.length > 0) {
-        // 使用传入的初始点
         setColorPoints(initialPoints);
       } else {
-        // 延迟设置默认点，确保 canvas 已经更新
         setTimeout(() => {
           const defaultPoints: ColorPoint[] = Array.from(
             { length: 5 },
             (_, i) => {
-              const x = 100 + i * 80;
-              const y = 100 + i * 50;
-              const color = getPixelColor(x, y);
+              const normalizedX = 50 + i * 70;
+              const normalizedY = 50 + i * 40;
+              const displayPos = getDisplayPosition(normalizedX, normalizedY);
+              const color = getPixelColor(displayPos.x, displayPos.y);
               return {
                 id: i + 1,
-                x,
-                y,
+                x: normalizedX,
+                y: normalizedY,
                 color,
               };
             },
@@ -107,7 +139,13 @@ export default function PickerColors({
         }, 100);
       }
     }
-  }, [image, colorPoints.length, getPixelColor, initialPoints]);
+  }, [
+    image,
+    colorPoints.length,
+    getPixelColor,
+    getDisplayPosition,
+    initialPoints,
+  ]);
 
   const updateMagnifier = useCallback((x: number, y: number) => {
     if (!canvasRef.current || !magnifierCanvasRef.current || !imageRef.current)
@@ -219,7 +257,6 @@ export default function PickerColors({
 
       setMagnifierPos({ x, y });
 
-      // 使用 setTimeout 确保状态更新后再调用
       setTimeout(() => {
         updateMagnifier(x, y);
       }, 0);
@@ -242,6 +279,10 @@ export default function PickerColors({
 
       if (draggedPoint) {
         const constrainedPos = getConstrainedPosition(x, y);
+        const normalizedPos = getNormalizedPosition(
+          constrainedPos.x,
+          constrainedPos.y,
+        );
         const newColor = getPixelColor(constrainedPos.x, constrainedPos.y);
 
         setColorPoints((prev) =>
@@ -249,8 +290,8 @@ export default function PickerColors({
             point.id === draggedPoint
               ? {
                   ...point,
-                  x: constrainedPos.x,
-                  y: constrainedPos.y,
+                  x: normalizedPos.x,
+                  y: normalizedPos.y,
                   color: newColor,
                 }
               : point,
@@ -258,7 +299,14 @@ export default function PickerColors({
         );
       }
     },
-    [draggedPoint, showMagnifier, getPixelColor, updateMagnifier],
+    [
+      draggedPoint,
+      showMagnifier,
+      getPixelColor,
+      updateMagnifier,
+      getConstrainedPosition,
+      getNormalizedPosition,
+    ],
   );
 
   const handleMouseUp = useCallback(() => {
@@ -315,20 +363,23 @@ export default function PickerColors({
           <canvas ref={canvasRef} className="hidden" />
           <canvas ref={magnifierCanvasRef} className="hidden" />
 
-          {colorPoints.map((point) => (
-            <div
-              key={point.id}
-              className="absolute h-6 w-6 -translate-x-1/2 -translate-y-1/2 transform cursor-move rounded-full border-2 border-white shadow-lg transition-transform hover:scale-110"
-              style={{
-                left: point.x,
-                top: point.y,
-                backgroundColor: point.color,
-              }}
-              onMouseDown={(e) => handleMouseDown(e, point.id)}
-            >
-              <div className="h-full w-full rounded-full border border-gray-400" />
-            </div>
-          ))}
+          {colorPoints.map((point) => {
+            const displayPos = getDisplayPosition(point.x, point.y);
+            return (
+              <div
+                key={point.id}
+                className="absolute h-6 w-6 -translate-x-1/2 -translate-y-1/2 transform cursor-move rounded-full border-2 border-white shadow-lg transition-transform hover:scale-110"
+                style={{
+                  left: displayPos.x,
+                  top: displayPos.y,
+                  backgroundColor: point.color,
+                }}
+                onMouseDown={(e) => handleMouseDown(e, point.id)}
+              >
+                <div className="h-full w-full rounded-full border border-gray-400" />
+              </div>
+            );
+          })}
 
           {showMagnifier && (
             <div style={getMagnifierStyle()}>

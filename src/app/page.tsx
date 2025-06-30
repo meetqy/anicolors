@@ -7,33 +7,33 @@ import PickerColors, { type ColorPoint } from "./components/picker-colors";
 const initialPoints: ColorPoint[] = [
   {
     id: 1,
-    x: 18,
-    y: 19,
-    color: "rgb(224, 222, 223)",
+    x: 187,
+    y: 139,
+    color: "rgb(188, 99, 114)",
   },
   {
     id: 2,
-    x: 15,
-    y: 493,
-    color: "rgb(218, 180, 203)",
+    x: 90,
+    y: 129,
+    color: "rgb(22, 121, 149)",
   },
   {
     id: 3,
-    x: 492,
-    y: 14,
-    color: "rgb(232, 226, 222)",
+    x: 237,
+    y: 271,
+    color: "rgb(165, 121, 205)",
   },
   {
     id: 4,
-    x: 303,
-    y: 358,
-    color: "rgb(161, 112, 198)",
+    x: 238,
+    y: 314,
+    color: "rgb(223, 188, 219)",
   },
   {
     id: 5,
-    x: 489,
-    y: 489,
-    color: "rgb(223, 168, 204)",
+    x: 312,
+    y: 208,
+    color: "rgb(205, 160, 162)",
   },
 ];
 
@@ -102,7 +102,7 @@ export default function Page() {
           </div>
         </div>
       ) : (
-        <div className="bg-muted/50 w-1/2">
+        <div className="bg-muted/50 w-1/2 min-w-96">
           <PickerColors
             initialPoints={initialPoints}
             image={image}
