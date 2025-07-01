@@ -4,8 +4,8 @@
 @custom-variant dark (&:is(.dark *));
 
 @theme {
-  --font-sans: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif,
-    "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  --font-sans:
+    var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
 }
 
 @theme inline {
@@ -121,5 +121,15 @@
   }
   body {
     @apply bg-background text-foreground;
+  }
+}
+
+@layer components {
+  .h1 {
+    @apply scroll-m-20 text-center text-4xl font-extrabold tracking-tight text-balance;
+  }
+
+  .p {
+    @apply leading-7 [&:not(:first-child)]:mt-6;
   }
 }
