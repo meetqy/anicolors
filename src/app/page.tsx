@@ -3,6 +3,8 @@ import { useState, useCallback } from "react";
 import { useDropzone } from "react-dropzone";
 import { Upload } from "lucide-react";
 import PickerColors, { type ColorPoint } from "./components/picker-colors";
+import Color from "color";
+import { Button } from "~/components/ui/button";
 
 const initialPoints: ColorPoint[] = [
   {
@@ -39,6 +41,7 @@ const initialPoints: ColorPoint[] = [
 
 export default function Page() {
   const [image, setImage] = useState<string | null>(null);
+  const [colors, setColors] = useState<ColorPoint[]>(initialPoints);
 
   const onDrop = useCallback((acceptedFiles: File[]) => {
     const file = acceptedFiles[0];
@@ -59,20 +62,14 @@ export default function Page() {
     multiple: false,
   });
 
-  const handleColorsChange = (colors: ColorPoint[]) => {
-    console.log("Selected colors:", colors);
-  };
-
   return (
-    <div className="mx-auto w-full max-w-screen-lg overflow-hidden rounded-md border">
+    <div className="mx-auto flex w-full max-w-screen-lg flex-col overflow-hidden rounded-md border lg:flex-row">
       {!image ? (
-        <div className="flex min-h-[60vh] items-center justify-center p-8">
+        <div className="flex min-h-[60vh] w-full items-center justify-center p-8">
           <div
             {...getRootProps()}
             className={`relative w-full max-w-md cursor-pointer rounded-lg border-2 border-dashed p-8 text-center transition-colors ${
-              isDragActive
-                ? "border-primary bg-primary/5"
-                : "border-muted-foreground/25 hover:border-muted-foreground/50"
+              isDragActive ? "border-primary bg-primary/5" : "border-muted-foreground/25 hover:border-muted-foreground/50"
             }`}
           >
             <input {...getInputProps()} />
@@ -83,34 +80,48 @@ export default function Page() {
               {isDragActive ? (
                 <div className="space-y-2">
                   <p className="text-lg font-medium">Drop files here</p>
-                  <p className="text-muted-foreground text-sm">
-                    Release to upload your image
-                  </p>
+                  <p className="text-muted-foreground text-sm">Release to upload your image</p>
                 </div>
               ) : (
                 <div className="space-y-2">
                   <p className="text-lg font-medium">Upload Image</p>
-                  <p className="text-muted-foreground text-sm">
-                    Click or drag an image here
-                  </p>
-                  <p className="text-muted-foreground text-xs">
-                    Supports PNG, JPG, GIF, WebP formats
-                  </p>
+                  <p className="text-muted-foreground text-sm">Click or drag an image here</p>
+                  <p className="text-muted-foreground text-xs">Supports PNG, JPG, GIF, WebP formats</p>
                 </div>
               )}
             </div>
           </div>
         </div>
       ) : (
-        <div className="bg-muted flex aspect-[5/4] h-full w-2/3 min-w-96 items-center justify-center border-r p-4">
-          <div className="min-w-96">
-            <PickerColors
-              initialPoints={initialPoints}
-              image={image}
-              onColorsChange={handleColorsChange}
-            />
+        <>
+          <div className="bg-muted flex aspect-[5/4] h-full w-full min-w-96 items-center justify-center border-r p-4 lg:w-2/3">
+            <div className="min-w-96">
+              <PickerColors initialPoints={initialPoints} image={image} onColorsChange={setColors} />
+            </div>
           </div>
-        </div>
+
+          <aside className="flex w-full flex-col p-4 lg:w-1/3">
+            <div className="relative mb-6">
+              <h2 className="text-lg font-semibold">Palette</h2>
+              <p className="text-muted-foreground text-sm">Click and drag markers to adjust colors</p>
+            </div>
+
+            <div className="flex flex-row gap-2 lg:flex-col lg:gap-6">
+              {colors.map((color) => (
+                <div
+                  key={color.id}
+                  style={{
+                    background: color.color,
+                    color: Color(color.color).isLight() ? "black" : "white",
+                  }}
+                  className="relative flex h-36 w-full items-center overflow-hidden rounded-lg lg:h-16"
+                >
+                  <span className="absolute right-4 bottom-2 font-mono text-sm opacity-90">{Color(color.color).hex()}</span>
+                </div>
+              ))}
+            </div>
+          </aside>
+        </>
       )}
     </div>
   );
