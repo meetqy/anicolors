@@ -11,24 +11,15 @@ datasource db {
 }
 
 model Palette {
-    id             String   @id @default(cuid())
-    name           String
-    category       String?
-    image          String
-    colorPoints    Json //  id: 1,x: 214.875,y: 96.31690140845072,color: "rgb(255, 211, 222)",
-    originalColors String[]
-    colors         Color[]
-    createdAt      DateTime @default(now())
-    updatedAt      DateTime @updatedAt
+    id          String   @id @default(cuid())
+    name        String
+    category    String?
+    image       String
+    colorPoints Json //  id: 1,x: 214.875,y: 96.31690140845072,color: "rgb(255, 211, 222)",
+    colorNames  String?
+    createdAt   DateTime @default(now())
+    updatedAt   DateTime @updatedAt
 
     @@index([name])
     @@map("palettes")
-}
-
-model Color {
-    hex      String    @id
-    name     String    @unique
-    palettes Palette[]
-
-    @@map("colors")
 }
