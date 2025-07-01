@@ -82,12 +82,18 @@ export default function PickerColors({ image, initialPoints, onColorsChange, cla
 
   // Convert normalized coordinates to actual display coordinates
   const getDisplayPosition = useCallback((normalizedX: number, normalizedY: number) => {
-    if (!imageRef.current) return { x: normalizedX, y: normalizedY };
+    if (!imageRef.current || !containerRef.current) return { x: normalizedX, y: normalizedY };
 
-    const rect = imageRef.current.getBoundingClientRect();
+    const imageRect = imageRef.current.getBoundingClientRect();
+    const containerRect = containerRef.current.getBoundingClientRect();
+    
+    // Calculate position relative to container
+    const imageOffsetX = imageRect.left - containerRect.left;
+    const imageOffsetY = imageRect.top - containerRect.top;
+    
     return {
-      x: (normalizedX / 384) * rect.width,
-      y: (normalizedY / 384) * (rect.width * (imageRef.current.naturalHeight / imageRef.current.naturalWidth)),
+      x: imageOffsetX + (normalizedX / 384) * imageRect.width,
+      y: imageOffsetY + (normalizedY / 384) * (imageRect.width * (imageRef.current.naturalHeight / imageRef.current.naturalWidth)),
     };
   }, []);
 
@@ -214,7 +220,7 @@ export default function PickerColors({ image, initialPoints, onColorsChange, cla
     setDraggedPoint(pointId);
     setShowMagnifier(pointId);
 
-    const rect = containerRef.current?.getBoundingClientRect();
+    const rect = imageRef.current?.getBoundingClientRect();
     if (rect) {
       const x = e.clientX - rect.left;
       const y = e.clientY - rect.top;
@@ -229,13 +235,13 @@ export default function PickerColors({ image, initialPoints, onColorsChange, cla
 
   const handleMouseMove = useCallback(
     (e: MouseEvent) => {
-      if (!containerRef.current || (!draggedPoint && !showMagnifier)) return;
+      if (!imageRef.current || (!draggedPoint && !showMagnifier)) return;
 
-      const rect = containerRef.current.getBoundingClientRect();
+      const rect = imageRef.current.getBoundingClientRect();
       const x = e.clientX - rect.left;
       const y = e.clientY - rect.top;
 
-      setMagnifierPos({ x, y });
+      setMagnifierPos({ x: e.clientX - (containerRef.current?.getBoundingClientRect().left || 0), y: e.clientY - (containerRef.current?.getBoundingClientRect().top || 0) });
 
       if (showMagnifier) {
         updateMagnifier(x, y);

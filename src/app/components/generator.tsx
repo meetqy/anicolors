@@ -64,10 +64,10 @@ export function Generator() {
   return (
     <div className="mx-auto flex w-full max-w-screen-lg flex-col overflow-hidden rounded-md border lg:flex-row">
       {!image ? (
-        <div className="flex min-h-[60vh] w-full items-center justify-center p-8">
+        <div className="flex aspect-video w-full items-center justify-center p-8">
           <div
             {...getRootProps()}
-            className={`relative w-full max-w-md cursor-pointer rounded-lg border-2 border-dashed p-8 text-center transition-colors ${
+            className={`relative flex size-full cursor-pointer items-center justify-center rounded-lg border-2 border-dashed p-8 text-center transition-colors ${
               isDragActive ? "border-primary bg-primary/5" : "border-muted-foreground/25 hover:border-muted-foreground/50"
             }`}
           >
