@@ -20,12 +20,7 @@ interface PickerColorsProps {
   onColorsChange?: (points: ColorPoint[]) => void;
 }
 
-export default function PickerColors({
-  image,
-  initialPoints,
-  onColorsChange,
-  classNames,
-}: PickerColorsProps) {
+export default function PickerColors({ image, initialPoints, onColorsChange, classNames }: PickerColorsProps) {
   const [colorPoints, setColorPoints] = useState<ColorPoint[]>([]);
   const [draggedPoint, setDraggedPoint] = useState<number | null>(null);
   const [showMagnifier, setShowMagnifier] = useState<number | null>(null);
@@ -86,37 +81,27 @@ export default function PickerColors({
   }, []);
 
   // Convert normalized coordinates to actual display coordinates
-  const getDisplayPosition = useCallback(
-    (normalizedX: number, normalizedY: number) => {
-      if (!imageRef.current) return { x: normalizedX, y: normalizedY };
+  const getDisplayPosition = useCallback((normalizedX: number, normalizedY: number) => {
+    if (!imageRef.current) return { x: normalizedX, y: normalizedY };
 
-      const rect = imageRef.current.getBoundingClientRect();
-      return {
-        x: (normalizedX / 384) * rect.width,
-        y:
-          (normalizedY / 384) *
-          (rect.width *
-            (imageRef.current.naturalHeight / imageRef.current.naturalWidth)),
-      };
-    },
-    [],
-  );
+    const rect = imageRef.current.getBoundingClientRect();
+    return {
+      x: (normalizedX / 384) * rect.width,
+      y: (normalizedY / 384) * (rect.width * (imageRef.current.naturalHeight / imageRef.current.naturalWidth)),
+    };
+  }, []);
 
   // Convert display coordinates to normalized coordinates
-  const getNormalizedPosition = useCallback(
-    (displayX: number, displayY: number) => {
-      if (!imageRef.current) return { x: displayX, y: displayY };
+  const getNormalizedPosition = useCallback((displayX: number, displayY: number) => {
+    if (!imageRef.current) return { x: displayX, y: displayY };
 
-      const rect = imageRef.current.getBoundingClientRect();
-      const aspectRatio =
-        imageRef.current.naturalHeight / imageRef.current.naturalWidth;
-      return {
-        x: (displayX / rect.width) * 384,
-        y: (displayY / (rect.width * aspectRatio)) * 384,
-      };
-    },
-    [],
-  );
+    const rect = imageRef.current.getBoundingClientRect();
+    const aspectRatio = imageRef.current.naturalHeight / imageRef.current.naturalWidth;
+    return {
+      x: (displayX / rect.width) * 384,
+      y: (displayY / (rect.width * aspectRatio)) * 384,
+    };
+  }, []);
 
   // Initialize default color points
   useEffect(() => {
@@ -125,36 +110,26 @@ export default function PickerColors({
         setColorPoints(initialPoints);
       } else {
         setTimeout(() => {
-          const defaultPoints: ColorPoint[] = Array.from(
-            { length: 5 },
-            (_, i) => {
-              const normalizedX = 50 + i * 70;
-              const normalizedY = 50 + i * 40;
-              const displayPos = getDisplayPosition(normalizedX, normalizedY);
-              const color = getPixelColor(displayPos.x, displayPos.y);
-              return {
-                id: i + 1,
-                x: normalizedX,
-                y: normalizedY,
-                color,
-              };
-            },
-          );
+          const defaultPoints: ColorPoint[] = Array.from({ length: 5 }, (_, i) => {
+            const normalizedX = 50 + i * 70;
+            const normalizedY = 50 + i * 40;
+            const displayPos = getDisplayPosition(normalizedX, normalizedY);
+            const color = getPixelColor(displayPos.x, displayPos.y);
+            return {
+              id: i + 1,
+              x: normalizedX,
+              y: normalizedY,
+              color,
+            };
+          });
           setColorPoints(defaultPoints);
         }, 100);
       }
     }
-  }, [
-    image,
-    colorPoints.length,
-    getPixelColor,
-    getDisplayPosition,
-    initialPoints,
-  ]);
+  }, [image, colorPoints.length, getPixelColor, getDisplayPosition, initialPoints]);
 
   const updateMagnifier = useCallback((x: number, y: number) => {
-    if (!canvasRef.current || !magnifierCanvasRef.current || !imageRef.current)
-      return;
+    if (!canvasRef.current || !magnifierCanvasRef.current || !imageRef.current) return;
 
     const sourceCanvas = canvasRef.current;
     const sourceCtx = sourceCanvas.getContext("2d");
@@ -183,27 +158,11 @@ export default function PickerColors({
       const halfRegion = regionSize / 2;
 
       // 获取源区域
-      const sourceRegionX = Math.max(
-        0,
-        Math.min(sourceX - halfRegion, sourceCanvas.width - regionSize),
-      );
-      const sourceRegionY = Math.max(
-        0,
-        Math.min(sourceY - halfRegion, sourceCanvas.height - regionSize),
-      );
+      const sourceRegionX = Math.max(0, Math.min(sourceX - halfRegion, sourceCanvas.width - regionSize));
+      const sourceRegionY = Math.max(0, Math.min(sourceY - halfRegion, sourceCanvas.height - regionSize));
 
       // 将10x10像素区域放大到150x150
-      magnifierCtx.drawImage(
-        sourceCanvas,
-        sourceRegionX,
-        sourceRegionY,
-        regionSize,
-        regionSize,
-        0,
-        0,
-        magnifierCanvas.width,
-        magnifierCanvas.height,
-      );
+      magnifierCtx.drawImage(sourceCanvas, sourceRegionX, sourceRegionY, regionSize, regionSize, 0, 0, magnifierCanvas.width, magnifierCanvas.height);
 
       // 绘制网格线
       magnifierCtx.strokeStyle = "rgba(255, 255, 255, 0.8)";
@@ -284,10 +243,7 @@ export default function PickerColors({
 
       if (draggedPoint) {
         const constrainedPos = getConstrainedPosition(x, y);
-        const normalizedPos = getNormalizedPosition(
-          constrainedPos.x,
-          constrainedPos.y,
-        );
+        const normalizedPos = getNormalizedPosition(constrainedPos.x, constrainedPos.y);
         const newColor = getPixelColor(constrainedPos.x, constrainedPos.y);
 
         setColorPoints((prev) =>
@@ -304,14 +260,7 @@ export default function PickerColors({
         );
       }
     },
-    [
-      draggedPoint,
-      showMagnifier,
-      getPixelColor,
-      updateMagnifier,
-      getConstrainedPosition,
-      getNormalizedPosition,
-    ],
+    [draggedPoint, showMagnifier, getPixelColor, updateMagnifier, getConstrainedPosition, getNormalizedPosition],
   );
 
   const handleMouseUp = useCallback(() => {
@@ -372,26 +321,33 @@ export default function PickerColors({
           return (
             <div
               key={point.id}
-              className="absolute h-6 w-6 -translate-x-1/2 -translate-y-1/2 transform cursor-move rounded-full border-2 border-white shadow-lg transition-transform hover:scale-110"
+              className="absolute -translate-x-1/2 -translate-y-1/2 transform cursor-move transition-transform hover:scale-125"
               style={{
                 left: displayPos.x,
                 top: displayPos.y,
-                backgroundColor: point.color,
               }}
               onMouseDown={(e) => handleMouseDown(e, point.id)}
             >
-              <div className="h-full w-full rounded-full border border-gray-400" />
+              {/* Outer glow ring */}
+              <div className="absolute -inset-2 animate-pulse rounded-full bg-white/30 blur-sm" />
+              {/* White border ring */}
+              <div className="relative h-8 w-8 rounded-full border-3 border-white shadow-2xl">
+                {/* Color fill */}
+                <div className="h-full w-full rounded-full border-2 border-black/20" style={{ backgroundColor: point.color }} />
+                {/* Center dot for precision */}
+                <div className="absolute top-1/2 left-1/2 h-1.5 w-1.5 -translate-x-1/2 -translate-y-1/2 rounded-full bg-white shadow-sm" />
+              </div>
+              {/* Point number label */}
+              <div className="absolute -bottom-8 left-1/2 -translate-x-1/2 rounded-full bg-black/80 px-2 py-1 text-xs font-medium text-white">
+                {point.id}
+              </div>
             </div>
           );
         })}
 
         {showMagnifier && (
           <div style={getMagnifierStyle()}>
-            <canvas
-              ref={magnifierCanvasRef}
-              className="h-full w-full rounded-full"
-              style={{ imageRendering: "pixelated" }}
-            />
+            <canvas ref={magnifierCanvasRef} className="h-full w-full rounded-full" style={{ imageRendering: "pixelated" }} />
           </div>
         )}
       </div>
