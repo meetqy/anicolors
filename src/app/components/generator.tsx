@@ -1,7 +1,7 @@
 "use client";
 import { useState, useCallback } from "react";
 import { useDropzone } from "react-dropzone";
-import { Upload } from "lucide-react";
+import { Icon } from "@iconify-icon/react";
 import PickerColors, { type ColorPoint } from "./picker-colors";
 import Color from "color";
 
@@ -74,7 +74,7 @@ export function Generator() {
             <input {...getInputProps()} />
             <div className="flex flex-col items-center gap-4">
               <div className="bg-muted rounded-full p-4">
-                <Upload className="text-muted-foreground h-8 w-8" />
+                <Icon icon={"lucide:upload"} className="text-muted-foreground h-8 w-8" />
               </div>
               {isDragActive ? (
                 <div className="space-y-2">
