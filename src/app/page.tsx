@@ -1,5 +1,3 @@
-import { Generator } from "./components/generator";
-
 export default function Page() {
   return (
     <div className="mx-auto py-12">
@@ -10,7 +8,6 @@ export default function Page() {
           your version of this character through your own custom palette!
         </p>
       </div>
-      <Generator />
     </div>
   );
 }

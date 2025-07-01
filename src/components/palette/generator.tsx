@@ -1,46 +1,17 @@
 "use client";
-import { useState, useCallback } from "react";
+import { useState, useCallback, useEffect } from "react";
 import { useDropzone } from "react-dropzone";
 import { Icon } from "@iconify-icon/react";
 import PickerColors, { type ColorPoint } from "./picker-colors";
 import Color from "color";
 
-const initialPoints: ColorPoint[] = [
-  {
-    id: 1,
-    x: 214.875,
-    y: 96.31690140845072,
-    color: "rgb(255, 211, 222)",
-  },
-  {
-    id: 2,
-    x: 110.0862676056338,
-    y: 113.21830985915494,
-    color: "rgb(245, 169, 255)",
-  },
-  {
-    id: 3,
-    x: 223.6637323943662,
-    y: 212.59859154929578,
-    color: "rgb(200, 174, 238)",
-  },
-  {
-    id: 4,
-    x: 117.52288732394366,
-    y: 201.7816901408451,
-    color: "rgb(149, 106, 33)",
-  },
-  {
-    id: 5,
-    x: 287.2130281690141,
-    y: 217.330985915493,
-    color: "rgb(236, 173, 241)",
-  },
-];
-
-export function Generator() {
+export function Generator({ initialPoints = [], onChange }: { initialPoints?: ColorPoint[]; onChange?: (points: ColorPoint[]) => void }) {
   const [image, setImage] = useState<string | null>(null);
   const [colors, setColors] = useState<ColorPoint[]>(initialPoints);
+
+  useEffect(() => {
+    onChange?.(colors);
+  }, [colors, onChange]);
 
   const onDrop = useCallback((acceptedFiles: File[]) => {
     const file = acceptedFiles[0];
@@ -73,8 +44,8 @@ export function Generator() {
           >
             <input {...getInputProps()} />
             <div className="flex flex-col items-center gap-4">
-              <div className="bg-muted rounded-full p-4">
-                <Icon icon={"lucide:upload"} className="text-muted-foreground h-8 w-8" />
+              <div className="bg-muted flex items-center justify-center rounded-full p-4">
+                <Icon width={32} className="text-muted-foreground" icon={"lucide:upload"} />
               </div>
               {isDragActive ? (
                 <div className="space-y-2">
