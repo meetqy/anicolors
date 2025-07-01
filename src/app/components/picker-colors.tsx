@@ -2,6 +2,7 @@
 "use client";
 
 import React, { useState, useRef, useCallback, useEffect } from "react";
+import { cn } from "~/lib/utils";
 
 export interface ColorPoint {
   id: number;
@@ -13,6 +14,9 @@ export interface ColorPoint {
 interface PickerColorsProps {
   image?: string;
   initialPoints?: ColorPoint[];
+  classNames?: {
+    image?: string;
+  };
   onColorsChange?: (points: ColorPoint[]) => void;
 }
 
@@ -20,6 +24,7 @@ export default function PickerColors({
   image,
   initialPoints,
   onColorsChange,
+  classNames,
 }: PickerColorsProps) {
   const [colorPoints, setColorPoints] = useState<ColorPoint[]>([]);
   const [draggedPoint, setDraggedPoint] = useState<number | null>(null);
@@ -348,50 +353,48 @@ export default function PickerColors({
   };
 
   return (
-    <div className="size-full">
-      {image && (
-        <div ref={containerRef} className="relative overflow-hidden">
-          <img
-            ref={imageRef}
-            src={image}
-            alt="Color picker"
-            onLoad={handleImageLoad}
-            className="block h-auto max-w-full"
-            draggable={false}
-          />
+    image && (
+      <div ref={containerRef} className="relative overflow-hidden">
+        <img
+          ref={imageRef}
+          src={image}
+          alt="Color picker"
+          onLoad={handleImageLoad}
+          className={cn("mx-auto max-h-[568px]", classNames?.image)}
+          draggable={false}
+        />
 
-          <canvas ref={canvasRef} className="hidden" />
-          <canvas ref={magnifierCanvasRef} className="hidden" />
+        <canvas ref={canvasRef} className="hidden" />
+        <canvas ref={magnifierCanvasRef} className="hidden" />
 
-          {colorPoints.map((point) => {
-            const displayPos = getDisplayPosition(point.x, point.y);
-            return (
-              <div
-                key={point.id}
-                className="absolute h-6 w-6 -translate-x-1/2 -translate-y-1/2 transform cursor-move rounded-full border-2 border-white shadow-lg transition-transform hover:scale-110"
-                style={{
-                  left: displayPos.x,
-                  top: displayPos.y,
-                  backgroundColor: point.color,
-                }}
-                onMouseDown={(e) => handleMouseDown(e, point.id)}
-              >
-                <div className="h-full w-full rounded-full border border-gray-400" />
-              </div>
-            );
-          })}
-
-          {showMagnifier && (
-            <div style={getMagnifierStyle()}>
-              <canvas
-                ref={magnifierCanvasRef}
-                className="h-full w-full rounded-full"
-                style={{ imageRendering: "pixelated" }}
-              />
+        {colorPoints.map((point) => {
+          const displayPos = getDisplayPosition(point.x, point.y);
+          return (
+            <div
+              key={point.id}
+              className="absolute h-6 w-6 -translate-x-1/2 -translate-y-1/2 transform cursor-move rounded-full border-2 border-white shadow-lg transition-transform hover:scale-110"
+              style={{
+                left: displayPos.x,
+                top: displayPos.y,
+                backgroundColor: point.color,
+              }}
+              onMouseDown={(e) => handleMouseDown(e, point.id)}
+            >
+              <div className="h-full w-full rounded-full border border-gray-400" />
             </div>
-          )}
-        </div>
-      )}
-    </div>
+          );
+        })}
+
+        {showMagnifier && (
+          <div style={getMagnifierStyle()}>
+            <canvas
+              ref={magnifierCanvasRef}
+              className="h-full w-full rounded-full"
+              style={{ imageRendering: "pixelated" }}
+            />
+          </div>
+        )}
+      </div>
+    )
   );
 }

@@ -64,7 +64,7 @@ export default function Page() {
   };
 
   return (
-    <div className="mx-auto w-full max-w-screen-lg rounded-md border">
+    <div className="mx-auto w-full max-w-screen-lg overflow-hidden rounded-md border">
       {!image ? (
         <div className="flex min-h-[60vh] items-center justify-center p-8">
           <div
@@ -102,12 +102,14 @@ export default function Page() {
           </div>
         </div>
       ) : (
-        <div className="bg-muted/50 w-1/2 min-w-96">
-          <PickerColors
-            initialPoints={initialPoints}
-            image={image}
-            onColorsChange={handleColorsChange}
-          />
+        <div className="bg-muted flex aspect-[5/4] h-full w-2/3 min-w-96 items-center justify-center border-r p-4">
+          <div className="min-w-96">
+            <PickerColors
+              initialPoints={initialPoints}
+              image={image}
+              onColorsChange={handleColorsChange}
+            />
+          </div>
         </div>
       )}
     </div>
