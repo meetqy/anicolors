@@ -18,9 +18,9 @@ export const Maker = () => {
   return (
     <div>
       <Generator onChange={setColors} />
-      <article className="prose mx-auto mt-12 max-w-screen-xl px-4 lg:px-0">
+      <article className="prose mx-auto mt-12 max-w-screen-xl px-4 xl:px-0">
         <h2>Colors</h2>
-        <div className="not-prose grid gap-4 lg:grid-cols-3">
+        <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
           {colors.map((item, index) => {
             const color = Color(item.color);
             const rgb = color.rgb().string();

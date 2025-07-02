@@ -10,16 +10,24 @@ datasource db {
     url      = env("DATABASE_URL")
 }
 
+model Topic {
+    id       String    @id @default(cuid())
+    image    String
+    name     String
+    palettes Palette[]
+
+    @@map("topics")
+}
+
 model Palette {
     id          String   @id @default(cuid())
-    name        String
-    category    String?
-    image       String
-    colorPoints Json //  id: 1,x: 214.875,y: 96.31690140845072,color: "rgb(255, 211, 222)",
     colorNames  String?
+    colorPoints Json
+    topics      Topic?   @relation(fields: [topicId], references: [id])
+    topicId     String?
+    isChoice    Boolean  @default(false) // 是否是精选的
     createdAt   DateTime @default(now())
     updatedAt   DateTime @updatedAt
 
-    @@index([name])
     @@map("palettes")
 }
