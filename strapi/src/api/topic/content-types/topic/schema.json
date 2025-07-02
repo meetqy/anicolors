@@ -1,0 +1,39 @@
+{
+  "kind": "collectionType",
+  "collectionName": "topics",
+  "info": {
+    "singularName": "topic",
+    "pluralName": "topics",
+    "displayName": "Topic"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "image": {
+      "type": "media",
+      "multiple": false,
+      "required": true,
+      "allowedTypes": [
+        "images"
+      ]
+    },
+    "name": {
+      "type": "string",
+      "required": true,
+      "unique": false
+    },
+    "category": {
+      "type": "string",
+      "required": true,
+      "unique": false
+    },
+    "palettes": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::palette.palette",
+      "mappedBy": "topic"
+    }
+  }
+}

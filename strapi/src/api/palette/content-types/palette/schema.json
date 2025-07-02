@@ -1,0 +1,30 @@
+{
+  "kind": "collectionType",
+  "collectionName": "palettes",
+  "info": {
+    "singularName": "palette",
+    "pluralName": "palettes",
+    "displayName": "Palette"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "points": {
+      "type": "json",
+      "required": true
+    },
+    "topic": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::topic.topic",
+      "inversedBy": "palettes"
+    },
+    "is_choice": {
+      "type": "boolean",
+      "required": false,
+      "default": false
+    }
+  }
+}
