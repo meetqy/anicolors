@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { Button } from "./ui/button";
-import { Icon } from "@iconify-icon/react";
+import { MdOutlineFilterTiltShift } from "react-icons/md";
 
 export function Header() {
   return (
@@ -8,7 +8,7 @@ export function Header() {
       <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-6">
         {/* Logo */}
         <Link href="/" className="flex items-center space-x-2">
-          <Icon width={32} icon="material-symbols:filter-tilt-shift-rounded" />
+          <MdOutlineFilterTiltShift className="size-8" />
           <span className="text-xl font-semibold">HiColors</span>
         </Link>
 

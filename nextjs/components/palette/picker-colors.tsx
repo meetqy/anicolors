@@ -2,6 +2,7 @@
 
 import React, { useState, useRef, useCallback, useEffect } from "react";
 import { cn } from "@/lib/utils";
+import Image from "next/image";
 
 export interface ColorPoint {
   id: number;
@@ -309,7 +310,7 @@ export default function PickerColors({ image, initialPoints, onColorsChange, cla
   return (
     image && (
       <div ref={containerRef} className="relative overflow-hidden">
-        <img ref={imageRef} src={image} alt="Color picker" onLoad={handleImageLoad} className={cn("mx-auto max-h-[568px]", classNames?.image)} draggable={false} />
+        <Image unoptimized fill ref={imageRef} src={image} alt="Color picker" onLoad={handleImageLoad} className={cn("mx-auto max-h-[568px]", classNames?.image)} draggable={false} />
 
         <canvas ref={canvasRef} className="hidden" />
         <canvas ref={magnifierCanvasRef} className="hidden" />

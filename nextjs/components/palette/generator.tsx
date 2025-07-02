@@ -1,9 +1,9 @@
 "use client";
 import { useState, useCallback, useEffect } from "react";
 import { useDropzone } from "react-dropzone";
-import { Icon } from "@iconify-icon/react";
 import PickerColors, { type ColorPoint } from "./picker-colors";
 import Color from "color";
+import { LuUpload } from "react-icons/lu";
 
 export function Generator({ initialPoints = [], onChange }: { initialPoints?: ColorPoint[]; onChange?: (points: ColorPoint[]) => void }) {
   const [image, setImage] = useState<string | null>(null);
@@ -46,7 +46,7 @@ export function Generator({ initialPoints = [], onChange }: { initialPoints?: Co
               <input {...getInputProps()} />
               <div className="flex flex-col items-center gap-4">
                 <div className="bg-muted flex items-center justify-center rounded-full p-4">
-                  <Icon width={32} className="text-muted-foreground" icon={"lucide:upload"} />
+                  <LuUpload className="text-muted-foreground size-8" />
                 </div>
                 {isDragActive ? (
                   <div className="space-y-2">
