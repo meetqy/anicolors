@@ -1,15 +1,14 @@
 "use client";
 
-import { getColorName } from "@/lib/nearest";
+import { ColorPoint } from "@/components/palette/picker-colors";
 import Color from "color";
 import { toast } from "sonner";
 
-export const CardColorBase = ({ color }: { color: string }) => {
-  const item = Color(color);
+export const CardColorBase = ({ point }: { point: ColorPoint }) => {
+  const item = Color(point.color);
   const hex = item.hex();
   const rgb = item.rgb().string();
   const cmyk = item.cmyk().string();
-  const colorName = getColorName(hex)?.name || "Unknown";
 
   const copyToClipboard = (text: string) => {
     navigator.clipboard.writeText(text);
@@ -21,7 +20,7 @@ export const CardColorBase = ({ color }: { color: string }) => {
       {/* Color preview bar */}
       <div className="relative flex h-24 w-full items-center justify-between px-6" style={{ backgroundColor: hex }}>
         <h3 className="text-lg font-medium" style={{ color: item.isDark() ? "white" : "black" }}>
-          {colorName}
+          {point.name}
         </h3>
       </div>
 

@@ -373,12 +373,12 @@ export interface AdminUser extends Struct.CollectionTypeSchema {
   };
 }
 
-export interface ApiColornameColorname extends Struct.CollectionTypeSchema {
-  collectionName: 'colornames';
+export interface ApiColorColor extends Struct.CollectionTypeSchema {
+  collectionName: 'colors';
   info: {
-    displayName: 'Colorname';
-    pluralName: 'colornames';
-    singularName: 'colorname';
+    displayName: 'Color';
+    pluralName: 'colors';
+    singularName: 'color';
   };
   options: {
     draftAndPublish: false;
@@ -388,15 +388,12 @@ export interface ApiColornameColorname extends Struct.CollectionTypeSchema {
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
-    localizations: Schema.Attribute.Relation<
-      'oneToMany',
-      'api::colorname.colorname'
-    > &
+    localizations: Schema.Attribute.Relation<'oneToMany', 'api::color.color'> &
       Schema.Attribute.Private;
     name: Schema.Attribute.String &
       Schema.Attribute.Required &
-      Schema.Attribute.Unique &
-      Schema.Attribute.DefaultTo<'name'>;
+      Schema.Attribute.Unique;
+    palettes: Schema.Attribute.Relation<'manyToMany', 'api::palette.palette'>;
     publishedAt: Schema.Attribute.DateTime;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
@@ -415,6 +412,7 @@ export interface ApiPalettePalette extends Struct.CollectionTypeSchema {
     draftAndPublish: false;
   };
   attributes: {
+    colors: Schema.Attribute.Relation<'manyToMany', 'api::color.color'>;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -971,7 +969,7 @@ declare module '@strapi/strapi' {
       'admin::transfer-token': AdminTransferToken;
       'admin::transfer-token-permission': AdminTransferTokenPermission;
       'admin::user': AdminUser;
-      'api::colorname.colorname': ApiColornameColorname;
+      'api::color.color': ApiColorColor;
       'api::palette.palette': ApiPalettePalette;
       'api::topic.topic': ApiTopicTopic;
       'plugin::content-releases.release': PluginContentReleasesRelease;

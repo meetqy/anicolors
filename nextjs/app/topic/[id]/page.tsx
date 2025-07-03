@@ -7,7 +7,7 @@ import { gql } from "@apollo/client";
 const getData = async (id: string) => {
   const res = await getClient().query({
     query: gql`
-      query GetTopic($documentId: ID!) {
+      query ExampleQuery($documentId: ID!) {
         topic(documentId: $documentId) {
           image {
             url
@@ -48,7 +48,7 @@ export default async function Page({ params }: { params: Promise<{ id: string }>
         <h2>Colors</h2>
         <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3 not-prose">
           {points.map((item, index) => (
-            <CardColorBase color={item.color} key={index} />
+            <CardColorBase point={item} key={index} />
           ))}
         </div>
       </div>

@@ -2,12 +2,15 @@
 
 import React, { useState, useRef, useCallback, useEffect } from "react";
 import { cn } from "@/lib/utils";
+import { getColorName } from "@/lib/nearest";
+import Color from "color";
 
 export interface ColorPoint {
   id: number;
   x: number;
   y: number;
   color: string;
+  name?: string;
 }
 
 interface PickerColorsProps {
@@ -17,9 +20,10 @@ interface PickerColorsProps {
     image?: string;
   };
   onColorsChange?: (points: ColorPoint[]) => void;
+  onColorsChangeEnter?: (points: ColorPoint[]) => void;
 }
 
-export default function PickerColors({ image, initialPoints, onColorsChange, classNames }: PickerColorsProps) {
+export default function PickerColors({ image, initialPoints, onColorsChange, classNames, onColorsChangeEnter }: PickerColorsProps) {
   const [colorPoints, setColorPoints] = useState<ColorPoint[]>([]);
   const [draggedPoint, setDraggedPoint] = useState<number | null>(null);
   const [showMagnifier, setShowMagnifier] = useState<number | null>(null);
@@ -226,9 +230,9 @@ export default function PickerColors({ image, initialPoints, onColorsChange, cla
       const y = e.clientY - rect.top;
 
       // 设置放大镜位置相对于容器
-      setMagnifierPos({ 
-        x: e.clientX - containerRect.left, 
-        y: e.clientY - containerRect.top 
+      setMagnifierPos({
+        x: e.clientX - containerRect.left,
+        y: e.clientY - containerRect.top,
       });
 
       setTimeout(() => {
@@ -247,9 +251,9 @@ export default function PickerColors({ image, initialPoints, onColorsChange, cla
       const y = e.clientY - rect.top;
 
       if (containerRect) {
-        setMagnifierPos({ 
-          x: e.clientX - containerRect.left, 
-          y: e.clientY - containerRect.top 
+        setMagnifierPos({
+          x: e.clientX - containerRect.left,
+          y: e.clientY - containerRect.top,
         });
       }
 
@@ -282,7 +286,19 @@ export default function PickerColors({ image, initialPoints, onColorsChange, cla
   const handleMouseUp = useCallback(() => {
     setDraggedPoint(null);
     setShowMagnifier(null);
-  }, []);
+
+    // 在鼠标弹起时触发 onColorsChangeEnter 回调
+    if (onColorsChangeEnter) {
+      onColorsChangeEnter(
+        colorPoints.map((item) => {
+          return {
+            ...item,
+            name: getColorName(Color(item.color).hex())?.name || "unknown",
+          };
+        })
+      );
+    }
+  }, [onColorsChangeEnter, colorPoints]);
 
   useEffect(() => {
     if (draggedPoint || showMagnifier) {

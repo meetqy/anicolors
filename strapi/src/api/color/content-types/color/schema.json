@@ -1,0 +1,26 @@
+{
+  "kind": "collectionType",
+  "collectionName": "colors",
+  "info": {
+    "singularName": "color",
+    "pluralName": "colors",
+    "displayName": "Color"
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "name": {
+      "type": "string",
+      "required": true,
+      "unique": true
+    },
+    "palettes": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::palette.palette",
+      "inversedBy": "colors"
+    }
+  }
+}

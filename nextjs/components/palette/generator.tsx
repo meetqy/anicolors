@@ -4,6 +4,7 @@ import { useDropzone } from "react-dropzone";
 import PickerColors, { type ColorPoint } from "./picker-colors";
 import Color from "color";
 import { LuUpload } from "react-icons/lu";
+import { getColorName } from "@/lib/nearest";
 
 // 将图片链接转换为 base64
 const convertImageToBase64 = (url: string): Promise<string> => {
@@ -34,7 +35,7 @@ const convertImageToBase64 = (url: string): Promise<string> => {
   });
 };
 
-export function Generator({ initialPoints = [], onChange, initImage }: { initialPoints?: ColorPoint[]; onChange?: (points: ColorPoint[]) => void; initImage?: string }) {
+export function Generator({ initialPoints = [], onColorsChangeEnter, initImage }: { initialPoints?: ColorPoint[]; onColorsChangeEnter?: (points: ColorPoint[]) => void; initImage?: string }) {
   const [image, setImage] = useState<string | null>(null);
   const [colors, setColors] = useState<ColorPoint[]>(initialPoints);
 
@@ -60,9 +61,16 @@ export function Generator({ initialPoints = [], onChange, initImage }: { initial
   }, [initImage, convertImageToBase64]);
 
   useEffect(() => {
-    console.log(colors);
-    onChange?.(colors);
-  }, [colors, onChange]);
+    console.log(
+      colors.map((item) => {
+        return {
+          ...item,
+          name: getColorName(Color(item.color).hex())?.name,
+        };
+      })
+    );
+    onColorsChangeEnter?.(colors);
+  }, [colors, onColorsChangeEnter]);
 
   const onDrop = useCallback((acceptedFiles: File[]) => {
     const file = acceptedFiles[0];
@@ -121,7 +129,7 @@ export function Generator({ initialPoints = [], onChange, initImage }: { initial
                 <PickerColors
                   initialPoints={initialPoints}
                   image={image}
-                  onColorsChange={setColors}
+                  onColorsChangeEnter={setColors}
                   classNames={{
                     image: "crossOrigin-anonymous",
                   }}

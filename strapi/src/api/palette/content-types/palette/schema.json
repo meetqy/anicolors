@@ -25,6 +25,12 @@
       "type": "boolean",
       "required": false,
       "default": false
+    },
+    "colors": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::color.color",
+      "mappedBy": "palettes"
     }
   }
 }

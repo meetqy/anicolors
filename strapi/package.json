@@ -15,17 +15,23 @@
     "upgrade:dry": "npx @strapi/upgrade latest --dry"
   },
   "dependencies": {
+    "@strapi/design-system": "2.0.0-rc.27",
+    "@strapi/icons": "2.0.0-rc.27",
     "@strapi/plugin-cloud": "5.17.0",
     "@strapi/plugin-graphql": "^5.17.0",
     "@strapi/plugin-users-permissions": "5.17.0",
     "@strapi/strapi": "5.17.0",
+    "color": "^5.0.0",
+    "color-name-list": "^11.23.0",
+    "nearest-color": "^0.4.4",
     "pg": "8.8.0",
-    "react": "^18.0.0",
-    "react-dom": "^18.0.0",
-    "react-router-dom": "^6.0.0",
-    "styled-components": "^6.0.0"
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "react-router-dom": "^6.30.1",
+    "styled-components": "^6.1.19"
   },
   "devDependencies": {
+    "@types/nearest-color": "^0.4.1",
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
