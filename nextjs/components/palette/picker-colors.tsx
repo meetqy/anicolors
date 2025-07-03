@@ -220,11 +220,16 @@ export default function PickerColors({ image, initialPoints, onColorsChange, cla
     setShowMagnifier(pointId);
 
     const rect = imageRef.current?.getBoundingClientRect();
-    if (rect) {
+    const containerRect = containerRef.current?.getBoundingClientRect();
+    if (rect && containerRect) {
       const x = e.clientX - rect.left;
       const y = e.clientY - rect.top;
 
-      setMagnifierPos({ x, y });
+      // 设置放大镜位置相对于容器
+      setMagnifierPos({ 
+        x: e.clientX - containerRect.left, 
+        y: e.clientY - containerRect.top 
+      });
 
       setTimeout(() => {
         updateMagnifier(x, y);
@@ -237,10 +242,16 @@ export default function PickerColors({ image, initialPoints, onColorsChange, cla
       if (!imageRef.current || (!draggedPoint && !showMagnifier)) return;
 
       const rect = imageRef.current.getBoundingClientRect();
+      const containerRect = containerRef.current?.getBoundingClientRect();
       const x = e.clientX - rect.left;
       const y = e.clientY - rect.top;
 
-      setMagnifierPos({ x: e.clientX - (containerRef.current?.getBoundingClientRect().left || 0), y: e.clientY - (containerRef.current?.getBoundingClientRect().top || 0) });
+      if (containerRect) {
+        setMagnifierPos({ 
+          x: e.clientX - containerRect.left, 
+          y: e.clientY - containerRect.top 
+        });
+      }
 
       if (showMagnifier) {
         updateMagnifier(x, y);
