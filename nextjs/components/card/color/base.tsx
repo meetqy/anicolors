@@ -2,6 +2,7 @@
 
 import { getColorName } from "@/lib/nearest";
 import Color from "color";
+import { toast } from "sonner";
 
 export const CardColorBase = ({ color }: { color: string }) => {
   const item = Color(color);
@@ -12,6 +13,7 @@ export const CardColorBase = ({ color }: { color: string }) => {
 
   const copyToClipboard = (text: string) => {
     navigator.clipboard.writeText(text);
+    toast.success("Copied to clipboard");
   };
 
   return (
