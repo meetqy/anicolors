@@ -1,4 +1,5 @@
 import { CardColorBase } from "@/components/card/color/base";
+import { CardColorGradientLighten } from "@/components/card/color/gradient";
 import { Generator } from "@/components/palette/generator";
 import { ColorPoint } from "@/components/palette/picker-colors";
 import { getClient } from "@/lib/apollo-client";
@@ -74,6 +75,12 @@ export default async function Page({ params }: { params: Promise<{ id: string }>
         <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3 not-prose">
           {points.map((item, index) => (
             <CardColorBase point={item} key={index} />
+          ))}
+        </div>
+        <h2>Gradient lighten</h2>
+        <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3 not-prose">
+          {points.map((item, index) => (
+            <CardColorGradientLighten point={item} key={index} />
           ))}
         </div>
       </div>
