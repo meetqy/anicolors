@@ -10,6 +10,7 @@ export function Generator({ initialPoints = [], onChange }: { initialPoints?: Co
   const [colors, setColors] = useState<ColorPoint[]>(initialPoints);
 
   useEffect(() => {
+    console.log(colors);
     onChange?.(colors);
   }, [colors, onChange]);
 

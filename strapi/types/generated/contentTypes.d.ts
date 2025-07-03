@@ -381,7 +381,7 @@ export interface ApiPalettePalette extends Struct.CollectionTypeSchema {
     singularName: 'palette';
   };
   options: {
-    draftAndPublish: true;
+    draftAndPublish: false;
   };
   attributes: {
     createdAt: Schema.Attribute.DateTime;
