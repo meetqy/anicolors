@@ -5,6 +5,7 @@ import { Geist } from "next/font/google";
 
 import { Header } from "@/components/header";
 import { Toaster } from "@/components/ui/sonner";
+import { ApolloWrapper } from "@/components/apollo-wrapper";
 
 export const metadata: Metadata = {
   title: "Create T3 App",
@@ -21,9 +22,11 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
   return (
     <html lang="en" className={`${geist.variable}`}>
       <body>
-        <Header />
-        {children}
-        <Toaster richColors />
+        <ApolloWrapper>
+          <Header />
+          {children}
+          <Toaster richColors />
+        </ApolloWrapper>
       </body>
     </html>
   );

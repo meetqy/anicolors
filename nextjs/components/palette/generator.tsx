@@ -5,8 +5,8 @@ import PickerColors, { type ColorPoint } from "./picker-colors";
 import Color from "color";
 import { LuUpload } from "react-icons/lu";
 
-export function Generator({ initialPoints = [], onChange }: { initialPoints?: ColorPoint[]; onChange?: (points: ColorPoint[]) => void }) {
-  const [image, setImage] = useState<string | null>(null);
+export function Generator({ initialPoints = [], onChange, initImage }: { initialPoints?: ColorPoint[]; onChange?: (points: ColorPoint[]) => void; initImage?: string }) {
+  const [image, setImage] = useState<string | null>(initImage || null);
   const [colors, setColors] = useState<ColorPoint[]>(initialPoints);
 
   useEffect(() => {
