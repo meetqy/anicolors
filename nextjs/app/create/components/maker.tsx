@@ -12,6 +12,7 @@ import { SaveableCardRef } from "@/components/card/with-save";
 import "react-photo-album/columns.css";
 import { DomGallery } from "./dom-gallery";
 import Color from "color";
+import { CardColor1 } from "@/components/card/color/1";
 
 export const Maker = ({ topicId }: { topicId: string }) => {
   const [points, setPoints] = useState<ColorPoint[]>([]);
@@ -51,60 +52,9 @@ export const Maker = ({ topicId }: { topicId: string }) => {
 
         <h2>Colors</h2>
         <div className="not-prose grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-          {points.map((item, index) => {
-            const color = Color(item.color);
-            const rgb = color.rgb().string();
-            const cmyk = color.cmyk().string();
-            const hex = color.hex();
-
-            return (
-              <div key={index} className="bg-card overflow-hidden rounded-lg border">
-                {/* Color preview bar */}
-                <div className="relative flex h-24 w-full items-center justify-between px-6" style={{ backgroundColor: item.color }}>
-                  <h3
-                    className="text-lg font-medium"
-                    style={{
-                      color: color.isDark() ? "white" : "black",
-                    }}
-                  >
-                    {item.name}
-                  </h3>
-                  <span
-                    className="text-sm opacity-75"
-                    style={{
-                      color: color.isDark() ? "white" : "black",
-                    }}
-                  >
-                    #{index + 1}
-                  </span>
-                </div>
-
-                {/* Color values */}
-                <div className="space-y-3 p-4">
-                  <button className="bg-muted border-muted  flex w-full items-center justify-between rounded-md border p-3 transition-colors">
-                    <div className="text-left">
-                      <div className="text-muted-foreground text-xs font-medium tracking-wider uppercase">HEX</div>
-                      <div className="font-mono text-sm font-medium">{hex}</div>
-                    </div>
-                  </button>
-
-                  <button className="bg-muted border-muted  flex w-full items-center justify-between rounded-md border p-3 transition-colors">
-                    <div className="text-left">
-                      <div className="text-muted-foreground text-xs font-medium tracking-wider uppercase">RGB</div>
-                      <div className="font-mono text-sm font-medium">{rgb}</div>
-                    </div>
-                  </button>
-
-                  <button className="bg-muted border-muted  flex w-full items-center justify-between rounded-md border p-3 transition-colors">
-                    <div className="text-left">
-                      <div className="text-muted-foreground text-xs font-medium tracking-wider uppercase">CMYK</div>
-                      <div className="truncate font-mono text-sm font-medium">{cmyk}</div>
-                    </div>
-                  </button>
-                </div>
-              </div>
-            );
-          })}
+          {points.map((item, index) => (
+            <CardColor1 className="w-full" key={index} point={item} index={index} />
+          ))}
         </div>
 
         <h2>Color Palette Gallery</h2>
