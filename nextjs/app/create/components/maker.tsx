@@ -1,7 +1,7 @@
 "use client";
 
 import Color from "color";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { toast } from "sonner";
 import { Generator } from "@/components/palette/generator";
 import type { ColorPoint } from "@/components/palette/picker-colors";
@@ -9,6 +9,9 @@ import { getColorName } from "@/lib/nearest";
 import { useQuery } from "@apollo/client";
 import { GET_TOPIC, Topic } from "@/query/topic";
 import { getAssetUrl } from "@/lib/utils";
+import { CardPalette1 } from "@/components/card/palette/1";
+import { CardPalette2, CardPalette2Ref } from "@/components/card/palette/2";
+import { Button } from "@/components/ui/button";
 
 export const Maker = ({ topicId }: { topicId: string }) => {
   const [points, setPoints] = useState<ColorPoint[]>([]);
@@ -16,6 +19,7 @@ export const Maker = ({ topicId }: { topicId: string }) => {
     variables: { documentId: topicId },
     skip: !topicId,
   });
+  const cardPalette2 = useRef<CardPalette2Ref>(null);
 
   useEffect(() => {
     if (data?.topic && data.topic.palettes[0]) {
@@ -28,11 +32,20 @@ export const Maker = ({ topicId }: { topicId: string }) => {
     toast.success("Copied to clipboard");
   };
 
+  const image = data?.topic?.image && getAssetUrl(data.topic.image.url);
+
+  const saveAllPalettes = async () => {
+    cardPalette2.current?.saveAsImage("palette.png", 4);
+  };
+
   return (
     <>
-      <Generator initialPoints={points} initImage={data?.topic?.image && getAssetUrl(data.topic.image.url)} onColorsChangeEnter={setPoints} />
+      <Generator initialPoints={points} initImage={image} onColorsChangeEnter={setPoints} />
 
       <article className="prose mx-auto mt-12 max-w-screen-xl px-4 xl:px-0">
+        <Button size={"lg"} onClick={saveAllPalettes}>
+          Download All Assets
+        </Button>
         <h2>Colors</h2>
         <div className="not-prose grid gap-4 md:grid-cols-2 lg:grid-cols-3">
           {points.map((item, index) => {
@@ -90,7 +103,13 @@ export const Maker = ({ topicId }: { topicId: string }) => {
             );
           })}
         </div>
-        {/* <h2>Color Palette Collage</h2> */}
+        <h2>Color Palette Gallery</h2>
+        {image && points.length > 0 && (
+          <div className="grid gap-4">
+            <CardPalette1 points={points} image={image} />
+            <CardPalette2 ref={cardPalette2} points={points} image={image} />
+          </div>
+        )}
       </article>
     </>
   );
