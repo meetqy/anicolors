@@ -1,38 +1,8 @@
 import { CardColorBase } from "@/components/card/color/base";
-import { CardColorGradientLighten } from "@/components/card/color/gradient";
 import { Generator } from "@/components/palette/generator";
-import { ColorPoint } from "@/components/palette/picker-colors";
-import { getClient } from "@/lib/apollo-client";
-import { gql } from "@apollo/client";
-
-const getData = async (id: string) => {
-  const res = await getClient().query({
-    query: gql`
-      query ExampleQuery($documentId: ID!) {
-        topic(documentId: $documentId) {
-          image {
-            url
-          }
-          name
-          category
-          palettes {
-            points
-          }
-        }
-      }
-    `,
-    variables: {
-      documentId: id,
-    },
-  });
-
-  return res.data.topic as {
-    name: string;
-    category: string;
-    image: { url: string };
-    palettes: { points: ColorPoint[] }[];
-  };
-};
+import { Button } from "@/components/ui/button";
+import { PaletteActions } from "./actions";
+import { getData } from "./fetch";
 
 export const generateMetadata = async ({ params }: { params: Promise<{ id: string }> }) => {
   const { id } = await params;
@@ -70,19 +40,21 @@ export default async function Page({ params }: { params: Promise<{ id: string }>
       </div>
       <Generator initialPoints={points} initImage={"http://localhost:1337" + topic.image.url} />
 
-      <div className="prose mx-auto mt-12 max-w-screen-xl px-4 xl:px-0">
-        <h2>Colors</h2>
-        <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3 not-prose">
-          {points.map((item, index) => (
-            <CardColorBase point={item} key={index} />
-          ))}
-        </div>
-        <h2>Gradient lighten</h2>
-        <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3 not-prose">
-          {points.map((item, index) => (
-            <CardColorGradientLighten point={item} key={index} />
-          ))}
-        </div>
+      <PaletteActions topic={topic} />
+
+      <div className="grid gap-2 grid-cols-5 max-w-screen-md mx-auto px-4 lg:px-0 mt-24">
+        {points.map((item, index) => (
+          <CardColorBase point={item} key={index} />
+        ))}
+      </div>
+
+      <div className="flex flex-wrap gap-2 max-w-screen-md mx-auto px-4 lg:px-0 mt-12 justify-center">
+        {points.map((item, index) => (
+          <Button variant="outline" className="rounded-full" key={index} size="sm">
+            <div className="size-4 rounded-full" style={{ backgroundColor: item.color }}></div>
+            {item.name}
+          </Button>
+        ))}
       </div>
     </div>
   );

@@ -29,6 +29,11 @@
       "required": true,
       "unique": false
     },
+    "like": {
+      "type": "integer",
+      "required": true,
+      "default": 0
+    },
     "palettes": {
       "type": "relation",
       "relation": "oneToMany",

@@ -18,6 +18,7 @@
     "@strapi/design-system": "2.0.0-rc.27",
     "@strapi/icons": "2.0.0-rc.27",
     "@strapi/plugin-cloud": "5.17.0",
+    "@strapi/plugin-documentation": "^5.17.0",
     "@strapi/plugin-graphql": "^5.17.0",
     "@strapi/plugin-users-permissions": "5.17.0",
     "@strapi/strapi": "5.17.0",
