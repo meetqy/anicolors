@@ -62,6 +62,11 @@ export const DomGallery = ({ image, points }: { image: string; points: ColorPoin
   return (
     <ColumnsPhotoAlbum
       photos={photos}
+      columns={(containerWidth) => {
+        if (containerWidth < 768) return 2;
+        if (containerWidth < 1024) return 3;
+        return 4;
+      }}
       render={{
         image: (props, context) => {
           const scale = context.width / 375;
