@@ -9,13 +9,14 @@ interface CardPalette2Props {
   points: ColorPoint[];
   image: string;
   className?: string;
+  style?: React.CSSProperties;
 }
 
-const CardPalette2Base = ({ points, className }: CardPalette2Props) => {
+const CardPalette2Base = ({ points, className, style }: CardPalette2Props) => {
   const end = Color(points[points.length - 1].color);
 
   return (
-    <div className={cn("w-[375px] aspect-video flex relative rounded-md overflow-hidden", className)}>
+    <div style={style} className={cn("w-[375px] aspect-video flex relative rounded-md overflow-hidden", className)}>
       <div className="absolute text-xl right-4 top-2 font-serif italic font-bold opacity-80" style={{ color: end.isDark() ? "#fff" : "#000" }}>
         HiColors
       </div>

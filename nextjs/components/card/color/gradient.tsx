@@ -2,12 +2,13 @@ import { ColorPoint } from "@/components/palette/picker-colors";
 import { cn } from "@/lib/utils";
 import Color from "color";
 import { withSave } from "../with-save";
+import { CSSProperties } from "react";
 
-const CardColorGradientLightenBase = ({ point, className }: { point: ColorPoint; className?: string }) => {
+const CardColorGradientLightenBase = ({ point, className, style }: { point: ColorPoint; className?: string; style?: CSSProperties }) => {
   const color = Color(point.color);
 
   return (
-    <div className={cn("relative grid rounded-xl overflow-hidden w-[375px] aspect-[4/5]", className)}>
+    <div className={cn("relative grid rounded-xl overflow-hidden w-[375px] aspect-[4/5]", className)} style={style}>
       <div
         className="absolute text-xl right-4 bottom-2 font-serif italic text-transparent bg-clip-text font-bold"
         style={{
