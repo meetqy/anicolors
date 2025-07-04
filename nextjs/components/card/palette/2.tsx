@@ -2,7 +2,7 @@
 
 import { ColorPoint } from "@/components/palette/picker-colors";
 import Color from "color";
-import { withSave, SaveableCardRef } from "./with-save";
+import { withSave, SaveableCardRef } from "../with-save";
 
 interface CardPalette2Props {
   points: ColorPoint[];

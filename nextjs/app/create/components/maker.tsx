@@ -11,8 +11,9 @@ import { GET_TOPIC, Topic } from "@/query/topic";
 import { getAssetUrl } from "@/lib/utils";
 import { CardPalette1 } from "@/components/card/palette/1";
 import { Button } from "@/components/ui/button";
-import { SaveableCardRef } from "@/components/card/palette/with-save";
+import { SaveableCardRef } from "@/components/card/with-save";
 import { CardPalette2 } from "@/components/card/palette/2";
+import { CardColorGradientLighten } from "@/components/card/color/gradient";
 
 export const Maker = ({ topicId }: { topicId: string }) => {
   const [points, setPoints] = useState<ColorPoint[]>([]);
@@ -22,7 +23,7 @@ export const Maker = ({ topicId }: { topicId: string }) => {
   });
 
   // 使用 Map 来管理多个 palette refs
-  const paletteRefs = useRef<Map<string, SaveableCardRef>>(new Map());
+  const myRefs = useRef<Map<string, SaveableCardRef>>(new Map());
 
   useEffect(() => {
     if (data?.topic && data.topic.palettes[0]) {
@@ -38,11 +39,12 @@ export const Maker = ({ topicId }: { topicId: string }) => {
   const image = data?.topic?.image && getAssetUrl(data.topic.image.url);
 
   const saveAllPalettes = async () => {
-    const palette1 = paletteRefs.current.get("palette1");
-    const palette2 = paletteRefs.current.get("palette2");
+    const topicName = topicId ? `${topicId}-` : "";
 
-    palette1?.saveAsImage("palette1.png");
-    palette2?.saveAsImage("palette2.png");
+    // 遍历所有 refs 并保存
+    myRefs.current.forEach((ref, key) => {
+      ref?.saveAsImage(`${topicName}${key}.png`);
+    });
   };
 
   return (
@@ -112,21 +114,30 @@ export const Maker = ({ topicId }: { topicId: string }) => {
         </div>
         <h2>Color Palette Gallery</h2>
         {image && points.length > 0 && (
-          <div className="grid gap-4">
+          <div className="grid gap-4 not-prose">
             <CardPalette1
               ref={(ref) => {
-                if (ref) paletteRefs.current.set("palette1", ref);
+                if (ref) myRefs.current.set("palette1", ref);
               }}
               points={points}
               image={image}
             />
             <CardPalette2
               ref={(ref) => {
-                if (ref) paletteRefs.current.set("palette2", ref);
+                if (ref) myRefs.current.set("palette2", ref);
               }}
               points={points}
               image={image}
             />
+            {points.map((e) => (
+              <CardColorGradientLighten
+                ref={(ref) => {
+                  if (ref) myRefs.current.set(`gradient-lighten-${e.id}`, ref);
+                }}
+                point={e}
+                key={e.id}
+              />
+            ))}
           </div>
         )}
       </article>

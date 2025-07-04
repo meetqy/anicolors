@@ -1,6 +1,6 @@
 import { ColorPoint } from "@/components/palette/picker-colors";
 import Color from "color";
-import { withSave } from "./with-save";
+import { withSave } from "../with-save";
 
 interface CardPalette1Props {
   points: ColorPoint[];

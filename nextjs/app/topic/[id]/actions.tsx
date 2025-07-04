@@ -1,8 +1,8 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
+import { Topic } from "@/query/topic";
 import { MdFavoriteBorder, MdLink } from "react-icons/md";
-import { Topic } from "./fetch";
 
 interface PaletteActionsProps {
   topic: Topic;

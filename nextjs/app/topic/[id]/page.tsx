@@ -2,9 +2,22 @@ import { CardColorBase } from "@/components/card/color/base";
 import { Generator } from "@/components/palette/generator";
 import { Button } from "@/components/ui/button";
 import { PaletteActions } from "./actions";
-import { getTopicData } from "./fetch";
-import { CardPalette1 } from "@/components/card/palette/1";
-import { CardPalette2 } from "@/components/card/palette/2";
+import { getClient } from "@/lib/apollo-client";
+import { GET_TOPIC, Topic } from "@/query/topic";
+import { RowsPhotoAlbum } from "react-photo-album";
+import "react-photo-album/rows.css";
+import { getAssetUrl } from "@/lib/utils";
+
+const getTopicData = async (id: string) => {
+  const res = await getClient().query({
+    query: GET_TOPIC,
+    variables: {
+      documentId: id,
+    },
+  });
+
+  return res.data.topic as Topic;
+};
 
 export const generateMetadata = async ({ params }: { params: Promise<{ id: string }> }) => {
   const { id } = await params;
@@ -28,7 +41,7 @@ export default async function Page({ params }: { params: Promise<{ id: string }>
   const { id } = await params;
   const topic = await getTopicData(id);
   const points = topic.palettes[0].points;
-  const image = "http://localhost:1337" + topic.image.url;
+  const image = getAssetUrl(topic.image.url);
 
   return (
     <div className="mx-auto py-12">
@@ -61,11 +74,17 @@ export default async function Page({ params }: { params: Promise<{ id: string }>
       </div>
 
       <div className="max-w-screen-lg prose mx-auto px-4 lg:px-0 mt-12">
-        <h2>Palette Gallery</h2>
+        <h2>Color Palette Gallery</h2>
 
-        <div className="not-prose grid gap-4">
-          <CardPalette1 points={points} image={image} />
-          <CardPalette2 points={points} image={image} />
+        <div className="not-prose">
+          <RowsPhotoAlbum
+            photos={topic.gallery.map((item) => ({
+              src: getAssetUrl(item.url),
+              width: item.width,
+              height: item.height,
+              alt: topic.name,
+            }))}
+          />
         </div>
       </div>
     </div>

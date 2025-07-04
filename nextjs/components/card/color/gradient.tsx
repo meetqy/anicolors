@@ -1,12 +1,13 @@
 import { ColorPoint } from "@/components/palette/picker-colors";
 import { cn } from "@/lib/utils";
 import Color from "color";
+import { withSave } from "../with-save";
 
-export const CardColorGradientLighten = ({ point }: { point: ColorPoint }) => {
+const CardColorGradientLightenBase = ({ point }: { point: ColorPoint }) => {
   const color = Color(point.color);
 
   return (
-    <div className="relative grid rounded-xl overflow-hidden aspect-[4/5]">
+    <div className="relative grid rounded-xl overflow-hidden w-[375px] aspect-[4/5]">
       <div
         className="absolute text-xl right-4 bottom-2 font-serif italic text-transparent bg-clip-text font-bold"
         style={{
@@ -26,15 +27,13 @@ export const CardColorGradientLighten = ({ point }: { point: ColorPoint }) => {
             style={{ backgroundColor: hex, color: Color(hex).isLight() ? "#000" : "#fff" }}
           >
             {index === 0 && <span className="text-xl">{point.name}</span>}
-            <span className="relative top-0.5">
-              <span className="sr-only">
-                {color.hex()} Gradient Lighten {number}
-              </span>{" "}
-              {hex}
-            </span>
+            <span className="relative top-0.5">{hex}</span>
           </h3>
         );
       })}
     </div>
   );
 };
+
+export const CardColorGradientLighten = withSave(CardColorGradientLightenBase);
+CardColorGradientLighten.displayName = "CardColorGradientLighten";

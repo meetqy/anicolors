@@ -8,11 +8,19 @@ export const GET_TOPIC = gql`
         url
       }
       name
-      like
-      createdAt
       category
+      like
       palettes {
         points
+        colors {
+          name
+        }
+      }
+      createdAt
+      gallery {
+        url
+        width
+        height
       }
     }
   }
@@ -25,4 +33,5 @@ export type Topic = {
   image: { url: string };
   like: number;
   palettes: { points: ColorPoint[] }[];
+  gallery: { url: string; width: number; height: number }[];
 };
