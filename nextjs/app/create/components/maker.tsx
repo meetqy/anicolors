@@ -10,8 +10,9 @@ import { useQuery } from "@apollo/client";
 import { GET_TOPIC, Topic } from "@/query/topic";
 import { getAssetUrl } from "@/lib/utils";
 import { CardPalette1 } from "@/components/card/palette/1";
-import { CardPalette2, CardPalette2Ref } from "@/components/card/palette/2";
 import { Button } from "@/components/ui/button";
+import { SaveableCardRef } from "@/components/card/palette/with-save";
+import { CardPalette2 } from "@/components/card/palette/2";
 
 export const Maker = ({ topicId }: { topicId: string }) => {
   const [points, setPoints] = useState<ColorPoint[]>([]);
@@ -19,7 +20,9 @@ export const Maker = ({ topicId }: { topicId: string }) => {
     variables: { documentId: topicId },
     skip: !topicId,
   });
-  const cardPalette2 = useRef<CardPalette2Ref>(null);
+
+  // 使用 Map 来管理多个 palette refs
+  const paletteRefs = useRef<Map<string, SaveableCardRef>>(new Map());
 
   useEffect(() => {
     if (data?.topic && data.topic.palettes[0]) {
@@ -35,7 +38,11 @@ export const Maker = ({ topicId }: { topicId: string }) => {
   const image = data?.topic?.image && getAssetUrl(data.topic.image.url);
 
   const saveAllPalettes = async () => {
-    cardPalette2.current?.saveAsImage("palette.png", 4);
+    const palette1 = paletteRefs.current.get("palette1");
+    const palette2 = paletteRefs.current.get("palette2");
+
+    palette1?.saveAsImage("palette1.png");
+    palette2?.saveAsImage("palette2.png");
   };
 
   return (
@@ -106,8 +113,20 @@ export const Maker = ({ topicId }: { topicId: string }) => {
         <h2>Color Palette Gallery</h2>
         {image && points.length > 0 && (
           <div className="grid gap-4">
-            <CardPalette1 points={points} image={image} />
-            <CardPalette2 ref={cardPalette2} points={points} image={image} />
+            <CardPalette1
+              ref={(ref) => {
+                if (ref) paletteRefs.current.set("palette1", ref);
+              }}
+              points={points}
+              image={image}
+            />
+            <CardPalette2
+              ref={(ref) => {
+                if (ref) paletteRefs.current.set("palette2", ref);
+              }}
+              points={points}
+              image={image}
+            />
           </div>
         )}
       </article>
