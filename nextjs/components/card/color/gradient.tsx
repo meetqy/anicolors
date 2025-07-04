@@ -1,13 +1,19 @@
 import { ColorPoint } from "@/components/palette/picker-colors";
 import { cn } from "@/lib/utils";
 import Color from "color";
-import { withSave } from "../with-save";
+import { withSave, SaveableCardRef } from "../with-save";
+import { forwardRef } from "react";
 
-const CardColorGradientLightenBase = ({ point }: { point: ColorPoint }) => {
+interface CardColorGradientLightenProps {
+  point: ColorPoint;
+  className?: string;
+}
+
+const CardColorGradientLightenBase = forwardRef<HTMLDivElement, CardColorGradientLightenProps>(({ point, className }, ref) => {
   const color = Color(point.color);
 
   return (
-    <div className="relative grid rounded-xl overflow-hidden w-[375px] aspect-[4/5]">
+    <div ref={ref} style={{ width: 360, height: 540 }} className={cn("relative grid rounded-xl overflow-hidden", className)}>
       <div
         className="absolute text-xl right-4 bottom-2 font-serif italic text-transparent bg-clip-text font-bold"
         style={{
@@ -33,7 +39,9 @@ const CardColorGradientLightenBase = ({ point }: { point: ColorPoint }) => {
       })}
     </div>
   );
-};
+});
+
+CardColorGradientLightenBase.displayName = "CardColorGradientLightenBase";
 
 export const CardColorGradientLighten = withSave(CardColorGradientLightenBase);
-CardColorGradientLighten.displayName = "CardColorGradientLighten";
+export type CardColorGradientLightenRef = SaveableCardRef;

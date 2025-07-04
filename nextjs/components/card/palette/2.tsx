@@ -2,18 +2,21 @@
 
 import { ColorPoint } from "@/components/palette/picker-colors";
 import Color from "color";
+import { forwardRef } from "react";
 import { withSave, SaveableCardRef } from "../with-save";
+import { cn } from "@/lib/utils";
 
 interface CardPalette2Props {
   points: ColorPoint[];
   image: string;
+  className?: string;
 }
 
-const CardPalette2Base = ({ points }: CardPalette2Props) => {
+const CardPalette2Base = forwardRef<HTMLDivElement, CardPalette2Props>(({ points, className }, ref) => {
   const end = Color(points[points.length - 1].color);
 
   return (
-    <div className="w-[375px] aspect-video flex relative rounded-md overflow-hidden bg-red-400">
+    <div ref={ref} className={cn("w-[375px] aspect-video flex relative rounded-md overflow-hidden", className)}>
       <div className="absolute text-xl right-4 top-2 font-serif italic font-bold opacity-80" style={{ color: end.isDark() ? "#fff" : "#000" }}>
         HiColors
       </div>
@@ -35,7 +38,7 @@ const CardPalette2Base = ({ points }: CardPalette2Props) => {
       })}
     </div>
   );
-};
+});
 
 export const CardPalette2 = withSave(CardPalette2Base);
 CardPalette2.displayName = "CardPalette2";
