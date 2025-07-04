@@ -37,7 +37,13 @@ const convertImageToBase64 = (url: string): Promise<string> => {
 
 export function Generator({ initialPoints = [], onColorsChangeEnter, initImage }: { initialPoints?: ColorPoint[]; onColorsChangeEnter?: (points: ColorPoint[]) => void; initImage?: string }) {
   const [image, setImage] = useState<string | null>(null);
-  const [colors, setColors] = useState<ColorPoint[]>(initialPoints);
+  const [colors, setColors] = useState<ColorPoint[]>([]);
+
+  useEffect(() => {
+    if (!colors.length) {
+      setColors(initialPoints);
+    }
+  }, [initialPoints]);
 
   // 当 initImage 变化时更新图片
   useEffect(() => {

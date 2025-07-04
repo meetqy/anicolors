@@ -447,6 +447,7 @@ export interface ApiTopicTopic extends Struct.CollectionTypeSchema {
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
+    gallery: Schema.Attribute.Media<'images', true>;
     image: Schema.Attribute.Media<'images'> & Schema.Attribute.Required;
     like: Schema.Attribute.Integer &
       Schema.Attribute.Required &

@@ -1,34 +1,9 @@
-import { ColorPoint } from "@/components/palette/picker-colors";
 import { getClient } from "@/lib/apollo-client";
-import { gql } from "@apollo/client";
+import { GET_TOPIC, Topic } from "@/query/topic";
 
-export type Topic = {
-  name: string;
-  category: string;
-  createdAt: string;
-  image: { url: string };
-  like: number;
-  palettes: { points: ColorPoint[] }[];
-};
-
-export const getData = async (id: string) => {
+export const getTopicData = async (id: string) => {
   const res = await getClient().query({
-    query: gql`
-      query ExampleQuery($documentId: ID!) {
-        topic(documentId: $documentId) {
-          image {
-            url
-          }
-          name
-          like
-          createdAt
-          category
-          palettes {
-            points
-          }
-        }
-      }
-    `,
+    query: GET_TOPIC,
     variables: {
       documentId: id,
     },

@@ -39,6 +39,13 @@
       "relation": "oneToMany",
       "target": "api::palette.palette",
       "mappedBy": "topic"
+    },
+    "gallery": {
+      "type": "media",
+      "multiple": true,
+      "allowedTypes": [
+        "images"
+      ]
     }
   }
 }

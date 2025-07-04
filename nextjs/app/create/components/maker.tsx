@@ -1,14 +1,27 @@
 "use client";
 
 import Color from "color";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { toast } from "sonner";
 import { Generator } from "@/components/palette/generator";
 import type { ColorPoint } from "@/components/palette/picker-colors";
 import { getColorName } from "@/lib/nearest";
+import { useQuery } from "@apollo/client";
+import { GET_TOPIC, Topic } from "@/query/topic";
+import { getAssetUrl } from "@/lib/utils";
 
-export const Maker = () => {
-  const [colors, setColors] = useState<ColorPoint[]>([]);
+export const Maker = ({ topicId }: { topicId: string }) => {
+  const [points, setPoints] = useState<ColorPoint[]>([]);
+  const { data } = useQuery<{ topic: Topic }>(GET_TOPIC, {
+    variables: { documentId: topicId },
+    skip: !topicId,
+  });
+
+  useEffect(() => {
+    if (data?.topic && data.topic.palettes[0]) {
+      setPoints(data.topic.palettes[0].points);
+    }
+  }, [data]);
 
   const copyToClipboard = (text: string) => {
     navigator.clipboard.writeText(text);
@@ -17,12 +30,12 @@ export const Maker = () => {
 
   return (
     <>
-      <Generator onChange={setColors} />
+      <Generator initialPoints={points} initImage={data?.topic?.image && getAssetUrl(data.topic.image.url)} onColorsChangeEnter={setPoints} />
 
       <article className="prose mx-auto mt-12 max-w-screen-xl px-4 xl:px-0">
         <h2>Colors</h2>
         <div className="not-prose grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-          {colors.map((item, index) => {
+          {points.map((item, index) => {
             const color = Color(item.color);
             const rgb = color.rgb().string();
             const cmyk = color.cmyk().string();
