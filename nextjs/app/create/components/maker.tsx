@@ -53,8 +53,8 @@ export const Maker = ({ topicId }: { topicId: string }) => {
       ? [
           {
             src: "1",
-            width: 375, // CardPalette1 实际宽度
-            height: 500, // CardPalette1 实际高度 (3:4 比例)
+            width: 3, // CardPalette1 实际宽度
+            height: 4, // CardPalette1 实际高度 (3:4 比例)
             component: (
               <CardPalette1
                 className="w-full"
@@ -68,8 +68,8 @@ export const Maker = ({ topicId }: { topicId: string }) => {
           },
           {
             src: "2",
-            width: 375, // CardPalette2 实际宽度
-            height: 211, // CardPalette2 实际高度 (16:9 比例)
+            width: 16, // CardPalette2 实际宽度
+            height: 9, // CardPalette2 实际高度 (16:9 比例)
             component: (
               <CardPalette2
                 ref={(ref) => {

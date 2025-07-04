@@ -1,6 +1,5 @@
 import { ColorPoint } from "@/components/palette/picker-colors";
 import Color from "color";
-import { forwardRef } from "react";
 import { withSave } from "../with-save";
 import { cn } from "@/lib/utils";
 
@@ -10,11 +9,11 @@ interface CardPalette1Props {
   className?: string;
 }
 
-const CardPalette1Base = forwardRef<HTMLDivElement, CardPalette1Props>(({ points, className }, ref) => {
+const CardPalette1Base = ({ points, className }: CardPalette1Props) => {
   const end = Color(points[points.length - 1].color);
 
   return (
-    <div ref={ref} className={cn("w-[375px] aspect-[3/4] flex flex-col relative rounded-md overflow-hidden", className)}>
+    <div className={cn("w-[375px] aspect-[3/4] flex flex-col relative rounded-md overflow-hidden", className)}>
       <div className="absolute text-xl right-4 bottom-2 font-serif italic font-bold opacity-80" style={{ color: end.isDark() ? "#fff" : "#000" }}>
         HiColors
       </div>
@@ -28,7 +27,7 @@ const CardPalette1Base = forwardRef<HTMLDivElement, CardPalette1Props>(({ points
       })}
     </div>
   );
-});
+};
 
 export const CardPalette1 = withSave(CardPalette1Base);
 CardPalette1.displayName = "CardPalette1";
