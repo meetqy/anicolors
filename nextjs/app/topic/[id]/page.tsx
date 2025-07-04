@@ -1,4 +1,4 @@
-import { CardColorBase } from "@/components/card/color/base";
+import { ColorBaseInfo } from "@/app/topic/[id]/color-base-info";
 import { Generator } from "@/components/palette/generator";
 import { Button } from "@/components/ui/button";
 import { PaletteActions } from "./actions";
@@ -60,7 +60,7 @@ export default async function Page({ params }: { params: Promise<{ id: string }>
 
       <div className="grid gap-2 grid-cols-5 max-w-screen-md mx-auto px-4 lg:px-0 mt-24">
         {points.map((item, index) => (
-          <CardColorBase point={item} key={index} />
+          <ColorBaseInfo point={item} key={index} />
         ))}
       </div>
 
@@ -73,7 +73,7 @@ export default async function Page({ params }: { params: Promise<{ id: string }>
         ))}
       </div>
 
-      <div className="max-w-screen-lg prose mx-auto px-4 lg:px-0 mt-12">
+      <div className="max-w-screen-xl prose mx-auto px-4 lg:px-0 mt-24">
         <h2>Color Palette Gallery</h2>
 
         <div className="not-prose">

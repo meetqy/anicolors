@@ -4,7 +4,7 @@ import { ColorPoint } from "@/components/palette/picker-colors";
 import Color from "color";
 import { toast } from "sonner";
 
-export const CardColorBase = ({ point }: { point: ColorPoint }) => {
+export const ColorBaseInfo = ({ point }: { point: ColorPoint }) => {
   const item = Color(point.color);
   const hex = item.hex();
   const rgb = item.rgb().string();
