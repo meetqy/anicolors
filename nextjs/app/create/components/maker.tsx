@@ -11,6 +11,7 @@ import { SaveableCardRef } from "@/components/card/with-save";
 import "react-photo-album/columns.css";
 import { DomGallery, DomGalleryRef } from "./dom-gallery";
 import { CardColor1 } from "@/components/card/color/1";
+import Landing from "./landing";
 
 export const Maker = ({ topicId }: { topicId: string }) => {
   const [points, setPoints] = useState<ColorPoint[]>([]);
@@ -43,7 +44,7 @@ export const Maker = ({ topicId }: { topicId: string }) => {
     <>
       <Generator initialPoints={points} initImage={image} onColorsChangeEnter={setPoints} onImageChange={setImage} />
 
-      {points.length && image && (
+      {points.length && image ? (
         <article className="prose mx-auto mt-12 max-w-screen-xl px-4 xl:px-0">
           <Button size={"lg"} onClick={saveAllPalettes}>
             Download All Assets
@@ -80,7 +81,9 @@ export const Maker = ({ topicId }: { topicId: string }) => {
             )}
           </div>
         </article>
-      )}
+      ) : null}
+
+      <Landing />
     </>
   );
 };
