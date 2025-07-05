@@ -34,6 +34,15 @@ export const extractMainColors = (
 
       if (a < 128) continue;
 
+      // 排除黑色和白色附近的颜色
+      const brightness = (r + g + b) / 3;
+      if (brightness < 30 || brightness > 225) continue; // 排除过暗和过亮的颜色
+
+      // 排除灰色调（RGB值差异太小的颜色）
+      const maxRGB = Math.max(r, g, b);
+      const minRGB = Math.min(r, g, b);
+      if (maxRGB - minRGB < 20) continue; // 排除饱和度太低的颜色
+
       // 量化颜色
       const quantizedR = Math.round(r / 24) * 24;
       const quantizedG = Math.round(g / 24) * 24;
@@ -59,7 +68,7 @@ export const extractMainColors = (
 
   // 使用贪心算法选择差别最大的颜色
   const selectedColors: typeof candidateColors = [];
-  
+
   if (candidateColors.length > 0) {
     // 先选择出现频率最高的颜色
     selectedColors.push(candidateColors[0]);
@@ -71,9 +80,9 @@ export const extractMainColors = (
 
       for (let i = 0; i < candidateColors.length; i++) {
         const candidate = candidateColors[i];
-        
+
         // 跳过已选择的颜色
-        if (selectedColors.some(selected => selected[0] === candidate[0])) continue;
+        if (selectedColors.some((selected) => selected[0] === candidate[0])) continue;
 
         // 计算与所有已选颜色的最小距离
         let minDistance = Infinity;
@@ -98,7 +107,7 @@ export const extractMainColors = (
   }
 
   return selectedColors.map((colorEntry, index) => {
-    const [colorKey, colorInfo] = colorEntry;
+    const [, colorInfo] = colorEntry;
     const [r, g, b] = colorInfo.rgb;
 
     // 选择该颜色的中心位置
