@@ -40,7 +40,7 @@ export function Generator({ initialPoints = [], onColorsChangeEnter, initImage }
   const [colors, setColors] = useState<ColorPoint[]>([]);
 
   useEffect(() => {
-    if (!colors.length) {
+    if (!colors.length && initialPoints.length) {
       setColors(initialPoints);
     }
   }, [initialPoints]);

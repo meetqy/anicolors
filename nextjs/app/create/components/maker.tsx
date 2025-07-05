@@ -11,7 +11,6 @@ import { Button } from "@/components/ui/button";
 import { SaveableCardRef } from "@/components/card/with-save";
 import "react-photo-album/columns.css";
 import { DomGallery } from "./dom-gallery";
-import Color from "color";
 import { CardColor1 } from "@/components/card/color/1";
 
 export const Maker = ({ topicId }: { topicId: string }) => {
