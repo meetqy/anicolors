@@ -6,6 +6,15 @@ import { CSSProperties } from "react";
 
 const CardColorGradientLightenBase = ({ point, className, style }: { point: ColorPoint; className?: string; style?: CSSProperties }) => {
   const color = Color(point.color);
+  const colors = [
+    ...new Set(
+      new Array(9).fill(0).map((_, index) => {
+        const number = parseFloat((0.1 * index).toFixed(1));
+        const hex = color.lighten(number).hex();
+        return hex;
+      })
+    ),
+  ];
 
   return (
     <div className={cn("relative grid rounded-xl overflow-hidden w-[375px] aspect-[4/5]", className)} style={style}>
@@ -17,10 +26,7 @@ const CardColorGradientLightenBase = ({ point, className, style }: { point: Colo
       >
         HiColors
       </div>
-      {new Array(9).fill(0).map((_, index) => {
-        const number = parseFloat((0.1 * index).toFixed(1));
-        const hex = color.lighten(number).hex();
-
+      {colors.map((hex, index) => {
         return (
           <h3
             className={cn("rounded-t-xl flex px-4 font-mono gap-4 items-center", { "-mt-3": index > 0, "font-medium": index === 0 })}

@@ -43,42 +43,44 @@ export const Maker = ({ topicId }: { topicId: string }) => {
     <>
       <Generator initialPoints={points} initImage={image} onColorsChangeEnter={setPoints} onImageChange={setImage} />
 
-      <article className="prose mx-auto mt-12 max-w-screen-xl px-4 xl:px-0">
-        <Button size={"lg"} onClick={saveAllPalettes}>
-          Download All Assets
-        </Button>
+      {points.length && image && (
+        <article className="prose mx-auto mt-12 max-w-screen-xl px-4 xl:px-0">
+          <Button size={"lg"} onClick={saveAllPalettes}>
+            Download All Assets
+          </Button>
 
-        <h2>Colors</h2>
-        <div className="not-prose grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-          {points.map((item, index) => (
-            <CardColor1
-              ref={(ref) => {
-                if (ref) myRefs.current.set(`color-${index}`, ref);
-              }}
-              className="w-full"
-              key={index}
-              point={item}
-              index={index}
-            />
-          ))}
-        </div>
+          <h2>Colors</h2>
+          <div className="not-prose grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+            {points.map((item, index) => (
+              <CardColor1
+                ref={(ref) => {
+                  if (ref) myRefs.current.set(`color-${index}`, ref);
+                }}
+                className="w-full"
+                key={index}
+                point={item}
+                index={index}
+              />
+            ))}
+          </div>
 
-        <h2>Color Palette Gallery</h2>
-        <div className="not-prose">
-          {image && points.length > 0 && (
-            <DomGallery
-              ref={(ref) => {
-                if (ref) {
-                  myRefs.current.set("dom-gallery", ref);
-                }
-              }}
-              image={image}
-              points={points}
-              topicId={topicId}
-            />
-          )}
-        </div>
-      </article>
+          <h2>Color Palette Gallery</h2>
+          <div className="not-prose">
+            {image && points.length > 0 && (
+              <DomGallery
+                ref={(ref) => {
+                  if (ref) {
+                    myRefs.current.set("dom-gallery", ref);
+                  }
+                }}
+                image={image}
+                points={points}
+                topicId={topicId}
+              />
+            )}
+          </div>
+        </article>
+      )}
     </>
   );
 };
