@@ -4,6 +4,7 @@ import React, { useState, useRef, useCallback, useEffect } from "react";
 import { cn } from "@/lib/utils";
 import { getColorName } from "@/lib/nearest";
 import Color from "color";
+import { extractMainColors } from "./color-extractor";
 
 export interface ColorPoint {
   id: number;
@@ -81,90 +82,13 @@ export default function PickerColors({ image, initialPoints, onColorsChange, cla
     };
   }, []);
 
-  // 提取图片主要颜色
-  const extractMainColors = useCallback(
-    (count: number = 5): ColorPoint[] => {
-      if (!canvasRef.current || !imageRef.current) return [];
-
-      const canvas = canvasRef.current;
-      const ctx = canvas.getContext("2d");
-      if (!ctx) return [];
-
-      const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
-      const pixels = imageData.data;
-
-      // 收集所有像素颜色及其位置
-      const colorMap = new Map<string, { count: number; positions: { x: number; y: number }[] }>();
-
-      for (let y = 0; y < canvas.height; y += 4) {
-        // 采样间隔
-        for (let x = 0; x < canvas.width; x += 4) {
-          const i = (y * canvas.width + x) * 4;
-          const r = pixels[i];
-          const g = pixels[i + 1];
-          const b = pixels[i + 2];
-          const a = pixels[i + 3];
-
-          // 跳过透明像素
-          if (a < 128) continue;
-
-          // 量化颜色以减少相似颜色
-          const quantizedR = Math.round(r / 32) * 32;
-          const quantizedG = Math.round(g / 32) * 32;
-          const quantizedB = Math.round(b / 32) * 32;
-
-          const colorKey = `${quantizedR},${quantizedG},${quantizedB}`;
-
-          if (!colorMap.has(colorKey)) {
-            colorMap.set(colorKey, { count: 0, positions: [] });
-          }
-
-          const colorInfo = colorMap.get(colorKey)!;
-          colorInfo.count++;
-          colorInfo.positions.push({ x, y });
-        }
-      }
-
-      // 按出现频率排序并选择前N个颜色
-      const sortedColors = Array.from(colorMap.entries())
-        .sort((a, b) => b[1].count - a[1].count)
-        .slice(0, count);
-
-      return sortedColors.map((colorEntry, index) => {
-        const [colorKey, colorInfo] = colorEntry;
-        const [r, g, b] = colorKey.split(",").map(Number);
-
-        // 选择该颜色的中心位置
-        const positions = colorInfo.positions;
-        const centerPos = positions[Math.floor(positions.length / 2)];
-
-        // 转换为显示坐标系
-        const rect = imageRef.current!.getBoundingClientRect();
-        const displayX = (centerPos.x / canvas.width) * rect.width;
-        const displayY = (centerPos.y / canvas.height) * rect.height;
-
-        // 转换为标准化坐标
-        const normalizedPos = getNormalizedPosition(displayX, displayY);
-
-        return {
-          id: index + 1,
-          x: normalizedPos.x,
-          y: normalizedPos.y,
-          color: `rgb(${r}, ${g}, ${b})`,
-          name: getColorName(Color(`rgb(${r}, ${g}, ${b})`).hex())?.name || "unknown",
-        };
-      });
-    },
-    [getNormalizedPosition]
-  );
-
   const handleImageLoad = () => {
     updateCanvas();
 
     // 图片加载完成后，如果没有初始点且当前没有颜色点，则提取主要颜色
     if (!initialPoints?.length && colorPoints.length === 0) {
       setTimeout(() => {
-        const extractedColors = extractMainColors(5);
+        const extractedColors = extractMainColors(canvasRef.current!, imageRef.current!, getNormalizedPosition, 5);
         setColorPoints(extractedColors);
         onColorsChangeEnter?.(extractedColors);
         onColorsChange?.(extractedColors);
