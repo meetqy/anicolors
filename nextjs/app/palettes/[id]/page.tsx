@@ -1,4 +1,4 @@
-import { ColorBaseInfo } from "@/app/topic/[id]/color-base-info";
+import { ColorBaseInfo } from "@/app/palettes/[id]/color-base-info";
 import { Generator } from "@/components/palette/generator";
 import { Button } from "@/components/ui/button";
 import { PaletteActions } from "./actions";

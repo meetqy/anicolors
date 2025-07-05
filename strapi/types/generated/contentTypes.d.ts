@@ -409,54 +409,25 @@ export interface ApiPalettePalette extends Struct.CollectionTypeSchema {
     singularName: 'palette';
   };
   options: {
-    draftAndPublish: false;
+    draftAndPublish: true;
   };
   attributes: {
+    category: Schema.Attribute.String & Schema.Attribute.Required;
     colors: Schema.Attribute.Relation<'manyToMany', 'api::color.color'>;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
-    is_choice: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
+    gallery: Schema.Attribute.Media<'images', true>;
+    image: Schema.Attribute.Media<'images'> & Schema.Attribute.Required;
+    likes: Schema.Attribute.Integer & Schema.Attribute.DefaultTo<1>;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<
       'oneToMany',
       'api::palette.palette'
     > &
       Schema.Attribute.Private;
-    points: Schema.Attribute.JSON & Schema.Attribute.Required;
-    publishedAt: Schema.Attribute.DateTime;
-    topic: Schema.Attribute.Relation<'manyToOne', 'api::topic.topic'>;
-    updatedAt: Schema.Attribute.DateTime;
-    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
-      Schema.Attribute.Private;
-  };
-}
-
-export interface ApiTopicTopic extends Struct.CollectionTypeSchema {
-  collectionName: 'topics';
-  info: {
-    displayName: 'Topic';
-    pluralName: 'topics';
-    singularName: 'topic';
-  };
-  options: {
-    draftAndPublish: true;
-  };
-  attributes: {
-    category: Schema.Attribute.String & Schema.Attribute.Required;
-    createdAt: Schema.Attribute.DateTime;
-    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
-      Schema.Attribute.Private;
-    gallery: Schema.Attribute.Media<'images', true>;
-    image: Schema.Attribute.Media<'images'> & Schema.Attribute.Required;
-    like: Schema.Attribute.Integer &
-      Schema.Attribute.Required &
-      Schema.Attribute.DefaultTo<0>;
-    locale: Schema.Attribute.String & Schema.Attribute.Private;
-    localizations: Schema.Attribute.Relation<'oneToMany', 'api::topic.topic'> &
-      Schema.Attribute.Private;
     name: Schema.Attribute.String & Schema.Attribute.Required;
-    palettes: Schema.Attribute.Relation<'oneToMany', 'api::palette.palette'>;
+    points: Schema.Attribute.JSON & Schema.Attribute.Required;
     publishedAt: Schema.Attribute.DateTime;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
@@ -975,7 +946,6 @@ declare module '@strapi/strapi' {
       'admin::user': AdminUser;
       'api::color.color': ApiColorColor;
       'api::palette.palette': ApiPalettePalette;
-      'api::topic.topic': ApiTopicTopic;
       'plugin::content-releases.release': PluginContentReleasesRelease;
       'plugin::content-releases.release-action': PluginContentReleasesReleaseAction;
       'plugin::i18n.locale': PluginI18NLocale;

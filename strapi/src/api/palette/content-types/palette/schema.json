@@ -7,7 +7,7 @@
     "displayName": "Palette"
   },
   "options": {
-    "draftAndPublish": false
+    "draftAndPublish": true
   },
   "pluginOptions": {},
   "attributes": {
@@ -15,22 +15,40 @@
       "type": "json",
       "required": true
     },
-    "topic": {
-      "type": "relation",
-      "relation": "manyToOne",
-      "target": "api::topic.topic",
-      "inversedBy": "palettes"
-    },
-    "is_choice": {
-      "type": "boolean",
-      "required": false,
-      "default": false
-    },
     "colors": {
       "type": "relation",
       "relation": "manyToMany",
       "target": "api::color.color",
       "mappedBy": "palettes"
+    },
+    "image": {
+      "type": "media",
+      "multiple": false,
+      "required": true,
+      "allowedTypes": [
+        "images"
+      ]
+    },
+    "name": {
+      "type": "string",
+      "required": true
+    },
+    "category": {
+      "type": "string",
+      "required": true
+    },
+    "likes": {
+      "type": "integer",
+      "required": false,
+      "default": 1,
+      "unique": false
+    },
+    "gallery": {
+      "type": "media",
+      "multiple": true,
+      "allowedTypes": [
+        "images"
+      ]
     }
   }
 }
