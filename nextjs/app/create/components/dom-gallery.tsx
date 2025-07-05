@@ -83,7 +83,7 @@ export const DomGallery = ({ image, points, id }: { image: string; points: Color
         ),
       })),
     ];
-  }, [points]);
+  }, [points, image]);
 
   const saveAsImage = async () => {
     const name = id ? `${id}-` : "";

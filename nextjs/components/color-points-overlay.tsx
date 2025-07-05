@@ -46,7 +46,9 @@ export const ColorPointsOverlay = ({ points, image, className, imageClassName }:
 
   return (
     <div ref={containerRef} className={`relative ${className}`}>
-      <img ref={imgRef} src={image} className={`object-contain h-full mx-auto ${imageClassName}`} onLoad={() => setImageLoaded(true)} />
+      <picture>
+        <img ref={imgRef} alt="point image" src={image} className={`object-contain h-full mx-auto ${imageClassName}`} onLoad={() => setImageLoaded(true)} />
+      </picture>
 
       {imageLoaded && (
         <div className="absolute inset-0">
