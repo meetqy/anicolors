@@ -69,8 +69,107 @@ export default function PickerColors({ image, initialPoints, onColorsChange, cla
     ctx.drawImage(imageRef.current, 0, 0);
   }, []);
 
+  // Convert display coordinates to normalized coordinates
+  const getNormalizedPosition = useCallback((displayX: number, displayY: number) => {
+    if (!imageRef.current) return { x: displayX, y: displayY };
+
+    const rect = imageRef.current.getBoundingClientRect();
+    const aspectRatio = imageRef.current.naturalHeight / imageRef.current.naturalWidth;
+    return {
+      x: (displayX / rect.width) * 384,
+      y: (displayY / (rect.width * aspectRatio)) * 384,
+    };
+  }, []);
+
+  // 提取图片主要颜色
+  const extractMainColors = useCallback(
+    (count: number = 5): ColorPoint[] => {
+      if (!canvasRef.current || !imageRef.current) return [];
+
+      const canvas = canvasRef.current;
+      const ctx = canvas.getContext("2d");
+      if (!ctx) return [];
+
+      const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+      const pixels = imageData.data;
+
+      // 收集所有像素颜色及其位置
+      const colorMap = new Map<string, { count: number; positions: { x: number; y: number }[] }>();
+
+      for (let y = 0; y < canvas.height; y += 4) {
+        // 采样间隔
+        for (let x = 0; x < canvas.width; x += 4) {
+          const i = (y * canvas.width + x) * 4;
+          const r = pixels[i];
+          const g = pixels[i + 1];
+          const b = pixels[i + 2];
+          const a = pixels[i + 3];
+
+          // 跳过透明像素
+          if (a < 128) continue;
+
+          // 量化颜色以减少相似颜色
+          const quantizedR = Math.round(r / 32) * 32;
+          const quantizedG = Math.round(g / 32) * 32;
+          const quantizedB = Math.round(b / 32) * 32;
+
+          const colorKey = `${quantizedR},${quantizedG},${quantizedB}`;
+
+          if (!colorMap.has(colorKey)) {
+            colorMap.set(colorKey, { count: 0, positions: [] });
+          }
+
+          const colorInfo = colorMap.get(colorKey)!;
+          colorInfo.count++;
+          colorInfo.positions.push({ x, y });
+        }
+      }
+
+      // 按出现频率排序并选择前N个颜色
+      const sortedColors = Array.from(colorMap.entries())
+        .sort((a, b) => b[1].count - a[1].count)
+        .slice(0, count);
+
+      return sortedColors.map((colorEntry, index) => {
+        const [colorKey, colorInfo] = colorEntry;
+        const [r, g, b] = colorKey.split(",").map(Number);
+
+        // 选择该颜色的中心位置
+        const positions = colorInfo.positions;
+        const centerPos = positions[Math.floor(positions.length / 2)];
+
+        // 转换为显示坐标系
+        const rect = imageRef.current!.getBoundingClientRect();
+        const displayX = (centerPos.x / canvas.width) * rect.width;
+        const displayY = (centerPos.y / canvas.height) * rect.height;
+
+        // 转换为标准化坐标
+        const normalizedPos = getNormalizedPosition(displayX, displayY);
+
+        return {
+          id: index + 1,
+          x: normalizedPos.x,
+          y: normalizedPos.y,
+          color: `rgb(${r}, ${g}, ${b})`,
+          name: getColorName(Color(`rgb(${r}, ${g}, ${b})`).hex())?.name || "unknown",
+        };
+      });
+    },
+    [getNormalizedPosition]
+  );
+
   const handleImageLoad = () => {
     updateCanvas();
+
+    // 图片加载完成后，如果没有初始点且当前没有颜色点，则提取主要颜色
+    if (!initialPoints?.length && colorPoints.length === 0) {
+      setTimeout(() => {
+        const extractedColors = extractMainColors(5);
+        setColorPoints(extractedColors);
+        onColorsChangeEnter?.(extractedColors);
+        onColorsChange?.(extractedColors);
+      }, 100);
+    }
   };
 
   const getConstrainedPosition = useCallback((x: number, y: number) => {
@@ -100,42 +199,15 @@ export default function PickerColors({ image, initialPoints, onColorsChange, cla
     };
   }, []);
 
-  // Convert display coordinates to normalized coordinates
-  const getNormalizedPosition = useCallback((displayX: number, displayY: number) => {
-    if (!imageRef.current) return { x: displayX, y: displayY };
-
-    const rect = imageRef.current.getBoundingClientRect();
-    const aspectRatio = imageRef.current.naturalHeight / imageRef.current.naturalWidth;
-    return {
-      x: (displayX / rect.width) * 384,
-      y: (displayY / (rect.width * aspectRatio)) * 384,
-    };
-  }, []);
-
   // Initialize default color points
   useEffect(() => {
     if (image && colorPoints.length === 0) {
       if (initialPoints && initialPoints.length > 0) {
         setColorPoints(initialPoints);
-      } else {
-        setTimeout(() => {
-          const defaultPoints: ColorPoint[] = Array.from({ length: 5 }, (_, i) => {
-            const normalizedX = 50 + i * 70;
-            const normalizedY = 50 + i * 40;
-            const displayPos = getDisplayPosition(normalizedX, normalizedY);
-            const color = getPixelColor(displayPos.x, displayPos.y);
-            return {
-              id: i + 1,
-              x: normalizedX,
-              y: normalizedY,
-              color,
-            };
-          });
-          setColorPoints(defaultPoints);
-        }, 100);
+        console.log("Initial color points set:", initialPoints);
       }
     }
-  }, [image, colorPoints.length, getPixelColor, getDisplayPosition, initialPoints]);
+  }, [image, colorPoints.length, initialPoints]);
 
   const updateMagnifier = useCallback((x: number, y: number) => {
     if (!canvasRef.current || !magnifierCanvasRef.current || !imageRef.current) return;
