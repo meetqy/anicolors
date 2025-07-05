@@ -14,7 +14,9 @@ export function Header() {
 
         {/* Auth Buttons */}
         <div className="flex items-center">
-          <Button variant="link">All Palettes</Button>
+          <Button variant="link" asChild>
+            <Link href="/palettes">All Palettes</Link>
+          </Button>
           <Button asChild>
             <Link href="/create">Make a Palette</Link>
           </Button>
