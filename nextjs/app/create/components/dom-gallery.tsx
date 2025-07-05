@@ -80,8 +80,6 @@ export const DomGallery = forwardRef<DomGalleryRef, { image: string; points: Col
     saveAsImage,
   }));
 
-  console.log(photos, points);
-
   return (
     <ColumnsPhotoAlbum
       photos={photos}
