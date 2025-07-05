@@ -4,7 +4,7 @@ import { ColorPoint } from "@/components/palette/picker-colors";
 import Color from "color";
 import { withSave } from "../with-save";
 import { cn } from "@/lib/utils";
-import { ColorPointsOverlay } from "@/components/ui/color-points-overlay";
+import { ColorPointsOverlay } from "@/components/color-points-overlay";
 
 interface CardPalette3Props {
   points: ColorPoint[];

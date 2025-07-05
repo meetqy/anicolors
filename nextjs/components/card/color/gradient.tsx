@@ -3,6 +3,7 @@ import { cn } from "@/lib/utils";
 import Color from "color";
 import { withSave } from "../with-save";
 import { CSSProperties } from "react";
+import { HiColorsLogo } from "@/components/hicolors-logo";
 
 const CardColorGradientLightenBase = ({ point, className, style }: { point: ColorPoint; className?: string; style?: CSSProperties }) => {
   const color = Color(point.color);
@@ -18,14 +19,7 @@ const CardColorGradientLightenBase = ({ point, className, style }: { point: Colo
 
   return (
     <div className={cn("relative bg-background grid rounded-xl overflow-hidden w-[375px] aspect-[4/5]", className)} style={style}>
-      <div
-        className="absolute text-xl right-4 bottom-2 font-serif italic text-transparent bg-clip-text font-bold"
-        style={{
-          backgroundImage: `linear-gradient(135deg, ${color.lighten(0.1).hex()}, ${color.darken(0.9).hex()})`,
-        }}
-      >
-        HiColors
-      </div>
+      <HiColorsLogo className="absolute text-xl right-4 bottom-2" variant="gradient" gradientColors={[color.lighten(0.1).hex(), color.darken(0.9).hex()]} />
       {colors.map((hex, index) => {
         return (
           <h3
