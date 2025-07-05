@@ -1,21 +1,21 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import { Topic } from "@/query/topic";
+import { Palette } from "@/query/palette";
 import { MdFavoriteBorder, MdLink } from "react-icons/md";
 
 interface PaletteActionsProps {
-  topic: Topic;
+  palette: Palette;
   onLike?: () => void;
   onShare?: () => void;
 }
 
-export const PaletteActions = ({ topic, onLike, onShare }: PaletteActionsProps) => {
+export const PaletteActions = ({ palette, onLike, onShare }: PaletteActionsProps) => {
   return (
     <div className="flex justify-between max-w-screen-lg mx-auto px-4 lg:px-0 mt-4">
       <div className="flex gap-2">
         <Button variant="outline" onClick={onLike}>
-          <MdFavoriteBorder className="size-5" /> {topic.like}
+          <MdFavoriteBorder className="size-5" /> {palette.likes}
         </Button>
         <Button variant="outline" onClick={onShare}>
           <MdLink className="size-5" /> Link
@@ -23,7 +23,7 @@ export const PaletteActions = ({ topic, onLike, onShare }: PaletteActionsProps) 
       </div>
 
       <time suppressHydrationWarning className="text-muted-foreground">
-        {new Date(topic.createdAt).toLocaleString()}
+        {new Date(palette.createdAt).toLocaleString()}
       </time>
     </div>
   );
