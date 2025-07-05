@@ -35,7 +35,9 @@ const convertImageToBase64 = (url: string): Promise<string> => {
   });
 };
 
-export function Generator({ initialPoints = [], onColorsChangeEnter, initImage }: { initialPoints?: ColorPoint[]; onColorsChangeEnter?: (points: ColorPoint[]) => void; initImage?: string }) {
+type GeneratorProps = { initialPoints?: ColorPoint[]; onColorsChangeEnter?: (points: ColorPoint[]) => void; initImage?: string; onImageChange?: (image: string) => void };
+
+export function Generator({ initialPoints = [], onColorsChangeEnter, initImage, onImageChange }: GeneratorProps) {
   const [image, setImage] = useState<string | null>(null);
   const [colors, setColors] = useState<ColorPoint[]>([]);
 
@@ -84,6 +86,7 @@ export function Generator({ initialPoints = [], onColorsChangeEnter, initImage }
       const reader = new FileReader();
       reader.onload = (e) => {
         setImage(e.target?.result as string);
+        onImageChange?.(e.target?.result as string);
       };
       reader.readAsDataURL(file);
     }

@@ -14,6 +14,7 @@ import { CardColor1 } from "@/components/card/color/1";
 
 export const Maker = ({ topicId }: { topicId: string }) => {
   const [points, setPoints] = useState<ColorPoint[]>([]);
+  const [image, setImage] = useState<string>();
   const { data } = useQuery<{ topic: Topic }>(GET_TOPIC, {
     variables: { documentId: topicId },
     skip: !topicId,
@@ -25,10 +26,9 @@ export const Maker = ({ topicId }: { topicId: string }) => {
   useEffect(() => {
     if (data?.topic && data.topic.palettes[0]) {
       setPoints(data.topic.palettes[0].points);
+      setImage(getAssetUrl(data.topic.image.url));
     }
-  }, [data]);
-
-  const image = data?.topic?.image && getAssetUrl(data.topic.image.url);
+  }, [data, setImage]);
 
   const saveAllPalettes = async () => {
     const topicName = topicId ? `${topicId}-` : "";
@@ -41,7 +41,7 @@ export const Maker = ({ topicId }: { topicId: string }) => {
 
   return (
     <>
-      <Generator initialPoints={points} initImage={image} onColorsChangeEnter={setPoints} />
+      <Generator initialPoints={points} initImage={image} onColorsChangeEnter={setPoints} onImageChange={setImage} />
 
       <article className="prose mx-auto mt-12 max-w-screen-xl px-4 xl:px-0">
         <Button size={"lg"} onClick={saveAllPalettes}>
