@@ -55,7 +55,7 @@ export default async function Page({ params }: { params: Promise<{ id: string }>
       </div>
       <Generator initialPoints={points} initImage={image} />
 
-      <PaletteActions palette={palette} />
+      <PaletteActions id={id} palette={palette} />
 
       <div className="grid gap-2 grid-cols-5 max-w-screen-md mx-auto px-4 lg:px-0 mt-24">
         {points.map((item, index) => (
