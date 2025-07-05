@@ -45,7 +45,7 @@ export function Generator({ initialPoints = [], onColorsChangeEnter, initImage, 
     if (!colors.length && initialPoints.length) {
       setColors(initialPoints);
     }
-  }, [initialPoints]);
+  }, [initialPoints, colors.length]);
 
   // 当 initImage 变化时更新图片
   useEffect(() => {

@@ -62,7 +62,7 @@ export const extractMainColors = (
 
   // 先按频率筛选出候选颜色（至少出现一定次数）
   const candidateColors = Array.from(colorMap.entries())
-    .filter(([_, info]) => info.count > 10)
+    .filter(([, info]) => info.count > 10)
     .sort((a, b) => b[1].count - a[1].count)
     .slice(0, Math.min(20, colorMap.size));
 
