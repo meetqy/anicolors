@@ -21,7 +21,7 @@ export const DomGallery = forwardRef<DomGalleryRef, { image: string; points: Col
   const photos = useMemo(() => {
     return [
       {
-        src: "1",
+        src: "palette1",
         width: 3,
         height: 4,
         component: (props: { style?: CSSProperties; className?: string }) => (
@@ -36,7 +36,7 @@ export const DomGallery = forwardRef<DomGalleryRef, { image: string; points: Col
         ),
       },
       {
-        src: "2",
+        src: "palette2",
         width: 16,
         height: 9,
         component: (props: { style?: CSSProperties; className?: string }) => (
@@ -51,9 +51,9 @@ export const DomGallery = forwardRef<DomGalleryRef, { image: string; points: Col
         ),
       },
       {
-        src: "3",
-        width: 16,
-        height: 9,
+        src: "palette3",
+        width: 1,
+        height: 1,
         component: (props: { style?: CSSProperties; className?: string }) => (
           <CardPalette3
             ref={(ref) => {
@@ -66,7 +66,7 @@ export const DomGallery = forwardRef<DomGalleryRef, { image: string; points: Col
         ),
       },
       ...points.map((e) => ({
-        src: `3-${e.id}`,
+        src: `color1-${e.id}`,
         width: 4,
         height: 5,
         component: (props: { style?: CSSProperties; className?: string }) => (
@@ -84,11 +84,11 @@ export const DomGallery = forwardRef<DomGalleryRef, { image: string; points: Col
   }, [points]);
 
   const saveAsImage = async () => {
-    const topicName = id ? `${id}-` : "";
+    const name = id ? `${id}-` : "";
 
     // 遍历所有 refs 并保存
     myRefs.current.forEach((ref, key) => {
-      ref?.saveAsImage(`${topicName}${key}.png`);
+      ref?.saveAsImage(`${name}${key}.png`);
     });
   };
 

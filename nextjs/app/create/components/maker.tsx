@@ -32,11 +32,11 @@ export const Maker = ({ id }: { id: string }) => {
   }, [data, setImage]);
 
   const saveAllPalettes = async () => {
-    const topicName = id ? `${id}-` : "";
+    const name = id ? `${id}-` : "";
 
     // 遍历所有 refs 并保存
     myRefs.current.forEach((ref, key) => {
-      ref.saveAsImage(`${topicName}${key}.png`);
+      ref.saveAsImage(`${name}${key}.png`);
     });
   };
 

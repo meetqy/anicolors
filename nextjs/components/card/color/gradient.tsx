@@ -17,7 +17,7 @@ const CardColorGradientLightenBase = ({ point, className, style }: { point: Colo
   ];
 
   return (
-    <div className={cn("relative grid rounded-xl overflow-hidden w-[375px] aspect-[4/5]", className)} style={style}>
+    <div className={cn("relative bg-background grid rounded-xl overflow-hidden w-[375px] aspect-[4/5]", className)} style={style}>
       <div
         className="absolute text-xl right-4 bottom-2 font-serif italic text-transparent bg-clip-text font-bold"
         style={{
