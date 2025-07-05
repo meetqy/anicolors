@@ -155,5 +155,3 @@ export const DomGallery = ({ image, points, id }: { image: string; points: Color
     </div>
   );
 };
-
-DomGallery.displayName = "DomGallery";
