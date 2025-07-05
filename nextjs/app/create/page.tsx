@@ -14,7 +14,7 @@ export default async function Page({ searchParams }: { searchParams: Promise<{ i
         <h1 className="h1 text-left">Create Your Own 5-Color Palette</h1>
         <p className="p">Pick 5 colors from your image to create a custom palette. Save and share your color combinations with the world.</p>
       </div>
-      <Maker topicId={id} />
+      <Maker id={id} />
     </div>
   );
 }

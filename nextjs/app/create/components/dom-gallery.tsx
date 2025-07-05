@@ -3,6 +3,7 @@
 import { CardColorGradientLighten } from "@/components/card/color/gradient";
 import { CardPalette1 } from "@/components/card/palette/1";
 import { CardPalette2 } from "@/components/card/palette/2";
+import { CardPalette3 } from "@/components/card/palette/3";
 import { SaveableCardRef } from "@/components/card/with-save";
 import { ColorPoint } from "@/components/palette/picker-colors";
 import { CSSProperties, useRef, useImperativeHandle, forwardRef, useMemo } from "react";
@@ -12,7 +13,7 @@ export interface DomGalleryRef {
   saveAsImage: () => Promise<void>;
 }
 
-export const DomGallery = forwardRef<DomGalleryRef, { image: string; points: ColorPoint[]; topicId?: string }>(({ image, points, topicId }, ref) => {
+export const DomGallery = forwardRef<DomGalleryRef, { image: string; points: ColorPoint[]; id?: string }>(({ image, points, id }, ref) => {
   // 使用 Map 来管理多个 palette refs
   const myRefs = useRef<Map<string, SaveableCardRef>>(new Map());
 
@@ -49,6 +50,21 @@ export const DomGallery = forwardRef<DomGalleryRef, { image: string; points: Col
           />
         ),
       },
+      {
+        src: "3",
+        width: 16,
+        height: 9,
+        component: (props: { style?: CSSProperties; className?: string }) => (
+          <CardPalette3
+            ref={(ref) => {
+              if (ref) myRefs.current.set("palette3", ref);
+            }}
+            points={points}
+            image={image}
+            {...props}
+          />
+        ),
+      },
       ...points.map((e) => ({
         src: `3-${e.id}`,
         width: 4,
@@ -68,7 +84,7 @@ export const DomGallery = forwardRef<DomGalleryRef, { image: string; points: Col
   }, [points]);
 
   const saveAsImage = async () => {
-    const topicName = topicId ? `${topicId}-` : "";
+    const topicName = id ? `${id}-` : "";
 
     // 遍历所有 refs 并保存
     myRefs.current.forEach((ref, key) => {

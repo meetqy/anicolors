@@ -4,7 +4,6 @@ import { useEffect, useRef, useState } from "react";
 import { Generator } from "@/components/palette/generator";
 import type { ColorPoint } from "@/components/palette/picker-colors";
 import { useQuery } from "@apollo/client";
-import { GET_TOPIC, Topic } from "@/query/topic";
 import { getAssetUrl } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { SaveableCardRef } from "@/components/card/with-save";
@@ -12,27 +11,28 @@ import "react-photo-album/columns.css";
 import { DomGallery, DomGalleryRef } from "./dom-gallery";
 import { CardColor1 } from "@/components/card/color/1";
 import Landing from "./landing";
+import { GET_PALETTE, Palette } from "@/query/palette";
 
-export const Maker = ({ topicId }: { topicId: string }) => {
+export const Maker = ({ id }: { id: string }) => {
   const [points, setPoints] = useState<ColorPoint[]>([]);
   const [image, setImage] = useState<string>();
-  const { data } = useQuery<{ topic: Topic }>(GET_TOPIC, {
-    variables: { documentId: topicId },
-    skip: !topicId,
+  const { data } = useQuery<{ palette: Palette }>(GET_PALETTE, {
+    variables: { documentId: id },
+    skip: !id,
   });
 
   // 使用 Map 来管理多个 palette refs
   const myRefs = useRef<Map<string, SaveableCardRef | DomGalleryRef>>(new Map());
 
   useEffect(() => {
-    if (data?.topic && data.topic.palettes[0]) {
-      setPoints(data.topic.palettes[0].points);
-      setImage(getAssetUrl(data.topic.image.url));
+    if (data?.palette) {
+      setPoints(data.palette.points);
+      setImage(getAssetUrl(data.palette.image.url));
     }
   }, [data, setImage]);
 
   const saveAllPalettes = async () => {
-    const topicName = topicId ? `${topicId}-` : "";
+    const topicName = id ? `${id}-` : "";
 
     // 遍历所有 refs 并保存
     myRefs.current.forEach((ref, key) => {
@@ -76,7 +76,7 @@ export const Maker = ({ topicId }: { topicId: string }) => {
                 }}
                 image={image}
                 points={points}
-                topicId={topicId}
+                id={id}
               />
             )}
           </div>
