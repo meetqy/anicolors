@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { toast } from "sonner";
 import { Generator } from "@/components/palette/generator";
 import type { ColorPoint } from "@/components/palette/picker-colors";
 import { useQuery } from "@apollo/client";
@@ -10,7 +9,7 @@ import { getAssetUrl } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { SaveableCardRef } from "@/components/card/with-save";
 import "react-photo-album/columns.css";
-import { DomGallery } from "./dom-gallery";
+import { DomGallery, DomGalleryRef } from "./dom-gallery";
 import { CardColor1 } from "@/components/card/color/1";
 
 export const Maker = ({ topicId }: { topicId: string }) => {
@@ -21,7 +20,7 @@ export const Maker = ({ topicId }: { topicId: string }) => {
   });
 
   // 使用 Map 来管理多个 palette refs
-  const myRefs = useRef<Map<string, SaveableCardRef>>(new Map());
+  const myRefs = useRef<Map<string, SaveableCardRef | DomGalleryRef>>(new Map());
 
   useEffect(() => {
     if (data?.topic && data.topic.palettes[0]) {
@@ -36,7 +35,7 @@ export const Maker = ({ topicId }: { topicId: string }) => {
 
     // 遍历所有 refs 并保存
     myRefs.current.forEach((ref, key) => {
-      ref?.saveAsImage(`${topicName}${key}.png`);
+      ref.saveAsImage(`${topicName}${key}.png`);
     });
   };
 
@@ -52,12 +51,33 @@ export const Maker = ({ topicId }: { topicId: string }) => {
         <h2>Colors</h2>
         <div className="not-prose grid gap-4 md:grid-cols-2 lg:grid-cols-3">
           {points.map((item, index) => (
-            <CardColor1 className="w-full" key={index} point={item} index={index} />
+            <CardColor1
+              ref={(ref) => {
+                if (ref) myRefs.current.set(`color-${index}`, ref);
+              }}
+              className="w-full"
+              key={index}
+              point={item}
+              index={index}
+            />
           ))}
         </div>
 
         <h2>Color Palette Gallery</h2>
-        <div className="not-prose">{image && points.length > 0 && <DomGallery image={image} points={points} />}</div>
+        <div className="not-prose">
+          {image && points.length > 0 && (
+            <DomGallery
+              ref={(ref) => {
+                if (ref) {
+                  myRefs.current.set("dom-gallery", ref);
+                }
+              }}
+              image={image}
+              points={points}
+              topicId={topicId}
+            />
+          )}
+        </div>
       </article>
     </>
   );

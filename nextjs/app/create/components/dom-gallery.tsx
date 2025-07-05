@@ -3,10 +3,14 @@ import { CardPalette1 } from "@/components/card/palette/1";
 import { CardPalette2 } from "@/components/card/palette/2";
 import { SaveableCardRef } from "@/components/card/with-save";
 import { ColorPoint } from "@/components/palette/picker-colors";
-import { CSSProperties, useRef } from "react";
+import { CSSProperties, useRef, useImperativeHandle, forwardRef } from "react";
 import { ColumnsPhotoAlbum } from "react-photo-album";
 
-export const DomGallery = ({ image, points }: { image: string; points: ColorPoint[] }) => {
+export interface DomGalleryRef {
+  saveAsImage: () => Promise<void>;
+}
+
+export const DomGallery = forwardRef<DomGalleryRef, { image: string; points: ColorPoint[]; topicId?: string }>(({ image, points, topicId }, ref) => {
   // 使用 Map 来管理多个 palette refs
   const myRefs = useRef<Map<string, SaveableCardRef>>(new Map());
 
@@ -59,6 +63,19 @@ export const DomGallery = ({ image, points }: { image: string; points: ColorPoin
     })),
   ];
 
+  const saveAsImage = async () => {
+    const topicName = topicId ? `${topicId}-` : "";
+
+    // 遍历所有 refs 并保存
+    myRefs.current.forEach((ref, key) => {
+      ref?.saveAsImage(`${topicName}${key}.png`);
+    });
+  };
+
+  useImperativeHandle(ref, () => ({
+    saveAsImage,
+  }));
+
   return (
     <ColumnsPhotoAlbum
       photos={photos}
@@ -96,4 +113,6 @@ export const DomGallery = ({ image, points }: { image: string; points: ColorPoin
       }}
     />
   );
-};
+});
+
+DomGallery.displayName = "DomGallery";
