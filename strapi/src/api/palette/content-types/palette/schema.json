@@ -49,6 +49,14 @@
       "allowedTypes": [
         "images"
       ]
+    },
+    "cover": {
+      "type": "media",
+      "multiple": false,
+      "required": true,
+      "allowedTypes": [
+        "images"
+      ]
     }
   }
 }

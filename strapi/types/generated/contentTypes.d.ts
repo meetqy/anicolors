@@ -414,6 +414,7 @@ export interface ApiPalettePalette extends Struct.CollectionTypeSchema {
   attributes: {
     category: Schema.Attribute.String & Schema.Attribute.Required;
     colors: Schema.Attribute.Relation<'manyToMany', 'api::color.color'>;
+    cover: Schema.Attribute.Media<'images'> & Schema.Attribute.Required;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
