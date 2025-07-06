@@ -2,10 +2,10 @@ import { ColorPoint } from "@/components/palette/picker-colors";
 import { gql } from "@apollo/client";
 
 export const GET_PALETTE = gql`
-  query Palette($documentId: ID!) {
+  query Palette($documentId: ID!, $pagination: PaginationArg) {
     palette(documentId: $documentId) {
       category
-      gallery {
+      gallery(pagination: $pagination) {
         width
         url
         height

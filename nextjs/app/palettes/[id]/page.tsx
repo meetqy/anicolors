@@ -12,6 +12,10 @@ const getPaletteData = async (id: string) => {
     query: GET_PALETTE,
     variables: {
       documentId: id,
+      pagination: {
+        pageSize: 24,
+        page: 1,
+      },
     },
   });
 

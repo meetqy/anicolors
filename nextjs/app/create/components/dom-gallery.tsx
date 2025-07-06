@@ -9,6 +9,7 @@ import { SaveableCardRef } from "@/components/card/with-save";
 import { ColorPoint } from "@/components/palette/picker-colors";
 import { Button } from "@/components/ui/button";
 import { Palette } from "@/query/palette";
+import { useSearchParams } from "next/navigation";
 import { CSSProperties, useRef, useMemo } from "react";
 import { ColumnsPhotoAlbum } from "react-photo-album";
 
@@ -27,6 +28,8 @@ const photosData = {
 export const DomGallery = ({ image, points, id, gallery }: { image: string; points: ColorPoint[]; id?: string; gallery: Palette["gallery"] }) => {
   // 使用 Map 来管理多个 palette refs
   const myRefs = useRef<Map<string, SaveableCardRef>>(new Map());
+  const params = useSearchParams();
+  const admin = !!params.get("admin");
 
   // 创建 photo album 数据
   const photos = useMemo(() => {
@@ -74,24 +77,40 @@ export const DomGallery = ({ image, points, id, gallery }: { image: string; poin
     ];
   }, [points, image]);
 
-  const saveAsImage = async () => {
+  const saveAllImage = async () => {
+    const prefix = id ? `${id}-` : "";
+
+    // 遍历所有 refs 并保存
+    myRefs.current.forEach((ref) => {
+      ref?.saveAsImage(`${prefix}${ref.id}.png`);
+    });
+  };
+
+  const saveMissImage = () => {
     const prefix = id ? `${id}-` : "";
     const names = gallery.map((e) => e.name);
 
     // 遍历所有 refs 并保存
     myRefs.current.forEach((ref) => {
-      // 如果 names 中包含 prefix + ref.id 则跳过
-      if (!names.includes(`${prefix}${ref.id}`)) {
-        ref?.saveAsImage(`${prefix}${ref.id}.png`);
-      }
+      const filename = `${prefix}${ref.id}.png`;
+      if (names.includes(filename)) return;
+
+      ref?.saveAsImage(filename);
     });
   };
 
   return (
     <div className="prose mx-auto mt-12 max-w-screen-xl px-4 xl:px-0 ">
-      <Button size={"lg"} onClick={saveAsImage}>
-        Download All Assets
-      </Button>
+      <div className="flex gap-4">
+        <Button size={"lg"} onClick={saveAllImage}>
+          Download All Assets
+        </Button>
+        {admin && (
+          <Button size={"lg"} variant="outline" onClick={saveMissImage}>
+            Download Missing Assets
+          </Button>
+        )}
+      </div>
       <h2>Colors</h2>
       <div className="not-prose grid gap-4 md:grid-cols-2 lg:grid-cols-3">
         {points.map((item, index) => (
