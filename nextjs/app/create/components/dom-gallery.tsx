@@ -8,6 +8,7 @@ import { CardPalette3 } from "@/components/card/palette/3";
 import { SaveableCardRef } from "@/components/card/with-save";
 import { ColorPoint } from "@/components/palette/picker-colors";
 import { Button } from "@/components/ui/button";
+import { Palette } from "@/query/palette";
 import { CSSProperties, useRef, useMemo } from "react";
 import { ColumnsPhotoAlbum } from "react-photo-album";
 
@@ -15,60 +16,47 @@ export interface DomGalleryRef {
   saveAsImage: () => Promise<void>;
 }
 
-export const DomGallery = ({ image, points, id }: { image: string; points: ColorPoint[]; id?: string }) => {
+const photosData = {
+  palettes: [
+    { aspect: "3/4", component: CardPalette1 },
+    { aspect: "16/9", component: CardPalette2 },
+    { aspect: "1/1", component: CardPalette3 },
+  ],
+};
+
+export const DomGallery = ({ image, points, id, gallery }: { image: string; points: ColorPoint[]; id?: string; gallery: Palette["gallery"] }) => {
   // 使用 Map 来管理多个 palette refs
   const myRefs = useRef<Map<string, SaveableCardRef>>(new Map());
 
   // 创建 photo album 数据
   const photos = useMemo(() => {
     return [
-      {
-        src: "palette1",
-        width: 3,
-        height: 4,
-        component: (props: { style?: CSSProperties; className?: string }) => (
-          <CardPalette1
-            ref={(ref) => {
-              if (ref) myRefs.current.set("palette1", ref);
-            }}
-            points={points}
-            image={image}
-            {...props}
-          />
-        ),
-      },
-      {
-        src: "palette2",
-        width: 16,
-        height: 9,
-        component: (props: { style?: CSSProperties; className?: string }) => (
-          <CardPalette2
-            ref={(ref) => {
-              if (ref) myRefs.current.set("palette2", ref);
-            }}
-            points={points}
-            image={image}
-            {...props}
-          />
-        ),
-      },
-      {
-        src: "palette3",
-        width: 1,
-        height: 1,
-        component: (props: { style?: CSSProperties; className?: string }) => (
-          <CardPalette3
-            ref={(ref) => {
-              if (ref) myRefs.current.set("palette3", ref);
-            }}
-            points={points}
-            image={image}
-            {...props}
-          />
-        ),
-      },
+      ...photosData.palettes.map((palette, index) => {
+        const [width, height] = palette.aspect.split("/");
+        const id = `palette-${index}`;
+        return {
+          src: id,
+          width: parseInt(width, 10),
+          height: parseInt(height, 10),
+          component: (props: { style?: CSSProperties; className?: string }) => {
+            const Component = palette.component;
+
+            return (
+              <Component
+                ref={(ref) => {
+                  if (ref) myRefs.current.set(id, ref);
+                }}
+                id={id}
+                points={points}
+                image={image}
+                {...props}
+              />
+            );
+          },
+        };
+      }),
       ...points.map((e) => ({
-        src: `color1-${e.id}`,
+        src: `gradient-lighten-${e.id}`,
         width: 4,
         height: 5,
         component: (props: { style?: CSSProperties; className?: string }) => (
@@ -76,6 +64,7 @@ export const DomGallery = ({ image, points, id }: { image: string; points: Color
             ref={(ref) => {
               if (ref) myRefs.current.set(`gradient-lighten-${e.id}`, ref);
             }}
+            id={`gradient-lighten-${e.id}`}
             point={e}
             key={e.id}
             {...props}
@@ -86,16 +75,20 @@ export const DomGallery = ({ image, points, id }: { image: string; points: Color
   }, [points, image]);
 
   const saveAsImage = async () => {
-    const name = id ? `${id}-` : "";
+    const prefix = id ? `${id}-` : "";
+    const names = gallery.map((e) => e.name);
 
     // 遍历所有 refs 并保存
-    myRefs.current.forEach((ref, key) => {
-      ref?.saveAsImage(`${name}${key}.png`);
+    myRefs.current.forEach((ref) => {
+      // 如果 names 中包含 prefix + ref.id 则跳过
+      if (!names.includes(`${prefix}${ref.id}`)) {
+        ref?.saveAsImage(`${prefix}${ref.id}.png`);
+      }
     });
   };
 
   return (
-    <div className="prose mx-auto mt-12 max-w-screen-xl px-4 xl:px-0">
+    <div className="prose mx-auto mt-12 max-w-screen-xl px-4 xl:px-0 ">
       <Button size={"lg"} onClick={saveAsImage}>
         Download All Assets
       </Button>
@@ -107,6 +100,7 @@ export const DomGallery = ({ image, points, id }: { image: string; points: Color
               if (ref) myRefs.current.set(`color-${index}`, ref);
             }}
             className="w-full"
+            id={`color-${index}`}
             key={index}
             point={item}
             index={index}

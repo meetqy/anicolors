@@ -9,6 +9,7 @@ export const GET_PALETTE = gql`
         width
         url
         height
+        name
       }
       likes
       image {
@@ -28,5 +29,5 @@ export type Palette = {
   image: { url: string };
   likes: number;
   points: ColorPoint[];
-  gallery: { url: string; width: number; height: number }[];
+  gallery: { url: string; width: number; height: number; name: string }[];
 };

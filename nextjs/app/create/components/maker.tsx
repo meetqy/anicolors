@@ -29,7 +29,7 @@ export const Maker = ({ id }: { id: string }) => {
     <>
       <Generator initialPoints={points} initImage={image} onColorsChangeEnter={setPoints} onImageChange={setImage} />
 
-      {image && <DomGallery image={image} points={points} id={id} />}
+      {image && <DomGallery image={image} points={points} id={id} gallery={data?.palette.gallery || []} />}
 
       <Landing />
     </>

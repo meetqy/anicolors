@@ -6,10 +6,15 @@ import domtoimage from "dom-to-image";
 export interface SaveableCardRef {
   saveAsImage: (filename?: string, scale?: number) => Promise<void>;
   getImageBlob: (scale?: number) => Promise<Blob>;
+  id?: string;
+}
+
+interface WithSaveProps {
+  id?: string;
 }
 
 export function withSave<P extends object>(WrappedComponent: ComponentType<P>) {
-  const WithSaveComponent = forwardRef<SaveableCardRef, P>((props, ref) => {
+  const WithSaveComponent = forwardRef<SaveableCardRef, P & WithSaveProps>((props, ref) => {
     const cardRef = useRef<HTMLDivElement>(null);
 
     const getTargetElement = () => {
@@ -75,6 +80,7 @@ export function withSave<P extends object>(WrappedComponent: ComponentType<P>) {
           throw error;
         }
       },
+      id: props.id,
     }));
 
     return (
