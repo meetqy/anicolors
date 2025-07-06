@@ -128,7 +128,6 @@ export default function PickerColors({ image, initialPoints, onColorsChange, cla
     if (image && colorPoints.length === 0) {
       if (initialPoints && initialPoints.length > 0) {
         setColorPoints(initialPoints);
-        console.log("Initial color points set:", initialPoints);
       }
     }
   }, [image, colorPoints.length, initialPoints]);
