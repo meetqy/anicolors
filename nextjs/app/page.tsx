@@ -28,8 +28,6 @@ export default async function Page() {
   // 获取最新的调色板数据用于展示
   const featuredPalettes = await getPalettesList(1, 16, "createdAt:desc");
 
-  console.log("Featured Palettes:", featuredPalettes);
-
   return (
     <div className="mx-auto">
       <section className="relative overflow-hidden bg-gradient-to-b from-background to-muted/20 py-16">

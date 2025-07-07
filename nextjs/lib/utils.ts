@@ -6,7 +6,6 @@ export function cn(...inputs: ClassValue[]) {
 }
 
 export const getAssetUrl = (url: string) => {
-  console.log("getAssetUrl", url);
   if (url.startsWith("http")) {
     return url;
   }

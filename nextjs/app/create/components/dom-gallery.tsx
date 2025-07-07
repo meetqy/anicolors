@@ -81,23 +81,34 @@ export const DomGallery = ({ image, points, id, gallery }: { image: string; poin
   const saveAllImage = async () => {
     const prefix = id ? `${id}-` : "";
 
-    // 遍历所有 refs 并保存
-    myRefs.current.forEach((ref) => {
-      ref?.saveAsImage(`${prefix}${ref.id}.png`);
-    });
+    // 遍历所有 refs 并依次保存，确保每个都完成后再进行下一个
+    for (const [key, ref] of myRefs.current.entries()) {
+      try {
+        await ref?.saveAsImage(`${prefix}${ref.id}.png`);
+        // 添加小延迟以防止浏览器过载
+        await new Promise((resolve) => setTimeout(resolve, 100));
+      } catch (error) {
+        console.error(`Failed to save image ${key}:`, error);
+      }
+    }
   };
 
-  const saveMissImage = () => {
+  const saveMissImage = async () => {
     const prefix = id ? `${id}-` : "";
     const names = gallery.map((e) => e.name);
 
-    // 遍历所有 refs 并保存
-    myRefs.current.forEach((ref) => {
+    // 遍历所有 refs 并依次保存缺失的图片
+    for (const [key, ref] of myRefs.current.entries()) {
       const filename = `${prefix}${ref.id}.png`;
-      if (names.includes(filename)) return;
+      if (names.includes(filename)) continue;
 
-      ref?.saveAsImage(filename);
-    });
+      try {
+        await ref?.saveAsImage(filename);
+        await new Promise((resolve) => setTimeout(resolve, 100));
+      } catch (error) {
+        console.error(`Failed to save missing image ${key}:`, error);
+      }
+    }
   };
 
   return (
