@@ -66,7 +66,7 @@ export function Generator({ initialPoints = [], onColorsChangeEnter, initImage, 
     } else {
       setImage(null);
     }
-  }, [initImage, convertImageToBase64]);
+  }, [initImage, setImage]);
 
   useEffect(() => {
     console.log(
@@ -80,17 +80,20 @@ export function Generator({ initialPoints = [], onColorsChangeEnter, initImage, 
     onColorsChangeEnter?.(colors);
   }, [colors, onColorsChangeEnter]);
 
-  const onDrop = useCallback((acceptedFiles: File[]) => {
-    const file = acceptedFiles[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onload = (e) => {
-        setImage(e.target?.result as string);
-        onImageChange?.(e.target?.result as string);
-      };
-      reader.readAsDataURL(file);
-    }
-  }, []);
+  const onDrop = useCallback(
+    (acceptedFiles: File[]) => {
+      const file = acceptedFiles[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = (e) => {
+          setImage(e.target?.result as string);
+          onImageChange?.(e.target?.result as string);
+        };
+        reader.readAsDataURL(file);
+      }
+    },
+    [onImageChange, setImage]
+  );
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
     onDrop,
