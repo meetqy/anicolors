@@ -1,4 +1,5 @@
 import { ColorPoint } from "@/components/palette/picker-colors";
+import { getClient } from "@/lib/apollo-client";
 import { gql } from "@apollo/client";
 
 /**
