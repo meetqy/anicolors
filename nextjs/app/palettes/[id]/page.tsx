@@ -6,6 +6,7 @@ import { getClient } from "@/lib/apollo-client";
 import { getAssetUrl } from "@/lib/utils";
 import { Gallery } from "./gallery";
 import { GET_PALETTE, Palette } from "@/query/palette";
+import { Metadata } from "next";
 
 const getPaletteData = async (id: string) => {
   const res = await getClient().query({
@@ -22,20 +23,19 @@ const getPaletteData = async (id: string) => {
   return res.data.palette as Palette;
 };
 
-export const generateMetadata = async ({ params }: { params: Promise<{ id: string }> }) => {
+export const generateMetadata = async ({ params }: { params: Promise<{ id: string }> }): Promise<Metadata> => {
   const { id } = await params;
   const palette = await getPaletteData(id);
+  const imageUrl = getAssetUrl(palette.cover.url);
+
   return {
     title: `Color Palette by ${palette.name} | HiColors`,
     description: `Create a custom color palette for ${palette.name} from the ${palette.category} category.`,
     openGraph: {
-      images: [
-        {
-          url: "http://localhost:1337" + palette.image.url,
-          width: 1200,
-          height: 630,
-        },
-      ],
+      images: [{ url: imageUrl }],
+    },
+    twitter: {
+      images: [imageUrl],
     },
   };
 };

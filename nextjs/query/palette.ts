@@ -18,6 +18,9 @@ export const GET_PALETTE = gql`
       points
       name
       createdAt
+      cover {
+        url
+      }
     }
   }
 `;
@@ -29,5 +32,6 @@ export type Palette = {
   image: { url: string };
   likes: number;
   points: ColorPoint[];
+  cover: { url: string };
   gallery: { url: string; width: number; height: number; name: string }[];
 };
