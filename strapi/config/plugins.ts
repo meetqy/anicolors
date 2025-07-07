@@ -1,6 +1,5 @@
 module.exports = ({ env }) => ({
-  // ...
-  upload: {
+  upload: env.NODE_ENV === "production" && {
     config: {
       provider: "strapi-provider-cloudflare-r2",
       providerOptions: {
