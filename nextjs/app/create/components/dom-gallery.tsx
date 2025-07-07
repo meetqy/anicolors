@@ -33,6 +33,7 @@ export const DomGallery = ({ image, points, id, gallery }: { image: string; poin
 
   // 创建 photo album 数据
   const photos = useMemo(() => {
+    if (!image || !points.length) return [];
     return [
       ...photosData.palettes.map((palette, index) => {
         const [width, height] = palette.aspect.split("/");
