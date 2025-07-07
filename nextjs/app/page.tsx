@@ -6,6 +6,8 @@ import { PaletteCard } from "./palettes/components/palette-card";
 import { Badge } from "@/components/ui/badge";
 import Link from "next/link";
 
+export const dynamic = "force-dynamic";
+
 const getPalettesList = async (page: number = 1, pageSize: number = 24, sort: string = "createdAt:desc") => {
   try {
     const { data } = await getClient().query<{ palettes: PaletteListItem[] }>({
