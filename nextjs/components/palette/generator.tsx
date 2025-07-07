@@ -10,7 +10,7 @@ import { getColorName } from "@/lib/nearest";
 const convertImageToBase64 = (url: string): Promise<string> => {
   return new Promise((resolve, reject) => {
     const img = new Image();
-
+    img.crossOrigin = "anonymous";
     img.onload = () => {
       const canvas = document.createElement("canvas");
       const ctx = canvas.getContext("2d");
@@ -21,24 +21,16 @@ const convertImageToBase64 = (url: string): Promise<string> => {
 
       canvas.width = img.naturalWidth;
       canvas.height = img.naturalHeight;
+      ctx.drawImage(img, 0, 0);
 
       try {
-        ctx.drawImage(img, 0, 0);
         const base64 = canvas.toDataURL("image/png");
         resolve(base64);
       } catch (error) {
-        // 如果无法转换，直接返回原始 URL
-        console.warn("Failed to convert to base64, using original URL:", error);
-        resolve(url);
+        reject(error);
       }
     };
-
-    img.onerror = () => {
-      console.warn("Failed to load image, using original URL");
-      // 如果图片加载失败，直接返回原始 URL
-      resolve(url);
-    };
-
+    img.onerror = () => reject(new Error("Failed to load image"));
     img.src = url;
   });
 };
