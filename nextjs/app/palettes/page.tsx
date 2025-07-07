@@ -5,10 +5,7 @@ import { EmptyState } from "./components/empty-state";
 import { getClient } from "@/lib/apollo-client";
 import { GET_PALETTE_LIST, PaletteListItem } from "@/query/palette";
 
-/**
- * Server-side function to fetch palettes list
- */
-export const getPalettesList = async (page: number = 1, pageSize: number = 24, sort: string = "createdAt:desc") => {
+const getPalettesList = async (page: number = 1, pageSize: number = 24, sort: string = "createdAt:desc") => {
   try {
     const { data } = await getClient().query<{ palettes: PaletteListItem[] }>({
       query: GET_PALETTE_LIST,
@@ -64,7 +61,7 @@ export default async function Page({ searchParams }: PageProps) {
               ))}
             </div>
 
-            <PaginationControls currentPage={page} pageSize={pageSize} totalItems={palettes.length} sort={sort} />
+            <PaginationControls currentPage={page} pageSize={pageSize} totalItems={palettes.length} />
           </div>
         </>
       )}

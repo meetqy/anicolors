@@ -1,24 +1,15 @@
 "use client";
 
-import {
-  Pagination,
-  PaginationContent,
-  PaginationEllipsis,
-  PaginationItem,
-  PaginationLink,
-  PaginationNext,
-  PaginationPrevious,
-} from "@/components/ui/pagination";
+import { Pagination, PaginationContent, PaginationEllipsis, PaginationItem, PaginationLink, PaginationNext, PaginationPrevious } from "@/components/ui/pagination";
 import { useSearchParams } from "next/navigation";
 
 interface PaginationControlsProps {
   currentPage: number;
   pageSize: number;
   totalItems: number;
-  sort: string;
 }
 
-export const PaginationControls = ({ currentPage, pageSize, totalItems, sort }: PaginationControlsProps) => {
+export const PaginationControls = ({ currentPage, pageSize, totalItems }: PaginationControlsProps) => {
   const searchParams = useSearchParams();
 
   const createPageUrl = (page: number) => {
@@ -62,10 +53,7 @@ export const PaginationControls = ({ currentPage, pageSize, totalItems, sort }: 
     <Pagination>
       <PaginationContent>
         <PaginationItem>
-          <PaginationPrevious
-            href={hasPrevious ? createPageUrl(currentPage - 1) : undefined}
-            className={!hasPrevious ? "pointer-events-none opacity-50" : ""}
-          />
+          <PaginationPrevious href={hasPrevious ? createPageUrl(currentPage - 1) : undefined} className={!hasPrevious ? "pointer-events-none opacity-50" : ""} />
         </PaginationItem>
 
         {getVisiblePages().map((page, index) => (
@@ -73,10 +61,7 @@ export const PaginationControls = ({ currentPage, pageSize, totalItems, sort }: 
             {page === "..." ? (
               <PaginationEllipsis />
             ) : (
-              <PaginationLink
-                href={createPageUrl(page as number)}
-                isActive={page === currentPage}
-              >
+              <PaginationLink href={createPageUrl(page as number)} isActive={page === currentPage}>
                 {page}
               </PaginationLink>
             )}
@@ -84,10 +69,7 @@ export const PaginationControls = ({ currentPage, pageSize, totalItems, sort }: 
         ))}
 
         <PaginationItem>
-          <PaginationNext
-            href={hasNext ? createPageUrl(currentPage + 1) : undefined}
-            className={!hasNext ? "pointer-events-none opacity-50" : ""}
-          />
+          <PaginationNext href={hasNext ? createPageUrl(currentPage + 1) : undefined} className={!hasNext ? "pointer-events-none opacity-50" : ""} />
         </PaginationItem>
       </PaginationContent>
     </Pagination>
