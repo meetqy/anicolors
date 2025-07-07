@@ -6,5 +6,9 @@ export function cn(...inputs: ClassValue[]) {
 }
 
 export const getAssetUrl = (url: string) => {
+  if (url.startsWith("http")) {
+    return url;
+  }
+
   return `${process.env.NEXT_PUBLIC_ASSET_URL}${url}`;
 };
