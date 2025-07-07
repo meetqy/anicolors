@@ -46,20 +46,24 @@ export const GET_PALETTE_LIST = gql`
   query Palettes($pagination: PaginationArg, $sort: [String]) {
     palettes(pagination: $pagination, sort: $sort) {
       likes
-      cover {
-        url
-      }
       name
       category
       points
+      image {
+        url
+      }
+      documentId
+      createdAt
     }
   }
 `;
 
-export type PaletteList = {
+export type PaletteListItem = {
   name: string;
   category: string;
   likes: number;
-  cover: { url: string };
+  image: { url: string };
   points: ColorPoint[];
-}[];
+  documentId: string;
+  createdAt: string;
+};
