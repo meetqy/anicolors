@@ -1,7 +1,7 @@
 export default ({ env }) => [
   "strapi::logger",
   "strapi::errors",
-  env.NODE_ENV === "production"
+  env("NODE_ENV") === "production"
     ? {
         name: "strapi::security",
         config: {
