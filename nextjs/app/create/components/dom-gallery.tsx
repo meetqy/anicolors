@@ -37,7 +37,7 @@ export const DomGallery = ({ image, points, id, gallery }: { image: string; poin
     return [
       ...photosData.palettes.map((palette, index) => {
         const [width, height] = palette.aspect.split("/");
-        const id = `palette-${index}`;
+        const id = `palette-${index + 1}`;
         return {
           src: id,
           width: parseInt(width, 10),
