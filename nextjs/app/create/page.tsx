@@ -4,6 +4,9 @@ import { Maker } from "./components/maker";
 export const metadata: Metadata = {
   title: "Create Your Own 5-Color Palette",
   description: "Pick 5 colors from your image to create a custom palette. Save and share your color combinations with the world.",
+  alternates: {
+    canonical: "https://hicolors.org/create",
+  },
 };
 
 export default async function Page({ searchParams }: { searchParams: Promise<{ id: string }> }) {
