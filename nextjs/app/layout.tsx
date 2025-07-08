@@ -12,6 +12,12 @@ export const metadata: Metadata = {
   description:
     "HiColors is a community-driven color palette library. Browse thousands of 5-color palettes extracted from anime characters, artworks, games, and user-uploaded images. Perfect for designers, illustrators, and color lovers.",
   icons: [{ rel: "icon", url: "/favicon.ico" }],
+  twitter: {
+    images: ["https://hicolors.org/og.jpg"],
+  },
+  openGraph: {
+    images: ["https://hicolors.org/og.jpg"],
+  },
 };
 
 const geist = Geist({
