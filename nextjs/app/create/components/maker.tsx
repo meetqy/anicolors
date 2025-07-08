@@ -14,7 +14,7 @@ export const Maker = ({ id }: { id: string }) => {
   const [points, setPoints] = useState<ColorPoint[]>([]);
   const [image, setImage] = useState<string>();
   const { data } = useQuery<{ palette: Palette }>(GET_PALETTE, {
-    variables: { documentId: id },
+    variables: { documentId: id, pagination: { limit: 100 } },
     skip: !id,
   });
 

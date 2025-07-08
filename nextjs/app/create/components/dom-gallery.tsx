@@ -106,7 +106,7 @@ export const DomGallery = ({ image, points, id, gallery }: { image: string; poin
     // 遍历所有 refs 并依次保存缺失的图片
     for (const [key, ref] of myRefs.current.entries()) {
       const filename = `${prefix}${ref.id}.png`;
-      if (names.includes(filename)) continue;
+      if (names.some((e) => filename.includes(e))) continue;
 
       try {
         await ref?.saveAsImage(filename);
