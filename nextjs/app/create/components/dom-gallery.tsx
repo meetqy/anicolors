@@ -138,9 +138,9 @@ export const DomGallery = ({ image, points, id, gallery }: { image: string; poin
             ref={(ref) => {
               if (ref) myRefs.current.set(`color-${index}`, ref);
             }}
-            className="w-full"
+            key={item.id}
+            className="w-full overflow-auto rounded-md"
             id={`color-${index}`}
-            key={index}
             point={item}
             index={index}
           />

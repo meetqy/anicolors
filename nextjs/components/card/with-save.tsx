@@ -61,11 +61,14 @@ export function withSave<P extends object>(WrappedComponent: ComponentType<P>) {
         try {
           const targetElement = getTargetElement();
           const options = createOptions(targetElement, scale);
+          const className = targetElement.className;
+          targetElement.classList.remove("rounded-md", "overflow-hidden", "border");
           const dataUrl = await domtoimage.toPng(targetElement, options);
           const link = document.createElement("a");
           link.download = filename;
           link.href = dataUrl;
           link.click();
+          targetElement.className = className;
         } catch (error) {
           console.error("Error saving image:", error);
         }
