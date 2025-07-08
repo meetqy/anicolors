@@ -10,7 +10,7 @@ const CardColor1Base = ({ point, index, className, style }: { point: ColorPoint;
   const cmyk = color.cmyk().string();
 
   return (
-    <div className={cn("w-[375px] aspect-[5/4] overflow-hidden flex flex-col rounded-lg border bg-background", className)} style={style}>
+    <div className={cn("w-[375px] aspect-[5/4] flex flex-col border bg-background", className)} style={style}>
       {/* Color preview bar */}
       <div className="relative flex h-24 w-full items-center justify-between px-6" style={{ backgroundColor: point.color }}>
         <h3

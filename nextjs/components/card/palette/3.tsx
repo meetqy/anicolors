@@ -15,12 +15,12 @@ interface CardPalette3Props {
 
 const CardPalette3Base = ({ points, className, style, image }: CardPalette3Props) => {
   return (
-    <div style={style} className={cn("w-[375px] flex flex-col aspect-square relative rounded-md bg-background", className)}>
+    <div style={style} className={cn("w-[375px] flex flex-col aspect-square relative bg-background", className)}>
       <div className="absolute text-xl right-4 top-2 font-serif italic font-bold opacity-80 z-10 text-muted-foreground">HiColors</div>
-      <div className="w-full h-[70%] bg-muted rounded-t-md">
+      <div className="w-full h-[70%] bg-muted">
         <ColorPointsOverlay className="size-full z-50 top-5 scale-110" points={points} image={image} />
       </div>
-      <div className="flex relative z-30 flex-1 rounded-b-md overflow-hidden">
+      <div className="flex relative z-30 flex-1">
         {points.map((item) => {
           const color = Color(item.color);
           return (

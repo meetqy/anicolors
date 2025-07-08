@@ -15,25 +15,24 @@ interface CardPalette4Props {
 
 const CardPalette4Base = ({ points, className, style, image }: CardPalette4Props) => {
   return (
-    <div style={style} className={cn("w-[375px] flex flex-col aspect-square relative rounded-md bg-background", className)}>
+    <div style={style} className={cn("w-[375px] flex aspect-[16/9] relative bg-background", className)}>
       <div className="absolute text-xl right-4 top-2 font-serif italic font-bold opacity-80 z-10 text-muted-foreground">HiColors</div>
-      <div className="w-full h-[70%] bg-muted rounded-t-md">
-        <ColorPointsOverlay className="size-full z-50 top-5 scale-110" points={points} image={image} />
+      <div className="w-2/3 bg-background flex justify-center items-center">
+        <ColorPointsOverlay className="size-full z-50" points={points} image={image} />
       </div>
-      <div className="flex relative z-30 flex-1 rounded-b-md overflow-hidden">
+      <div className="flex flex-col relative z-30 flex-1 gap-1">
         {points.map((item) => {
           const color = Color(item.color);
           return (
             <div
               key={item.id}
-              className="flex-1 flex items-center justify-end font-mono text-sm pb-2"
+              className="flex-1 flex items-center font-mono text-sm justify-end pr-2"
               style={{
                 backgroundColor: color.hex(),
                 color: color.isDark() ? "#fff" : "#000",
-                writingMode: "vertical-rl",
               }}
             >
-              {color.hex().split("").reverse().join("")}
+              {color.hex()}
             </div>
           );
         })}

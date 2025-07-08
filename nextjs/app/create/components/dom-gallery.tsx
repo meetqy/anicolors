@@ -23,15 +23,14 @@ const photosData = {
     { aspect: "3/4", component: CardPalette1 },
     { aspect: "16/9", component: CardPalette2 },
     { aspect: "1/1", component: CardPalette3 },
-    { aspect: "4/3", component: CardPalette4 },
+    { aspect: "16/9", component: CardPalette4 },
   ],
 };
 
 export const DomGallery = ({ image, points, id, gallery }: { image: string; points: ColorPoint[]; id?: string; gallery: Palette["gallery"] }) => {
   // 使用 Map 来管理多个 palette refs
   const myRefs = useRef<Map<string, SaveableCardRef>>(new Map());
-  const params = useSearchParams();
-  const admin = !!params.get("admin");
+  const admin = !!localStorage.getItem("admin");
   const [saving, setSaving] = useState(false);
 
   // 创建 photo album 数据
@@ -170,6 +169,7 @@ export const DomGallery = ({ image, points, id, gallery }: { image: string; poin
                     width: context.width,
                     height: context.height,
                   }}
+                  className="rounded-md overflow-hidden"
                 >
                   <Com
                     style={{
