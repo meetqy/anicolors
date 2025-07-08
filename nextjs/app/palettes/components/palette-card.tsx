@@ -22,9 +22,10 @@ export const PaletteCard = ({ palette }: PaletteCardProps) => {
       >
         <div className="rounded-md relative">
           <div
-            className="absolute bottom-0 left-1/2 w-full h-full rounded-md -translate-x-1/2 transition-all duration-300 group-hover:w-48 group-hover:h-48 group-hover:rounded-full group-hover:bottom-[-70px] group-hover:rotate-x-[75deg]"
+            className="absolute bottom-0 left-1/2 w-full h-full rounded-md -translate-x-1/2 transition-all duration-300 group-hover:w-56 group-hover:h-56 group-hover:rounded-full group-hover:bottom-[-85px] group-hover:rotate-x-[80deg]"
             style={{
               backgroundColor: bgColor,
+              boxShadow: "0 20px 40px rgba(0,0,0,0.1)",
             }}
           />
           {/* 额外的流畅背景层 */}
@@ -37,7 +38,9 @@ export const PaletteCard = ({ palette }: PaletteCardProps) => {
               ${getAssetUrl(palette.image.url, 960)} 3x
             `}
             alt={palette.name}
-            className={cn("w-full z-10 relative aspect-square object-contain transition-transform duration-300 group-hover:scale-125 group-hover:translate-y-[-50px] group-hover:rotate-x-[10deg]")}
+            className={cn(
+              "w-full z-10 relative aspect-square object-contain transition-transform duration-300 group-hover:scale-130 group-hover:translate-y-[-60px] group-hover:rotate-x-[15deg] group-hover:drop-shadow-2xl"
+            )}
           />
           <div className="flex w-full rounded-b-md overflow-hidden absolute bottom-0 left-0">
             {palette.points.map((point, index) => {
