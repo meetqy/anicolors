@@ -10,7 +10,7 @@ import { ColorPoint } from "@/components/palette/picker-colors";
 import { Button } from "@/components/ui/button";
 import { Palette } from "@/query/palette";
 import { useSearchParams } from "next/navigation";
-import { CSSProperties, useRef, useMemo } from "react";
+import { CSSProperties, useRef, useMemo, useState } from "react";
 import { ColumnsPhotoAlbum } from "react-photo-album";
 
 export interface DomGalleryRef {
@@ -30,6 +30,7 @@ export const DomGallery = ({ image, points, id, gallery }: { image: string; poin
   const myRefs = useRef<Map<string, SaveableCardRef>>(new Map());
   const params = useSearchParams();
   const admin = !!params.get("admin");
+  const [saving, setSaving] = useState(false);
 
   // 创建 photo album 数据
   const photos = useMemo(() => {
@@ -80,6 +81,7 @@ export const DomGallery = ({ image, points, id, gallery }: { image: string; poin
 
   const saveAllImage = async () => {
     const prefix = id ? `${id}-` : "";
+    setSaving(true);
 
     // 遍历所有 refs 并依次保存，确保每个都完成后再进行下一个
     for (const [key, ref] of myRefs.current.entries()) {
@@ -91,11 +93,13 @@ export const DomGallery = ({ image, points, id, gallery }: { image: string; poin
         console.error(`Failed to save image ${key}:`, error);
       }
     }
+    setSaving(false);
   };
 
   const saveMissImage = async () => {
     const prefix = id ? `${id}-` : "";
     const names = gallery.map((e) => e.name);
+    setSaving(true);
 
     // 遍历所有 refs 并依次保存缺失的图片
     for (const [key, ref] of myRefs.current.entries()) {
@@ -109,16 +113,18 @@ export const DomGallery = ({ image, points, id, gallery }: { image: string; poin
         console.error(`Failed to save missing image ${key}:`, error);
       }
     }
+
+    setSaving(false);
   };
 
   return (
     <div className="prose mx-auto mt-12 max-w-screen-xl px-4 xl:px-0 ">
       <div className="flex gap-4">
-        <Button size={"lg"} onClick={saveAllImage}>
+        <Button size={"lg"} disabled={saving} onClick={saveAllImage}>
           Download All Assets
         </Button>
         {admin && (
-          <Button size={"lg"} variant="outline" onClick={saveMissImage}>
+          <Button disabled={saving} size={"lg"} variant="outline" onClick={saveMissImage}>
             Download Missing Assets
           </Button>
         )}
