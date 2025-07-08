@@ -16,11 +16,11 @@ interface CardPalette4Props {
 const CardPalette4Base = ({ points, className, style, image }: CardPalette4Props) => {
   return (
     <div style={style} className={cn("w-[375px] flex aspect-[16/9] relative bg-background", className)}>
-      <div className="absolute text-xl right-4 top-2 font-serif italic font-bold opacity-80 z-10 text-muted-foreground">HiColors</div>
+      <div className="absolute text-xl left-4 top-2 font-serif italic font-bold opacity-80 z-10 text-muted-foreground">HiColors</div>
       <div className="w-2/3 bg-background flex justify-center items-center">
         <ColorPointsOverlay className="size-full z-50" points={points} image={image} />
       </div>
-      <div className="flex flex-col relative z-30 flex-1 gap-1">
+      <div className="flex flex-col relative flex-1 gap-1">
         {points.map((item) => {
           const color = Color(item.color);
           return (
