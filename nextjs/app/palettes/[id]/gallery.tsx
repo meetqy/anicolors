@@ -16,6 +16,11 @@ export const Gallery = ({ palette }: { palette: Palette }) => {
             if (containerWidth < 1024) return 3;
             return 4;
           }}
+          componentsProps={{
+            image: {
+              className: "rounded-md overflow-hidden",
+            },
+          }}
           photos={palette.gallery.map((item) => {
             const ratio = item.width / item.height;
 
