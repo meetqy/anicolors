@@ -14,7 +14,12 @@ export const PaletteCard = ({ palette }: PaletteCardProps) => {
       <Link href={`/palettes/${palette.documentId}`} className="group">
         <div className="rounded-md relative" style={{ backgroundColor: palette.points[0].color }}>
           <img
-            src={getAssetUrl(palette.image.url)}
+            src={getAssetUrl(palette.image.url, 320)}
+            srcSet={`
+              ${getAssetUrl(palette.image.url, 320)} 1x,
+              ${getAssetUrl(palette.image.url, 640)} 2x,
+              ${getAssetUrl(palette.image.url, 960)} 3x
+            `}
             alt={palette.name}
             className={cn("w-full z-10 relative aspect-square object-contain group-hover:scale-125 transition-transform", isEndNumber ? "group-hover:rotate-6" : "group-hover:-rotate-6")}
           />
