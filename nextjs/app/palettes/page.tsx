@@ -55,7 +55,7 @@ export default async function Page({ searchParams }: PageProps) {
             <p className="text-xl text-muted-foreground max-w-3xl text-center">Extracted from Genshin Impact, Studio Ghibli, fashion, UI and more. Visual color inspiration at your fingertips.</p>
           </div>
           <div className="mx-auto max-w-screen-xl px-4 lg:px-0">
-            <div className="grid grid-cols-1 lg:grid-cols-3 xl:grid-cols-4 gap-6 mb-12">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 mb-12">
               {palettes.map((palette, index) => (
                 <PaletteCard key={`${palette.name}-${index}`} palette={palette} />
               ))}
