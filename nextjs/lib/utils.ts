@@ -10,7 +10,7 @@ export const getAssetUrl = (url: string, width?: number, height?: number, qualit
 
   if (url.startsWith(assetUrl)) {
     // cdn-cgi/image/w=640,q=75
-    const option = ["format=webp"];
+    const option = [];
 
     if (width) {
       option.push(`w=${width}`);
@@ -22,6 +22,10 @@ export const getAssetUrl = (url: string, width?: number, height?: number, qualit
 
     if (quality) {
       option.push(`q=${quality}`);
+    }
+
+    if (option.length > 0) {
+      option.push("format=webp");
     }
 
     url = url.replace(assetUrl, assetUrl + "/cdn-cgi/image/" + option.join(","));
