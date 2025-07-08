@@ -21,7 +21,7 @@ export const PaletteCard = ({ palette }: PaletteCardProps) => {
               ${getAssetUrl(palette.image.url, 960)} 3x
             `}
             alt={palette.name}
-            className={cn("w-full z-10 relative aspect-square object-contain group-hover:scale-125 transition-transform", isEndNumber ? "group-hover:rotate-6" : "group-hover:-rotate-6")}
+            className={cn("w-full z-10 relative aspect-square object-contain group-hover:scale-125 transition-transform")}
           />
           <div className="flex w-full rounded-b-md overflow-hidden absolute bottom-0 left-0">
             {palette.points.map((point, index) => {
