@@ -26,9 +26,9 @@ export const getAssetUrl = (url: string, width?: number, height?: number, qualit
 
     if (option.length > 0) {
       option.push("format=webp");
-    }
 
-    url = url.replace(assetUrl, assetUrl + "/cdn-cgi/image/" + option.join(","));
+      return url.replace(assetUrl, assetUrl + "/cdn-cgi/image/" + option.join(","));
+    }
 
     return url;
   }
