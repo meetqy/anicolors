@@ -5,6 +5,7 @@ import { CardColorGradientLighten } from "@/components/card/color/gradient";
 import { CardPalette1 } from "@/components/card/palette/1";
 import { CardPalette2 } from "@/components/card/palette/2";
 import { CardPalette3 } from "@/components/card/palette/3";
+import { CardPalette4 } from "@/components/card/palette/4";
 import { SaveableCardRef } from "@/components/card/with-save";
 import { ColorPoint } from "@/components/palette/picker-colors";
 import { Button } from "@/components/ui/button";
@@ -22,6 +23,7 @@ const photosData = {
     { aspect: "3/4", component: CardPalette1 },
     { aspect: "16/9", component: CardPalette2 },
     { aspect: "1/1", component: CardPalette3 },
+    { aspect: "4/3", component: CardPalette4 },
   ],
 };
 
