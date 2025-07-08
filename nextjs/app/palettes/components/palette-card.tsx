@@ -8,7 +8,6 @@ interface PaletteCardProps {
 }
 
 export const PaletteCard = ({ palette }: PaletteCardProps) => {
-  const isEndNumber = /\d$/.test(palette.documentId);
   return (
     <div className="relative ">
       <Link href={`/palettes/${palette.documentId}`} className="group">
