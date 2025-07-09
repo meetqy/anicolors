@@ -6,35 +6,6 @@ import Color from "color";
 import { LuUpload } from "react-icons/lu";
 import { getColorName } from "@/lib/nearest";
 
-// 将图片链接转换为 base64
-const convertImageToBase64 = (url: string): Promise<string> => {
-  return new Promise((resolve, reject) => {
-    const img = new Image();
-    img.crossOrigin = "anonymous";
-    img.onload = () => {
-      const canvas = document.createElement("canvas");
-      const ctx = canvas.getContext("2d");
-      if (!ctx) {
-        reject(new Error("Failed to get canvas context"));
-        return;
-      }
-
-      canvas.width = img.naturalWidth;
-      canvas.height = img.naturalHeight;
-      ctx.drawImage(img, 0, 0);
-
-      try {
-        const base64 = canvas.toDataURL("image/png");
-        resolve(base64);
-      } catch (error) {
-        reject(error);
-      }
-    };
-    img.onerror = () => reject(new Error("Failed to load image"));
-    img.src = url;
-  });
-};
-
 type GeneratorProps = { initialPoints?: ColorPoint[]; onColorsChangeEnter?: (points: ColorPoint[]) => void; initImage?: string; onImageChange?: (image: string) => void };
 
 export function Generator({ initialPoints = [], onColorsChangeEnter, initImage, onImageChange }: GeneratorProps) {
@@ -50,19 +21,7 @@ export function Generator({ initialPoints = [], onColorsChangeEnter, initImage, 
   // 当 initImage 变化时更新图片
   useEffect(() => {
     if (initImage) {
-      // 如果是 base64 格式，直接设置
-      if (initImage.startsWith("data:")) {
-        setImage(initImage);
-      } else {
-        // 如果是链接，转换为 base64
-        convertImageToBase64(initImage)
-          .then((base64) => setImage(base64))
-          .catch((error) => {
-            console.error("Failed to convert image to base64:", error);
-            // 如果转换失败，仍然尝试直接使用链接
-            setImage(initImage);
-          });
-      }
+      setImage(initImage);
     } else {
       setImage(null);
     }
