@@ -1,7 +1,9 @@
+"use client";
 import { cn, getAssetUrl } from "@/lib/utils";
 import { timeAgo } from "@/lib/time-utils";
 import { PaletteListItem } from "@/query/palette";
 import Link from "next/link";
+import { useCallback } from "react";
 
 interface PaletteCardProps {
   palette: PaletteListItem;
@@ -10,11 +12,17 @@ interface PaletteCardProps {
 export const PaletteCard = ({ palette }: PaletteCardProps) => {
   const bgColor = palette.points[0].color;
 
+  const preloadImage = useCallback(() => {
+    const img = new Image();
+    img.src = getAssetUrl(palette.image.url); // 预加载高分辨率原图
+  }, [palette.image.url]);
+
   return (
     <div className="relative ">
       <Link
         href={`/palettes/${palette.documentId}`}
         className="group"
+        onMouseEnter={preloadImage}
         style={{
           perspective: "1000px",
           transformStyle: "preserve-3d",
