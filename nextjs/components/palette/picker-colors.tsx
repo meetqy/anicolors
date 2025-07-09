@@ -29,6 +29,7 @@ export default function PickerColors({ image, initialPoints, onColorsChange, cla
   const [draggedPoint, setDraggedPoint] = useState<number | null>(null);
   const [showMagnifier, setShowMagnifier] = useState<number | null>(null);
   const [magnifierPos, setMagnifierPos] = useState({ x: 0, y: 0 });
+  const [imageLoaded, setImageLoaded] = useState(false);
 
   const imageRef = useRef<HTMLImageElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -84,15 +85,14 @@ export default function PickerColors({ image, initialPoints, onColorsChange, cla
 
   const handleImageLoad = () => {
     updateCanvas();
+    setImageLoaded(true);
 
     // 图片加载完成后，如果没有初始点且当前没有颜色点，则提取主要颜色
     if (!initialPoints?.length && colorPoints.length === 0) {
-      setTimeout(() => {
-        const extractedColors = extractMainColors(canvasRef.current!, imageRef.current!, getNormalizedPosition, 5);
-        setColorPoints(extractedColors);
-        onColorsChangeEnter?.(extractedColors);
-        onColorsChange?.(extractedColors);
-      }, 100);
+      const extractedColors = extractMainColors(canvasRef.current!, imageRef.current!, getNormalizedPosition, 5);
+      setColorPoints(extractedColors);
+      onColorsChangeEnter?.(extractedColors);
+      onColorsChange?.(extractedColors);
     }
   };
 
@@ -108,29 +108,43 @@ export default function PickerColors({ image, initialPoints, onColorsChange, cla
 
   // Convert normalized coordinates to actual display coordinates
   const getDisplayPosition = useCallback((normalizedX: number, normalizedY: number) => {
-    if (!imageRef.current || !containerRef.current) return { x: normalizedX, y: normalizedY };
+    if (!imageRef.current || !containerRef.current) return { x: 0, y: 0 };
 
     const imageRect = imageRef.current.getBoundingClientRect();
     const containerRect = containerRef.current.getBoundingClientRect();
+
+    // Check if dimensions are valid
+    if (!imageRect.width || !imageRect.height || !imageRef.current.naturalWidth || !imageRef.current.naturalHeight) {
+      return { x: 0, y: 0 };
+    }
 
     // Calculate position relative to container
     const imageOffsetX = imageRect.left - containerRect.left;
     const imageOffsetY = imageRect.top - containerRect.top;
 
+    const x = imageOffsetX + (normalizedX / 384) * imageRect.width;
+    const y = imageOffsetY + (normalizedY / 384) * (imageRect.width * (imageRef.current.naturalHeight / imageRef.current.naturalWidth));
+
+    // Ensure values are finite numbers
     return {
-      x: imageOffsetX + (normalizedX / 384) * imageRect.width,
-      y: imageOffsetY + (normalizedY / 384) * (imageRect.width * (imageRef.current.naturalHeight / imageRef.current.naturalWidth)),
+      x: isFinite(x) ? x : 0,
+      y: isFinite(y) ? y : 0,
     };
   }, []);
 
   // Initialize default color points
   useEffect(() => {
-    if (image && colorPoints.length === 0) {
+    if (image && colorPoints.length === 0 && imageLoaded) {
       if (initialPoints && initialPoints.length > 0) {
         setColorPoints(initialPoints);
       }
     }
-  }, [image, colorPoints.length, initialPoints]);
+  }, [image, colorPoints.length, initialPoints, imageLoaded]);
+
+  // Reset imageLoaded when image changes
+  useEffect(() => {
+    setImageLoaded(false);
+  }, [image]);
 
   const updateMagnifier = useCallback((x: number, y: number) => {
     if (!canvasRef.current || !magnifierCanvasRef.current || !imageRef.current) return;
@@ -338,32 +352,33 @@ export default function PickerColors({ image, initialPoints, onColorsChange, cla
         <canvas ref={canvasRef} className="hidden" />
         <canvas ref={magnifierCanvasRef} className="hidden" />
 
-        {colorPoints.map((point) => {
-          const displayPos = getDisplayPosition(point.x, point.y);
-          return (
-            <div
-              key={point.id}
-              className="absolute -translate-x-1/2 -translate-y-1/2 transform cursor-move transition-transform hover:scale-125"
-              style={{
-                left: displayPos.x,
-                top: displayPos.y,
-              }}
-              onMouseDown={(e) => handleMouseDown(e, point.id)}
-            >
-              {/* Outer glow ring */}
-              <div className="absolute -inset-2 animate-pulse rounded-full bg-white/30 blur-sm" />
-              {/* White border ring */}
-              <div className="relative h-8 w-8 rounded-full border-3 border-white shadow-2xl">
-                {/* Color fill */}
-                <div className="h-full w-full rounded-full border-2 border-black/20" style={{ backgroundColor: point.color }} />
-                {/* Center dot for precision */}
-                <div className="absolute top-1/2 left-1/2 h-1.5 w-1.5 -translate-x-1/2 -translate-y-1/2 rounded-full bg-white shadow-sm" />
+        {imageLoaded &&
+          colorPoints.map((point) => {
+            const displayPos = getDisplayPosition(point.x, point.y);
+            return (
+              <div
+                key={point.id}
+                className="absolute -translate-x-1/2 -translate-y-1/2 transform cursor-move transition-transform hover:scale-125"
+                style={{
+                  left: displayPos.x,
+                  top: displayPos.y,
+                }}
+                onMouseDown={(e) => handleMouseDown(e, point.id)}
+              >
+                {/* Outer glow ring */}
+                <div className="absolute -inset-2 animate-pulse rounded-full bg-white/30 blur-sm" />
+                {/* White border ring */}
+                <div className="relative h-8 w-8 rounded-full border-3 border-white shadow-2xl">
+                  {/* Color fill */}
+                  <div className="h-full w-full rounded-full border-2 border-black/20" style={{ backgroundColor: point.color }} />
+                  {/* Center dot for precision */}
+                  <div className="absolute top-1/2 left-1/2 h-1.5 w-1.5 -translate-x-1/2 -translate-y-1/2 rounded-full bg-white shadow-sm" />
+                </div>
+                {/* Point number label */}
+                <div className="absolute -bottom-8 left-1/2 -translate-x-1/2 rounded-full bg-black/80 px-2 py-1 text-xs font-medium text-white">{point.id}</div>
               </div>
-              {/* Point number label */}
-              <div className="absolute -bottom-8 left-1/2 -translate-x-1/2 rounded-full bg-black/80 px-2 py-1 text-xs font-medium text-white">{point.id}</div>
-            </div>
-          );
-        })}
+            );
+          })}
 
         {showMagnifier && (
           <div style={getMagnifierStyle()}>

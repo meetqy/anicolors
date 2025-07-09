@@ -45,7 +45,7 @@ export const PaletteActions = ({ palette, id }: PaletteActionsProps) => {
           <MdLink className="size-5" /> Link
         </Button>
         <Button variant={"outline"} asChild>
-          <Link target="_blank" href={`https://twitter.com/intent/tweet?text=${encodeURIComponent(title)}&url=${encodeURIComponent(`${window.location.origin}/palettes/${id}`)}`}>
+          <Link target="_blank" href={`https://twitter.com/intent/tweet?text=${encodeURIComponent(title)}&url=${encodeURIComponent(`${process.env.NEXT_PUBLIC_SITE_URL}/palettes/${id}`)}`}>
             <TwitterIcon /> Twitter
           </Link>
         </Button>

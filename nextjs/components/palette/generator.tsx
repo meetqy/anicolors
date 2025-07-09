@@ -20,11 +20,7 @@ export function Generator({ initialPoints = [], onColorsChangeEnter, initImage, 
 
   // 当 initImage 变化时更新图片
   useEffect(() => {
-    if (initImage) {
-      setImage(initImage);
-    } else {
-      setImage(null);
-    }
+    setImage(initImage || null);
   }, [initImage, setImage]);
 
   useEffect(() => {
