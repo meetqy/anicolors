@@ -1,9 +1,9 @@
 import { Metadata } from "next";
 import { PaletteCard } from "./components/palette-card";
-import { PaginationControls } from "./components/pagination-controls";
 import { EmptyState } from "./components/empty-state";
 import { getClient } from "@/lib/apollo-client";
 import { GET_PALETTE_LIST, PaletteListItem } from "@/query/palette";
+import { PaginationControls } from "@/components/pagination-controls";
 
 const getPalettesList = async (page: number = 1, pageSize: number = 24, sort: string = "createdAt:desc") => {
   try {
@@ -61,7 +61,7 @@ export default async function Page({ searchParams }: PageProps) {
               ))}
             </div>
 
-            <PaginationControls currentPage={page} pageSize={pageSize} totalItems={palettes.length} />
+            <PaginationControls currentPage={page} totalPages={Math.ceil(palettes.length / pageSize)} basePath="/palettes" />
           </div>
         </>
       )}

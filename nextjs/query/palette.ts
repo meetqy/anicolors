@@ -43,8 +43,8 @@ export type Palette = {
  * Fetches a list of palettes with their basic information.
  */
 export const GET_PALETTE_LIST = gql`
-  query Palettes($pagination: PaginationArg, $sort: [String]) {
-    palettes(pagination: $pagination, sort: $sort) {
+  query Palettes($filters: PaletteFiltersInput, $pagination: PaginationArg, $sort: [String]) {
+    palettes(filters: $filters, pagination: $pagination, sort: $sort) {
       likes
       name
       category

@@ -5,22 +5,21 @@ import { useSearchParams } from "next/navigation";
 
 interface PaginationControlsProps {
   currentPage: number;
-  pageSize: number;
-  totalItems: number;
+  totalPages: number;
+  basePath?: string;
 }
 
-export const PaginationControls = ({ currentPage, pageSize, totalItems }: PaginationControlsProps) => {
+export const PaginationControls = ({ currentPage, totalPages, basePath = "/palettes" }: PaginationControlsProps) => {
   const searchParams = useSearchParams();
 
   const createPageUrl = (page: number) => {
     const params = new URLSearchParams(searchParams.toString());
     params.set("page", page.toString());
-    return `/palettes?${params.toString()}`;
+    return `${basePath}?${params.toString()}`;
   };
 
   const hasPrevious = currentPage > 1;
-  const hasNext = totalItems >= pageSize;
-  const totalPages = Math.ceil(totalItems / pageSize);
+  const hasNext = currentPage < totalPages;
 
   // Generate page numbers to show
   const getVisiblePages = () => {
@@ -48,6 +47,8 @@ export const PaginationControls = ({ currentPage, pageSize, totalItems }: Pagina
 
     return rangeWithDots;
   };
+
+  if (totalPages <= 1) return null;
 
   return (
     <Pagination>
