@@ -26,6 +26,11 @@
       "locale": null
     },
     {
+      "documentId": "up61pb6if4k5wf523y4mwww5",
+      "action": "api::palette.palette.toggleLike",
+      "locale": null
+    },
+    {
       "documentId": "uzclpgcv06d4znprzi5csobp",
       "action": "plugin::users-permissions.auth.callback",
       "locale": null
