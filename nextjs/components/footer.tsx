@@ -4,7 +4,10 @@ interface FriendLink {
 }
 
 export const Footer = () => {
-  const friendLinks: FriendLink[] = [{ name: "Featured on ShowMeBestAI", url: "https://www.showmebest.ai" }];
+  const friendLinks: FriendLink[] = [
+    { name: "Featured on ShowMeBestAI", url: "https://www.showmebest.ai" },
+    { name: "Featured on Twelve Tools", url: "https://twelve.tools" },
+  ];
 
   return (
     <footer className="bg-gray-50 mt-16">
