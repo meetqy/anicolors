@@ -5,8 +5,8 @@ interface FriendLink {
 
 export const Footer = () => {
   const friendLinks: FriendLink[] = [
-    { name: "Featured on ShowMeBestAI", url: "https://www.showmebest.ai" },
-    { name: "Featured on Twelve Tools", url: "https://twelve.tools" },
+    { name: "ShowMeBestAI", url: "https://www.showmebest.ai" },
+    { name: "Twelve Tools", url: "https://twelve.tools" },
   ];
 
   return (
