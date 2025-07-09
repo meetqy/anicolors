@@ -2,25 +2,21 @@ import { Metadata } from "next";
 import { PaletteCard } from "./components/palette-card";
 import { EmptyState } from "./components/empty-state";
 import { getClient } from "@/lib/apollo-client";
-import { GET_PALETTE_LIST, PaletteListItem } from "@/query/palette";
+import { GET_PALETTE_LIST, PaletteListResponse } from "@/query/palette";
 import { PaginationControls } from "@/components/pagination-controls";
 
-const getPalettesList = async (page: number = 1, pageSize: number = 24, sort: string = "createdAt:desc") => {
-  try {
-    const { data } = await getClient().query<{ palettes: PaletteListItem[] }>({
-      query: GET_PALETTE_LIST,
-      variables: {
-        pagination: { page, pageSize },
-        sort: [sort],
-      },
-      fetchPolicy: "no-cache",
-    });
+const pageSize = 24;
 
-    return data.palettes;
-  } catch (error) {
-    console.error("Error fetching palettes:", error);
-    return [];
-  }
+const getPalettesList = async (page = 1) => {
+  const res = await getClient().query<PaletteListResponse>({
+    query: GET_PALETTE_LIST,
+    variables: {
+      pagination: { page, pageSize },
+      sort: ["createdAt:desc"],
+    },
+  });
+
+  return res.data;
 };
 
 export const metadata: Metadata = {
@@ -29,39 +25,34 @@ export const metadata: Metadata = {
 };
 
 interface PageProps {
-  searchParams: Promise<{
-    page?: string;
-    pageSize?: string;
-    sort?: string;
-  }>;
+  searchParams: Promise<{ page?: string }>;
 }
 
 export default async function Page({ searchParams }: PageProps) {
   const params = await searchParams;
-  const page = parseInt(params.page || "1", 10);
-  const pageSize = parseInt(params.pageSize || "24", 10);
-  const sort = params.sort || "createdAt:desc";
+  const page = parseInt(params.page || "1");
 
-  const palettes = await getPalettesList(page, pageSize, sort);
+  const { palettes, palettes_connection } = await getPalettesList(page);
 
   return (
-    <div className="py-12 w-full">
+    <div className="max-w-7xl mx-auto px-4 py-12">
       {!palettes?.length ? (
         <EmptyState />
       ) : (
         <>
-          <div className="mx-auto mb-12 max-w-screen-xl px-4 lg:px-0 flex justify-center flex-col items-center">
-            <h1 className="h1 text-left mb-6">HiColors List</h1>
-            <p className="text-xl text-muted-foreground max-w-3xl text-center">Extracted from Genshin Impact, Studio Ghibli, fashion, UI and more. Visual color inspiration at your fingertips.</p>
+          <div className="mb-8">
+            <h1 className="text-3xl font-bold capitalize mb-2">HiColors Palettes</h1>
+            <p className="text-muted-foreground">Extracted from Genshin Impact, Studio Ghibli, fashion, UI and more. Visual color inspiration at your fingertips.</p>
           </div>
+
           <div className="mx-auto max-w-screen-xl px-4 lg:px-0">
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 mb-12">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-x-6 gap-y-12 mb-12">
               {palettes.map((palette, index) => (
                 <PaletteCard key={`${palette.name}-${index}`} palette={palette} />
               ))}
             </div>
 
-            <PaginationControls currentPage={page} totalPages={Math.ceil(palettes.length / pageSize)} basePath="/palettes" />
+            <PaginationControls currentPage={page} totalPages={Math.ceil(palettes_connection.pageInfo.total / pageSize)} basePath="/palettes" />
           </div>
         </>
       )}

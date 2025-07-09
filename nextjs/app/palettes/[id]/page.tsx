@@ -7,6 +7,8 @@ import { getAssetUrl } from "@/lib/utils";
 import { Gallery } from "./gallery";
 import { GET_PALETTE, Palette } from "@/query/palette";
 import { Metadata } from "next";
+import Link from "next/link";
+import { Shapes } from "lucide-react";
 
 const getPaletteData = async (id: string) => {
   const res = await getClient().query({
@@ -67,7 +69,13 @@ export default async function Page({ params }: { params: Promise<{ id: string }>
         ))}
       </div>
 
-      <div className="flex flex-wrap gap-2 max-w-screen-md mx-auto px-4 lg:px-0 mt-12 justify-center">
+      <div className="flex flex-wrap gap-x-2 gap-y-4 max-w-screen-md mx-auto px-4 lg:px-0 mt-12 justify-center">
+        <Button variant="outline" className="rounded-full capitalize" size="sm" asChild>
+          <Link href={`/category/${palette.category}`}>
+            <Shapes className="size-4" />
+            {palette.category}
+          </Link>
+        </Button>
         {points.map((item, index) => (
           <Button variant="outline" className="rounded-full" key={index} size="sm">
             <div className="size-4 rounded-full" style={{ backgroundColor: item.color }}></div>

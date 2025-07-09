@@ -55,6 +55,11 @@ export const GET_PALETTE_LIST = gql`
       documentId
       createdAt
     }
+    palettes_connection {
+      pageInfo {
+        total
+      }
+    }
   }
 `;
 
@@ -66,4 +71,11 @@ export type PaletteListItem = {
   points: ColorPoint[];
   documentId: string;
   createdAt: string;
+};
+
+export type PaletteListResponse = {
+  palettes: PaletteListItem[];
+  palettes_connection: {
+    pageInfo: { total: number };
+  };
 };
