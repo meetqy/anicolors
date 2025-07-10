@@ -52,7 +52,7 @@ export default async function Page({ searchParams }: PageProps) {
               ))}
             </div>
 
-            <PaginationControls currentPage={page} totalPages={Math.ceil(palettes_connection.pageInfo.total / pageSize)} basePath="/palettes" />
+            <PaginationControls currentPage={page} totalPages={Math.ceil(palettes_connection.pageInfo.total / pageSize)} />
           </div>
         </>
       )}

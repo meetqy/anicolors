@@ -64,7 +64,9 @@ export const PaletteCard = ({ palette }: PaletteCardProps) => {
             {palette.category}
           </Link>
         </div>
-        <time className="text-sm text-muted-foreground">{timeAgo(palette.createdAt)}</time>
+        <time suppressHydrationWarning className="text-sm text-muted-foreground">
+          {timeAgo(palette.createdAt)}
+        </time>
       </div>
     </div>
   );
