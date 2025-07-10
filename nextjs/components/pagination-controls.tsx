@@ -13,35 +13,25 @@ export const PaginationControls = ({ currentPage, totalPages }: PaginationContro
 
   // Generate page numbers to show
   const getVisiblePages = () => {
-    if (totalPages <= 1) return [1];
-
     const delta = 2;
     const range = [];
     const rangeWithDots = [];
 
-    // Calculate the range around current page
     for (let i = Math.max(2, currentPage - delta); i <= Math.min(totalPages - 1, currentPage + delta); i++) {
       range.push(i);
     }
 
-    // Always include page 1
     if (currentPage - delta > 2) {
       rangeWithDots.push(1, "...");
     } else {
       rangeWithDots.push(1);
     }
 
-    // Add the range (skip if already included page 1)
-    range.forEach((page) => {
-      if (page !== 1) {
-        rangeWithDots.push(page);
-      }
-    });
+    rangeWithDots.push(...range);
 
-    // Add last page if not already included
     if (currentPage + delta < totalPages - 1) {
       rangeWithDots.push("...", totalPages);
-    } else if (totalPages > 1 && !rangeWithDots.includes(totalPages)) {
+    } else if (totalPages > 1) {
       rangeWithDots.push(totalPages);
     }
 
@@ -49,8 +39,6 @@ export const PaginationControls = ({ currentPage, totalPages }: PaginationContro
   };
 
   if (totalPages <= 1) return null;
-
-  console.log(getVisiblePages(), totalPages);
 
   return (
     <Pagination>
