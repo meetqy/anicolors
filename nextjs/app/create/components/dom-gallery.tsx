@@ -14,6 +14,7 @@ import { Button } from "@/components/ui/button";
 import { Palette } from "@/query/palette";
 import { CSSProperties, useRef, useMemo, useState } from "react";
 import { ColumnsPhotoAlbum } from "react-photo-album";
+import { toast } from "sonner";
 
 export interface DomGalleryRef {
   saveAsImage: () => Promise<void>;
@@ -132,6 +133,16 @@ export const DomGallery = ({ image, points, id, gallery }: { image: string; poin
             Download Missing Assets
           </Button>
         )}
+        <Button
+          size={"lg"}
+          variant="outline"
+          onClick={() => {
+            navigator.clipboard.writeText(JSON.stringify(points));
+            toast.success("Points copied to clipboard!");
+          }}
+        >
+          Copy Points
+        </Button>
       </div>
       <h2>Colors</h2>
       <div className="not-prose grid gap-4 md:grid-cols-2 lg:grid-cols-3">

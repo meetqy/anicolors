@@ -24,7 +24,7 @@ export function Generator({ initialPoints = [], onColorsChangeEnter, initImage, 
   }, [initImage, setImage]);
 
   useEffect(() => {
-    console.log(
+    onColorsChangeEnter?.(
       colors.map((item) => {
         return {
           ...item,
@@ -32,7 +32,6 @@ export function Generator({ initialPoints = [], onColorsChangeEnter, initImage, 
         };
       })
     );
-    onColorsChangeEnter?.(colors);
   }, [colors, onColorsChangeEnter]);
 
   const onDrop = useCallback(
