@@ -25,7 +25,8 @@ export const PaletteActions = ({ palette, id }: PaletteActionsProps) => {
     toast.success("Palette link copied to clipboard!");
   };
 
-  const title = `${palette.category} ${palette.name} Palette - HiColors \n #hicolors`;
+  const title = `${palette.category} ${palette.name} Palette - HiColors \n\n #hicolors #${palette.category} #${palette.name} #palette`;
+  const host = process.env.NEXT_PUBLIC_SITE_URL || "https://hicolors.org";
 
   return (
     <div className="flex items-center justify-between max-w-screen-lg mx-auto px-4 lg:px-0 mt-4">
@@ -45,7 +46,7 @@ export const PaletteActions = ({ palette, id }: PaletteActionsProps) => {
           <MdLink className="size-5" /> Link
         </Button>
         <Button variant={"outline"} asChild>
-          <Link target="_blank" href={`https://twitter.com/intent/tweet?text=${encodeURIComponent(title)}&url=${encodeURIComponent(`${process.env.NEXT_PUBLIC_SITE_URL}/palettes/${id}`)}`}>
+          <Link target="_blank" href={`https://twitter.com/intent/tweet?text=${encodeURIComponent(title)}&url=${encodeURIComponent(`${host}/palettes/${id}`)}`}>
             <TwitterIcon /> Twitter
           </Link>
         </Button>
