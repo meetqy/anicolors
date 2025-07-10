@@ -1,6 +1,8 @@
 "use client";
 
-import { forwardRef, useImperativeHandle, useRef, ComponentType } from "react";
+import { forwardRef, useImperativeHandle, useRef, ComponentType, useState } from "react";
+import { Button } from "@/components/ui/button";
+import { Download } from "lucide-react";
 import domtoimage from "dom-to-image";
 
 export interface SaveableCardRef {
@@ -16,6 +18,7 @@ interface WithSaveProps {
 export function withSave<P extends object>(WrappedComponent: ComponentType<P>) {
   const WithSaveComponent = forwardRef<SaveableCardRef, P & WithSaveProps>((props, ref) => {
     const cardRef = useRef<HTMLDivElement>(null);
+    const [isHovering, setIsHovering] = useState(false);
 
     const getTargetElement = () => {
       if (!cardRef.current) throw new Error("Card ref not available");
@@ -56,6 +59,23 @@ export function withSave<P extends object>(WrappedComponent: ComponentType<P>) {
       };
     };
 
+    const handleDownload = async () => {
+      try {
+        const targetElement = getTargetElement();
+        const options = createOptions(targetElement);
+        const className = targetElement.className;
+        targetElement.classList.remove("rounded-md", "overflow-hidden", "border");
+        const dataUrl = await domtoimage.toPng(targetElement, options);
+        const link = document.createElement("a");
+        link.download = `palette-${props.id || Date.now()}.png`;
+        link.href = dataUrl;
+        link.click();
+        targetElement.className = className;
+      } catch (error) {
+        console.error("Error downloading image:", error);
+      }
+    };
+
     useImperativeHandle(ref, () => ({
       saveAsImage: async (filename = "palette.png", scale?: number) => {
         try {
@@ -87,8 +107,35 @@ export function withSave<P extends object>(WrappedComponent: ComponentType<P>) {
     }));
 
     return (
-      <div ref={cardRef}>
+      <div 
+        ref={cardRef}
+        className="relative group"
+        onMouseEnter={() => setIsHovering(true)}
+        onMouseLeave={() => setIsHovering(false)}
+      >
         <WrappedComponent {...(props as P)} />
+        
+        {/* Hover Mask */}
+        {isHovering && (
+          <div className="absolute inset-0 bg-black/50 flex items-center justify-center transition-all duration-200">
+            <div className="text-center text-white space-y-2">
+              {props.id && (
+                <div className="text-sm font-mono opacity-80">
+                  ID: {props.id}
+                </div>
+              )}
+              <Button
+                variant="secondary"
+                size="sm"
+                onClick={handleDownload}
+                className="bg-white/20 hover:bg-white/30 text-white border-white/20"
+              >
+                <Download className="w-4 h-4 mr-2" />
+                Download
+              </Button>
+            </div>
+          </div>
+        )}
       </div>
     );
   });
