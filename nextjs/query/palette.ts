@@ -43,21 +43,24 @@ export type Palette = {
  * Fetches a list of palettes with their basic information.
  */
 export const GET_PALETTE_LIST = gql`
-  query Palettes($filters: PaletteFiltersInput, $pagination: PaginationArg, $sort: [String]) {
-    palettes(filters: $filters, pagination: $pagination, sort: $sort) {
-      likes
-      name
-      category
-      points
-      image {
-        url
+  query Palettes_connection($pagination: PaginationArg, $sort: [String], $filters: PaletteFiltersInput) {
+    palettes_connection(pagination: $pagination, sort: $sort, filters: $filters) {
+      nodes {
+        likes
+        name
+        category
+        points
+        image {
+          url
+        }
+        documentId
+        createdAt
       }
-      documentId
-      createdAt
-    }
-    palettes_connection {
       pageInfo {
         total
+        pageCount
+        page
+        pageSize
       }
     }
   }
@@ -74,8 +77,15 @@ export type PaletteListItem = {
 };
 
 export type PaletteListResponse = {
-  palettes: PaletteListItem[];
   palettes_connection: {
-    pageInfo: { total: number };
+    nodes: PaletteListItem[];
+    pageInfo: PageInfo;
   };
+};
+
+export type PageInfo = {
+  total: number;
+  pageCount: number;
+  page: number;
+  pageSize: number;
 };

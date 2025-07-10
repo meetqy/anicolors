@@ -32,7 +32,8 @@ export default async function Page({ searchParams }: PageProps) {
   const params = await searchParams;
   const page = parseInt(params.page || "1");
 
-  const { palettes, palettes_connection } = await getPalettesList(page);
+  const { palettes_connection } = await getPalettesList(page);
+  const { nodes: palettes, pageInfo } = palettes_connection;
 
   return (
     <div className="max-w-7xl mx-auto px-4 py-12">
@@ -52,7 +53,7 @@ export default async function Page({ searchParams }: PageProps) {
               ))}
             </div>
 
-            <PaginationControls currentPage={page} totalPages={Math.ceil(palettes_connection.pageInfo.total / pageSize)} />
+            <PaginationControls {...pageInfo} />
           </div>
         </>
       )}

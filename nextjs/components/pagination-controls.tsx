@@ -1,15 +1,11 @@
 "use client";
 
 import { Pagination, PaginationContent, PaginationEllipsis, PaginationItem, PaginationLink, PaginationNext, PaginationPrevious } from "@/components/ui/pagination";
+import { PageInfo } from "@/query/palette";
 
-interface PaginationControlsProps {
-  currentPage: number;
-  totalPages: number;
-}
-
-export const PaginationControls = ({ currentPage, totalPages }: PaginationControlsProps) => {
-  const hasPrevious = currentPage > 1;
-  const hasNext = currentPage < totalPages;
+export const PaginationControls = ({ page, pageCount }: PageInfo) => {
+  const hasPrevious = page > 1;
+  const hasNext = page < pageCount;
 
   // Generate page numbers to show
   const getVisiblePages = () => {
@@ -17,11 +13,11 @@ export const PaginationControls = ({ currentPage, totalPages }: PaginationContro
     const range = [];
     const rangeWithDots = [];
 
-    for (let i = Math.max(2, currentPage - delta); i <= Math.min(totalPages - 1, currentPage + delta); i++) {
+    for (let i = Math.max(2, page - delta); i <= Math.min(pageCount - 1, page + delta); i++) {
       range.push(i);
     }
 
-    if (currentPage - delta > 2) {
+    if (page - delta > 2) {
       rangeWithDots.push(1, "...");
     } else {
       rangeWithDots.push(1);
@@ -29,38 +25,38 @@ export const PaginationControls = ({ currentPage, totalPages }: PaginationContro
 
     rangeWithDots.push(...range);
 
-    if (currentPage + delta < totalPages - 1) {
-      rangeWithDots.push("...", totalPages);
-    } else if (totalPages > 1) {
-      rangeWithDots.push(totalPages);
+    if (page + delta < pageCount - 1) {
+      rangeWithDots.push("...", pageCount);
+    } else if (pageCount > 1) {
+      rangeWithDots.push(pageCount);
     }
 
     return rangeWithDots;
   };
 
-  if (totalPages <= 1) return null;
+  if (pageCount <= 1) return null;
 
   return (
     <Pagination>
       <PaginationContent>
         <PaginationItem>
-          <PaginationPrevious href={hasPrevious ? `?page=${currentPage - 1}` : undefined} className={!hasPrevious ? "pointer-events-none opacity-50" : ""} />
+          <PaginationPrevious href={hasPrevious ? `?page=${page - 1}` : undefined} className={!hasPrevious ? "pointer-events-none opacity-50" : ""} />
         </PaginationItem>
 
-        {getVisiblePages().map((page, index) => (
+        {getVisiblePages().map((_page, index) => (
           <PaginationItem key={index}>
-            {page === "..." ? (
+            {_page === "..." ? (
               <PaginationEllipsis />
             ) : (
-              <PaginationLink href={`?page=${page}`} isActive={page === currentPage}>
-                {page}
+              <PaginationLink href={`?page=${_page}`} isActive={_page === page}>
+                {_page}
               </PaginationLink>
             )}
           </PaginationItem>
         ))}
 
         <PaginationItem>
-          <PaginationNext href={hasNext ? `?page=${currentPage + 1}` : undefined} className={!hasNext ? "pointer-events-none opacity-50" : ""} />
+          <PaginationNext href={hasNext ? `?page=${page + 1}` : undefined} className={!hasNext ? "pointer-events-none opacity-50" : ""} />
         </PaginationItem>
       </PaginationContent>
     </Pagination>

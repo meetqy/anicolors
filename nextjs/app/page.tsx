@@ -1,4 +1,4 @@
-import { GET_PALETTE_LIST, PaletteListItem } from "@/query/palette";
+import { GET_PALETTE_LIST, PaletteListItem, PaletteListResponse } from "@/query/palette";
 import { getClient } from "@/lib/apollo-client";
 import { Button } from "@/components/ui/button";
 import { Sparkles, Upload, Palette, ArrowRight, Grid3X3 } from "lucide-react";
@@ -9,26 +9,21 @@ import Link from "next/link";
 export const dynamic = "force-dynamic";
 
 const getPalettesList = async (page: number = 1, pageSize: number = 24, sort: string = "createdAt:desc") => {
-  try {
-    const { data } = await getClient().query<{ palettes: PaletteListItem[] }>({
-      query: GET_PALETTE_LIST,
-      variables: {
-        pagination: { page, pageSize },
-        sort: [sort],
-      },
-      fetchPolicy: "no-cache",
-    });
+  const res = await getClient().query<PaletteListResponse>({
+    query: GET_PALETTE_LIST,
+    variables: {
+      pagination: { page, pageSize },
+      sort: [sort],
+    },
+  });
 
-    return data.palettes;
-  } catch (error) {
-    console.error("Error fetching palettes:", error);
-    return [];
-  }
+  return res.data;
 };
 
 export default async function Page() {
   // 获取最新的调色板数据用于展示
-  const featuredPalettes = await getPalettesList(1, 16, "createdAt:desc");
+  const { palettes_connection } = await getPalettesList(1, 16, "createdAt:desc");
+  const { nodes: featuredPalettes } = palettes_connection;
 
   return (
     <div className="mx-auto">

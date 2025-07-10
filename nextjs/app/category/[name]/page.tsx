@@ -19,7 +19,6 @@ const getPalettesList = async (name: string, page: number = 1) => {
     },
   });
 
-  console.log(res.data);
   return res.data;
 };
 
@@ -32,7 +31,8 @@ export default async function CategoryPage({ params, searchParams }: CategoryPag
   const { name } = await params;
   const page = parseInt((await searchParams).page || "1");
 
-  const { palettes, palettes_connection } = await getPalettesList(name, page);
+  const { palettes_connection } = await getPalettesList(name, page);
+  const { nodes: palettes, pageInfo } = palettes_connection;
 
   return (
     <div className="max-w-7xl mx-auto px-4 py-12">
@@ -55,7 +55,7 @@ export default async function CategoryPage({ params, searchParams }: CategoryPag
         </div>
       )}
 
-      <PaginationControls currentPage={page} totalPages={Math.ceil(palettes_connection.pageInfo.total / pageSize)} />
+      <PaginationControls {...pageInfo} />
     </div>
   );
 }
