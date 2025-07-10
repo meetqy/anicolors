@@ -14,6 +14,11 @@ interface PaletteActionsProps {
   id: string;
 }
 
+// 转换空格后的字符为首字母大写并删除空格
+const toCamelCase = (str: string) => {
+  return str.replace(/\s+(.)/g, (_, char) => char.toUpperCase()).replace(/\s+/g, "");
+};
+
 export const PaletteActions = ({ palette, id }: PaletteActionsProps) => {
   const { likes, isLiked, isLoading, toggleLike } = useToggleLike({
     paletteId: id,
@@ -25,7 +30,7 @@ export const PaletteActions = ({ palette, id }: PaletteActionsProps) => {
     toast.success("Palette link copied to clipboard!");
   };
 
-  const title = `${palette.category} ${palette.name} Palette - HiColors \n\n #hicolors #${palette.category} #${palette.name} #palette`;
+  const title = `${palette.category} ${palette.name} Palette - HiColors \n\n #hicolors #${toCamelCase(palette.category)} #${toCamelCase(palette.name)} #palette`;
   const host = process.env.NEXT_PUBLIC_SITE_URL || "https://hicolors.org";
 
   return (
