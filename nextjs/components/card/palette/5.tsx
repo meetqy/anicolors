@@ -1,19 +1,12 @@
 "use client";
 
-import { ColorPoint } from "@/components/palette/picker-colors";
 import Color from "color";
 import { withSave } from "../with-save";
 import { cn } from "@/lib/utils";
 import { ColorPointsOverlay } from "@/components/color-points-overlay";
+import { CardPaletteProps } from "./common";
 
-interface CardPalette5Props {
-  points: ColorPoint[];
-  image: string;
-  className?: string;
-  style?: React.CSSProperties;
-}
-
-const CardPalette5Base = ({ points, className, style, image }: CardPalette5Props) => {
+const CardPalette5Base = ({ points, className, style, image }: CardPaletteProps) => {
   const first = points[0];
 
   return (

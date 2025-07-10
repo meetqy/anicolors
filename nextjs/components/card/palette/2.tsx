@@ -1,18 +1,11 @@
 "use client";
 
-import { ColorPoint } from "@/components/palette/picker-colors";
 import Color from "color";
 import { withSave } from "../with-save";
 import { cn } from "@/lib/utils";
+import { CardPaletteProps } from "./common";
 
-interface CardPalette2Props {
-  points: ColorPoint[];
-  image: string;
-  className?: string;
-  style?: React.CSSProperties;
-}
-
-const CardPalette2Base = ({ points, className, style }: CardPalette2Props) => {
+const CardPalette2Base = ({ points, className, style }: CardPaletteProps) => {
   const end = Color(points[points.length - 1].color);
 
   return (

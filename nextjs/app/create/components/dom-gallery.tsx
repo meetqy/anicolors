@@ -7,6 +7,7 @@ import { CardPalette2 } from "@/components/card/palette/2";
 import { CardPalette3 } from "@/components/card/palette/3";
 import { CardPalette4 } from "@/components/card/palette/4";
 import { CardPalette5 } from "@/components/card/palette/5";
+import { CardPalette6 } from "@/components/card/palette/6";
 import { SaveableCardRef } from "@/components/card/with-save";
 import { ColorPoint } from "@/components/palette/picker-colors";
 import { Button } from "@/components/ui/button";
@@ -25,6 +26,7 @@ const photosData = {
     { aspect: "1/1", component: CardPalette3 },
     { aspect: "16/9", component: CardPalette4 },
     { aspect: "16/9", component: CardPalette5 },
+    { aspect: "9/16", component: CardPalette6 },
   ],
 };
 

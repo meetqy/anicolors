@@ -1,19 +1,12 @@
 "use client";
 
-import { ColorPoint } from "@/components/palette/picker-colors";
 import Color from "color";
 import { withSave } from "../with-save";
 import { cn } from "@/lib/utils";
 import { ColorPointsOverlay } from "@/components/color-points-overlay";
+import { CardPaletteProps } from "./common";
 
-interface CardPalette3Props {
-  points: ColorPoint[];
-  image: string;
-  className?: string;
-  style?: React.CSSProperties;
-}
-
-const CardPalette3Base = ({ points, className, style, image }: CardPalette3Props) => {
+const CardPalette3Base = ({ points, className, style, image }: CardPaletteProps) => {
   return (
     <div style={style} className={cn("w-[375px] flex flex-col aspect-square relative bg-background", className)}>
       <div className="absolute text-xl right-4 top-2 font-serif italic font-bold opacity-80 z-10 text-muted-foreground">HiColors</div>
