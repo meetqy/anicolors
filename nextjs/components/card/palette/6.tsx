@@ -27,7 +27,7 @@ const CardPalette6Base = ({ points, className, image }: CardPaletteProps) => {
         transformStyle: "preserve-3d",
       }}
     >
-      <div className="relative h-full pt-32">
+      <div className="relative h-full pt-[105px]">
         <div
           className="absolute z-10 bottom-[-85px] left-1/2 w-56 h-56 rounded-full -translate-x-1/2 rotate-x-[80deg]"
           style={{
