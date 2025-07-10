@@ -1,4 +1,4 @@
-import { GET_PALETTE_LIST, PaletteListItem, PaletteListResponse } from "@/query/palette";
+import { GET_PALETTE_LIST, PaletteListResponse } from "@/query/palette";
 import { getClient } from "@/lib/apollo-client";
 import { Button } from "@/components/ui/button";
 import { Sparkles, Upload, Palette, ArrowRight, Grid3X3 } from "lucide-react";
