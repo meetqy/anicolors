@@ -11,6 +11,7 @@ interface ColorPointsOverlayProps {
 export const ColorPointsOverlay = ({ points, image, className, imageClassName }: ColorPointsOverlayProps) => {
   const [imageLoaded, setImageLoaded] = useState(false);
   const [imageDimensions, setImageDimensions] = useState({ width: 0, height: 0, displayWidth: 0, displayHeight: 0 });
+  const [containerSize, setContainerSize] = useState({ width: 0, height: 0 });
   const imgRef = useRef<HTMLImageElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
 
@@ -18,6 +19,7 @@ export const ColorPointsOverlay = ({ points, image, className, imageClassName }:
     const updateImageDimensions = () => {
       if (imgRef.current && containerRef.current) {
         const img = imgRef.current;
+        const container = containerRef.current;
 
         setImageDimensions({
           width: img.naturalWidth,
@@ -25,12 +27,18 @@ export const ColorPointsOverlay = ({ points, image, className, imageClassName }:
           displayWidth: img.offsetWidth,
           displayHeight: img.offsetHeight,
         });
+
+        setContainerSize({
+          width: container.offsetWidth,
+          height: container.offsetHeight,
+        });
       }
     };
 
     const handleImageLoad = () => {
       setImageLoaded(true);
-      updateImageDimensions();
+      // 延迟更新以确保布局完成
+      setTimeout(updateImageDimensions, 0);
     };
 
     const img = imgRef.current;
@@ -44,28 +52,59 @@ export const ColorPointsOverlay = ({ points, image, className, imageClassName }:
     }
   }, [image]);
 
+  // 添加 ResizeObserver 来监听容器尺寸变化
+  useEffect(() => {
+    if (!containerRef.current) return;
+
+    const resizeObserver = new ResizeObserver(() => {
+      if (imageLoaded) {
+        setTimeout(() => {
+          if (imgRef.current && containerRef.current) {
+            const img = imgRef.current;
+            const container = containerRef.current;
+
+            setImageDimensions((prev) => ({
+              ...prev,
+              displayWidth: img.offsetWidth,
+              displayHeight: img.offsetHeight,
+            }));
+
+            setContainerSize({
+              width: container.offsetWidth,
+              height: container.offsetHeight,
+            });
+          }
+        }, 0);
+      }
+    });
+
+    resizeObserver.observe(containerRef.current);
+
+    return () => resizeObserver.disconnect();
+  }, [imageLoaded]);
+
   return (
     <div ref={containerRef} className={`relative ${className}`}>
       <picture>
         <img ref={imgRef} alt="point image" src={image} className={`object-contain h-full mx-auto ${imageClassName}`} onLoad={() => setImageLoaded(true)} />
       </picture>
 
-      {imageLoaded && (
+      {imageLoaded && imageDimensions.displayWidth > 0 && (
         <div className="absolute inset-0">
           {points.map((point) => {
-            // 计算图片在容器中的实际显示区域
-            const containerRect = containerRef.current?.getBoundingClientRect();
-            const imgRect = imgRef.current?.getBoundingClientRect();
+            // 计算图片在容器中的居中位置
+            const containerWidth = containerSize.width;
+            const containerHeight = containerSize.height;
+            const imgWidth = imageDimensions.displayWidth;
+            const imgHeight = imageDimensions.displayHeight;
 
-            if (!containerRect || !imgRect) return null;
-
-            // 计算图片相对于容器的偏移
-            const imgOffsetX = imgRect.left - containerRect.left;
-            const imgOffsetY = imgRect.top - containerRect.top;
+            // 计算图片在容器中的偏移（居中对齐）
+            const imgOffsetX = (containerWidth - imgWidth) / 2;
+            const imgOffsetY = (containerHeight - imgHeight) / 2;
 
             // 将标准化坐标转换为图片显示区域内的位置
-            const relativeX = (point.x / 384) * imageDimensions.displayWidth;
-            const relativeY = (point.y / 384) * imageDimensions.displayHeight;
+            const relativeX = (point.x / 384) * imgWidth;
+            const relativeY = (point.y / 384) * imgHeight;
 
             return (
               <div
