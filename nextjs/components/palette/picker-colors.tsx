@@ -86,13 +86,15 @@ export default function PickerColors({ image, initialPoints, onColorsChange, cla
   useEffect(() => {
     if (!canvasRef.current || !imageRef.current) return;
 
-    setImageLoading(true);
-    updateCanvas();
-    const extractedColors = extractMainColors(canvasRef.current, imageRef.current, getNormalizedPosition, 5);
-    setColorPoints(extractedColors);
-    onColorsChangeEnter?.(extractedColors);
-    onColorsChange?.(extractedColors);
-    setImageLoading(false);
+    imageRef.current.onload = () => {
+      setImageLoading(true);
+      updateCanvas();
+      const extractedColors = extractMainColors(canvasRef.current!, imageRef.current!, getNormalizedPosition, 5);
+      setColorPoints(extractedColors);
+      onColorsChangeEnter?.(extractedColors);
+      onColorsChange?.(extractedColors);
+      setImageLoading(false);
+    };
   }, [canvasRef, imageRef, updateCanvas, getNormalizedPosition, onColorsChangeEnter, onColorsChange]);
 
   const getConstrainedPosition = useCallback((x: number, y: number) => {
