@@ -83,18 +83,17 @@ export default function PickerColors({ image, initialPoints, onColorsChange, cla
     };
   }, []);
 
-  const handleImageLoad = () => {
+  useEffect(() => {
+    if (!canvasRef.current || !imageRef.current) return;
+
     setImageLoading(true);
     updateCanvas();
-
-    // 提取主色调
-    if (!imageRef.current || !canvasRef.current) return;
     const extractedColors = extractMainColors(canvasRef.current, imageRef.current, getNormalizedPosition, 5);
     setColorPoints(extractedColors);
     onColorsChangeEnter?.(extractedColors);
     onColorsChange?.(extractedColors);
     setImageLoading(false);
-  };
+  }, [image, canvasRef.current, imageRef.current]);
 
   const getConstrainedPosition = useCallback((x: number, y: number) => {
     if (!imageRef.current) return { x, y };
@@ -332,7 +331,7 @@ export default function PickerColors({ image, initialPoints, onColorsChange, cla
     image && (
       <div ref={containerRef} className="relative overflow-hidden">
         <picture>
-          <img fetchPriority="high" ref={imageRef} src={image} alt="Color picker" onLoad={handleImageLoad} className={cn("mx-auto max-h-[512px]", classNames?.image)} draggable={false} />
+          <img fetchPriority="high" crossOrigin="anonymous" ref={imageRef} src={image} alt="Color picker" className={cn("mx-auto max-h-[512px]", classNames?.image)} draggable={false} />
         </picture>
 
         <canvas ref={canvasRef} className="hidden" />
