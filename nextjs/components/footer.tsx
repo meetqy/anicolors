@@ -7,8 +7,8 @@ export const Footer = () => {
   const friendLinks: FriendLink[] = [
     { name: "ShowMeBestAI", url: "https://www.showmebest.ai" },
     { name: "Twelve Tools", url: "https://twelve.tools" },
+    { name: "Hiaitools", url: "https://hiaitools.com" },
     { name: "Startup Fame", url: "https://startupfa.me/s/hicolors?utm_source=hicolors.org" },
-    { name: "It's Sofy", url: "https://itsofy.com/" },
   ];
 
   return (
