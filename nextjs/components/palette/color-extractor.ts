@@ -15,7 +15,7 @@ const isWarmColor = (rgb: number[]) => {
 
   // 暖色调通常红色和黄色成分较高，蓝色成分较低
   // 红色 > 蓝色，且 (红色 + 绿色) > 蓝色 * 1.5
-  return r > b && (r + g) > b * 1.5;
+  return r > b && r + g > b * 1.5;
 };
 
 // 计算颜色的饱和度和亮度
@@ -32,10 +32,7 @@ const getColorVibrancy = (rgb: number[]) => {
 
   // 计算艳丽度：饱和度 * 适中的亮度权重
   // 亮度在 0.3-0.8 之间的颜色更艳丽
-  const brightnessWeight =
-    brightness < 0.3 || brightness > 0.8
-      ? Math.max(0, 1 - Math.abs(brightness - 0.55) * 2)
-      : 1;
+  const brightnessWeight = brightness < 0.3 || brightness > 0.8 ? Math.max(0, 1 - Math.abs(brightness - 0.55) * 2) : 1;
 
   return saturation * brightnessWeight;
 };
@@ -167,7 +164,7 @@ export const extractMainColors = (
     .sort((a, b) => {
       // 先按暖色调排序，暖色调优先
       if (a.isWarm !== b.isWarm) {
-        return a.isWarm ? -1 : 1;
+        return a.isWarm ? 1 : -1;
       }
       // 同类型颜色按艳丽度排序
       return b.vibrancy - a.vibrancy;
