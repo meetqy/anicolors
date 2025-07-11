@@ -6,9 +6,9 @@ import Color from "color";
 import { LuUpload } from "react-icons/lu";
 import { getColorName } from "@/lib/nearest";
 
-type GeneratorProps = { initialPoints?: ColorPoint[]; onColorsChangeEnter?: (points: ColorPoint[]) => void; initImage?: string };
+type GeneratorProps = { initialPoints?: ColorPoint[]; onColorsChangeEnter?: (points: ColorPoint[]) => void; initImage?: string; onImageChange?: (image: string) => void };
 
-export function Generator({ initialPoints = [], onColorsChangeEnter, initImage }: GeneratorProps) {
+export function Generator({ initialPoints = [], onColorsChangeEnter, initImage, onImageChange }: GeneratorProps) {
   const [image, setImage] = useState<string | null>(initImage || null);
   const [colors, setColors] = useState<ColorPoint[]>(initialPoints || []);
 
@@ -31,12 +31,13 @@ export function Generator({ initialPoints = [], onColorsChangeEnter, initImage }
         reader.onload = (e) => {
           const newImage = e.target?.result as string;
           setImage(newImage);
-          setColors([]); // 重置颜色标记
+          setColors([]);
+          onImageChange?.(newImage);
         };
         reader.readAsDataURL(file);
       }
     },
-    [setImage, setColors]
+    [setImage, setColors, onImageChange]
   );
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
