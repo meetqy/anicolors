@@ -14,7 +14,8 @@ export const PaletteCard = ({ palette }: PaletteCardProps) => {
 
   const preloadImage = useCallback(() => {
     const img = new Image();
-    img.src = getAssetUrl(palette.image.url); // 预加载高分辨率原图
+    img.crossOrigin = "anonymous";
+    img.src = getAssetUrl(palette.image.url);
   }, [palette.image.url]);
 
   return (
@@ -39,6 +40,7 @@ export const PaletteCard = ({ palette }: PaletteCardProps) => {
           {/* 额外的流畅背景层 */}
           <div style={{ backgroundColor: bgColor }} className="absolute inset-0 rounded-md opacity-100 group-hover:opacity-0 transition-opacity duration-300" />
           <img
+            crossOrigin="anonymous"
             src={getAssetUrl(palette.image.url, 320)}
             srcSet={`
               ${getAssetUrl(palette.image.url, 320)} 1x,
