@@ -25,11 +25,11 @@ interface PickerColorsProps {
 }
 
 export default function PickerColors({ image, initialPoints, onColorsChange, classNames, onColorsChangeEnter }: PickerColorsProps) {
-  const [colorPoints, setColorPoints] = useState<ColorPoint[]>([]);
+  const [colorPoints, setColorPoints] = useState<ColorPoint[]>(initialPoints || []);
   const [draggedPoint, setDraggedPoint] = useState<number | null>(null);
   const [showMagnifier, setShowMagnifier] = useState<number | null>(null);
   const [magnifierPos, setMagnifierPos] = useState({ x: 0, y: 0 });
-  const [imageLoaded, setImageLoaded] = useState(false);
+  const [imageLoading, setImageLoading] = useState(true);
 
   const imageRef = useRef<HTMLImageElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -84,13 +84,16 @@ export default function PickerColors({ image, initialPoints, onColorsChange, cla
   }, []);
 
   const handleImageLoad = () => {
+    setImageLoading(true);
     updateCanvas();
-    setImageLoaded(true);
 
-    const extractedColors = extractMainColors(canvasRef.current!, imageRef.current!, getNormalizedPosition, 5);
+    // 提取主色调
+    if (!imageRef.current || !canvasRef.current) return;
+    const extractedColors = extractMainColors(canvasRef.current, imageRef.current, getNormalizedPosition, 5);
     setColorPoints(extractedColors);
     onColorsChangeEnter?.(extractedColors);
     onColorsChange?.(extractedColors);
+    setImageLoading(false);
   };
 
   const getConstrainedPosition = useCallback((x: number, y: number) => {
@@ -128,29 +131,6 @@ export default function PickerColors({ image, initialPoints, onColorsChange, cla
       y: isFinite(y) ? y : 0,
     };
   }, []);
-
-  // Initialize default color points
-  useEffect(() => {
-    if (image && colorPoints.length === 0 && imageLoaded) {
-      if (initialPoints && initialPoints.length > 0) {
-        setColorPoints(initialPoints);
-      }
-    }
-  }, [initialPoints, imageLoaded]);
-
-  // Reset imageLoaded when image changes
-  useEffect(() => {
-    if (!image) return;
-
-    // Reset state when image changes
-    setImageLoaded(false);
-    setColorPoints([]);
-
-    // If image is already loaded, trigger handleImageLoad
-    if (imageRef.current?.complete) {
-      handleImageLoad();
-    }
-  }, [image]);
 
   const updateMagnifier = useCallback((x: number, y: number) => {
     if (!canvasRef.current || !magnifierCanvasRef.current || !imageRef.current) return;
@@ -352,13 +332,22 @@ export default function PickerColors({ image, initialPoints, onColorsChange, cla
     image && (
       <div ref={containerRef} className="relative overflow-hidden">
         <picture>
-          <img fetchPriority="high" ref={imageRef} src={image} alt="Color picker" onLoad={handleImageLoad} className={cn("mx-auto max-h-[512px]", classNames?.image)} draggable={false} />
+          <img
+            fetchPriority="high"
+            ref={imageRef}
+            src={image}
+            crossOrigin="anonymous"
+            alt="Color picker"
+            onLoad={handleImageLoad}
+            className={cn("mx-auto max-h-[512px]", classNames?.image)}
+            draggable={false}
+          />
         </picture>
 
         <canvas ref={canvasRef} className="hidden" />
         <canvas ref={magnifierCanvasRef} className="hidden" />
 
-        {imageLoaded &&
+        {!imageLoading &&
           colorPoints.map((point) => {
             const displayPos = getDisplayPosition(point.x, point.y);
             return (
