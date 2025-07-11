@@ -9,8 +9,18 @@ import { getColorName } from "@/lib/nearest";
 type GeneratorProps = { initialPoints?: ColorPoint[]; onColorsChangeEnter?: (points: ColorPoint[]) => void; initImage?: string; onImageChange?: (image: string) => void };
 
 export function Generator({ initialPoints = [], onColorsChangeEnter, initImage, onImageChange }: GeneratorProps) {
-  const [image, setImage] = useState<string | null>(initImage || null);
-  const [colors, setColors] = useState<ColorPoint[]>(initialPoints || []);
+  const [image, setImage] = useState<string | null>(null);
+  const [colors, setColors] = useState<ColorPoint[]>([]);
+
+  useEffect(() => {
+    if (initImage && initImage !== image) {
+      setImage(initImage);
+    }
+
+    if (initialPoints?.length > 0 && colors.length === 0) {
+      setColors(initialPoints);
+    }
+  }, [initImage, initialPoints]);
 
   useEffect(() => {
     onColorsChangeEnter?.(
@@ -84,15 +94,7 @@ export function Generator({ initialPoints = [], onColorsChangeEnter, initImage, 
           <>
             <div className="bg-muted flex aspect-[5/4] h-full w-full min-w-96 items-center justify-center p-4 lg:w-2/3 lg:border-r">
               <div className="min-w-96">
-                <PickerColors
-                  key={image}
-                  initialPoints={colors}
-                  image={image}
-                  onColorsChangeEnter={setColors}
-                  classNames={{
-                    image: "crossOrigin-anonymous",
-                  }}
-                />
+                <PickerColors key={image} initialPoints={colors} image={image} onColorsChangeEnter={setColors} />
               </div>
             </div>
 
