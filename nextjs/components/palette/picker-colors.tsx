@@ -87,13 +87,10 @@ export default function PickerColors({ image, initialPoints, onColorsChange, cla
     updateCanvas();
     setImageLoaded(true);
 
-    // 图片加载完成后，如果没有初始点且当前没有颜色点，则提取主要颜色
-    if (!initialPoints?.length && colorPoints.length === 0) {
-      const extractedColors = extractMainColors(canvasRef.current!, imageRef.current!, getNormalizedPosition, 5);
-      setColorPoints(extractedColors);
-      onColorsChangeEnter?.(extractedColors);
-      onColorsChange?.(extractedColors);
-    }
+    const extractedColors = extractMainColors(canvasRef.current!, imageRef.current!, getNormalizedPosition, 5);
+    setColorPoints(extractedColors);
+    onColorsChangeEnter?.(extractedColors);
+    onColorsChange?.(extractedColors);
   };
 
   const getConstrainedPosition = useCallback((x: number, y: number) => {
@@ -139,11 +136,20 @@ export default function PickerColors({ image, initialPoints, onColorsChange, cla
         setColorPoints(initialPoints);
       }
     }
-  }, [image, colorPoints.length, initialPoints, imageLoaded]);
+  }, [initialPoints, imageLoaded]);
 
   // Reset imageLoaded when image changes
   useEffect(() => {
+    if (!image) return;
+
+    // Reset state when image changes
     setImageLoaded(false);
+    setColorPoints([]);
+
+    // If image is already loaded, trigger handleImageLoad
+    if (imageRef.current?.complete) {
+      handleImageLoad();
+    }
   }, [image]);
 
   const updateMagnifier = useCallback((x: number, y: number) => {
