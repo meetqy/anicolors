@@ -24,6 +24,10 @@ export const Gallery = ({ palette }: { palette: Palette }) => {
           photos={palette.gallery.map((item) => {
             const ratio = item.width / item.height;
 
+            // 删除_和后面的部分
+            // 例如: "image_123.jpg" -> "image"
+            const alt = item.url.split("/").pop()?.split("_").slice(0, -1).join(" ");
+
             return {
               src: getAssetUrl(item.url, 300),
               srcSet: [
@@ -33,7 +37,7 @@ export const Gallery = ({ palette }: { palette: Palette }) => {
               ],
               width: item.width,
               height: item.height,
-              alt: palette.name,
+              alt: palette.name + " " + alt,
             };
           })}
         />
