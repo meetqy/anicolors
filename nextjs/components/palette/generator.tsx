@@ -11,16 +11,49 @@ type GeneratorProps = { initialPoints?: ColorPoint[]; onColorsChangeEnter?: (poi
 export function Generator({ initialPoints = [], onColorsChangeEnter, initImage, onImageChange }: GeneratorProps) {
   const [image, setImage] = useState<string | null>(null);
   const [colors, setColors] = useState<ColorPoint[]>([]);
+  const [isDraggedImage, setIsDraggedImage] = useState(false);
+
+  // Convert image URL to base64
+  const convertToBase64 = useCallback(async (imageUrl: string): Promise<string> => {
+    if (imageUrl.startsWith("data:")) {
+      return imageUrl; // Already base64
+    }
+
+    try {
+      const response = await fetch(imageUrl);
+      const blob = await response.blob();
+
+      return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onload = () => resolve(reader.result as string);
+        reader.onerror = reject;
+        reader.readAsDataURL(blob);
+      });
+    } catch (error) {
+      console.error("Failed to convert image to base64:", error);
+      return imageUrl; // Return original URL if conversion fails
+    }
+  }, []);
 
   useEffect(() => {
+    // 如果是拖拽的图片，不要被 initImage 覆盖
+    if (isDraggedImage) return;
+
     if (initImage && initImage !== image) {
-      setImage(initImage);
+      if (initImage.startsWith("data:")) {
+        setImage(initImage);
+      } else {
+        convertToBase64(initImage).then((base64Image) => {
+          setImage(base64Image);
+          onImageChange?.(base64Image);
+        });
+      }
     }
 
     if (initialPoints?.length > 0 && colors.length === 0) {
       setColors(initialPoints);
     }
-  }, [initImage, initialPoints]);
+  }, [initImage, initialPoints, image, convertToBase64, onImageChange, isDraggedImage]);
 
   useEffect(() => {
     onColorsChangeEnter?.(
@@ -42,12 +75,13 @@ export function Generator({ initialPoints = [], onColorsChangeEnter, initImage, 
           const newImage = e.target?.result as string;
           setImage(newImage);
           setColors([]); // 重置颜色标记
+          setIsDraggedImage(true); // 标记为拖拽图片
           onImageChange?.(newImage);
         };
         reader.readAsDataURL(file);
       }
     },
-    [onImageChange, setImage, setColors]
+    [onImageChange]
   );
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
