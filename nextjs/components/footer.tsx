@@ -8,7 +8,7 @@ export const Footer = () => {
     { name: "ShowMeBestAI", url: "https://www.showmebest.ai" },
     { name: "Twelve Tools", url: "https://twelve.tools" },
     { name: "Hiaitools", url: "https://hiaitools.com" },
-    { name: "Victrays.com", url: "https://victrays.com/" },
+    { name: "Victrays", url: "https://victrays.com/" },
   ];
 
   return (
