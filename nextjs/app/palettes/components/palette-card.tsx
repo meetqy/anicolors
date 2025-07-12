@@ -23,7 +23,7 @@ export const PaletteCard = ({ palette }: PaletteCardProps) => {
       <Link
         href={`/palettes/${palette.documentId}`}
         className="group"
-        onClick={preloadImage}
+        onMouseDown={preloadImage}
         style={{
           perspective: "1000px",
           transformStyle: "preserve-3d",
