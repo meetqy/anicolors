@@ -110,7 +110,7 @@ export default function PickerColors({ image, initialPoints, onColorsChange, cla
         init();
       };
     }
-  }, [canvasRef, imageRef, updateCanvas, getNormalizedPosition, onColorsChangeEnter, onColorsChange]);
+  }, [canvasRef, imageRef, updateCanvas, getNormalizedPosition, onColorsChangeEnter, onColorsChange, initialPoints]);
 
   const getConstrainedPosition = useCallback((x: number, y: number) => {
     if (!imageRef.current) return { x, y };
