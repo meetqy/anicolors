@@ -9,8 +9,14 @@ import { getColorName } from "@/lib/nearest";
 type GeneratorProps = { initialPoints?: ColorPoint[]; onColorsChangeEnter?: (points: ColorPoint[]) => void; initImage?: string; onImageChange?: (image: string) => void };
 
 export function Generator({ initialPoints = [], onColorsChangeEnter, initImage, onImageChange }: GeneratorProps) {
-  const [image, setImage] = useState<string | null>(initImage || null);
+  const [image, setImage] = useState<string | null>(null);
   const [colors, setColors] = useState<ColorPoint[]>(initialPoints || []);
+
+  useEffect(() => {
+    if (initImage) {
+      setImage(initImage);
+    }
+  }, [initImage]);
 
   useEffect(() => {
     onColorsChangeEnter?.(
