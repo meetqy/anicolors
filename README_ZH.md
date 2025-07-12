@@ -4,7 +4,12 @@
 
 快速搭建一个从图片中提取颜色，生成 5 色调色板的开源项目。
 
-在线地址：[hicolors.org](https://hicolors.org)
+在线 DEMO：[hicolors.org](https://hicolors.org)
+
+开源地址：
+
+- https://github.com/meetqy/hicolors
+- https://gitee.com/meetqy/hicolors
 
 ## 特色
 

@@ -6,6 +6,11 @@ Quickly set up an open-source project that extracts colors from images and gener
 
 Live Demo: [hicolors.org](https://hicolors.org)
 
+Open-source repositories:
+
+- https://github.com/meetqy/hicolors
+- https://gitee.com/meetqy/hicolors
+
 ## Features
 
 - ✅ Easy to use - drag and drop to automatically identify colors in images
