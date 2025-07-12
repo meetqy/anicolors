@@ -7,6 +7,7 @@ import { Header } from "@/components/header";
 import { Toaster } from "@/components/ui/sonner";
 import { ApolloWrapper } from "@/components/apollo-wrapper";
 import { Footer } from "@/components/footer";
+import NextTopLoader from "nextjs-toploader";
 
 export const metadata: Metadata = {
   title: "Discover 5-Color Palettes Extracted from Real Images",
@@ -34,6 +35,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
   return (
     <html lang="en" className={`${geist.variable} ${geistMono.variable}`}>
       <body>
+        <NextTopLoader color="#000" />
         <ApolloWrapper>
           <Header />
           {children}
