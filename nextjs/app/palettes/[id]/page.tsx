@@ -43,8 +43,10 @@ export const generateMetadata = async ({ params }: { params: Promise<{ id: strin
   };
 };
 
-export default async function Page({ params }: { params: Promise<{ id: string }> }) {
+export default async function Page({ params, searchParams }: { params: Promise<{ id: string }>; searchParams: Promise<{ page?: string }> }) {
   const { id } = await params;
+  const { page } = await searchParams;
+
   const palette = await getPaletteData(id);
   const points = palette.points;
   const image = getAssetUrl(palette.image.url);
@@ -89,7 +91,7 @@ export default async function Page({ params }: { params: Promise<{ id: string }>
         <h2>Color Palette Gallery</h2>
         <Gallery palette={palette} />
         <h2>More</h2>
-        <MoreList category={palette.category} colors={points.map((item) => item.name!)} />
+        <MoreList category={palette.category} page={parseInt(page || "1")} colors={points.map((item) => item.name!)} />
       </div>
     </div>
   );
