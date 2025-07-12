@@ -65,4 +65,4 @@ pnpm dev
 
 ## 开源协议
 
-本项目采用 [AGPL License]()
+本项目采用 [AGPL License](./LICENSE) 协议开源。
