@@ -9,6 +9,7 @@ import { GET_PALETTE, Palette } from "@/query/palette";
 import { Metadata } from "next";
 import Link from "next/link";
 import { Shapes } from "lucide-react";
+import { MoreList } from "./more-list";
 
 const getPaletteData = async (id: string) => {
   const res = await getClient().query({
@@ -87,6 +88,8 @@ export default async function Page({ params }: { params: Promise<{ id: string }>
       <div className="max-w-screen-xl prose mx-auto px-4 lg:px-0 mt-24">
         <h2>Color Palette Gallery</h2>
         <Gallery palette={palette} />
+        <h2>More</h2>
+        <MoreList category={palette.category} colors={points.map((item) => item.name!)} />
       </div>
     </div>
   );
