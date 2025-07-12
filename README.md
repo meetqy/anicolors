@@ -2,7 +2,7 @@
 
 ![cover](https://hicolors.org/og.jpg)
 
-Extract colors from anime/game images and generate 5-color palettes!
+Quickly set up an open-source project that extracts colors from images and generates a 5-color palette.
 
 Live Demo: [hicolors.org](https://hicolors.org)
 
@@ -13,6 +13,7 @@ Live Demo: [hicolors.org](https://hicolors.org)
 - ✅ Provides various palette styles to meet different needs
 - ✅ Supports custom color point positioning for personalized palettes
 - ✅ Export palettes as JSON format for easy saving and sharing
+- ✅ Based on Strapi, allowing for future expansion of features such as user management and permission control
 
 ## Local Deployment
 
