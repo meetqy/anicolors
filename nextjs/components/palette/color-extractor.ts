@@ -15,7 +15,7 @@ const isWarmColor = (rgb: number[]) => {
 
   // 暖色调通常红色和黄色成分较高，蓝色成分较低
   // 红色 > 蓝色，且 (红色 + 绿色) > 蓝色 * 1.5
-  return r > b && (r + g) > b * 1.5;
+  return r > b && r + g > b * 1.5;
 };
 
 // 计算颜色的饱和度和亮度
@@ -32,10 +32,7 @@ const getColorVibrancy = (rgb: number[]) => {
 
   // 计算艳丽度：饱和度 * 适中的亮度权重
   // 亮度在 0.3-0.8 之间的颜色更艳丽
-  const brightnessWeight =
-    brightness < 0.3 || brightness > 0.8
-      ? Math.max(0, 1 - Math.abs(brightness - 0.55) * 2)
-      : 1;
+  const brightnessWeight = brightness < 0.3 || brightness > 0.8 ? Math.max(0, 1 - Math.abs(brightness - 0.55) * 2) : 1;
 
   return saturation * brightnessWeight;
 };
@@ -68,11 +65,6 @@ export const extractMainColors = (
       // 排除黑色和白色附近的颜色
       const brightness = (r + g + b) / 3;
       if (brightness < 30 || brightness > 225) continue; // 排除过暗和过亮的颜色
-
-      // 排除灰色调（RGB值差异太小的颜色）
-      const maxRGB = Math.max(r, g, b);
-      const minRGB = Math.min(r, g, b);
-      if (maxRGB - minRGB < 20) continue; // 排除饱和度太低的颜色
 
       // 量化颜色
       const quantizedR = Math.round(r / 24) * 24;
@@ -137,40 +129,30 @@ export const extractMainColors = (
     }
   }
 
-  return selectedColors
-    .map((colorEntry, index) => {
-      const [, colorInfo] = colorEntry;
-      const [r, g, b] = colorInfo.rgb;
+  return selectedColors.map((colorEntry, index) => {
+    const [, colorInfo] = colorEntry;
+    const [r, g, b] = colorInfo.rgb;
 
-      // 选择该颜色的中心位置
-      const positions = colorInfo.positions;
-      const centerPos = positions[Math.floor(positions.length / 2)];
+    // 选择该颜色的中心位置
+    const positions = colorInfo.positions;
+    const centerPos = positions[Math.floor(positions.length / 2)];
 
-      // 转换为显示坐标系
-      const rect = imageElement.getBoundingClientRect();
-      const displayX = (centerPos.x / canvas.width) * rect.width;
-      const displayY = (centerPos.y / canvas.height) * rect.height;
+    // 转换为显示坐标系
+    const rect = imageElement.getBoundingClientRect();
+    const displayX = (centerPos.x / canvas.width) * rect.width;
+    const displayY = (centerPos.y / canvas.height) * rect.height;
 
-      // 转换为标准化坐标
-      const normalizedPos = getNormalizedPosition(displayX, displayY);
+    // 转换为标准化坐标
+    const normalizedPos = getNormalizedPosition(displayX, displayY);
 
-      return {
-        id: index + 1,
-        x: normalizedPos.x,
-        y: normalizedPos.y,
-        color: `rgb(${r}, ${g}, ${b})`,
-        name: getColorName(Color(`rgb(${r}, ${g}, ${b})`).hex())?.name || "unknown",
-        vibrancy: getColorVibrancy([r, g, b]),
-        isWarm: isWarmColor([r, g, b]),
-      };
-    })
-    .sort((a, b) => {
-      // 先按暖色调排序，暖色调优先
-      if (a.isWarm !== b.isWarm) {
-        return a.isWarm ? -1 : 1;
-      }
-      // 同类型颜色按艳丽度排序
-      return b.vibrancy - a.vibrancy;
-    })
-    .map((color, index) => ({ ...color, id: index + 1 })); // 重新分配 ID
+    return {
+      id: index + 1,
+      x: normalizedPos.x,
+      y: normalizedPos.y,
+      color: `rgb(${r}, ${g}, ${b})`,
+      name: getColorName(Color(`rgb(${r}, ${g}, ${b})`).hex())?.name || "unknown",
+      vibrancy: getColorVibrancy([r, g, b]),
+      isWarm: isWarmColor([r, g, b]),
+    };
+  });
 };
