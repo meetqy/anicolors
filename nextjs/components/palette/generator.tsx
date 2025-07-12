@@ -88,10 +88,8 @@ export function Generator({ initialPoints = [], onColorsChangeEnter, initImage, 
           </div>
         ) : (
           <>
-            <div className="bg-muted flex aspect-[5/4] h-full w-full min-w-96 items-center justify-center p-4 lg:w-2/3 lg:border-r">
-              <div className="min-w-96">
-                <PickerColors key={image} initialPoints={colors} image={image} onColorsChangeEnter={setColors} />
-              </div>
+            <div className="bg-muted flex lg:aspect-[5/4] h-full w-full lg:min-w-96 items-center justify-center p-4 lg:w-2/3 lg:border-r">
+              <PickerColors key={image} initialPoints={colors} image={image} onColorsChangeEnter={setColors} />
             </div>
 
             <aside className="flex w-full flex-col p-4 lg:w-1/3">
@@ -108,9 +106,9 @@ export function Generator({ initialPoints = [], onColorsChangeEnter, initImage, 
                       background: color.color,
                       color: Color(color.color).isLight() ? "black" : "white",
                     }}
-                    className="relative flex h-36 w-full items-center overflow-hidden rounded-lg lg:h-16"
+                    className="relative flex flex-1 lg:flex-auto lg:aspect-auto aspect-square w-full items-center overflow-hidden rounded-lg lg:h-16"
                   >
-                    <span className="absolute right-4 bottom-2 font-mono text-sm opacity-90">{Color(color.color).hex()}</span>
+                    <span className="absolute lg:inline-block hidden right-4 bottom-2 font-mono text-sm opacity-90">{Color(color.color).hex()}</span>
                   </div>
                 ))}
               </div>

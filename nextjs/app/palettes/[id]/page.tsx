@@ -72,7 +72,7 @@ export default async function Page({ params, searchParams }: { params: Promise<{
         ))}
       </div>
 
-      <div className="flex flex-wrap gap-x-2 gap-y-4 max-w-screen-md mx-auto px-4 lg:px-0 mt-12 justify-center">
+      <div className="flex flex-wrap gap-x-2 gap-y-4 max-w-screen-md mx-auto px-4 lg:px-0 mt-12 lg:justify-center">
         <Button variant="outline" className="rounded-full capitalize" size="sm" asChild>
           <Link href={`/category/${palette.category}`}>
             <Shapes className="size-4" />

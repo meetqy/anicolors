@@ -348,7 +348,7 @@ export default function PickerColors({ image, initialPoints, onColorsChange, cla
     image && (
       <div ref={containerRef} className="relative overflow-hidden">
         <picture>
-          <img fetchPriority="high" ref={imageRef} src={image} crossOrigin="anonymous" alt="Color picker" className={cn("mx-auto max-h-[512px]", classNames?.image)} draggable={false} />
+          <img fetchPriority="high" ref={imageRef} src={image} crossOrigin="anonymous" alt="Color picker" className={cn("mx-auto lg:max-h-[512px]", classNames?.image)} draggable={false} />
         </picture>
 
         <canvas ref={canvasRef} className="hidden" />
