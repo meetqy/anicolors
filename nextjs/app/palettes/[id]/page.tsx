@@ -84,7 +84,10 @@ export default async function Page({ params }: { params: Promise<{ id: string }>
         ))}
       </div>
 
-      <Gallery palette={palette} />
+      <div className="max-w-screen-xl prose mx-auto px-4 lg:px-0 mt-24">
+        <h2>Color Palette Gallery</h2>
+        <Gallery palette={palette} />
+      </div>
     </div>
   );
 }
