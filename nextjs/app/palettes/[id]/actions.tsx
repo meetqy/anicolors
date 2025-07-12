@@ -34,8 +34,8 @@ export const PaletteActions = ({ palette, id }: PaletteActionsProps) => {
   const host = process.env.NEXT_PUBLIC_SITE_URL || "https://hicolors.org";
 
   return (
-    <div className="flex items-center justify-between max-w-screen-lg mx-auto px-4 lg:px-0 mt-4">
-      <div className="flex gap-2">
+    <div className="flex items-center flex-wrap justify-between max-w-screen-lg mx-auto px-4 lg:px-0 mt-4 gap-4">
+      <div className="flex gap-2 flex-wrap">
         <Button
           variant="outline"
           className={cn({
@@ -55,14 +55,16 @@ export const PaletteActions = ({ palette, id }: PaletteActionsProps) => {
             <TwitterIcon /> Twitter
           </Link>
         </Button>
+      </div>
+
+      <div className="flex justify-between items-center flex-1">
         <Button>
           <Link href={`/create?id=${id}`}>Custom Maker</Link>
         </Button>
+        <time suppressHydrationWarning className="text-muted-foreground">
+          {new Date(palette.createdAt).toLocaleString()}
+        </time>
       </div>
-
-      <time suppressHydrationWarning className="text-muted-foreground">
-        {new Date(palette.createdAt).toLocaleString()}
-      </time>
     </div>
   );
 };
