@@ -21,7 +21,7 @@ export const Maker = ({ id }: { id: string }) => {
   useEffect(() => {
     if (data?.palette) {
       setPoints(data.palette.points);
-      setImage(getAssetUrl(data.palette.image.url));
+      setImage(getAssetUrl(data.palette.image.url, 960));
     }
   }, [data, setImage]);
 

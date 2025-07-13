@@ -15,7 +15,7 @@ export const PaletteCard = ({ palette }: PaletteCardProps) => {
   const preloadImage = useCallback(() => {
     const img = new Image();
     img.crossOrigin = "anonymous";
-    img.src = getAssetUrl(palette.image.url);
+    img.src = getAssetUrl(palette.image.url, 960);
   }, [palette.image.url]);
 
   return (
@@ -23,7 +23,7 @@ export const PaletteCard = ({ palette }: PaletteCardProps) => {
       <Link
         href={`/palettes/${palette.documentId}`}
         className="group"
-        onMouseDown={preloadImage}
+        onMouseEnter={preloadImage}
         style={{
           perspective: "1000px",
           transformStyle: "preserve-3d",

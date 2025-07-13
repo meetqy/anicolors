@@ -49,7 +49,7 @@ export default async function Page({ params, searchParams }: { params: Promise<{
 
   const palette = await getPaletteData(id);
   const points = palette.points;
-  const image = getAssetUrl(palette.image.url);
+  const image = getAssetUrl(palette.image.url, 960);
 
   return (
     <div className="mx-auto py-12">
