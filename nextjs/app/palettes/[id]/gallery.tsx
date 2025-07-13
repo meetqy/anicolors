@@ -13,30 +13,40 @@ export const Gallery = ({ palette }: { palette: Palette }) => {
           if (containerWidth < 1024) return 3;
           return 4;
         }}
-        componentsProps={{
+        componentsProps={() => ({
           image: {
             className: "rounded-md overflow-hidden",
           },
-        }}
+        })}
         photos={palette.gallery.map((item) => {
-          const ratio = item.width / item.height;
-
           // 删除_和后面的部分
           // 例如: "image_123.jpg" -> "image"
           const alt = item.url.split("/").pop()?.split("_").slice(0, -1).join(" ");
 
           return {
-            src: getAssetUrl(item.url, 300),
-            srcSet: [
-              { width: 300, height: 300 / ratio, src: getAssetUrl(item.url, 300) },
-              { width: 600, height: 600 / ratio, src: getAssetUrl(item.url, 600) },
-              { width: 1200, height: 1200 / ratio, src: getAssetUrl(item.url, 1200) },
-            ],
+            src: item.url,
             width: item.width,
             height: item.height,
             alt: palette.name + " " + alt,
           };
         })}
+        render={{
+          image: (props) => {
+            const src = props.src as string;
+
+            return (
+              <img
+                {...props}
+                src={getAssetUrl(src, 320)}
+                srcSet={`
+              ${getAssetUrl(src, 320)} 1x,
+              ${getAssetUrl(src, 640)} 2x,
+              ${getAssetUrl(src, 960)} 3x
+            `}
+              />
+            );
+          },
+        }}
       />
     </div>
   );
