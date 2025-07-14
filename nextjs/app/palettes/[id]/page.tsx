@@ -36,7 +36,7 @@ export const generateMetadata = async ({ params }: { params: Promise<{ id: strin
 
   return {
     title: `${palette.name} Color Palette: ${hexs}`,
-    description: `Explore the ${palette.name} color palette with shades like ${hexs}.`,
+    description: `Explore the ${palette.name} color palette with shades like ${hexs}. Drag colors to create your palette.`,
     openGraph: {
       images: [{ url: imageUrl }],
     },
