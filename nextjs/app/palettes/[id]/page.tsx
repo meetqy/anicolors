@@ -10,6 +10,7 @@ import { Metadata } from "next";
 import Link from "next/link";
 import { Shapes } from "lucide-react";
 import { MoreList } from "./more-list";
+import Color from "color";
 
 const getPaletteData = async (id: string) => {
   const res = await getClient().query({
@@ -31,9 +32,11 @@ export const generateMetadata = async ({ params }: { params: Promise<{ id: strin
   const palette = await getPaletteData(id);
   const imageUrl = getAssetUrl(palette.cover.url, 960);
 
+  const hexs = palette.points.map((item) => Color(item.color).hex()).join(" ");
+
   return {
-    title: `Color Palette by ${palette.name} | HiColors`,
-    description: `Create a custom color palette for ${palette.name} from the ${palette.category} category.`,
+    title: `${palette.name} Color Palette: ${hexs}`,
+    description: `Explore the ${palette.name} color palette with shades like ${hexs}.`,
     openGraph: {
       images: [{ url: imageUrl }],
     },
