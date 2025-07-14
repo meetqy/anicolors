@@ -1,3 +1,4 @@
+import { getAssetUrl } from "@/lib/utils";
 import { MetadataRoute } from "next";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
@@ -50,7 +51,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
           changeFrequency: (changefreqMatch?.[1] as MetadataRoute.Sitemap[number]["changeFrequency"]) || "weekly",
           priority: priorityMatch?.[1] ? parseFloat(priorityMatch[1]) : 0.5,
           images: imagesMatch.map((img) => {
-            return img.replace(/<image:loc>(.*?)<\/image:loc>/, "$1").trim();
+            return getAssetUrl(img.replace(/<image:loc>(.*?)<\/image:loc>/, "$1").trim(), 960);
           }),
         };
       })

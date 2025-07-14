@@ -29,7 +29,7 @@ const getPaletteData = async (id: string) => {
 export const generateMetadata = async ({ params }: { params: Promise<{ id: string }> }): Promise<Metadata> => {
   const { id } = await params;
   const palette = await getPaletteData(id);
-  const imageUrl = palette.cover.url;
+  const imageUrl = getAssetUrl(palette.cover.url, 960);
 
   return {
     title: `Color Palette by ${palette.name} | HiColors`,
