@@ -43,9 +43,8 @@ export const generateMetadata = async ({ params }: { params: Promise<{ id: strin
   };
 };
 
-export default async function Page({ params, searchParams }: { params: Promise<{ id: string }>; searchParams: Promise<{ page?: string }> }) {
+export default async function Page({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
-  const { page } = await searchParams;
 
   const palette = await getPaletteData(id);
   const points = palette.points;
