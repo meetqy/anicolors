@@ -37,6 +37,7 @@ export const Gallery = ({ palette }: { palette: Palette }) => {
             return (
               <img
                 {...props}
+                alt={props.alt}
                 src={getAssetUrl(src, 320)}
                 srcSet={`
               ${getAssetUrl(src, 320)} 1x,
