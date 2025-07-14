@@ -31,6 +31,11 @@
       "locale": null
     },
     {
+      "documentId": "lksi6v0fp3q2enr3kyzfi20a",
+      "action": "plugin::strapi-5-sitemap-plugin.controller.getSitemap",
+      "locale": null
+    },
+    {
       "documentId": "uzclpgcv06d4znprzi5csobp",
       "action": "plugin::users-permissions.auth.callback",
       "locale": null

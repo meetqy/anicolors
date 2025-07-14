@@ -1,0 +1,238 @@
+{
+  "key": "plugin_content_manager_configuration_content_types::plugin::strapi-5-sitemap-plugin.strapi-5-sitemap-plugin-content-type",
+  "value": {
+    "settings": {
+      "bulkable": true,
+      "filterable": true,
+      "searchable": true,
+      "pageSize": 10,
+      "mainField": "type",
+      "defaultSortBy": "type",
+      "defaultSortOrder": "ASC"
+    },
+    "metadatas": {
+      "id": {
+        "edit": {},
+        "list": {
+          "label": "id",
+          "searchable": true,
+          "sortable": true
+        }
+      },
+      "type": {
+        "edit": {
+          "label": "type",
+          "description": "",
+          "placeholder": "",
+          "visible": true,
+          "editable": true
+        },
+        "list": {
+          "label": "type",
+          "searchable": true,
+          "sortable": true
+        }
+      },
+      "langcode": {
+        "edit": {
+          "label": "langcode",
+          "description": "",
+          "placeholder": "",
+          "visible": true,
+          "editable": true
+        },
+        "list": {
+          "label": "langcode",
+          "searchable": true,
+          "sortable": true
+        }
+      },
+      "pattern": {
+        "edit": {
+          "label": "pattern",
+          "description": "",
+          "placeholder": "",
+          "visible": true,
+          "editable": true
+        },
+        "list": {
+          "label": "pattern",
+          "searchable": true,
+          "sortable": true
+        }
+      },
+      "priority": {
+        "edit": {
+          "label": "priority",
+          "description": "",
+          "placeholder": "",
+          "visible": true,
+          "editable": true
+        },
+        "list": {
+          "label": "priority",
+          "searchable": true,
+          "sortable": true
+        }
+      },
+      "frequency": {
+        "edit": {
+          "label": "frequency",
+          "description": "",
+          "placeholder": "",
+          "visible": true,
+          "editable": true
+        },
+        "list": {
+          "label": "frequency",
+          "searchable": true,
+          "sortable": true
+        }
+      },
+      "lastModified": {
+        "edit": {
+          "label": "lastModified",
+          "description": "",
+          "placeholder": "",
+          "visible": true,
+          "editable": true
+        },
+        "list": {
+          "label": "lastModified",
+          "searchable": true,
+          "sortable": true
+        }
+      },
+      "thumbnail": {
+        "edit": {
+          "label": "thumbnail",
+          "description": "",
+          "placeholder": "",
+          "visible": true,
+          "editable": true
+        },
+        "list": {
+          "label": "thumbnail",
+          "searchable": true,
+          "sortable": true
+        }
+      },
+      "createdAt": {
+        "edit": {
+          "label": "createdAt",
+          "description": "",
+          "placeholder": "",
+          "visible": false,
+          "editable": true
+        },
+        "list": {
+          "label": "createdAt",
+          "searchable": true,
+          "sortable": true
+        }
+      },
+      "updatedAt": {
+        "edit": {
+          "label": "updatedAt",
+          "description": "",
+          "placeholder": "",
+          "visible": false,
+          "editable": true
+        },
+        "list": {
+          "label": "updatedAt",
+          "searchable": true,
+          "sortable": true
+        }
+      },
+      "createdBy": {
+        "edit": {
+          "label": "createdBy",
+          "description": "",
+          "placeholder": "",
+          "visible": false,
+          "editable": true,
+          "mainField": "firstname"
+        },
+        "list": {
+          "label": "createdBy",
+          "searchable": true,
+          "sortable": true
+        }
+      },
+      "updatedBy": {
+        "edit": {
+          "label": "updatedBy",
+          "description": "",
+          "placeholder": "",
+          "visible": false,
+          "editable": true,
+          "mainField": "firstname"
+        },
+        "list": {
+          "label": "updatedBy",
+          "searchable": true,
+          "sortable": true
+        }
+      },
+      "documentId": {
+        "edit": {},
+        "list": {
+          "label": "documentId",
+          "searchable": true,
+          "sortable": true
+        }
+      }
+    },
+    "layouts": {
+      "list": [
+        "id",
+        "type",
+        "langcode",
+        "pattern"
+      ],
+      "edit": [
+        [
+          {
+            "name": "type",
+            "size": 6
+          },
+          {
+            "name": "langcode",
+            "size": 6
+          }
+        ],
+        [
+          {
+            "name": "pattern",
+            "size": 6
+          },
+          {
+            "name": "priority",
+            "size": 4
+          }
+        ],
+        [
+          {
+            "name": "frequency",
+            "size": 6
+          },
+          {
+            "name": "lastModified",
+            "size": 6
+          }
+        ],
+        [
+          {
+            "name": "thumbnail",
+            "size": 6
+          }
+        ]
+      ]
+    },
+    "uid": "plugin::strapi-5-sitemap-plugin.strapi-5-sitemap-plugin-content-type"
+  },
+  "type": "object",
+  "environment": null,
+  "tag": null
+}

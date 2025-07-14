@@ -603,6 +603,24 @@
       "locale": null
     },
     {
+      "documentId": "w928xemg6iq49332ke9g5fko",
+      "action": "plugin::strapi-5-sitemap-plugin.menu-link",
+      "actionParameters": {},
+      "subject": null,
+      "properties": {},
+      "conditions": [],
+      "locale": null
+    },
+    {
+      "documentId": "dblxwv56frumv0cuuttl5qj2",
+      "action": "plugin::strapi-5-sitemap-plugin.settings.read",
+      "actionParameters": {},
+      "subject": null,
+      "properties": {},
+      "conditions": [],
+      "locale": null
+    },
+    {
       "documentId": "qqqisdyus0y6pstn4h21c0u7",
       "action": "plugin::upload.assets.copy-link",
       "actionParameters": {},
