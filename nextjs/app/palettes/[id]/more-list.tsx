@@ -1,15 +1,24 @@
-import { getClient } from "@/lib/apollo-client";
-import { GET_PALETTE_LIST, PaletteListResponse } from "@/query/palette";
-import { PaletteCard } from "../components/palette-card";
-import { PaginationControls } from "@/components/pagination-controls";
+"use client";
 
-export const MoreList = async ({ category, colors, page = 1 }: { category: string; colors: string[]; page: number }) => {
-  const { data } = await getClient().query<PaletteListResponse>({
-    query: GET_PALETTE_LIST,
+import { useQuery } from "@apollo/client";
+import { GET_PALETTE_LIST, PaletteListResponse, PaletteListItem } from "@/query/palette";
+import { PaletteCard } from "../components/palette-card";
+import { useState, useCallback, useEffect } from "react";
+import { Button } from "@/components/ui/button";
+import { Loader2 } from "lucide-react";
+import { useIntersectionObserver } from "usehooks-ts";
+
+export const MoreList = ({ category, colors }: { category: string; colors: string[] }) => {
+  const [page, setPage] = useState(1);
+  const [allPalettes, setAllPalettes] = useState<PaletteListItem[]>([]);
+  const [hasMore, setHasMore] = useState(true);
+  const [isLoadingMore, setIsLoadingMore] = useState(false);
+
+  const { loading, error, fetchMore } = useQuery<PaletteListResponse>(GET_PALETTE_LIST, {
     variables: {
       pagination: {
         pageSize: 24,
-        page,
+        page: 1,
       },
       filters: {
         or: [
@@ -24,20 +33,82 @@ export const MoreList = async ({ category, colors, page = 1 }: { category: strin
         ],
       },
     },
+    onCompleted: (data) => {
+      setAllPalettes(data.palettes_connection.nodes);
+      setHasMore(1 < data.palettes_connection.pageInfo.pageCount);
+    },
   });
 
-  const { palettes_connection } = data;
-  const { nodes: palettes, pageInfo } = palettes_connection;
+  const loadMore = useCallback(async () => {
+    if (!hasMore || loading || isLoadingMore) return;
+
+    setIsLoadingMore(true);
+    const nextPage = page + 1;
+
+    try {
+      const { data: newData } = await fetchMore({
+        variables: {
+          pagination: {
+            pageSize: 24,
+            page: nextPage,
+          },
+        },
+      });
+
+      if (newData?.palettes_connection?.nodes) {
+        setAllPalettes((prev) => [...prev, ...newData.palettes_connection.nodes]);
+        setPage(nextPage);
+        setHasMore(nextPage < newData.palettes_connection.pageInfo.pageCount);
+      }
+    } catch (error) {
+      console.error("Error loading more palettes:", error);
+    } finally {
+      setIsLoadingMore(false);
+    }
+  }, [hasMore, loading, isLoadingMore, fetchMore, page]);
+
+  const { isIntersecting, ref } = useIntersectionObserver({
+    threshold: 0.1,
+  });
+
+  // Trigger load more when the element is visible
+  useEffect(() => {
+    if (isIntersecting && hasMore && !loading && !isLoadingMore) {
+      loadMore();
+    }
+  }, [isIntersecting, hasMore, loading, isLoadingMore, loadMore]);
+
+  if (error) {
+    return <div className="text-center text-red-500">Error loading palettes: {error.message}</div>;
+  }
 
   return (
     <div className="not-prose">
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-x-4 gap-y-8 mb-12">
-        {palettes.map((palette, index) => (
-          <PaletteCard key={`${palette.name}-${index}`} palette={palette} />
+        {allPalettes.map((palette, index) => (
+          <PaletteCard key={`${palette.documentId}-${index}`} palette={palette} />
         ))}
       </div>
 
-      <PaginationControls {...pageInfo} />
+      {(loading || isLoadingMore) && (
+        <div className="flex justify-center items-center py-8">
+          <Loader2 className="w-6 h-6 animate-spin" />
+          <span className="ml-2">Loading more palettes...</span>
+        </div>
+      )}
+
+      {!loading && !isLoadingMore && hasMore && (
+        <div className="flex justify-center py-8">
+          <Button onClick={loadMore} variant="outline">
+            Load More
+          </Button>
+        </div>
+      )}
+
+      {!hasMore && allPalettes.length > 0 && <div className="text-center text-muted-foreground py-8">No more palettes to load</div>}
+
+      {/* Intersection Observer Target */}
+      <div ref={ref} className="h-4" />
     </div>
   );
 };

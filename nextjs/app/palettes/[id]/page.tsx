@@ -91,7 +91,7 @@ export default async function Page({ params, searchParams }: { params: Promise<{
         <h2>Color Palette Gallery</h2>
         <Gallery palette={palette} />
         <h2>More</h2>
-        <MoreList category={palette.category} page={parseInt(page || "1")} colors={points.map((item) => item.name!)} />
+        <MoreList category={palette.category} colors={points.map((item) => item.name!)} />
       </div>
     </div>
   );
