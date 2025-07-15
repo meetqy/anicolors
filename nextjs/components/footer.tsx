@@ -9,6 +9,7 @@ export const Footer = () => {
     { name: "Twelve Tools", url: "https://twelve.tools" },
     { name: "Hiaitools", url: "https://hiaitools.com" },
     { name: "Victrays", url: "https://victrays.com/" },
+    { name: "MagicBox", url: "https://magicbox.tools" },
   ];
 
   return (
