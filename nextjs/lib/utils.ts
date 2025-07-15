@@ -33,3 +33,13 @@ export const getAssetUrl = (url: string, width?: number, height?: number, qualit
 
   return `${process.env.NEXT_PUBLIC_ASSET_URL}${url}`;
 };
+
+export const capitalize = (str: string): string => {
+  return str
+    .split(/(\s+)/) // Split by spaces but keep the spaces
+    .map((part) => {
+      if (/\s/.test(part)) return part; // Keep spaces as-is
+      return part.charAt(0).toUpperCase() + part.slice(1).toLowerCase();
+    })
+    .join("");
+};

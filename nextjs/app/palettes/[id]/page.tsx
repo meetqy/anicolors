@@ -3,7 +3,7 @@ import { Generator } from "@/components/palette/generator";
 import { Button } from "@/components/ui/button";
 import { PaletteActions } from "./actions";
 import { getClient } from "@/lib/apollo-client";
-import { getAssetUrl } from "@/lib/utils";
+import { getAssetUrl, capitalize } from "@/lib/utils";
 import { Gallery } from "./gallery";
 import { GET_PALETTE, Palette } from "@/query/palette";
 import { Metadata } from "next";
@@ -32,11 +32,13 @@ export const generateMetadata = async ({ params }: { params: Promise<{ id: strin
   const palette = await getPaletteData(id);
   const imageUrl = getAssetUrl(palette.cover.url, 960);
 
-  const hexs = palette.points.map((item) => Color(item.color).hex()).join(" ");
+  const hexs = palette.points.map((item) => Color(item.color).hex()).join(", ");
+  const category = capitalize(palette.category);
+  const name = capitalize(palette.name);
 
   return {
-    title: `${palette.name} Color Palette: ${hexs}`,
-    description: `Explore the ${palette.name} color palette with shades like ${hexs}. Drag colors to create your palette.`,
+    title: `${name} Color Palette - ${category} Inspired Colors`,
+    description: `Discover the ${name} color palette inspired by ${category}. Use ${hexs} to create your custom palette!`,
     openGraph: {
       images: [{ url: imageUrl }],
     },
@@ -57,7 +59,7 @@ export default async function Page({ params }: { params: Promise<{ id: string }>
     <div className="mx-auto py-12">
       <div className="mx-auto mb-12 max-w-screen-lg px-4 lg:px-0">
         <h1 className="h1 text-left capitalize">
-          {palette.category} {palette.name} Color Palette
+          {palette.name} Color Palette - {palette.category}
         </h1>
         <p className="p">
           This color palette is inspired by the character <b>{palette.name}</b> from{" "}
