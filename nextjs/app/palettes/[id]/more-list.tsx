@@ -14,7 +14,7 @@ export const MoreList = ({ category, colors }: { category: string; colors: strin
   const [hasMore, setHasMore] = useState(true);
   const [isLoadingMore, setIsLoadingMore] = useState(false);
 
-  const { loading, error, fetchMore } = useQuery<PaletteListResponse>(GET_PALETTE_LIST, {
+  const { loading, error, data, fetchMore } = useQuery<PaletteListResponse>(GET_PALETTE_LIST, {
     variables: {
       pagination: {
         pageSize: 24,
@@ -34,11 +34,15 @@ export const MoreList = ({ category, colors }: { category: string; colors: strin
         ],
       },
     },
-    onCompleted: (data) => {
+  });
+
+  // Handle initial data loading
+  useEffect(() => {
+    if (data?.palettes_connection) {
       setAllPalettes(data.palettes_connection.nodes);
       setHasMore(1 < data.palettes_connection.pageInfo.pageCount);
-    },
-  });
+    }
+  }, [data]);
 
   const loadMore = useCallback(async () => {
     if (!hasMore || loading || isLoadingMore) return;

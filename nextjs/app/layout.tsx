@@ -19,6 +19,7 @@ export const metadata: Metadata = {
   openGraph: {
     images: ["https://hicolors.org/og.jpg"],
   },
+  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || "https://hicolors.com"),
 };
 
 const geist = Geist({
