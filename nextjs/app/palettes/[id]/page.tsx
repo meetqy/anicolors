@@ -11,6 +11,7 @@ import Link from "next/link";
 import { Shapes } from "lucide-react";
 import { MoreList } from "./more-list";
 import Color from "color";
+import Head from "next/head";
 
 const getPaletteData = async (id: string) => {
   const res = await getClient().query({
@@ -24,7 +25,13 @@ const getPaletteData = async (id: string) => {
     },
   });
 
-  return res.data.palette as Palette;
+  const palette = res.data.palette as Palette;
+
+  return {
+    ...palette,
+    name: capitalize(palette.name),
+    category: capitalize(palette.category),
+  };
 };
 
 export const generateMetadata = async ({ params }: { params: Promise<{ id: string }> }): Promise<Metadata> => {
@@ -33,12 +40,10 @@ export const generateMetadata = async ({ params }: { params: Promise<{ id: strin
   const imageUrl = getAssetUrl(palette.cover.url, 960);
 
   const hexs = palette.points.map((item) => Color(item.color).hex()).join(", ");
-  const category = capitalize(palette.category);
-  const name = capitalize(palette.name);
 
   return {
-    title: `${name} Color Palette - ${category} Inspired Colors`,
-    description: `Discover the ${name} color palette inspired by ${category}. Use ${hexs} to create your custom palette!`,
+    title: `${palette.name} Color Palette - ${palette.category} Inspired Colors`,
+    description: `Discover the ${palette.name} color palette inspired by ${palette.category}. Use ${hexs} to create your custom palette!`,
     openGraph: {
       images: [{ url: imageUrl }],
     },
@@ -56,54 +61,67 @@ export default async function Page({ params }: { params: Promise<{ id: string }>
   const image = getAssetUrl(palette.image.url, 960);
 
   return (
-    <div className="mx-auto py-12">
-      <div className="mx-auto mb-12 max-w-screen-lg px-4 lg:px-0">
-        <h1 className="h1 text-left capitalize">
-          {palette.name} Color Palette - {palette.category}
-        </h1>
-        <p className="p">
-          This color palette is inspired by the character <b>{palette.name}</b> from{" "}
-          <Link className="underline capitalize" href={`/category/${palette.category}`}>
-            {palette.category}
-          </Link>
-          . We've extracted these five iconic colors from the official character art. Want to create your own version? Hit the{" "}
-          <Link href={`/create?id=${id}`} className="bg-primary text-primary-foreground px-2 py-1 rounded-md">
-            Custom Maker
-          </Link>{" "}
-          button below to get started!
-        </p>
-      </div>
-      <Generator initialPoints={points} initImage={image} />
+    <>
+      <Head>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "CreativeWork",
+              name: `${palette.name} Color Palette`,
+              description: `A color palette inspired by ${palette.name} from ${palette.category}, featuring shades like ${points.map((item) => item.name).join(", ")}.`,
+              image: getAssetUrl(palette.cover.url, 960),
+              keywords: `${palette.name}, ${palette.category}, color palette, hicolors, color inspiration`,
+            }),
+          }}
+        ></script>
+      </Head>
+      <div className="mx-auto py-12">
+        <div className="mx-auto mb-12 prose max-w-screen-lg px-4 lg:px-0">
+          <h1 className="text-left capitalize">
+            {palette.name} Color Palette - {palette.category}
+          </h1>
+          <p>
+            This color palette is inspired by the character <b>{palette.name}</b> from{" "}
+            <Link className="underline capitalize" href={`/category/${palette.category}`}>
+              {palette.category}
+            </Link>
+            . We've extracted these five iconic colors from the official character art. Want to create your own version? Hit the <b>"Custom Maker"</b> button below to get started!
+          </p>
+        </div>
+        <Generator initialPoints={points} initImage={image} />
 
-      <PaletteActions id={id} palette={palette} />
+        <PaletteActions id={id} palette={palette} />
 
-      <div className="grid gap-2 grid-cols-5 max-w-screen-md mx-auto px-4 lg:px-0 mt-24">
-        {points.map((item, index) => (
-          <ColorBaseInfo point={item} key={index} />
-        ))}
-      </div>
+        <div className="grid gap-2 grid-cols-5 max-w-screen-md mx-auto px-4 lg:px-0 mt-24">
+          {points.map((item, index) => (
+            <ColorBaseInfo point={item} key={index} />
+          ))}
+        </div>
 
-      <div className="flex flex-wrap gap-x-2 gap-y-4 max-w-screen-md mx-auto px-4 lg:px-0 mt-12 lg:justify-center">
-        <Button variant="outline" className="rounded-full capitalize" size="sm" asChild>
-          <Link href={`/category/${palette.category}`}>
-            <Shapes className="size-4" />
-            {palette.category}
-          </Link>
-        </Button>
-        {points.map((item, index) => (
-          <Button variant="outline" className="rounded-full" key={index} size="sm">
-            <div className="size-4 rounded-full" style={{ backgroundColor: item.color }}></div>
-            {item.name}
+        <div className="flex flex-wrap gap-x-2 gap-y-4 max-w-screen-md mx-auto px-4 lg:px-0 mt-12 lg:justify-center">
+          <Button variant="outline" className="rounded-full capitalize" size="sm" asChild>
+            <Link href={`/category/${palette.category}`}>
+              <Shapes className="size-4" />
+              {palette.category}
+            </Link>
           </Button>
-        ))}
-      </div>
+          {points.map((item, index) => (
+            <Button variant="outline" className="rounded-full" key={index} size="sm">
+              <div className="size-4 rounded-full" style={{ backgroundColor: item.color }}></div>
+              {item.name}
+            </Button>
+          ))}
+        </div>
 
-      <div className="max-w-screen-xl prose mx-auto px-4 lg:px-0 mt-24">
-        <h2>Color Palette Gallery</h2>
-        <Gallery palette={palette} />
-        <h2>More</h2>
-        <MoreList category={palette.category} colors={points.map((item) => item.name!)} />
+        <div className="max-w-screen-xl prose mx-auto px-4 lg:px-0 mt-24">
+          <h2>Color Palette Gallery</h2>
+          <Gallery palette={palette} />
+          <h2>More</h2>
+          <MoreList category={palette.category} colors={points.map((item) => item.name!)} />
+        </div>
       </div>
-    </div>
+    </>
   );
 }
