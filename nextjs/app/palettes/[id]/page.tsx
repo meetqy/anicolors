@@ -60,8 +60,15 @@ export default async function Page({ params }: { params: Promise<{ id: string }>
           {palette.category} {palette.name} Color Palette
         </h1>
         <p className="p">
-          Click and drag the color points on the image to select five colors you feel best represent <b>{palette.name}</b>. Everyone sees colors differently — express your version of this character
-          through your own custom palette!
+          This color palette is inspired by the character <b>{palette.name}</b> from{" "}
+          <Link className="underline capitalize" href={`/category/${palette.category}`}>
+            {palette.category}
+          </Link>
+          . We've extracted these five iconic colors from the official character art. Want to create your own version? Hit the{" "}
+          <Link href={`/create?id=${id}`} className="bg-primary text-primary-foreground px-2 py-1 rounded-md">
+            Custom Maker
+          </Link>{" "}
+          button below to get started!
         </p>
       </div>
       <Generator initialPoints={points} initImage={image} />
