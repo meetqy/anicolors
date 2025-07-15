@@ -61,6 +61,7 @@ export default async function Page({ params }: { params: Promise<{ id: string }>
   const palette = await getPaletteData(id);
   const points = palette.points;
   const image = getAssetUrl(palette.image.url, 960);
+  const hexs = points.map((item) => Color(item.color).hex()).join(", ");
 
   return (
     <>
@@ -71,7 +72,7 @@ export default async function Page({ params }: { params: Promise<{ id: string }>
             "@context": "https://schema.org",
             "@type": "CreativeWork",
             name: `${palette.name} Color Palette`,
-            description: `A color palette inspired by ${palette.name} from ${palette.category}, featuring shades like ${points.map((item) => item.name).join(", ")}.`,
+            description: `A color palette inspired by ${palette.name} from ${palette.category}, featuring shades like ${hexs}.`,
             image: getAssetUrl(palette.cover.url, 960),
             keywords: `${palette.name}, ${palette.category}, color palette, hicolors, color inspiration`,
           }),
@@ -120,7 +121,7 @@ export default async function Page({ params }: { params: Promise<{ id: string }>
         <div className="max-w-screen-xl prose mx-auto px-4 lg:px-0 mt-24">
           <h2>{palette.name} Color Palette Gallery</h2>
           <p>
-            Explore unique styles and shades inspired by {palette.name} from {palette.category}. Perfect for anime art, game design, or creative projects.
+            Explore unique styles and shades inspired by {palette.name} from {palette.category}. Perfect for anime art, game design, or cosplay projects.
           </p>
 
           <Gallery palette={palette} />
