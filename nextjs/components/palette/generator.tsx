@@ -3,8 +3,9 @@ import { useState, useCallback, useEffect } from "react";
 import { useDropzone } from "react-dropzone";
 import PickerColors, { type ColorPoint } from "./picker-colors";
 import Color from "color";
-import { LuUpload } from "react-icons/lu";
+import { LuUpload, LuX } from "react-icons/lu";
 import { getColorName } from "@/lib/nearest";
+import { Button } from "../ui/button";
 
 type GeneratorProps = { initialPoints?: ColorPoint[]; onColorsChangeEnter?: (points: ColorPoint[]) => void; initImage?: string; onImageChange?: (image: string) => void };
 
@@ -28,6 +29,10 @@ export function Generator({ initialPoints = [], onColorsChangeEnter, initImage, 
       })
     );
   }, [colors, onColorsChangeEnter]);
+
+  const deleteColor = useCallback((id: number) => {
+    setColors((prev) => prev.filter((color) => color.id !== id));
+  }, []);
 
   const onDrop = useCallback(
     (acceptedFiles: File[]) => {
@@ -106,8 +111,15 @@ export function Generator({ initialPoints = [], onColorsChangeEnter, initImage, 
                       background: color.color,
                       color: Color(color.color).isLight() ? "black" : "white",
                     }}
-                    className="relative flex flex-1 lg:flex-auto lg:aspect-auto aspect-square w-full items-center overflow-hidden rounded-lg lg:h-16"
+                    className="relative flex flex-1 lg:flex-auto lg:aspect-auto aspect-square w-full items-center overflow-hidden rounded-lg lg:h-16 group"
                   >
+                    <Button
+                      onClick={() => deleteColor(color.id)}
+                      className="absolute top-0 flex justify-center items-center left-0 h-full aspect-square rounded-r-none group-hover:opacity-100 opacity-0 bg-black/20 hover:bg-black/40 transition-colors"
+                      aria-label="Delete color"
+                    >
+                      <LuX className="size-6 text-red-600" />
+                    </Button>
                     <span className="absolute lg:inline-block hidden right-4 bottom-2 font-mono text-sm opacity-90">{Color(color.color).hex()}</span>
                   </div>
                 ))}
