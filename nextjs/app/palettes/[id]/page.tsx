@@ -11,7 +11,6 @@ import Link from "next/link";
 import { Shapes } from "lucide-react";
 import { MoreList } from "./more-list";
 import Color from "color";
-import Head from "next/head";
 
 const getPaletteData = async (id: string) => {
   const res = await getClient().query({
@@ -90,6 +89,8 @@ export default async function Page({ params }: { params: Promise<{ id: string }>
             </Link>
             . We've extracted these five iconic colors from the official character art. Want to create your own version? Hit the <b>"Custom Maker"</b> button below to get started!
           </p>
+
+          <p>Use our anime color palette generator to create custom schemes for your art or design projects.</p>
         </div>
         <Generator initialPoints={points} initImage={image} />
 
@@ -117,9 +118,15 @@ export default async function Page({ params }: { params: Promise<{ id: string }>
         </div>
 
         <div className="max-w-screen-xl prose mx-auto px-4 lg:px-0 mt-24">
-          <h2>Color Palette Gallery</h2>
+          <h2>{palette.name} Color Palette Gallery</h2>
+          <p>
+            Explore unique styles and shades inspired by {palette.name} from {palette.category}. Perfect for anime art, game design, or creative projects.
+          </p>
+
           <Gallery palette={palette} />
-          <h2>More</h2>
+          <hr className="border-0" />
+
+          <h2>Explore More Color Palettes</h2>
           <MoreList category={palette.category} colors={points.map((item) => item.name!)} />
         </div>
       </div>
