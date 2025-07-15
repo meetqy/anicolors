@@ -65,21 +65,19 @@ export default async function Page({ params }: { params: Promise<{ id: string }>
 
   return (
     <>
-      <Head>
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{
-            __html: JSON.stringify({
-              "@context": "https://schema.org",
-              "@type": "CreativeWork",
-              name: `${palette.name} Color Palette`,
-              description: `A color palette inspired by ${palette.name} from ${palette.category}, featuring shades like ${points.map((item) => item.name).join(", ")}.`,
-              image: getAssetUrl(palette.cover.url, 960),
-              keywords: `${palette.name}, ${palette.category}, color palette, hicolors, color inspiration`,
-            }),
-          }}
-        ></script>
-      </Head>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "CreativeWork",
+            name: `${palette.name} Color Palette`,
+            description: `A color palette inspired by ${palette.name} from ${palette.category}, featuring shades like ${points.map((item) => item.name).join(", ")}.`,
+            image: getAssetUrl(palette.cover.url, 960),
+            keywords: `${palette.name}, ${palette.category}, color palette, hicolors, color inspiration`,
+          }),
+        }}
+      />
       <div className="mx-auto py-12">
         <div className="mx-auto mb-12 prose max-w-screen-lg px-4 lg:px-0">
           <h1 className="text-left capitalize">
