@@ -1,24 +1,50 @@
-# HiColors
+Of course, here is the English translation of the project description for HiColors.
+
+---
+
+# HiColors - Discover and Create ACG Color Palettes
 
 ![cover](https://hicolors.org/og.jpg)
 
-Quickly set up an open-source project that extracts colors from images and generates a 5-color palette.
+HiColors is more than just an image color picker; it's an ACG color archive.
 
-Live Demo: [hicolors.org](https://hicolors.org)
+Live DEMO: [hicolors.org](https://hicolors.org)
 
-Open-source repositories:
+Open Source:
 
 - https://github.com/meetqy/hicolors
 - https://gitee.com/meetqy/hicolors
 
-## Features
+## Two Core Features
 
-- ✅ Easy to use - drag and drop to automatically identify colors in images
-- ✅ Supports multiple image formats including PNG, JPG, GIF, etc.
-- ✅ Provides various palette styles to meet different needs
-- ✅ Supports custom color point positioning for personalized palettes
-- ✅ Export palettes as JSON format for easy saving and sharing
-- ✅ Based on Strapi, allowing for future expansion of features such as user management and permission control
+### 1. 🎨 Curated Daily · Inspiration Palette Gallery
+
+This isn't just a collection of algorithm-generated palettes. It's a gallery hand-picked by us, as passionate ACG fans.
+Every day, I dive into a vast sea of anime, games, manga, and official concept art to manually select the most inspiring materials for you, crafting them into beautiful palette detail pages. Here, you will discover:
+
+- **Character Palettes:** From the armor of "Saber" to the teal hair of "Hatsune Miku."
+- **Atmospheric Palettes:** The skies from Makoto Shinkai's films, the neon-lit Night City from "Cyberpunk: Edgerunners."
+- **Thematic Palettes:** The iconic red and black of "Persona 5," the youthful tones of "Bocchi the Rock!"
+
+Each palette includes precise HEX color codes that you can use directly in your creations, or simply enjoy as wallpapers and design assets.
+
+### 2. 🛠️ Powerful & Easy-to-Use · Custom Palette Generator
+
+If you have your own treasured images or want to analyze the color scheme of a specific piece of fan art, our tool can help you do just that.
+
+- **Upload Any Image:** Simply drag and drop screenshots from your phone or your downloaded wallpapers.
+- **Pixel-Perfect Color Picking:** Use the magnifier tool to precisely target a character's eyes or the folds in their clothing to get that exact shade you want.
+- **One-Click Export & Share:** Export the generated palette as a high-quality image or copy the color codes directly for use in Procreate, Photoshop, or any other design software.
+
+## Technical Features
+
+- ✅ Simple to use; automatically identifies colors in images via drag-and-drop.
+- ✅ Supports multiple image formats, including PNG, JPG, GIF, and more.
+- ✅ Offers a variety of palette template styles to suit different design needs.
+- ✅ Allows custom positioning of color points to create personalized palettes.
+- ✅ Features a color extraction algorithm specifically optimized for anime and game character designs.
+- ✅ Supports exporting palettes for easy saving and sharing.
+- ✅ Built on Strapi, allowing for future feature expansion and scalability.
 
 ## Local Deployment
 
