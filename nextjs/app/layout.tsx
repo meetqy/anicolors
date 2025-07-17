@@ -10,7 +10,7 @@ import { Footer } from "@/components/footer";
 import NextTopLoader from "nextjs-toploader";
 
 export const metadata: Metadata = {
-  title: "Discover ACG Color Palettes - HiColors",
+  title: "Discover & Make ACG Color Palettes - HiColors",
   description: "Find Your Anime Comic Game Soul. Pick colors from the scenes you love and instantly generate your signature palette.",
   icons: [{ rel: "icon", url: "/favicon.ico" }],
   twitter: {
