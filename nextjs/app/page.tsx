@@ -5,6 +5,7 @@ import { Sparkles, Upload, Palette, ArrowRight, Grid3X3 } from "lucide-react";
 import { PaletteCard } from "./palettes/components/palette-card";
 import { Badge } from "@/components/ui/badge";
 import Link from "next/link";
+import { Stats } from "./_components/stats";
 
 export const dynamic = "force-dynamic";
 
@@ -23,7 +24,8 @@ const getPalettesList = async (page: number = 1, pageSize: number = 24, sort: st
 export default async function Page() {
   // 获取最新的调色板数据用于展示
   const { palettes_connection } = await getPalettesList(1, 16, "createdAt:desc");
-  const { nodes: featuredPalettes } = palettes_connection;
+  const { nodes: featuredPalettes, pageInfo } = palettes_connection;
+  console.log(pageInfo);
 
   return (
     <div className="mx-auto">
@@ -60,24 +62,7 @@ export default async function Page() {
             </div>
 
             {/* Quick Stats */}
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-12">
-              <div className="text-center p-4 rounded-lg bg-card">
-                <div className="text-2xl font-bold text-primary mb-1">10K+</div>
-                <div className="text-sm text-muted-foreground">Palettes Created</div>
-              </div>
-              <div className="text-center p-4 rounded-lg bg-card">
-                <div className="text-2xl font-bold text-primary mb-1">50+</div>
-                <div className="text-sm text-muted-foreground">Categories</div>
-              </div>
-              <div className="text-center p-4 rounded-lg bg-card">
-                <div className="text-2xl font-bold text-primary mb-1">2-5</div>
-                <div className="text-sm text-muted-foreground">Colors Each</div>
-              </div>
-              <div className="text-center p-4 rounded-lg bg-card">
-                <div className="text-2xl font-bold text-primary mb-1">12</div>
-                <div className="text-sm text-muted-foreground">Layout Styles</div>
-              </div>
-            </div>
+            <Stats createNumber={pageInfo.total} />
           </div>
 
           {/* Featured Palettes Grid */}
