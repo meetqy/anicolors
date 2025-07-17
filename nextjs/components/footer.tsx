@@ -20,7 +20,7 @@ export const Footer = () => {
           <h3 className="text-sm font-medium text-gray-900 mb-4">Friend Links</h3>
           <div className="flex flex-wrap justify-center gap-4 mb-6 max-w-4xl mx-auto">
             {friendLinks.map((link) => (
-              <a key={link.name} href={link.url} target="_blank" rel="noopener noreferrer" className="text-sm text-gray-600 hover:text-gray-900 transition-colors px-2 py-1">
+              <a key={link.name} href={link.url} target="_blank" className="text-sm text-gray-600 hover:text-gray-900 transition-colors px-2 py-1">
                 {link.name}
               </a>
             ))}

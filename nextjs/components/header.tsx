@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { Button } from "./ui/button";
+import { GithubIcon } from "lucide-react";
 
 export function Header() {
   return (
@@ -12,12 +13,17 @@ export function Header() {
         </Link>
 
         {/* Auth Buttons */}
-        <div className="flex items-center">
+        <div className="flex items-center gap-2">
           <Button variant="link" asChild>
             <Link href="/palettes">All Palettes</Link>
           </Button>
-          <Button asChild>
+          <Button asChild className="lg:block hidden">
             <Link href="/create">Make a Palette</Link>
+          </Button>
+          <Button variant="ghost" size="icon" asChild>
+            <Link href="https://github.com/meetqy/hicolors" target="_blank">
+              <GithubIcon className="size-6" />
+            </Link>
           </Button>
         </div>
       </div>
