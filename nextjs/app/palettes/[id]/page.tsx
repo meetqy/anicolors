@@ -116,9 +116,11 @@ export default async function Page({ params }: { params: Promise<{ id: string }>
             </Link>
           </Button>
           {points.map((item, index) => (
-            <Button variant="outline" className="rounded-full" key={index} size="sm">
-              <div className="size-4 rounded-full" style={{ backgroundColor: item.color }}></div>
-              {item.name}
+            <Button asChild variant="outline" className="rounded-full" key={index} size="sm">
+              <Link href={`/color/${item.name}`}>
+                <div className="size-4 rounded-full" style={{ backgroundColor: item.color }}></div>
+                {item.name}
+              </Link>
             </Button>
           ))}
         </div>
