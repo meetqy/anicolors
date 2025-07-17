@@ -25,7 +25,6 @@ export default async function Page() {
   // 获取最新的调色板数据用于展示
   const { palettes_connection } = await getPalettesList(1, 16, "createdAt:desc");
   const { nodes: featuredPalettes, pageInfo } = palettes_connection;
-  console.log(pageInfo);
 
   return (
     <div className="mx-auto">
