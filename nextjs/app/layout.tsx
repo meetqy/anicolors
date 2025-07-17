@@ -10,7 +10,7 @@ import { Footer } from "@/components/footer";
 import NextTopLoader from "nextjs-toploader";
 
 export const metadata: Metadata = {
-  title: "Discover 5-Color Palettes Extracted from Real Images",
+  title: "Discover Anime Comic Game Color Palettes - HiColors",
   description: "HiColors offers thousands of 5-color palettes, all extracted directly from diverse images like anime, art, and games. Ideal for designers, illustrators, and color lovers.",
   icons: [{ rel: "icon", url: "/favicon.ico" }],
   twitter: {
