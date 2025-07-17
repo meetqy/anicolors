@@ -2,8 +2,9 @@ import { Metadata } from "next";
 import { Maker } from "./components/maker";
 
 export const metadata: Metadata = {
-  title: "Create Your Own 5-Color Palette",
-  description: "Pick 5 colors from your image to create a custom palette. Save and share your color combinations with the world.",
+  title: "ACG Color Palette Generator",
+  description:
+    "This tool is built specifically for the ACG community. Upload any screenshot from your favorite anime, game, or comic, and hand-pick the exact colors from characters, scenes, or designs. Instantly generate the perfect palette for your fanart, cosplay, or creative projects.",
   alternates: {
     canonical: "https://hicolors.org/create",
   },
@@ -14,8 +15,8 @@ export default async function Page({ searchParams }: { searchParams: Promise<{ i
   return (
     <div className="py-12">
       <div className="mx-auto mb-12 max-w-screen-lg px-4 lg:px-0">
-        <h1 className="h1 text-left">Create Your Own 5-Color Palette</h1>
-        <p className="p">Pick 5 colors from your image to create a custom palette. Save and share your color combinations with the world.</p>
+        <h1 className="h1 text-left">{metadata.title?.toString()}</h1>
+        <p className="p">{metadata.description}</p>
       </div>
       <Maker id={id} />
     </div>
