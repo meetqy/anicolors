@@ -92,9 +92,14 @@ export default async function Page({ params }: { params: Promise<{ id: string }>
           </p>
 
           <p>Use our anime color palette generator to create custom schemes for your art or design projects.</p>
-        </div>
-        <Generator initialPoints={points} initImage={image} />
 
+          <p>
+            <span className="text-red-500 relative top-1 mr-2">*</span>
+            <b>You can drag the markers to picker different colors.</b>
+          </p>
+        </div>
+
+        <Generator initialPoints={points} initImage={image} />
         <PaletteActions id={id} palette={palette} />
 
         <div className="grid gap-2 grid-cols-5 max-w-screen-md mx-auto px-4 lg:px-0 mt-24">
