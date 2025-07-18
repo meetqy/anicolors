@@ -18,7 +18,7 @@ export const Footer = () => {
   return (
     <footer className="bg-muted/30 border-t mt-16">
       <div className="max-w-7xl mx-auto px-4 py-12">
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div className="grid md:grid-cols-3 gap-8">
           {/* Brand Section */}
           <div className="space-y-4">
             <div className="flex items-end">
@@ -44,9 +44,9 @@ export const Footer = () => {
           {/* Friend Links */}
           <div className="space-y-4">
             <h3 className="text-sm font-semibold text-foreground">Friend Links</h3>
-            <div className="flex flex-col space-y-2">
+            <div className="flex flex-wrap gap-x-2 gap-y-1 text-sm">
               {friendLinks.map((link) => (
-                <a key={link.name} href={link.url} target="_blank" rel="noopener noreferrer" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
+                <a key={link.name} href={link.url} target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-foreground transition-colors whitespace-nowrap">
                   {link.name}
                 </a>
               ))}
@@ -57,7 +57,7 @@ export const Footer = () => {
         {/* Bottom Section */}
         <div className="mt-8 pt-8 border-t border-border">
           <div className="text-center">
-            <p className="text-xs text-muted-foreground">© 2024 HiColors. All rights reserved.</p>
+            <p className="text-xs text-muted-foreground">© 2025 HiColors. All rights reserved.</p>
           </div>
         </div>
       </div>
