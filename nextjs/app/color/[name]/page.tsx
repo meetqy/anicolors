@@ -62,12 +62,20 @@ export default async function CategoryPage({ params, searchParams }: CategoryPag
   );
 }
 
-export async function generateMetadata({ params }: CategoryPageProps) {
+export async function generateMetadata({ params, searchParams }: CategoryPageProps) {
   const { name } = await params;
+  const page = parseInt((await searchParams).page || "1");
   const categoryName = decodeURIComponent(name);
 
-  return {
-    title: `${categoryName} Color Palettes - HiColors`,
-    description: `Explore beautiful ${categoryName} color palettes and find inspiration for your next design project.`,
-  };
+  if (page > 1) {
+    return {
+      title: `${categoryName} Color Palettes – Page ${page} | HiColors`,
+      description: `Page ${page} of beautiful ${categoryName} color palettes from characters and scenes. Discover matching HEX codes, color names, and layout styles for design and illustration at HiColors.`,
+    };
+  } else {
+    return {
+      title: `${categoryName} Color Palettes – Elegant Tones and HEX Codes | HiColors`,
+      description: `Explore curated ${categoryName} color palettes extracted from illustrations, anime, and game characters. Find the perfect gray tones with HEX and RGB codes for your creative projects at HiColors.`,
+    };
+  }
 }
