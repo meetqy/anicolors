@@ -6,8 +6,21 @@ import { PaletteCard } from "./palettes/components/palette-card";
 import { Badge } from "@/components/ui/badge";
 import Link from "next/link";
 import { Stats } from "./_components/stats";
+import { Metadata } from "next";
 
 export const dynamic = "force-dynamic";
+
+export const metadata: Metadata = {
+  title: "Discover & Make ACG Color Palettes - HiColors",
+  description: "Find Your Anime Comic Game Soul. Pick colors from the scenes you love and instantly generate your signature palette.",
+  icons: [{ rel: "icon", url: "/favicon.ico" }],
+  twitter: {
+    images: ["https://hicolors.org/og.jpg"],
+  },
+  openGraph: {
+    images: ["https://hicolors.org/og.jpg"],
+  },
+};
 
 const getPalettesList = async (page: number = 1, pageSize: number = 24, sort: string = "createdAt:desc") => {
   const res = await getClient().query<PaletteListResponse>({

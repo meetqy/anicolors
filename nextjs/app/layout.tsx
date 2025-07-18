@@ -13,12 +13,6 @@ export const metadata: Metadata = {
   title: "Discover & Make ACG Color Palettes - HiColors",
   description: "Find Your Anime Comic Game Soul. Pick colors from the scenes you love and instantly generate your signature palette.",
   icons: [{ rel: "icon", url: "/favicon.ico" }],
-  twitter: {
-    images: ["https://hicolors.org/og.jpg"],
-  },
-  openGraph: {
-    images: ["https://hicolors.org/og.jpg"],
-  },
   metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || "https://hicolors.org"),
 };
 
