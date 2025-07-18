@@ -68,12 +68,12 @@ export async function generateMetadata({ params, searchParams }: CategoryPagePro
   if (page > 1) {
     return {
       title: `${categoryName} Color Palettes - Page ${page} | HiColors`,
-      description: `Browse more color palettes from ${categoryName}, page ${page}. Each palette is extracted from iconic characters or scenes with matching HEX codes and color names. Find inspiration for your next design on HiColors.`,
+      description: `Browse more color palettes from ${categoryName}, page ${page}.`,
     };
   } else {
     return {
       title: `${categoryName} Color Palettes - Inspired by Characters & Scenes | HiColors`,
-      description: `Discover beautifully extracted color palettes from ${categoryName} characters and scenes. Perfect for design inspiration, illustration, and ACG aesthetics. Explore curated HEX codes and unique color names on HiColors.`,
+      description: `Discover color palettes from ${categoryName} characters and scenes.`,
     };
   }
 }

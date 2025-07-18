@@ -4,7 +4,7 @@ import { Maker } from "./components/maker";
 export const metadata: Metadata = {
   title: "ACG Color Palette Generator",
   description:
-    "This tool is built specifically for the ACG community. Upload any screenshot from your favorite anime, game, or comic, and hand-pick the exact colors from characters, scenes, or designs. Instantly generate the perfect palette for your fanart, cosplay, or creative projects.",
+    "Upload any screenshot from your favorite anime, game, or comic, and hand-pick the exact colors from characters, scenes, or designs. Instantly generate the perfect palette for your fanart, cosplay, or creative projects.",
   alternates: {
     canonical: "https://hicolors.org/create",
   },
