@@ -41,8 +41,8 @@ export const generateMetadata = async ({ params }: { params: Promise<{ id: strin
   const hexs = palette.points.map((item) => Color(item.color).hex()).join(", ");
 
   return {
-    title: `${palette.name} Color Palette - ${palette.category} Inspired Colors`,
-    description: `Discover the ${palette.name} color palette inspired by ${palette.category}. Use ${hexs} to create your custom palette!`,
+    title: `${palette.name} Color Palette - ${palette.category}`,
+    description: `${palette.name} color palette by ${palette.category}, Colors ${hexs}.`,
     alternates: {
       canonical: `/palettes/${id}`,
     },
