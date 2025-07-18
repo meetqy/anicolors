@@ -35,7 +35,8 @@
     },
     "category": {
       "type": "string",
-      "required": true
+      "required": true,
+      "unique": false
     },
     "likes": {
       "type": "integer",
@@ -57,6 +58,12 @@
       "allowedTypes": [
         "images"
       ]
+    },
+    "categoryExtend": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::category.category",
+      "inversedBy": "palettes"
     }
   }
 }

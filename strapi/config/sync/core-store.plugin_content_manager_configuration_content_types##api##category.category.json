@@ -1,14 +1,14 @@
 {
-  "key": "plugin_content_manager_configuration_content_types::api::palette.palette",
+  "key": "plugin_content_manager_configuration_content_types::api::category.category",
   "value": {
     "settings": {
       "bulkable": true,
       "filterable": true,
       "searchable": true,
       "pageSize": 10,
-      "mainField": "documentId",
-      "defaultSortBy": "id",
-      "defaultSortOrder": "DESC"
+      "mainField": "name",
+      "defaultSortBy": "name",
+      "defaultSortOrder": "ASC"
     },
     "metadatas": {
       "id": {
@@ -17,49 +17,6 @@
           "label": "id",
           "searchable": true,
           "sortable": true
-        }
-      },
-      "points": {
-        "edit": {
-          "label": "points",
-          "description": "",
-          "placeholder": "",
-          "visible": true,
-          "editable": true
-        },
-        "list": {
-          "label": "points",
-          "searchable": false,
-          "sortable": false
-        }
-      },
-      "colors": {
-        "edit": {
-          "label": "colors",
-          "description": "",
-          "placeholder": "",
-          "visible": true,
-          "editable": true,
-          "mainField": "name"
-        },
-        "list": {
-          "label": "colors",
-          "searchable": false,
-          "sortable": false
-        }
-      },
-      "image": {
-        "edit": {
-          "label": "image",
-          "description": "",
-          "placeholder": "",
-          "visible": true,
-          "editable": true
-        },
-        "list": {
-          "label": "image",
-          "searchable": false,
-          "sortable": false
         }
       },
       "name": {
@@ -76,48 +33,6 @@
           "sortable": true
         }
       },
-      "category": {
-        "edit": {
-          "label": "category",
-          "description": "",
-          "placeholder": "",
-          "visible": true,
-          "editable": true
-        },
-        "list": {
-          "label": "category",
-          "searchable": true,
-          "sortable": true
-        }
-      },
-      "likes": {
-        "edit": {
-          "label": "likes",
-          "description": "",
-          "placeholder": "",
-          "visible": true,
-          "editable": true
-        },
-        "list": {
-          "label": "likes",
-          "searchable": true,
-          "sortable": true
-        }
-      },
-      "gallery": {
-        "edit": {
-          "label": "gallery",
-          "description": "",
-          "placeholder": "",
-          "visible": true,
-          "editable": true
-        },
-        "list": {
-          "label": "gallery",
-          "searchable": false,
-          "sortable": false
-        }
-      },
       "cover": {
         "edit": {
           "label": "cover",
@@ -132,9 +47,9 @@
           "sortable": false
         }
       },
-      "categoryExtend": {
+      "palettes": {
         "edit": {
-          "label": "categoryExtend",
+          "label": "palettes",
           "description": "",
           "placeholder": "",
           "visible": true,
@@ -142,9 +57,9 @@
           "mainField": "name"
         },
         "list": {
-          "label": "categoryExtend",
-          "searchable": true,
-          "sortable": true
+          "label": "palettes",
+          "searchable": false,
+          "sortable": false
         }
       },
       "createdAt": {
@@ -218,41 +133,17 @@
       "edit": [
         [
           {
-            "name": "image",
-            "size": 4
+            "name": "name",
+            "size": 6
           },
+          {
+            "name": "palettes",
+            "size": 6
+          }
+        ],
+        [
           {
             "name": "cover",
-            "size": 4
-          },
-          {
-            "name": "gallery",
-            "size": 4
-          }
-        ],
-        [
-          {
-            "name": "name",
-            "size": 4
-          },
-          {
-            "name": "categoryExtend",
-            "size": 4
-          },
-          {
-            "name": "category",
-            "size": 4
-          }
-        ],
-        [
-          {
-            "name": "points",
-            "size": 12
-          }
-        ],
-        [
-          {
-            "name": "colors",
             "size": 6
           }
         ]
@@ -260,12 +151,11 @@
       "list": [
         "id",
         "name",
-        "likes",
-        "image",
+        "cover",
         "createdAt"
       ]
     },
-    "uid": "api::palette.palette"
+    "uid": "api::category.category"
   },
   "type": "object",
   "environment": null,
