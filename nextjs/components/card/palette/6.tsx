@@ -4,8 +4,11 @@ import { CardPaletteProps } from "./common";
 import { ColorPointsOverlay } from "@/components/color-points-overlay";
 import Color from "color";
 
+const _heights = ["h-1/2", "h-1/3", "h-2/5", "h-1/6", "h-2/7"];
+
 const CardPalette6Base = ({ points, className, image }: CardPaletteProps) => {
   const bgColor = points[0].color;
+  const heights = _heights.slice(0, points.length).sort(() => Math.random() - 0.5);
 
   // 计算颜色亮度来调整阴影强度
   const getLuminance = (color: string) => {
@@ -49,7 +52,6 @@ const CardPalette6Base = ({ points, className, image }: CardPaletteProps) => {
         </div>
         <div className="flex w-full h-full absolute bottom-0 left-0 items-end flex-row-reverse">
           {points.map((point, index) => {
-            const heights = ["h-1/2", "h-1/3", "h-2/5", "h-1/6", "h-2/7"];
             const randomHeight = heights[index % heights.length];
             return <div className={`w-full rounded-t-md ${randomHeight}`} key={index} style={{ backgroundColor: point.color }}></div>;
           })}
