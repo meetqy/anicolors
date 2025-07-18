@@ -47,7 +47,7 @@ export default async function Page() {
           <div className="text-center mb-12">
             <Badge variant="outline" className="mb-4">
               <Sparkles className="w-4 h-4 mr-2" />
-              Color Palette Gallery
+              ACG Color Palettes
             </Badge>
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight mb-6 max-w-3xl mx-auto">Discover and Make ACG Color Palettes</h1>
             <p className="text-xl text-muted-foreground max-w-4xl mx-auto leading-relaxed mb-8">
