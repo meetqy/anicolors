@@ -1,3 +1,4 @@
+import { InstagramIcon, TwitterIcon } from "lucide-react";
 import Link from "next/link";
 
 interface FriendLink {
@@ -26,6 +27,15 @@ export const Footer = () => {
               <span className="text-xl font-bold font-serif italic relative top-1">Colors</span>
             </div>
             <p className="text-sm text-muted-foreground max-w-sm">Discover & make acg color palettes.</p>
+            <div className="flex items-center gap-x-4 gap-y-2">
+              <Link href={"https://x.com/hi_colors"} target="_blank" className="text-muted-foreground hover:text-foreground transition-colors">
+                <TwitterIcon />
+              </Link>
+
+              <Link href={"https://www.instagram.com/hicolors_org/"} target="_blank" className="text-muted-foreground hover:text-foreground transition-colors">
+                <InstagramIcon />
+              </Link>
+            </div>
           </div>
 
           {/* Legal Links */}
