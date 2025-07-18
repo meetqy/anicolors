@@ -53,11 +53,11 @@ export const PaletteCard = ({ palette }: PaletteCardProps) => {
       <div className="py-2 flex justify-between items-center">
         <div>
           <h2 className="capitalize font-medium">{palette.name}</h2>
-          <Link href={`/category/${palette.category}`} className="text-muted-foreground hover:text-foreground hover:underline capitalize text-sm">
+          <Link href={`/category/${palette.category}`} className="text-muted-foreground line-clamp-1 hover:text-foreground hover:underline capitalize text-sm">
             {palette.category}
           </Link>
         </div>
-        <time suppressHydrationWarning className="text-sm text-muted-foreground">
+        <time suppressHydrationWarning className="text-sm text-muted-foreground shrink-0">
           {timeAgo(palette.createdAt)}
         </time>
       </div>
