@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 interface FriendLink {
   name: string;
   url: string;
@@ -14,18 +16,49 @@ export const Footer = () => {
   ];
 
   return (
-    <footer className="bg-gray-50 mt-16">
-      <div className="max-w-7xl mx-auto px-4 py-8">
-        <div className="text-center">
-          <h3 className="text-sm font-medium text-gray-900 mb-4">Friend Links</h3>
-          <div className="flex flex-wrap justify-center gap-4 mb-6 max-w-4xl mx-auto">
-            {friendLinks.map((link) => (
-              <a key={link.name} href={link.url} target="_blank" className="text-sm text-gray-600 hover:text-gray-900 transition-colors px-2 py-1">
-                {link.name}
-              </a>
-            ))}
+    <footer className="bg-muted/30 border-t mt-16">
+      <div className="max-w-7xl mx-auto px-4 py-12">
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {/* Brand Section */}
+          <div className="space-y-4">
+            <div className="flex items-end">
+              <img src="/logo.svg" alt="HiColors Logo" className="h-8" />
+              <span className="text-xl font-bold font-serif italic relative top-1">Colors</span>
+            </div>
+            <p className="text-sm text-muted-foreground max-w-sm">Discover & make acg color palettes.</p>
           </div>
-          <p className="text-xs text-gray-500">© 2024 HiColors. All rights reserved.</p>
+
+          {/* Legal Links */}
+          <div className="space-y-4">
+            <h3 className="text-sm font-semibold text-foreground">Legal</h3>
+            <div className="flex flex-col space-y-2">
+              <Link href="/about/privacy" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
+                Privacy Policy
+              </Link>
+              <Link href="/about/terms" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
+                Terms of Service
+              </Link>
+            </div>
+          </div>
+
+          {/* Friend Links */}
+          <div className="space-y-4">
+            <h3 className="text-sm font-semibold text-foreground">Friend Links</h3>
+            <div className="flex flex-col space-y-2">
+              {friendLinks.map((link) => (
+                <a key={link.name} href={link.url} target="_blank" rel="noopener noreferrer" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
+                  {link.name}
+                </a>
+              ))}
+            </div>
+          </div>
+        </div>
+
+        {/* Bottom Section */}
+        <div className="mt-8 pt-8 border-t border-border">
+          <div className="text-center">
+            <p className="text-xs text-muted-foreground">© 2024 HiColors. All rights reserved.</p>
+          </div>
         </div>
       </div>
     </footer>
