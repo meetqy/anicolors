@@ -14,7 +14,7 @@
       "name": "Apache 2.0",
       "url": "https://www.apache.org/licenses/LICENSE-2.0.html"
     },
-    "x-generation-date": "2025-07-18T07:12:01.927Z"
+    "x-generation-date": "2025-07-19T03:31:53.733Z"
   },
   "x-strapi-config": {
     "plugins": [
@@ -3016,11 +3016,15 @@
         "properties": {
           "data": {
             "required": [
-              "name"
+              "name",
+              "slug"
             ],
             "type": "object",
             "properties": {
               "name": {
+                "type": "string"
+              },
+              "slug": {
                 "type": "string"
               },
               "cover": {
@@ -3107,7 +3111,8 @@
       "Category": {
         "type": "object",
         "required": [
-          "name"
+          "name",
+          "slug"
         ],
         "properties": {
           "id": {
@@ -3117,6 +3122,9 @@
             "type": "string"
           },
           "name": {
+            "type": "string"
+          },
+          "slug": {
             "type": "string"
           },
           "cover": {
@@ -4220,6 +4228,9 @@
                       "type": "string"
                     },
                     "name": {
+                      "type": "string"
+                    },
+                    "slug": {
                       "type": "string"
                     },
                     "cover": {
@@ -5608,6 +5619,9 @@
                       "type": "string"
                     },
                     "name": {
+                      "type": "string"
+                    },
+                    "slug": {
                       "type": "string"
                     },
                     "cover": {
@@ -7000,6 +7014,9 @@
                             "type": "string"
                           },
                           "name": {
+                            "type": "string"
+                          },
+                          "slug": {
                             "type": "string"
                           },
                           "cover": {
