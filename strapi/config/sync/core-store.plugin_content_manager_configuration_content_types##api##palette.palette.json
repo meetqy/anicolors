@@ -147,6 +147,20 @@
           "sortable": true
         }
       },
+      "extend": {
+        "edit": {
+          "label": "extend",
+          "description": "",
+          "placeholder": "",
+          "visible": true,
+          "editable": true
+        },
+        "list": {
+          "label": "extend",
+          "searchable": false,
+          "sortable": false
+        }
+      },
       "createdAt": {
         "edit": {
           "label": "createdAt",
@@ -233,15 +247,11 @@
         [
           {
             "name": "name",
-            "size": 4
+            "size": 6
           },
           {
             "name": "categoryExtend",
-            "size": 4
-          },
-          {
-            "name": "category",
-            "size": 4
+            "size": 6
           }
         ],
         [
@@ -251,6 +261,16 @@
           }
         ],
         [
+          {
+            "name": "extend",
+            "size": 12
+          }
+        ],
+        [
+          {
+            "name": "category",
+            "size": 6
+          },
           {
             "name": "colors",
             "size": 6

@@ -132,7 +132,7 @@
       "locale": null
     },
     {
-      "documentId": "f1w2623gwfziuln4702xq0ym",
+      "documentId": "v442qi7j9q3aa505mdb5kxft",
       "action": "plugin::content-manager.explorer.create",
       "actionParameters": {},
       "subject": "api::palette.palette",
@@ -146,7 +146,8 @@
           "likes",
           "gallery",
           "cover",
-          "categoryExtend"
+          "categoryExtend",
+          "extend"
         ]
       },
       "conditions": [],
@@ -171,7 +172,7 @@
       "locale": null
     },
     {
-      "documentId": "ot9ypdmz1ocjmy1idacarmzi",
+      "documentId": "de6oshy0awrsv223esmmi8rt",
       "action": "plugin::content-manager.explorer.read",
       "actionParameters": {},
       "subject": "api::palette.palette",
@@ -185,14 +186,15 @@
           "likes",
           "gallery",
           "cover",
-          "categoryExtend"
+          "categoryExtend",
+          "extend"
         ]
       },
       "conditions": [],
       "locale": null
     },
     {
-      "documentId": "zdrqb9bcq3zaqzhwu0itj00c",
+      "documentId": "dv3g2zjvsdgyyx7wtd2wqybc",
       "action": "plugin::content-manager.explorer.update",
       "actionParameters": {},
       "subject": "api::palette.palette",
@@ -206,7 +208,8 @@
           "likes",
           "gallery",
           "cover",
-          "categoryExtend"
+          "categoryExtend",
+          "extend"
         ]
       },
       "conditions": [],
