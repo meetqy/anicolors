@@ -11,6 +11,7 @@ import Link from "next/link";
 import { Shapes } from "lucide-react";
 import { MoreList } from "./more-list";
 import Color from "color";
+import { Extend } from "./extend";
 
 const getPaletteData = async (id: string) => {
   const res = await getClient().query({
@@ -43,15 +44,9 @@ export const generateMetadata = async ({ params }: { params: Promise<{ id: strin
   return {
     title: `${palette.name} Color Palette - ${palette.category}`,
     description: `${palette.name} color palette by ${palette.category}, Colors ${hexs}.`,
-    alternates: {
-      canonical: `/palettes/${id}`,
-    },
-    openGraph: {
-      images: [{ url: imageUrl }],
-    },
-    twitter: {
-      images: [imageUrl],
-    },
+    alternates: { canonical: `/palettes/${id}` },
+    openGraph: { images: [{ url: imageUrl }] },
+    twitter: { images: [imageUrl] },
   };
 };
 
@@ -62,6 +57,8 @@ export default async function Page({ params }: { params: Promise<{ id: string }>
   const points = palette.points;
   const image = getAssetUrl(palette.image.url, 960);
   const hexs = points.map((item) => Color(item.color).hex()).join(", ");
+
+  console.log(palette.extend);
 
   return (
     <>
@@ -125,14 +122,14 @@ export default async function Page({ params }: { params: Promise<{ id: string }>
           ))}
         </div>
 
-        <div className="max-w-screen-xl prose mx-auto px-4 lg:px-0 mt-24">
+        <div className="max-w-screen-xl prose mx-auto px-4 mt-24">
           <h2>{palette.name} Color Palette Gallery</h2>
           <p>
             Explore unique styles and shades inspired by {palette.name} from {palette.category}. Perfect for anime art, game design, or cosplay projects.
           </p>
-
           <Gallery palette={palette} />
-          <hr className="border-0" />
+
+          <Extend palette={palette} />
 
           <h2>Explore More Color Palettes</h2>
           <MoreList category={palette.category} colors={points.map((item) => item.name!)} />

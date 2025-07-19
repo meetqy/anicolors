@@ -24,6 +24,7 @@ export const GET_PALETTE = gql`
       cover {
         url
       }
+      extend
     }
   }
 `;
@@ -34,6 +35,11 @@ export type Palette = {
   createdAt: string;
   image: { url: string };
   likes: number;
+  extend?: {
+    suitableUse: string[];
+    colorMeanings: string[];
+    unsuitableUse: string[];
+  };
   points: ColorPoint[];
   cover: { url: string };
   gallery: { url: string; width: number; height: number; name: string }[];
