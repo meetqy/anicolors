@@ -47,9 +47,11 @@ export default async function Page() {
           <div className="text-center mb-12">
             <Badge variant="outline" className="mb-4">
               <Sparkles className="w-4 h-4 mr-2" />
-              Anime & Game Colors
+              Anime & Game Color Palettes
             </Badge>
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight mb-6 max-w-3xl mx-auto">Discover and Make Anime & Game Color Palettes</h1>
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight mb-6 max-w-3xl mx-auto">
+              Discover and Create <br /> Anime & Game Colors
+            </h1>
             <p className="text-xl text-muted-foreground max-w-4xl mx-auto leading-relaxed mb-8">
               Browse thousands of color palettes created from anime characters, artworks, games, and user-uploaded images. Discover unique color combinations and layout styles.
             </p>
