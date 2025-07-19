@@ -14,6 +14,7 @@ export const Footer = () => {
     { name: "Victrays", url: "https://victrays.com/" },
     { name: "MagicBox", url: "https://magicbox.tools" },
     { name: "Turbo0", url: "https://turbo0.com/item/hicolors" },
+    { name: "YP for AI", url: "https://ypforai.com" },
   ];
 
   return (
