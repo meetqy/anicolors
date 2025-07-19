@@ -58,8 +58,6 @@ export default async function Page({ params }: { params: Promise<{ id: string }>
   const image = getAssetUrl(palette.image.url, 960);
   const hexs = points.map((item) => Color(item.color).hex()).join(", ");
 
-  console.log(palette.extend);
-
   return (
     <>
       <script
