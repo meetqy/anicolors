@@ -65,15 +65,8 @@ export async function generateMetadata({ params, searchParams }: CategoryPagePro
   const page = parseInt((await searchParams).page || "1");
   const categoryName = decodeURIComponent(name);
 
-  if (page > 1) {
-    return {
-      title: `${categoryName} Color Palettes - Page ${page} | HiColors`,
-      description: `Browse more color palettes from ${categoryName}, page ${page}.`,
-    };
-  } else {
-    return {
-      title: `${categoryName} Color Palettes | HiColors`,
-      description: `Discover color palettes from ${categoryName} characters and scenes.`,
-    };
-  }
+  return {
+    title: `${categoryName} Color Palettes - Page ${page} | HiColors`,
+    description: `Browse more color palettes from ${categoryName}, page ${page}.`,
+  };
 }

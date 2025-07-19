@@ -67,15 +67,8 @@ export async function generateMetadata({ params, searchParams }: CategoryPagePro
   const page = parseInt((await searchParams).page || "1");
   const categoryName = decodeURIComponent(name);
 
-  if (page > 1) {
-    return {
-      title: `${categoryName} Color Palettes – Page ${page} | HiColors`,
-      description: `Page ${page} of beautiful ${categoryName} color palettes from characters and scenes.`,
-    };
-  } else {
-    return {
-      title: `${categoryName} Color Palettes | HiColors`,
-      description: `Explore curated ${categoryName} color palettes extracted from illustrations, anime, and game characters.`,
-    };
-  }
+  return {
+    title: `${categoryName} Color Palettes – Page ${page} | HiColors`,
+    description: `Page ${page} of beautiful ${categoryName} color palettes from characters and scenes.`,
+  };
 }
