@@ -10,7 +10,7 @@ export const Extend = ({ palette }: { palette: Palette }) => {
       <h2 className="pt-8">💡 Color Meanings</h2>
       <ul>
         {palette.extend.colorMeanings.map((meaning, index) => (
-          <li key={index}>{meaning}</li>
+          <li key={index} dangerouslySetInnerHTML={{ __html: meaning.replace(/.*?\)/, "<b>$&</b>") }} />
         ))}
       </ul>
       <div className="grid lg:grid-cols-2 grid-cols-1">
