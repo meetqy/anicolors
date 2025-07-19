@@ -18,15 +18,19 @@ const getPalettesList = async (page = 1) => {
 
   return res.data;
 };
-
-export const metadata: Metadata = {
-  title: "Color Palettes Gallery | HiColors",
-  description: "Discover beautiful color palettes created by designers and artists. Find inspiration for your next creative project.",
-};
-
 interface PageProps {
   searchParams: Promise<{ page?: string }>;
 }
+
+export const generateMetadata = async ({ searchParams }: PageProps): Promise<Metadata> => {
+  const params = await searchParams;
+  const page = parseInt(params.page || "1");
+
+  return {
+    title: `Discover Beautiful Color Palettes from Anime, Games & Art – Page ${page}`,
+    description: `Explore a curated collection of color palettes inspired by anime, games, and illustrations. Find aesthetic combinations extracted from your favorite characters and scenes. Page ${page}.`,
+  };
+};
 
 export default async function Page({ searchParams }: PageProps) {
   const params = await searchParams;

@@ -72,7 +72,7 @@ export async function generateMetadata({ params, searchParams }: CategoryPagePro
     };
   } else {
     return {
-      title: `${categoryName} Color Palettes - Inspired by Characters & Scenes | HiColors`,
+      title: `${categoryName} Color Palettes | HiColors`,
       description: `Discover color palettes from ${categoryName} characters and scenes.`,
     };
   }
