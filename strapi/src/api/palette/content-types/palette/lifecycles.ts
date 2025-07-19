@@ -1,6 +1,6 @@
 const syncCategory = async (event) => {
   const { connect } = event.params.data.categoryExtend;
-  const categoryId = connect[0].id;
+  const categoryId = connect?.[0]?.id;
 
   if (!categoryId) {
     return;
