@@ -455,6 +455,7 @@ export interface ApiPalettePalette extends Struct.CollectionTypeSchema {
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
+    extend: Schema.Attribute.JSON;
     gallery: Schema.Attribute.Media<'images', true>;
     image: Schema.Attribute.Media<'images'> & Schema.Attribute.Required;
     likes: Schema.Attribute.Integer & Schema.Attribute.DefaultTo<1>;

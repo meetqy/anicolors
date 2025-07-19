@@ -64,6 +64,9 @@
       "relation": "manyToOne",
       "target": "api::category.category",
       "inversedBy": "palettes"
+    },
+    "extend": {
+      "type": "json"
     }
   }
 }

@@ -9,13 +9,7 @@ const getPalettesList = async (name: string, page: number = 1) => {
   const res = await getClient().query<PaletteListResponse>({
     query: GET_PALETTE_LIST,
     variables: {
-      filters: {
-        colors: {
-          name: {
-            containsi: decodeURIComponent(name),
-          },
-        },
-      },
+      filters: { colors: { name: { containsi: decodeURIComponent(name) } } },
       pagination: { page, pageSize },
       sort: ["createdAt:desc"],
     },
