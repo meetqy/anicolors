@@ -1,12 +1,8 @@
-Of course, here is the English translation of the project description for HiColors.
-
----
-
-# HiColors - Discover and Create ACG Color Palettes
+# HiColors - Discover and Create Anime & Game Color Palettes
 
 ![cover](https://hicolors.org/og.jpg)
 
-HiColors is more than just an image color picker; it's an ACG color archive.
+HiColors is more than just an image color picker; it's a color archive inspired by the worlds of **anime, manga, and games.**
 
 Live DEMO: [hicolors.org](https://hicolors.org)
 
@@ -19,7 +15,7 @@ Open Source:
 
 ### 1. 🎨 Curated Daily · Inspiration Palette Gallery
 
-This isn't just a collection of algorithm-generated palettes. It's a gallery hand-picked by us, as passionate ACG fans.
+This isn't just a collection of algorithm-generated palettes. It's a gallery curated by us—**passionate fans of anime and gaming.**
 Every day, I dive into a vast sea of anime, games, manga, and official concept art to manually select the most inspiring materials for you, crafting them into beautiful palette detail pages. Here, you will discover:
 
 - **Character Palettes:** From the armor of "Saber" to the teal hair of "Hatsune Miku."
@@ -42,7 +38,7 @@ If you have your own treasured images or want to analyze the color scheme of a s
 - ✅ Supports multiple image formats, including PNG, JPG, GIF, and more.
 - ✅ Offers a variety of palette template styles to suit different design needs.
 - ✅ Allows custom positioning of color points to create personalized palettes.
-- ✅ Features a color extraction algorithm specifically optimized for anime and game character designs.
+- ✅ Features a color extraction algorithm specifically optimized for **anime and game character designs.**
 - ✅ Supports exporting palettes for easy saving and sharing.
 - ✅ Built on Strapi, allowing for future feature expansion and scalability.
 
