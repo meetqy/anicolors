@@ -33,6 +33,20 @@
           "sortable": true
         }
       },
+      "slug": {
+        "edit": {
+          "label": "slug",
+          "description": "",
+          "placeholder": "",
+          "visible": true,
+          "editable": true
+        },
+        "list": {
+          "label": "slug",
+          "searchable": true,
+          "sortable": true
+        }
+      },
       "cover": {
         "edit": {
           "label": "cover",
@@ -130,6 +144,12 @@
       }
     },
     "layouts": {
+      "list": [
+        "id",
+        "name",
+        "cover",
+        "createdAt"
+      ],
       "edit": [
         [
           {
@@ -145,14 +165,12 @@
           {
             "name": "cover",
             "size": 6
+          },
+          {
+            "name": "slug",
+            "size": 6
           }
         ]
-      ],
-      "list": [
-        "id",
-        "name",
-        "cover",
-        "createdAt"
       ]
     },
     "uid": "api::category.category"
