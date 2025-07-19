@@ -12,10 +12,10 @@ export default function Landing() {
         <div className="text-center mb-16">
           <Badge variant="secondary" className="mb-4">
             <Pipette className="w-4 h-4 mr-2" />
-            The Ultimate ACG Palette Tool
+            The Ultimate Fan-Palette Tool
           </Badge>
           <h2 className="text-4xl font-bold tracking-tight mb-6">
-            Capture the Soul of Your Favorite ACG Worlds
+            Capture the Soul of Your Favorite Worlds
             <span className="text-primary"> in a Perfect Palette</span>
           </h2>
           <p className="text-xl text-muted-foreground max-w-3xl mx-auto leading-relaxed">
@@ -32,7 +32,7 @@ export default function Landing() {
                 <Zap className="w-6 h-6 text-primary" />
               </div>
               <CardTitle>Instant Scene Analysis</CardTitle>
-              <CardDescription>Upload any ACG image and our AI instantly finds 5 dominant colors, perfect for capturing the mood of a scene or character.</CardDescription>
+              <CardDescription>Upload an image from any anime or game and our AI instantly finds 5 dominant colors, perfect for capturing the mood of a scene or character.</CardDescription>
             </CardHeader>
           </Card>
 
@@ -91,7 +91,7 @@ export default function Landing() {
 
         {/* <!-- Use Cases --> */}
         <div className="mb-16">
-          <h3 className="text-3xl font-bold text-center mb-12">The Go-To Tool for ACG Creators & Fans</h3>
+          <h3 className="text-3xl font-bold text-center mb-12">The Go-To Tool for Fan Creators & Artists</h3>
           <div className="grid md:grid-cols-2 gap-6">
             <Card className="p-6">
               <div className="flex items-start space-x-4">
@@ -153,7 +153,7 @@ export default function Landing() {
 
         {/* <!-- Features List --> */}
         <Card className="p-8 mb-16">
-          <h3 className="text-2xl font-bold text-center mb-8">Why Our ACG Palette Generator?</h3>
+          <h3 className="text-2xl font-bold text-center mb-8">Why Our Palette Generator?</h3>
           <div className="grid md:grid-cols-2 gap-6">
             <div className="flex items-center space-x-3">
               <div className="w-2 h-2 bg-primary rounded-full"></div>
@@ -173,7 +173,7 @@ export default function Landing() {
             </div>
             <div className="flex items-center space-x-3">
               <div className="w-2 h-2 bg-primary rounded-full"></div>
-              <span>Intuitive drag-and-drop interface for any ACG image</span>
+              <span>Intuitive drag-and-drop interface for any image</span>
             </div>
             <div className="flex items-center space-x-3">
               <div className="w-2 h-2 bg-primary rounded-full"></div>
@@ -186,12 +186,12 @@ export default function Landing() {
         <div className="text-center">
           <h3 className="text-2xl font-bold mb-4">Ready to Capture Your Fandom's Colors?</h3>
           <p className="text-muted-foreground mb-8 max-w-2xl mx-auto">
-            Join thousands of artists, cosplayers, and fans who use our tool to bring their favorite ACG worlds to life. Upload an image and create your first palette in seconds.
+            Join thousands of artists, cosplayers, and fans who use our tool to bring their favorite worlds to life. Upload an image and create your first palette in seconds.
           </p>
           <Button size="lg" className="gap-2" asChild>
             <Link href={"#"}>
               <Palette className="w-5 h-5" />
-              Create Your ACG Palette
+              Create Your Palette
             </Link>
           </Button>
         </div>

@@ -11,8 +11,8 @@ import { Metadata } from "next";
 export const dynamic = "force-dynamic";
 
 export const metadata: Metadata = {
-  title: "Discover & Make ACG Color Palettes - HiColors",
-  description: "Find Your Anime Comic Game Soul. Pick colors from the scenes you love and instantly generate your signature palette.",
+  title: "Discover Anime Color Palettes & Create Your Own - HiColors",
+  description: "Extract the iconic colors from your favorite anime and game scenes. Upload any image to instantly generate a beautiful, shareable color palette with HiColors.",
   icons: [{ rel: "icon", url: "/favicon.ico" }],
   twitter: {
     images: ["https://hicolors.org/og.jpg"],
@@ -47,9 +47,9 @@ export default async function Page() {
           <div className="text-center mb-12">
             <Badge variant="outline" className="mb-4">
               <Sparkles className="w-4 h-4 mr-2" />
-              ACG Color Palettes
+              Anime & Game Colors
             </Badge>
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight mb-6 max-w-3xl mx-auto">Discover and Make ACG Color Palettes</h1>
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight mb-6 max-w-3xl mx-auto">Discover and Make Anime & Game Color Palettes</h1>
             <p className="text-xl text-muted-foreground max-w-4xl mx-auto leading-relaxed mb-8">
               Browse thousands of color palettes created from anime characters, artworks, games, and user-uploaded images. Discover unique color combinations and layout styles.
             </p>

@@ -10,8 +10,8 @@ import { Footer } from "@/components/footer";
 import NextTopLoader from "nextjs-toploader";
 
 export const metadata: Metadata = {
-  title: "Discover & Make ACG Color Palettes - HiColors",
-  description: "Find Your Anime Comic Game Soul. Pick colors from the scenes you love and instantly generate your signature palette.",
+  title: "Discover Anime Color Palettes & Create Your Own - HiColors",
+  description: "Extract the iconic colors from your favorite anime and game scenes. Upload any image to instantly generate a beautiful, shareable color palette with HiColors.",
   icons: [{ rel: "icon", url: "/favicon.ico" }],
   metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || "https://hicolors.org"),
 };
