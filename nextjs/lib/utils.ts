@@ -34,6 +34,10 @@ export const getAssetUrl = (url: string, width?: number, height?: number, qualit
   return `${process.env.NEXT_PUBLIC_ASSET_URL}${url}`;
 };
 
+export const getOriginalUrl = (url: string) => {
+  return url.startsWith("http") ? url : `${process.env.NEXT_PUBLIC_ASSET_URL}${url}`;
+};
+
 export const capitalize = (str: string): string => {
   return str
     .split(/(\s+)/) // Split by spaces but keep the spaces

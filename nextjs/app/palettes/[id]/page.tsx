@@ -3,7 +3,7 @@ import { Generator } from "@/components/palette/generator";
 import { Button } from "@/components/ui/button";
 import { PaletteActions } from "./actions";
 import { getClient } from "@/lib/apollo-client";
-import { getAssetUrl, capitalize } from "@/lib/utils";
+import { getAssetUrl, capitalize, getOriginalUrl } from "@/lib/utils";
 import { Gallery } from "./gallery";
 import { GET_PALETTE, Palette } from "@/query/palette";
 import { Metadata } from "next";
@@ -90,7 +90,11 @@ export default async function Page({ params }: { params: Promise<{ id: string }>
 
           <p>
             <span className="text-red-500 relative top-1 mr-2">*</span>
-            <b>You can drag the markers to picker different colors.</b>
+            You can drag the markers to picker different colors, create your own color palettes.
+          </p>
+          <p>
+            <span className="text-red-500 relative top-1 mr-2">*</span>
+            Free download {palette.category} {palette.name} transparent background png HD.{" "}
           </p>
         </div>
 
