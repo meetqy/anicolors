@@ -3,7 +3,7 @@ import { Generator } from "@/components/palette/generator";
 import { Button } from "@/components/ui/button";
 import { PaletteActions } from "./actions";
 import { getClient } from "@/lib/apollo-client";
-import { getAssetUrl, capitalize, getOriginalUrl } from "@/lib/utils";
+import { getAssetUrl, capitalize } from "@/lib/utils";
 import { Gallery } from "./gallery";
 import { GET_PALETTE, Palette } from "@/query/palette";
 import { Metadata } from "next";
