@@ -22,7 +22,7 @@ export const metadata: Metadata = {
   },
 };
 
-const getPalettesList = async (page: number = 1, pageSize: number = 24, sort: string = "createdAt:desc") => {
+const getPalettesList = async (page: number = 1, pageSize: number = 24, sort: string = "publishedAt:desc") => {
   const res = await getClient().query<PaletteListResponse>({
     query: GET_PALETTE_LIST,
     variables: {
@@ -36,7 +36,7 @@ const getPalettesList = async (page: number = 1, pageSize: number = 24, sort: st
 
 export default async function Page() {
   // 获取最新的调色板数据用于展示
-  const { palettes_connection } = await getPalettesList(1, 16, "createdAt:desc");
+  const { palettes_connection } = await getPalettesList(1, 16, "publishedAt:desc");
   const { nodes: featuredPalettes, pageInfo } = palettes_connection;
 
   return (

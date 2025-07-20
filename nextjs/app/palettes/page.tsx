@@ -12,7 +12,7 @@ const getPalettesList = async (page = 1) => {
     query: GET_PALETTE_LIST,
     variables: {
       pagination: { page, pageSize },
-      sort: ["createdAt:desc"],
+      sort: ["publishedAt:desc"],
     },
   });
 
