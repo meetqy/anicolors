@@ -12,6 +12,7 @@ import { SaveableCardRef } from "@/components/card/with-save";
 import { ColorPoint } from "@/components/palette/picker-colors";
 import { Button } from "@/components/ui/button";
 import { Palette } from "@/query/palette";
+import Link from "next/link";
 import { CSSProperties, useRef, useMemo, useState } from "react";
 import { ColumnsPhotoAlbum } from "react-photo-album";
 import { toast } from "sonner";
@@ -152,6 +153,11 @@ export const DomGallery = ({ image, points, id, gallery }: { image: string; poin
               ref={(ref) => {
                 if (ref) myRefs.current.set(`color-${index}`, ref);
               }}
+              maskExtra={
+                <Button size="sm" variant="outline" asChild>
+                  <Link href="/create/color/1">Make Color Card</Link>
+                </Button>
+              }
               className="w-full"
               id={`color-${index}`}
               point={item}

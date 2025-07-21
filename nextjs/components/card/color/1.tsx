@@ -12,6 +12,7 @@ type CardColor1Props = {
   classNames?: {
     valuesContainer?: string;
   };
+  maskExtra?: React.ReactNode;
 };
 
 const CardColor1Base = ({ point, index, className, style, classNames }: CardColor1Props) => {

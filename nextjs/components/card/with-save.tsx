@@ -15,6 +15,7 @@ export interface SaveableCardRef {
 interface WithSaveProps {
   id?: string;
   className?: string;
+  maskExtra?: React.ReactNode;
 }
 
 export function withSave<P extends object>(WrappedComponent: ComponentType<P>) {
@@ -106,12 +107,13 @@ export function withSave<P extends object>(WrappedComponent: ComponentType<P>) {
         {/* Hover Mask */}
         {isHovering && (
           <div className="absolute inset-0 bg-black/50 flex items-center justify-center transition-all duration-200">
-            <div className="text-center text-white space-y-2">
-              {props.id && <div className="text-sm font-mono opacity-80">ID: {props.id}</div>}
+            <div className="text-center grid space-y-2">
+              {props.id && <div className="text-sm font-mono opacity-80 text-white">ID: {props.id}</div>}
               <Button variant="secondary" size="sm" onClick={() => handleDownload()} className="bg-white/20 hover:bg-white/30 text-white border-white/20">
                 <Download className="w-4 h-4 mr-2" />
                 Download
               </Button>
+              {props.maskExtra}
             </div>
           </div>
         )}
