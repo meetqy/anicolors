@@ -4,26 +4,26 @@ import { useState } from "react";
 import { CardColor1 } from "@/components/card/color/1";
 import { ColorPoint } from "@/components/palette/picker-colors";
 import { getColorName } from "@/lib/nearest";
-import Color from "color";
 import dynamic from "next/dynamic";
+import { ColorResult } from "react-color";
 
 const ChromePicker = dynamic(() => import("react-color").then((mod) => mod.ChromePicker), { ssr: false });
 
 export function Generator() {
-  const [selectedColor, setSelectedColor] = useState({ r: 255, g: 0, b: 0, a: 1 });
+  const [selectedColor, setSelectedColor] = useState<ColorResult>();
 
-  const handleColorChange = (color: any) => {
-    setSelectedColor(color.rgb);
+  const handleColorChange = (color: ColorResult) => {
+    setSelectedColor(color);
   };
 
-  const colorHex = Color(`rgba(${selectedColor.r}, ${selectedColor.g}, ${selectedColor.b}, ${selectedColor.a})`).hex();
+  const hex = selectedColor?.hex || "#ff0000";
 
   const colorPoint: ColorPoint = {
     id: 1,
     x: 0,
     y: 0,
-    color: colorHex,
-    name: getColorName(colorHex)?.name || "Unknown",
+    color: hex,
+    name: getColorName(hex)?.name || "Unknown",
   };
 
   return (
@@ -32,7 +32,7 @@ export function Generator() {
       <div className="bg-muted/50 p-12">
         <h2 className="text-2xl font-semibold mb-8 text-center">Pick Your Color</h2>
         <div className="flex justify-center" suppressHydrationWarning>
-          <ChromePicker className="!w-full !shadow-none border !rounded-md overflow-hidden" color={selectedColor} onChange={handleColorChange} disableAlpha={false} />
+          <ChromePicker className="!w-full !shadow-none border !rounded-md overflow-hidden" color={hex} onChange={handleColorChange} disableAlpha={false} />
         </div>
       </div>
 

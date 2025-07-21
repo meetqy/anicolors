@@ -201,6 +201,7 @@ export default function Page() {
               return (
                 <div className="border rounded-md overflow-hidden" key={item}>
                   <img
+                    alt="Example color card"
                     srcSet={`
 ${getAssetUrl(url, 320)} 1x,
 ${getAssetUrl(url, 640)} 2x,
