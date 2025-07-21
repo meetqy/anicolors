@@ -27,7 +27,7 @@ export function Generator() {
   };
 
   return (
-    <div className="grid lg:grid-cols-2 gap-0 max-w-6xl mx-auto border rounded-2xl overflow-hidden">
+    <div className="grid lg:grid-cols-2 gap-0 max-w-6xl mx-auto border rounded-lg overflow-hidden">
       {/* Color Picker Section */}
       <div className="bg-muted/50 p-12">
         <h2 className="text-2xl font-semibold mb-8 text-center">Pick Your Color</h2>
@@ -40,7 +40,7 @@ export function Generator() {
       <div className="bg-background p-12 border-l">
         <h2 className="text-2xl font-semibold mb-8 text-center">Generated Color Card</h2>
         <div className="flex justify-center">
-          <div className="border w-full">
+          <div className="border w-full rounded-md overflow-hidden">
             <CardColor1 className="w-full" point={colorPoint} />
           </div>
         </div>
