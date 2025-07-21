@@ -64,6 +64,7 @@ export const Footer = () => {
               ))}
 
               <a href="https://starterbest.com" target="_blank" rel="noopener noreferrer">
+                StarterBest
                 <img src="https://starterbest.com/badages-awards.svg" className="sr-only" alt="Featured on Starter Best" style={{ height: 54 }} />
               </a>
             </div>
