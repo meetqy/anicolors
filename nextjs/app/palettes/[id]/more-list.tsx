@@ -20,7 +20,7 @@ export const MoreList = ({ category, colors }: { category: string; colors: strin
         pageSize: 24,
         page: 1,
       },
-      sort: ["createdAt:desc"],
+      sort: ["publishedAt:desc"],
       filters: {
         or: [
           {

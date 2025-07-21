@@ -11,7 +11,7 @@ const getPalettesList = async (name: string, page: number = 1) => {
     variables: {
       filters: { colors: { name: { containsi: decodeURIComponent(name) } } },
       pagination: { page, pageSize },
-      sort: ["createdAt:desc"],
+      sort: ["publishedAt:desc"],
     },
   });
 

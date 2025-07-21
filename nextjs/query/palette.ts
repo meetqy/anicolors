@@ -20,7 +20,7 @@ export const GET_PALETTE = gql`
       }
       points
       name
-      createdAt
+      publishedAt
       cover {
         url
       }
@@ -32,7 +32,7 @@ export const GET_PALETTE = gql`
 export type Palette = {
   name: string;
   category: string;
-  createdAt: string;
+  publishedAt: string;
   image: { url: string };
   likes: number;
   extend?: {
@@ -60,7 +60,7 @@ export const GET_PALETTE_LIST = gql`
           url
         }
         documentId
-        createdAt
+        publishedAt
       }
       pageInfo {
         total
@@ -79,7 +79,7 @@ export type PaletteListItem = {
   image: { url: string };
   points: ColorPoint[];
   documentId: string;
-  createdAt: string;
+  publishedAt: string;
 };
 
 export type PaletteListResponse = {

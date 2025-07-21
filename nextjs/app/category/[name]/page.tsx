@@ -15,7 +15,7 @@ const getPalettesList = async (name: string, page: number = 1) => {
         },
       },
       pagination: { page, pageSize },
-      sort: ["createdAt:desc"],
+      sort: ["publishedAt:desc"],
     },
   });
 

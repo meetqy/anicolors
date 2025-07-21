@@ -58,7 +58,7 @@ export const PaletteCard = ({ palette }: PaletteCardProps) => {
           </Link>
         </div>
         <time suppressHydrationWarning className="text-sm text-muted-foreground shrink-0">
-          {timeAgo(palette.createdAt)}
+          {timeAgo(palette.publishedAt)}
         </time>
       </div>
     </div>
