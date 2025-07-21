@@ -32,7 +32,7 @@ export function Generator() {
       <div className="bg-muted/50 p-12">
         <h2 className="text-2xl font-semibold mb-8 text-center">Pick Your Color</h2>
         <div className="flex justify-center" suppressHydrationWarning>
-          <ChromePicker className="!w-full !shadow-none border !rounded-md overflow-hidden" color={hex} onChange={handleColorChange} disableAlpha={false} />
+          <ChromePicker className="!w-full !shadow-none border !rounded-md overflow-hidden" color={hex} onChange={handleColorChange} disableAlpha />
         </div>
       </div>
 
