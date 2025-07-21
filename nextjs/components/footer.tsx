@@ -30,11 +30,11 @@ export const Footer = () => {
             </div>
             <p className="text-sm text-muted-foreground max-w-sm">Discover Anime Color Palettes & Create Your Own.</p>
             <div className="flex items-center gap-x-4 gap-y-2">
-              <Link href={"https://x.com/hi_colors"} target="_blank" className="text-muted-foreground hover:text-foreground transition-colors">
+              <Link href={"https://x.com/hi_colors"} aria-label="View the Twitter profile" target="_blank" className="text-muted-foreground hover:text-foreground transition-colors">
                 <TwitterIcon />
               </Link>
 
-              <Link href={"https://www.instagram.com/hicolors_org/"} target="_blank" className="text-muted-foreground hover:text-foreground transition-colors">
+              <Link href={"https://www.instagram.com/hicolors_org/"} aria-label="View the Instagram profile" target="_blank" className="text-muted-foreground hover:text-foreground transition-colors">
                 <InstagramIcon />
               </Link>
             </div>

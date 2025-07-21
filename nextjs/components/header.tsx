@@ -15,13 +15,17 @@ export function Header() {
         {/* Auth Buttons */}
         <div className="flex items-center gap-2">
           <Button variant="link" asChild>
-            <Link href="/palettes">All Palettes</Link>
+            <Link href="/palettes" aria-label="View all color palettes">
+              All Palettes
+            </Link>
           </Button>
           <Button asChild className="lg:block hidden">
-            <Link href="/create">Make a Palette</Link>
+            <Link href="/create" aria-label="Create a new color palette">
+              Make a Palette
+            </Link>
           </Button>
           <Button variant="ghost" size="icon" asChild>
-            <Link href="https://github.com/meetqy/hicolors" target="_blank">
+            <Link href="https://github.com/meetqy/hicolors" aria-label="View the GitHub repository" target="_blank">
               <GithubIcon className="size-6" />
             </Link>
           </Button>
