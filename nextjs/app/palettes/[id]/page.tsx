@@ -86,16 +86,12 @@ export default async function Page({ params }: { params: Promise<{ id: string }>
             . We've extracted these five iconic colors from the official character art. Want to create your own version? Hit the <b>"Custom Maker"</b> button below to get started!
           </p>
 
-          <p>Use our anime color palette generator to create custom schemes for your art or design projects.</p>
-
-          <p>
-            <span className="text-red-500 relative top-1 mr-2">*</span>
-            You can drag the markers to picker different colors, create your own color palettes.
-          </p>
-          <p>
-            <span className="text-red-500 relative top-1 mr-2">*</span>
-            Free download {palette.category} {palette.name} transparent background png HD.{" "}
-          </p>
+          <ul>
+            <li> You can drag the markers to picker different colors, create your own color palettes.</li>
+            <li>
+              Free download {palette.category} {palette.name} transparent background png HD.
+            </li>
+          </ul>
         </div>
 
         <Generator initialPoints={points} initImage={image} />

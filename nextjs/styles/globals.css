@@ -138,6 +138,14 @@
   .p {
     @apply leading-7 [&:not(:first-child)]:mt-6;
   }
+
+  .blockquote {
+    @apply mt-6 border-l-2 pl-6 italic;
+  }
+
+  .list {
+    @apply my-6 ml-6 list-disc [&>li]:mt-2;
+  }
 }
 
 @layer utilities {
