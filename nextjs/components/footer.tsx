@@ -13,9 +13,9 @@ export const Footer = () => {
     { name: "Hiaitools", url: "https://hiaitools.com" },
     { name: "Victrays", url: "https://victrays.com/" },
     { name: "MagicBox", url: "https://magicbox.tools" },
-    { name: "Turbo0", url: "https://turbo0.com/item/hicolors" },
+    { name: "Turbo0", url: "https://turbo0.com" },
     { name: "YP for AI", url: "https://ypforai.com" },
-    { name: "UtilPortal", url: "https://utilportal.com/item/https://hicolors.org" },
+    { name: "UtilPortal", url: "https://utilportal.com" },
     { name: "StarterBest", url: "https://starterbest.com" },
   ];
 
