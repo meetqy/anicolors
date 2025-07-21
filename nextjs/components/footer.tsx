@@ -16,7 +16,6 @@ export const Footer = () => {
     { name: "Turbo0", url: "https://turbo0.com" },
     { name: "YP for AI", url: "https://ypforai.com" },
     { name: "UtilPortal", url: "https://utilportal.com" },
-    { name: "StarterBest", url: "https://starterbest.com" },
   ];
 
   return (
@@ -63,6 +62,10 @@ export const Footer = () => {
                   {link.name}
                 </a>
               ))}
+
+              <a href="https://starterbest.com" target="_blank" rel="noopener noreferrer">
+                <img src="https://starterbest.com/badages-awards.svg" className="sr-only" alt="Featured on Starter Best" style={{ height: 54 }} />
+              </a>
             </div>
           </div>
         </div>
