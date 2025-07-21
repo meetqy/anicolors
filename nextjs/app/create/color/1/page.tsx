@@ -3,6 +3,7 @@ import { Generator } from "./generator";
 import { Badge } from "@/components/ui/badge";
 import { getAssetUrl } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
+import Link from "next/link";
 
 export const metadata: Metadata = {
   title: "Color Card Generator – Create, Download, Share – Free Online Tool",
@@ -222,8 +223,8 @@ ${getAssetUrl(url, 960)} 3x
         <div className="container mx-auto px-4 text-center">
           <h2 className="h2 border-transparent">Ready to Make Your Color Card?</h2>
           <p className="p text-muted-foreground">Start creating beautiful, professional color cards in seconds. Free to use, no signup required.</p>
-          <Button size="lg" className="mt-8">
-            Start Now
+          <Button size="lg" className="mt-8" asChild>
+            <Link href="/create/color/1">Start Now</Link>
           </Button>
         </div>
       </section>
