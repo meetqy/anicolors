@@ -4,6 +4,7 @@ import { forwardRef, useImperativeHandle, useRef, ComponentType, useState } from
 import { Button } from "@/components/ui/button";
 import { Download } from "lucide-react";
 import domtoimage from "dom-to-image";
+import { cn } from "@/lib/utils";
 
 export interface SaveableCardRef {
   saveAsImage: (filename?: string, scale?: number) => Promise<void>;
@@ -13,6 +14,7 @@ export interface SaveableCardRef {
 
 interface WithSaveProps {
   id?: string;
+  className?: string;
 }
 
 export function withSave<P extends object>(WrappedComponent: ComponentType<P>) {
@@ -98,7 +100,7 @@ export function withSave<P extends object>(WrappedComponent: ComponentType<P>) {
     }));
 
     return (
-      <div ref={cardRef} className="relative group" onMouseEnter={() => setIsHovering(true)} onMouseLeave={() => setIsHovering(false)}>
+      <div ref={cardRef} className={cn("relative group", props.className)} onMouseEnter={() => setIsHovering(true)} onMouseLeave={() => setIsHovering(false)}>
         <WrappedComponent {...(props as P)} />
 
         {/* Hover Mask */}

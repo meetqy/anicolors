@@ -1,5 +1,6 @@
 import { Metadata } from "next";
 import { Maker } from "./components/maker";
+import Introduction from "./components/introduction";
 
 export const metadata: Metadata = {
   title: "Anime & Game Color Palette Generator - HiColors",
@@ -19,6 +20,7 @@ export default async function Page({ searchParams }: { searchParams: Promise<{ i
         <p className="p">{metadata.description}</p>
       </div>
       <Maker id={id} />
+      <Introduction />
     </div>
   );
 }

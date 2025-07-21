@@ -4,7 +4,7 @@ import { Badge } from "@/components/ui/badge";
 import { Palette, Download, Zap, Eye, Brush, Target, Users, Lightbulb, PaintBucket, Pipette, FileImage } from "lucide-react";
 import Link from "next/link";
 
-export default function Landing() {
+export default function Introduction() {
   return (
     <section className="py-16">
       <div className="container mx-auto px-4 max-w-6xl">

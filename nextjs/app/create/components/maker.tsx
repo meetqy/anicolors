@@ -7,7 +7,6 @@ import { useQuery } from "@apollo/client";
 import { getAssetUrl } from "@/lib/utils";
 import "react-photo-album/columns.css";
 import { DomGallery } from "./dom-gallery";
-import Landing from "./landing";
 import { GET_PALETTE, Palette } from "@/query/palette";
 
 export const Maker = ({ id }: { id: string }) => {
@@ -30,8 +29,6 @@ export const Maker = ({ id }: { id: string }) => {
       <Generator initialPoints={points} initImage={image} onColorsChangeEnter={setPoints} onImageChange={setImage} />
 
       {image && <DomGallery image={image} points={points} id={id} gallery={data?.palette.gallery || []} />}
-
-      <Landing />
     </>
   );
 };

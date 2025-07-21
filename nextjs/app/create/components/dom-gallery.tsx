@@ -147,16 +147,18 @@ export const DomGallery = ({ image, points, id, gallery }: { image: string; poin
       <h2>Colors</h2>
       <div className="not-prose grid gap-4 md:grid-cols-2 lg:grid-cols-3">
         {points.map((item, index) => (
-          <CardColor1
-            ref={(ref) => {
-              if (ref) myRefs.current.set(`color-${index}`, ref);
-            }}
-            key={item.id}
-            className="w-full"
-            id={`color-${index}`}
-            point={item}
-            index={index}
-          />
+          <div className="w-full border rounded-md overflow-hidden" key={item.id}>
+            <CardColor1
+              ref={(ref) => {
+                if (ref) myRefs.current.set(`color-${index}`, ref);
+              }}
+              key={item.id}
+              className="w-full"
+              id={`color-${index}`}
+              point={item}
+              index={index}
+            />
+          </div>
         ))}
       </div>
 
