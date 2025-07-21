@@ -191,9 +191,9 @@ export default function Page() {
       {/* Demo Gallery */}
       <section className="py-20">
         <div className="container mx-auto px-4">
-          <div className="text-center space-y-4 mb-16">
-            <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl">Example Color Cards</h2>
-            <p className="text-lg text-muted-foreground">See what you can create</p>
+          <div className="text-center mb-16">
+            <h2 className="h2 border-transparent">Example Color Cards</h2>
+            <p className="p text-muted-foreground">See what you can create</p>
           </div>
 
           <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
