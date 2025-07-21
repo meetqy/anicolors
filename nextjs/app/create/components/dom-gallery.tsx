@@ -152,11 +152,10 @@ export const DomGallery = ({ image, points, id, gallery }: { image: string; poin
               ref={(ref) => {
                 if (ref) myRefs.current.set(`color-${index}`, ref);
               }}
-              key={item.id}
               className="w-full"
               id={`color-${index}`}
               point={item}
-              index={index}
+              index={index + 1}
             />
           </div>
         ))}

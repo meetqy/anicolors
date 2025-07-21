@@ -72,7 +72,7 @@ const CardColor1Base = ({ point, index, className, style, classNames }: CardColo
                 color: color.isDark() ? "white" : "black",
               }}
             >
-              #{index + 1}
+              #{index}
             </span>
           )}
         </div>
