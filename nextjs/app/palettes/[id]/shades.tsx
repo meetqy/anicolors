@@ -42,7 +42,7 @@ export const Shades = ({ palette }: { palette: Palette }) => {
             <div className="grid grid-cols-5 lg:grid-cols-9 gap-4">
               {shades.map((shade, shadeIndex) => (
                 <div key={shadeIndex} className="space-y-2">
-                  <div className="w-full rounded-lg aspect-square border shadow-sm" style={{ backgroundColor: shade.color }} />
+                  <div className="w-full rounded-lg aspect-square border" style={{ backgroundColor: shade.color }} />
                   <div className="text-center space-y-1 not-prose">
                     <p className="text-sm font-medium">{shade.label}</p>
                     <p className="text-xs text-muted-foreground font-mono">{shade.color.toUpperCase()}</p>
