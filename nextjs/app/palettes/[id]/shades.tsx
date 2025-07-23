@@ -38,7 +38,7 @@ export const Shades = ({ palette }: { palette: Palette }) => {
               <Link className="no-underline border-b-2 font-bold" href={`/color/${point.name}`} style={{ borderColor: color.hex() }}>
                 {point.name}
               </Link>{" "}
-              – 12 Shades from Light to Dark
+              <span className="sr-only">– 12 Shades from Light to Dark</span>
             </h3>
 
             <div className="grid grid-cols-6 lg:grid-cols-11 gap-4">
