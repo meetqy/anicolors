@@ -56,9 +56,9 @@ export const Footer = () => {
           {/* Friend Links */}
           <div className="space-y-4">
             <h3 className="text-sm font-semibold text-foreground">Friend Links</h3>
-            <div className="flex flex-wrap gap-x-2 gap-y-1 text-sm">
+            <div className="flex flex-wrap gap-x-2 gap-y-1 text-sm text-muted-foreground [&>a]:hover:text-foreground [&>a]:transition-colors">
               {friendLinks.map((link) => (
-                <a key={link.name} href={link.url} target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-foreground transition-colors whitespace-nowrap">
+                <a key={link.name} href={link.url} target="_blank" rel="noopener noreferrer">
                   {link.name}
                 </a>
               ))}
@@ -66,6 +66,10 @@ export const Footer = () => {
               <a href="https://starterbest.com" target="_blank" rel="noopener noreferrer">
                 StarterBest
                 <img src="https://starterbest.com/badages-awards.svg" className="sr-only" alt="Featured on Starter Best" style={{ height: 54 }} />
+              </a>
+              <a target="_blank" href="https://launchigniter.com/product/hicolors?ref=badge-hicolors">
+                Launchigniter
+                <img src="https://api.launchigniter.com/widgets/embed-image/featured.svg" className="sr-only" alt="Featured on LaunchIgniter" width="250" height="54" />
               </a>
             </div>
           </div>
