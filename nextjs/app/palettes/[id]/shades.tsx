@@ -21,18 +21,23 @@ export const Shades = ({ palette }: { palette: Palette }) => {
 
   return (
     <article className="space-y-12">
+      <h2>Explore the 10-step light-to-dark shades for each color in this palette.</h2>
+      <p>
+        These gradients reveal how each tone transforms across brightness levels — from airy pastels to deep, rich hues — giving you more creative control for backgrounds, highlights, shadows, and UI
+        accents.
+      </p>
       {points.map((point, index) => {
         const color = Color(point.color);
         const shades = generateShades(color);
 
         return (
           <div key={index} className="space-y-6">
-            <h2>
+            <h3>
               <Link className="no-underline border-b-2 font-bold" href={`/color/${point.name}`} style={{ borderColor: color.hex() }}>
                 {point.name}
               </Link>{" "}
               – 9 Shades from Light to Dark
-            </h2>
+            </h3>
 
             <div className="grid grid-cols-5 lg:grid-cols-9 gap-4">
               {shades.map((shade, shadeIndex) => (
