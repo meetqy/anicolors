@@ -12,6 +12,7 @@ import { Shapes } from "lucide-react";
 import { MoreList } from "./more-list";
 import Color from "color";
 import { Extend } from "./extend";
+import { Shades } from "./shades";
 
 const getPaletteData = async (id: string) => {
   const res = await getClient().query({
@@ -112,8 +113,8 @@ export default async function Page({ params }: { params: Promise<{ id: string }>
             Explore unique styles and shades inspired by {palette.name} from {palette.category}. Perfect for anime art, game design, or cosplay projects.
           </p>
           <Gallery palette={palette} />
-
           <Extend palette={palette} />
+          <Shades palette={palette} />
 
           <h2>Explore More Color Palettes</h2>
           <MoreList category={palette.category} colors={points.map((item) => item.name!)} />
