@@ -53,7 +53,7 @@ export const Gallery = ({ palette }: { palette: Palette }) => {
                     </Button>
                     {src.includes("color_") && (
                       <Button asChild variant="outline" size="sm">
-                        <Link href={`/create/color/1`}>Create Card</Link>
+                        <Link href={`/create/color-card?layout=1`}>Create Card</Link>
                       </Button>
                     )}
                   </div>
