@@ -34,7 +34,12 @@ export const Maker = ({ id }: { id: string }) => {
 
   return (
     <>
-      <Generator initialPoints={points} initImage={image} autoExtract={autoExtract} />
+      {loading ? (
+        <div className="flex items-center justify-center aspect-video bg-muted text-muted-foreground max-w-screen-lg mx-auto border rounded-md">Loading...</div>
+      ) : (
+        <Generator initialPoints={points} initImage={image} autoExtract={autoExtract} />
+      )}
+
       {image && <DomGallery image={image} points={points} id={id} gallery={data?.palette.gallery || []} />}
     </>
   );
