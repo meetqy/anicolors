@@ -84,7 +84,7 @@ export default async function Page({ params }: { params: Promise<{ id: string }>
         <Generator initialPoints={points} initImage={image} />
         <PaletteActions id={id} palette={palette} />
 
-        <div className="grid gap-2 grid-cols-5 max-w-screen-md mx-auto px-4 lg:px-0 mt-24">
+        <div className="flex gap-2 max-w-screen-md justify-center mx-auto px-4 lg:px-0 mt-24">
           {points.map((item, index) => (
             <ColorBaseInfo point={item} key={index} />
           ))}

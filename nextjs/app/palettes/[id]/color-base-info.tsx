@@ -15,7 +15,7 @@ export const ColorBaseInfo = ({ point }: { point: ColorPoint }) => {
   };
 
   return (
-    <div className="bg-card overflow-hidden rounded-lg flex justify-center">
+    <div className="bg-card overflow-hidden rounded-lg flex justify-center w-1/5">
       <div className="flex-col flex justify-center items-center gap-x-2 gap-y-4">
         <div className="size-12 rounded-full" style={{ backgroundColor: hex }}></div>
         <p onClick={() => copyToClipboard(hex)}>{hex}</p>
