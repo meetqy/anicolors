@@ -7,14 +7,10 @@ interface HiColorsLogoProps {
   gradientColors?: string[];
 }
 
-export const HiColorsLogo = ({ 
-  className, 
-  style, 
-  variant = "solid",
-  gradientColors = ["#000", "#666"]
-}: HiColorsLogoProps) => {
-  const baseClasses = "font-serif italic font-bold";
-  
+export const HiColorsLogo = ({ className, style, variant = "solid", gradientColors = ["#000", "#666"] }: HiColorsLogoProps) => {
+  const baseClasses = "font-serif italic";
+  const text = "hicolors.org";
+
   if (variant === "gradient") {
     return (
       <div
@@ -24,14 +20,14 @@ export const HiColorsLogo = ({
           ...style,
         }}
       >
-        HiColors
+        {text}
       </div>
     );
   }
 
   return (
     <div className={cn(baseClasses, className)} style={style}>
-      HiColors
+      {text}
     </div>
   );
 };

@@ -19,7 +19,7 @@ const CardColorGradientLightenBase = ({ point, className, style }: { point: Colo
 
   return (
     <div className={cn("relative bg-background grid w-[375px] aspect-[4/5]", className)} style={style}>
-      <HiColorsLogo className="absolute text-xl right-4 bottom-2" variant="gradient" gradientColors={[color.lighten(0.1).hex(), color.darken(0.9).hex()]} />
+      <HiColorsLogo className="absolute right-2 bottom-2" variant="gradient" gradientColors={[color.lighten(0.1).hex(), color.darken(0.9).hex()]} />
       {colors.map((hex, index) => {
         return (
           <h3
