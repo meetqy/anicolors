@@ -3,6 +3,7 @@ import { withSave } from "../with-save";
 import { CardPaletteProps } from "./common";
 import { ColorPointsOverlay } from "@/components/color-points-overlay";
 import Color from "color";
+import { HiColorsLogo } from "@/components/hicolors-logo";
 
 const _heights = ["h-1/2", "h-1/3", "h-2/5", "h-1/6", "h-2/7"];
 
@@ -30,6 +31,7 @@ const CardPalette6Base = ({ points, className, image }: CardPaletteProps) => {
         transformStyle: "preserve-3d",
       }}
     >
+      <HiColorsLogo className="absolute right-1 top-1 z-20" />
       <div className="relative h-full pt-[105px]">
         <div
           className="absolute z-10 bottom-[-85px] left-1/2 w-56 h-56 rounded-full -translate-x-1/2 rotate-x-[80deg]"
