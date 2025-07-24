@@ -16,7 +16,8 @@ export interface ColorPoint {
 
 interface PickerColorsProps {
   image?: string;
-  initialPoints?: ColorPoint[];
+  colors?: ColorPoint[];
+  autoExtract?: boolean;
   classNames?: {
     image?: string;
   };
@@ -24,8 +25,8 @@ interface PickerColorsProps {
   onColorsChangeEnter?: (points: ColorPoint[]) => void;
 }
 
-export default function PickerColors({ image, initialPoints, onColorsChange, classNames, onColorsChangeEnter }: PickerColorsProps) {
-  const [colorPoints, setColorPoints] = useState<ColorPoint[]>(initialPoints || []);
+export default function PickerColors({ image, colors, autoExtract = false, onColorsChange, classNames, onColorsChangeEnter }: PickerColorsProps) {
+  const [colorPoints, setColorPoints] = useState<ColorPoint[]>(colors || []);
   const [draggedPoint, setDraggedPoint] = useState<number | null>(null);
   const [showMagnifier, setShowMagnifier] = useState<number | null>(null);
   const [magnifierPos, setMagnifierPos] = useState({ x: 0, y: 0 });
@@ -91,13 +92,14 @@ export default function PickerColors({ image, initialPoints, onColorsChange, cla
     const init = () => {
       setImageLoading(true);
       updateCanvas();
-      if (!initialPoints || initialPoints.length === 0) {
+
+      if (autoExtract) {
         const extractedColors = extractMainColors(canvasRef.current!, imageRef.current!, getNormalizedPosition, 5);
         setColorPoints(extractedColors);
         onColorsChangeEnter?.(extractedColors);
         onColorsChange?.(extractedColors);
-      } else {
-        setColorPoints(initialPoints);
+      } else if (colors) {
+        setColorPoints(colors);
       }
 
       setImageLoading(false);
@@ -110,7 +112,7 @@ export default function PickerColors({ image, initialPoints, onColorsChange, cla
         init();
       };
     }
-  }, [canvasRef, imageRef, updateCanvas, getNormalizedPosition, onColorsChangeEnter, onColorsChange, initialPoints]);
+  }, [canvasRef, imageRef, updateCanvas, getNormalizedPosition, onColorsChangeEnter, onColorsChange, colors, autoExtract]);
 
   const getConstrainedPosition = useCallback((x: number, y: number) => {
     if (!imageRef.current) return { x, y };

@@ -10,9 +10,10 @@ interface PickerPaletteProps {
   onDeleteColor: (id: number) => void;
   image: string;
   onColorsChange: (colors: ColorPoint[]) => void;
+  autoExtract?: boolean;
 }
 
-export function PickerPalette({ colors, onDeleteColor, image, onColorsChange }: PickerPaletteProps) {
+export function PickerPalette({ colors, onDeleteColor, image, onColorsChange, autoExtract }: PickerPaletteProps) {
   const deleteColor = useCallback(
     (id: number) => {
       onDeleteColor(id);
@@ -23,7 +24,7 @@ export function PickerPalette({ colors, onDeleteColor, image, onColorsChange }: 
   return (
     <>
       <div className="bg-muted flex lg:aspect-[5/4] h-full w-full lg:min-w-96 items-center justify-center p-4 lg:w-2/3 lg:border-r">
-        <PickerColors key={image} initialPoints={colors} image={image} onColorsChangeEnter={onColorsChange} />
+        <PickerColors autoExtract={autoExtract} key={image} colors={colors} image={image} onColorsChangeEnter={onColorsChange} />
       </div>
 
       <aside className="flex w-full flex-col p-4 lg:w-1/3">

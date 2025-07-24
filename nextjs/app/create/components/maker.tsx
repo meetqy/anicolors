@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { Generator } from "@/components/palette/generator";
 import type { ColorPoint } from "@/components/palette/picker-colors";
 import { useQuery } from "@apollo/client";
@@ -11,23 +11,30 @@ import { GET_PALETTE, Palette } from "@/query/palette";
 
 export const Maker = ({ id }: { id: string }) => {
   const [points, setPoints] = useState<ColorPoint[]>([]);
-  const [image, setImage] = useState<string>();
-  const { data } = useQuery<{ palette: Palette }>(GET_PALETTE, {
-    variables: { documentId: id, pagination: { limit: 100 } },
-    skip: !id,
+  const { data, loading } = useQuery<{ palette: Palette }>(GET_PALETTE, {
+    variables: { documentId: id },
   });
+
+  const image = useMemo(() => {
+    if (data?.palette.image.url) {
+      return getAssetUrl(data.palette.image.url, 960);
+    }
+    return undefined;
+  }, [data]);
 
   useEffect(() => {
     if (data?.palette) {
       setPoints(data.palette.points);
-      setImage(getAssetUrl(data.palette.image.url, 960));
     }
-  }, [data, setImage]);
+  }, [data]);
+
+  const autoExtract = useMemo(() => {
+    return !data?.palette && !loading;
+  }, [loading, data]);
 
   return (
     <>
-      <Generator initialPoints={points} initImage={image} onColorsChangeEnter={setPoints} onImageChange={setImage} />
-
+      <Generator initialPoints={points} initImage={image} autoExtract={autoExtract} />
       {image && <DomGallery image={image} points={points} id={id} gallery={data?.palette.gallery || []} />}
     </>
   );
