@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useRef, useCallback, useEffect } from "react";
+import React, { useState, useRef, useCallback, useEffect, useImperativeHandle } from "react";
 import { cn } from "@/lib/utils";
 import { getColorName } from "@/lib/nearest";
 import Color from "color";
@@ -16,8 +16,7 @@ export interface ColorPoint {
 
 interface PickerColorsProps {
   image?: string;
-  colors?: ColorPoint[];
-  autoExtract?: boolean;
+  points?: ColorPoint[];
   classNames?: {
     image?: string;
   };
@@ -25,47 +24,40 @@ interface PickerColorsProps {
   onColorsChangeEnter?: (points: ColorPoint[]) => void;
 }
 
-export default function PickerColors({ image, colors, autoExtract = false, onColorsChange, classNames, onColorsChangeEnter }: PickerColorsProps) {
-  const [colorPoints, setColorPoints] = useState<ColorPoint[]>(colors || []);
+type PickerColorsHandle = {
+  extractMainColors: (count?: number) => ColorPoint[];
+};
+
+const PickerColors = React.forwardRef<PickerColorsHandle, PickerColorsProps>(function PickerColors({ image, points, onColorsChange, classNames, onColorsChangeEnter }, ref) {
+  const [colorPoints, setColorPoints] = useState<ColorPoint[]>([]);
   const [draggedPoint, setDraggedPoint] = useState<number | null>(null);
   const [showMagnifier, setShowMagnifier] = useState<number | null>(null);
   const [magnifierPos, setMagnifierPos] = useState({ x: 0, y: 0 });
   const [imageLoading, setImageLoading] = useState(true);
+
+  useEffect(() => {
+    if (imageLoading) {
+      updateCanvas(canvasRef.current, imageRef.current);
+      if (points && points.length > 0) {
+        setColorPoints(points);
+      }
+    }
+  }, [points, setColorPoints, imageLoading]);
 
   const imageRef = useRef<HTMLImageElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const magnifierCanvasRef = useRef<HTMLCanvasElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
 
-  useEffect(() => {
-    if (!canvasRef.current || !imageRef.current) {
-      return;
-    }
-
-    const init = () => {
-      setImageLoading(true);
-      updateCanvas(canvasRef.current, imageRef.current);
-
-      if (autoExtract) {
-        const extractedColors = extractMainColors(canvasRef.current!, imageRef.current!, 5);
-        setColorPoints(extractedColors);
-        onColorsChangeEnter?.(extractedColors);
-        onColorsChange?.(extractedColors);
-      } else if (colors) {
-        setColorPoints(colors);
-      }
-
-      setImageLoading(false);
-    };
-
-    if (imageRef.current.complete) {
-      init();
-    } else {
-      imageRef.current.onload = () => {
-        init();
-      };
-    }
-  }, [canvasRef, imageRef, onColorsChangeEnter, onColorsChange, colors, autoExtract]);
+  useImperativeHandle(
+    ref,
+    () => ({
+      extractMainColors: (count: number = 5) => {
+        return extractMainColors(canvasRef.current!, imageRef.current!, count);
+      },
+    }),
+    []
+  );
 
   const handleMouseDown = (e: React.MouseEvent, pointId: number) => {
     e.preventDefault();
@@ -185,7 +177,16 @@ export default function PickerColors({ image, colors, autoExtract = false, onCol
     image && (
       <div ref={containerRef} className="relative overflow-hidden">
         <picture>
-          <img fetchPriority="high" ref={imageRef} src={image} crossOrigin="anonymous" alt="Color picker" className={cn("mx-auto lg:max-h-[512px]", classNames?.image)} draggable={false} />
+          <img
+            fetchPriority="high"
+            onLoad={() => setImageLoading(false)}
+            ref={imageRef}
+            src={image}
+            crossOrigin="anonymous"
+            alt="Color picker"
+            className={cn("mx-auto lg:max-h-[512px]", classNames?.image)}
+            draggable={false}
+          />
         </picture>
 
         <canvas ref={canvasRef} className="hidden" />
@@ -227,4 +228,6 @@ export default function PickerColors({ image, colors, autoExtract = false, onCol
       </div>
     )
   );
-}
+});
+
+export default PickerColors;
