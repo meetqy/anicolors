@@ -17,6 +17,7 @@ export const Footer = () => {
     { name: "YP for AI", url: "https://ypforai.com" },
     { name: "UtilPortal", url: "https://utilportal.com" },
     { name: "AI Toolz Dir", url: "https://www.aitoolzdir.com" },
+    { name: "AI Best Top", url: "https://aibesttop.com" },
   ];
 
   return (
