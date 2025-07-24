@@ -42,7 +42,7 @@ export default async function Page() {
 
   return (
     <div className="mx-auto">
-      <section className="relative overflow-hidden bg-gradient-to-b from-background to-muted/20 py-16">
+      <section className="relative overflow-hidden bg-gradient-to-b from-background to-muted/50 py-16">
         <div className="container mx-auto px-4 max-w-7xl">
           {/* Header Content */}
           <div className="text-center mb-12">
@@ -100,7 +100,7 @@ export default async function Page() {
           <FAQs />
 
           {/* Bottom CTA */}
-          <div className="text-center">
+          <div className="text-center pb-12">
             <h3 className="text-2xl font-bold mb-4">Ready to Create Your Own?</h3>
             <p className="text-muted-foreground mb-8 max-w-2xl mx-auto">Upload any image and extract beautiful color palettes in seconds. Join thousands of creators using HiColors.</p>
             <Button asChild size="lg">
