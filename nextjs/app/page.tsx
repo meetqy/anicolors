@@ -7,6 +7,7 @@ import { Badge } from "@/components/ui/badge";
 import Link from "next/link";
 import { Stats } from "./_components/stats";
 import { Metadata } from "next";
+import { FAQs } from "./_components/faqs";
 
 export const dynamic = "force-dynamic";
 
@@ -95,6 +96,8 @@ export default async function Page() {
               </div>
             </div>
           )}
+
+          <FAQs />
 
           {/* Bottom CTA */}
           <div className="text-center">
