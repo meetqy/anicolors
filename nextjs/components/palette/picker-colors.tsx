@@ -36,7 +36,7 @@ const PickerColors = React.forwardRef<PickerColorsHandle, PickerColorsProps>(fun
   const [imageLoading, setImageLoading] = useState(true);
 
   useEffect(() => {
-    if (imageLoading) {
+    if (!imageLoading) {
       updateCanvas(canvasRef.current, imageRef.current);
       if (points && points.length > 0) {
         setColorPoints(points);

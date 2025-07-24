@@ -6,25 +6,18 @@ import { Button } from "../ui/button";
 import PickerColors, { type ColorPoint } from "./picker-colors";
 
 interface PickerPaletteProps {
-  colors: ColorPoint[];
+  image?: string;
+  points?: ColorPoint[];
+  onColorsChange?: (points: ColorPoint[]) => void;
+  onColorsChangeEnter?: (points: ColorPoint[]) => void;
   onDeleteColor: (id: number) => void;
-  image: string;
-  onColorsChange: (colors: ColorPoint[]) => void;
-  autoExtract?: boolean;
 }
 
-export function PickerPalette({ colors, onDeleteColor, image, onColorsChange, autoExtract }: PickerPaletteProps) {
-  const deleteColor = useCallback(
-    (id: number) => {
-      onDeleteColor(id);
-    },
-    [onDeleteColor]
-  );
-
+export function PickerPalette({ points, onDeleteColor, image, onColorsChange, onColorsChangeEnter }: PickerPaletteProps) {
   return (
     <>
       <div className="bg-muted flex lg:aspect-[5/4] h-full w-full lg:min-w-96 items-center justify-center p-4 lg:w-2/3 lg:border-r">
-        <PickerColors autoExtract={autoExtract} key={image} colors={colors} image={image} onColorsChangeEnter={onColorsChange} />
+        <PickerColors key={image} points={points} image={image} onColorsChange={onColorsChange} onColorsChangeEnter={onColorsChangeEnter} />
       </div>
 
       <aside className="flex w-full flex-col p-4 lg:w-1/3">
@@ -34,23 +27,23 @@ export function PickerPalette({ colors, onDeleteColor, image, onColorsChange, au
         </div>
 
         <div className="flex flex-row gap-2 lg:flex-col lg:gap-6">
-          {colors.map((color) => (
+          {points?.map((point) => (
             <div
-              key={color.id}
+              key={point.id}
               style={{
-                background: color.color,
-                color: Color(color.color).isLight() ? "black" : "white",
+                background: point.color,
+                color: Color(point.color).isLight() ? "black" : "white",
               }}
               className="relative flex flex-1 lg:flex-auto lg:aspect-auto aspect-square w-full items-center overflow-hidden rounded-lg lg:h-16 group"
             >
               <Button
-                onClick={() => deleteColor(color.id)}
+                onClick={() => onDeleteColor(point.id)}
                 className="absolute top-0 flex justify-center items-center left-0 h-full aspect-square rounded-r-none group-hover:opacity-100 opacity-0 bg-black/20 hover:bg-black/40 transition-colors"
                 aria-label="Delete color"
               >
                 <LuX className="size-6 text-red-600" />
               </Button>
-              <span className="absolute lg:inline-block hidden right-4 bottom-2 font-mono text-sm opacity-90">{Color(color.color).hex()}</span>
+              <span className="absolute lg:inline-block hidden right-4 bottom-2 font-mono text-sm opacity-90">{Color(point.color).hex()}</span>
             </div>
           ))}
         </div>
