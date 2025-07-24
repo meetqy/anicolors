@@ -37,12 +37,7 @@ const getColorVibrancy = (rgb: number[]) => {
   return saturation * brightnessWeight;
 };
 
-export const extractMainColors = (
-  canvas: HTMLCanvasElement,
-  imageElement: HTMLImageElement,
-  getNormalizedPosition: (displayX: number, displayY: number) => { x: number; y: number },
-  count: number = 5
-): ColorPoint[] => {
+export const extractMainColors = (canvas: HTMLCanvasElement, imageElement: HTMLImageElement, count: number = 5): ColorPoint[] => {
   const ctx = canvas.getContext("2d");
   if (!ctx) return [];
 
@@ -142,8 +137,8 @@ export const extractMainColors = (
     const displayX = (centerPos.x / canvas.width) * rect.width;
     const displayY = (centerPos.y / canvas.height) * rect.height;
 
-    // 转换为标准化坐标
-    const normalizedPos = getNormalizedPosition(displayX, displayY);
+    // 转换为标准化坐标（直接用本地 getNormalizedPosition）
+    const normalizedPos = getNormalizedPosition(imageElement, displayX, displayY);
 
     return {
       id: index + 1,
@@ -155,4 +150,152 @@ export const extractMainColors = (
       isWarm: isWarmColor([r, g, b]),
     };
   });
+};
+
+// 获取像素颜色
+export const getPixelColor = (canvas: HTMLCanvasElement | null, image: HTMLImageElement | null, x: number, y: number): string => {
+  if (!canvas || !image) return "#ffffff";
+
+  const ctx = canvas.getContext("2d");
+  if (!ctx) return "#ffffff";
+
+  const rect = image.getBoundingClientRect();
+  const scaleX = canvas.width / rect.width;
+  const scaleY = canvas.height / rect.height;
+
+  const canvasX = Math.floor(x * scaleX);
+  const canvasY = Math.floor(y * scaleY);
+
+  try {
+    const imageData = ctx.getImageData(canvasX, canvasY, 1, 1);
+    const [r, g, b] = imageData.data;
+    return `rgb(${r}, ${g}, ${b})`;
+  } catch {
+    return "#ffffff";
+  }
+};
+
+// 更新canvas内容
+export const updateCanvas = (canvas: HTMLCanvasElement | null, image: HTMLImageElement | null) => {
+  if (!image || !canvas) return;
+
+  const ctx = canvas.getContext("2d");
+  if (!ctx) return;
+
+  canvas.width = image.naturalWidth;
+  canvas.height = image.naturalHeight;
+  ctx.drawImage(image, 0, 0);
+};
+
+// 显示坐标转标准化坐标
+export const getNormalizedPosition = (image: HTMLImageElement | null, displayX: number, displayY: number) => {
+  if (!image) return { x: displayX, y: displayY };
+
+  const rect = image.getBoundingClientRect();
+  const aspectRatio = image.naturalHeight / image.naturalWidth;
+  return {
+    x: (displayX / rect.width) * 384,
+    y: (displayY / (rect.width * aspectRatio)) * 384,
+  };
+};
+
+// 约束坐标在图片范围内
+export const getConstrainedPosition = (image: HTMLImageElement | null, x: number, y: number) => {
+  if (!image) return { x, y };
+
+  const rect = image.getBoundingClientRect();
+  return {
+    x: Math.max(0, Math.min(x, rect.width)),
+    y: Math.max(0, Math.min(y, rect.height)),
+  };
+};
+
+// 标准化坐标转显示坐标
+export const getDisplayPosition = (image: HTMLImageElement | null, container: HTMLDivElement | null, normalizedX: number, normalizedY: number) => {
+  if (!image || !container) return { x: 0, y: 0 };
+
+  const imageRect = image.getBoundingClientRect();
+  const containerRect = container.getBoundingClientRect();
+
+  if (!imageRect.width || !imageRect.height || !image.naturalWidth || !image.naturalHeight) {
+    return { x: 0, y: 0 };
+  }
+
+  const imageOffsetX = imageRect.left - containerRect.left;
+  const imageOffsetY = imageRect.top - containerRect.top;
+
+  const x = imageOffsetX + (normalizedX / 384) * imageRect.width;
+  const y = imageOffsetY + (normalizedY / 384) * (imageRect.width * (image.naturalHeight / image.naturalWidth));
+
+  return {
+    x: isFinite(x) ? x : 0,
+    y: isFinite(y) ? y : 0,
+  };
+};
+
+// 更新放大镜
+export const updateMagnifier = (canvas: HTMLCanvasElement | null, magnifierCanvas: HTMLCanvasElement | null, image: HTMLImageElement | null, x: number, y: number) => {
+  if (!canvas || !magnifierCanvas || !image) return;
+
+  const sourceCtx = canvas.getContext("2d");
+  const magnifierCtx = magnifierCanvas.getContext("2d");
+
+  if (!sourceCtx || !magnifierCtx) return;
+
+  const rect = image.getBoundingClientRect();
+  const scaleX = canvas.width / rect.width;
+  const scaleY = canvas.height / rect.height;
+
+  const sourceX = x * scaleX;
+  const sourceY = y * scaleY;
+
+  magnifierCanvas.width = 150;
+  magnifierCanvas.height = 150;
+  magnifierCtx.imageSmoothingEnabled = false;
+
+  try {
+    const regionSize = 10;
+    const halfRegion = regionSize / 2;
+    const sourceRegionX = Math.max(0, Math.min(sourceX - halfRegion, canvas.width - regionSize));
+    const sourceRegionY = Math.max(0, Math.min(sourceY - halfRegion, canvas.height - regionSize));
+    magnifierCtx.drawImage(canvas, sourceRegionX, sourceRegionY, regionSize, regionSize, 0, 0, magnifierCanvas.width, magnifierCanvas.height);
+
+    magnifierCtx.strokeStyle = "rgba(255, 255, 255, 0.8)";
+    magnifierCtx.lineWidth = 1;
+    const gridSize = magnifierCanvas.width / regionSize;
+
+    for (let i = 0; i <= regionSize; i++) {
+      const pos = i * gridSize;
+      magnifierCtx.beginPath();
+      magnifierCtx.moveTo(pos, 0);
+      magnifierCtx.lineTo(pos, magnifierCanvas.height);
+      magnifierCtx.stroke();
+
+      magnifierCtx.beginPath();
+      magnifierCtx.moveTo(0, pos);
+      magnifierCtx.lineTo(magnifierCanvas.width, pos);
+      magnifierCtx.stroke();
+    }
+
+    const centerX = magnifierCanvas.width / 2;
+    const centerY = magnifierCanvas.height / 2;
+
+    magnifierCtx.strokeStyle = "#ff0000";
+    magnifierCtx.lineWidth = 2;
+
+    magnifierCtx.beginPath();
+    magnifierCtx.moveTo(centerX, centerY - 15);
+    magnifierCtx.lineTo(centerX, centerY + 15);
+    magnifierCtx.stroke();
+
+    magnifierCtx.beginPath();
+    magnifierCtx.moveTo(centerX - 15, centerY);
+    magnifierCtx.lineTo(centerX + 15, centerY);
+    magnifierCtx.stroke();
+
+    magnifierCtx.fillStyle = "#ff0000";
+    magnifierCtx.fillRect(centerX - 1, centerY - 1, 2, 2);
+  } catch (error) {
+    console.error("Error updating magnifier:", error);
+  }
 };

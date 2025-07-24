@@ -4,7 +4,7 @@ import React, { useState, useRef, useCallback, useEffect } from "react";
 import { cn } from "@/lib/utils";
 import { getColorName } from "@/lib/nearest";
 import Color from "color";
-import { extractMainColors } from "./color-extractor";
+import { extractMainColors, getPixelColor, updateCanvas, getNormalizedPosition, getConstrainedPosition, getDisplayPosition, updateMagnifier } from "./color-extractor";
 
 export interface ColorPoint {
   id: number;
@@ -37,53 +37,6 @@ export default function PickerColors({ image, colors, autoExtract = false, onCol
   const magnifierCanvasRef = useRef<HTMLCanvasElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
 
-  const getPixelColor = useCallback((x: number, y: number): string => {
-    if (!canvasRef.current || !imageRef.current) return "#ffffff";
-
-    const canvas = canvasRef.current;
-    const ctx = canvas.getContext("2d");
-    if (!ctx) return "#ffffff";
-
-    const rect = imageRef.current.getBoundingClientRect();
-    const scaleX = canvas.width / rect.width;
-    const scaleY = canvas.height / rect.height;
-
-    const canvasX = Math.floor(x * scaleX);
-    const canvasY = Math.floor(y * scaleY);
-
-    try {
-      const imageData = ctx.getImageData(canvasX, canvasY, 1, 1);
-      const [r, g, b] = imageData.data;
-      return `rgb(${r}, ${g}, ${b})`;
-    } catch {
-      return "#ffffff";
-    }
-  }, []);
-
-  const updateCanvas = useCallback(() => {
-    if (!imageRef.current || !canvasRef.current) return;
-
-    const canvas = canvasRef.current;
-    const ctx = canvas.getContext("2d");
-    if (!ctx) return;
-
-    canvas.width = imageRef.current.naturalWidth;
-    canvas.height = imageRef.current.naturalHeight;
-    ctx.drawImage(imageRef.current, 0, 0);
-  }, []);
-
-  // Convert display coordinates to normalized coordinates
-  const getNormalizedPosition = useCallback((displayX: number, displayY: number) => {
-    if (!imageRef.current) return { x: displayX, y: displayY };
-
-    const rect = imageRef.current.getBoundingClientRect();
-    const aspectRatio = imageRef.current.naturalHeight / imageRef.current.naturalWidth;
-    return {
-      x: (displayX / rect.width) * 384,
-      y: (displayY / (rect.width * aspectRatio)) * 384,
-    };
-  }, []);
-
   useEffect(() => {
     if (!canvasRef.current || !imageRef.current) {
       return;
@@ -91,10 +44,10 @@ export default function PickerColors({ image, colors, autoExtract = false, onCol
 
     const init = () => {
       setImageLoading(true);
-      updateCanvas();
+      updateCanvas(canvasRef.current, imageRef.current);
 
       if (autoExtract) {
-        const extractedColors = extractMainColors(canvasRef.current!, imageRef.current!, getNormalizedPosition, 5);
+        const extractedColors = extractMainColors(canvasRef.current!, imageRef.current!, 5);
         setColorPoints(extractedColors);
         onColorsChangeEnter?.(extractedColors);
         onColorsChange?.(extractedColors);
@@ -112,124 +65,7 @@ export default function PickerColors({ image, colors, autoExtract = false, onCol
         init();
       };
     }
-  }, [canvasRef, imageRef, updateCanvas, getNormalizedPosition, onColorsChangeEnter, onColorsChange, colors, autoExtract]);
-
-  const getConstrainedPosition = useCallback((x: number, y: number) => {
-    if (!imageRef.current) return { x, y };
-
-    const rect = imageRef.current.getBoundingClientRect();
-    return {
-      x: Math.max(0, Math.min(x, rect.width)),
-      y: Math.max(0, Math.min(y, rect.height)),
-    };
-  }, []);
-
-  // Convert normalized coordinates to actual display coordinates
-  const getDisplayPosition = useCallback((normalizedX: number, normalizedY: number) => {
-    if (!imageRef.current || !containerRef.current) return { x: 0, y: 0 };
-
-    const imageRect = imageRef.current.getBoundingClientRect();
-    const containerRect = containerRef.current.getBoundingClientRect();
-
-    // Check if dimensions are valid
-    if (!imageRect.width || !imageRect.height || !imageRef.current.naturalWidth || !imageRef.current.naturalHeight) {
-      return { x: 0, y: 0 };
-    }
-
-    // Calculate position relative to container
-    const imageOffsetX = imageRect.left - containerRect.left;
-    const imageOffsetY = imageRect.top - containerRect.top;
-
-    const x = imageOffsetX + (normalizedX / 384) * imageRect.width;
-    const y = imageOffsetY + (normalizedY / 384) * (imageRect.width * (imageRef.current.naturalHeight / imageRef.current.naturalWidth));
-
-    // Ensure values are finite numbers
-    return {
-      x: isFinite(x) ? x : 0,
-      y: isFinite(y) ? y : 0,
-    };
-  }, []);
-
-  const updateMagnifier = useCallback((x: number, y: number) => {
-    if (!canvasRef.current || !magnifierCanvasRef.current || !imageRef.current) return;
-
-    const sourceCanvas = canvasRef.current;
-    const sourceCtx = sourceCanvas.getContext("2d");
-    const magnifierCanvas = magnifierCanvasRef.current;
-    const magnifierCtx = magnifierCanvas.getContext("2d");
-
-    if (!sourceCtx || !magnifierCtx) return;
-
-    const rect = imageRef.current.getBoundingClientRect();
-    const scaleX = sourceCanvas.width / rect.width;
-    const scaleY = sourceCanvas.height / rect.height;
-
-    const sourceX = x * scaleX;
-    const sourceY = y * scaleY;
-
-    // 设置放大镜画布大小 - 缩小尺寸
-    magnifierCanvas.width = 150;
-    magnifierCanvas.height = 150;
-
-    // 禁用图像平滑，显示像素化效果
-    magnifierCtx.imageSmoothingEnabled = false;
-
-    try {
-      // 从源图像提取10x10像素区域
-      const regionSize = 10;
-      const halfRegion = regionSize / 2;
-
-      // 获取源区域
-      const sourceRegionX = Math.max(0, Math.min(sourceX - halfRegion, sourceCanvas.width - regionSize));
-      const sourceRegionY = Math.max(0, Math.min(sourceY - halfRegion, sourceCanvas.height - regionSize));
-
-      // 将10x10像素区域放大到150x150
-      magnifierCtx.drawImage(sourceCanvas, sourceRegionX, sourceRegionY, regionSize, regionSize, 0, 0, magnifierCanvas.width, magnifierCanvas.height);
-
-      // 绘制网格线
-      magnifierCtx.strokeStyle = "rgba(255, 255, 255, 0.8)";
-      magnifierCtx.lineWidth = 1;
-      const gridSize = magnifierCanvas.width / regionSize;
-
-      for (let i = 0; i <= regionSize; i++) {
-        const pos = i * gridSize;
-        magnifierCtx.beginPath();
-        magnifierCtx.moveTo(pos, 0);
-        magnifierCtx.lineTo(pos, magnifierCanvas.height);
-        magnifierCtx.stroke();
-
-        magnifierCtx.beginPath();
-        magnifierCtx.moveTo(0, pos);
-        magnifierCtx.lineTo(magnifierCanvas.width, pos);
-        magnifierCtx.stroke();
-      }
-
-      // 绘制十字准星
-      const centerX = magnifierCanvas.width / 2;
-      const centerY = magnifierCanvas.height / 2;
-
-      magnifierCtx.strokeStyle = "#ff0000";
-      magnifierCtx.lineWidth = 2;
-
-      // 垂直线
-      magnifierCtx.beginPath();
-      magnifierCtx.moveTo(centerX, centerY - 15);
-      magnifierCtx.lineTo(centerX, centerY + 15);
-      magnifierCtx.stroke();
-
-      // 水平线
-      magnifierCtx.beginPath();
-      magnifierCtx.moveTo(centerX - 15, centerY);
-      magnifierCtx.lineTo(centerX + 15, centerY);
-      magnifierCtx.stroke();
-
-      // 中心点
-      magnifierCtx.fillStyle = "#ff0000";
-      magnifierCtx.fillRect(centerX - 1, centerY - 1, 2, 2);
-    } catch (error) {
-      console.error("Error updating magnifier:", error);
-    }
-  }, []);
+  }, [canvasRef, imageRef, onColorsChangeEnter, onColorsChange, colors, autoExtract]);
 
   const handleMouseDown = (e: React.MouseEvent, pointId: number) => {
     e.preventDefault();
@@ -242,14 +78,13 @@ export default function PickerColors({ image, colors, autoExtract = false, onCol
       const x = e.clientX - rect.left;
       const y = e.clientY - rect.top;
 
-      // 设置放大镜位置相对于容器
       setMagnifierPos({
         x: e.clientX - containerRect.left,
         y: e.clientY - containerRect.top,
       });
 
       setTimeout(() => {
-        updateMagnifier(x, y);
+        updateMagnifier(canvasRef.current, magnifierCanvasRef.current, imageRef.current, x, y);
       }, 0);
     }
   };
@@ -271,13 +106,13 @@ export default function PickerColors({ image, colors, autoExtract = false, onCol
       }
 
       if (showMagnifier) {
-        updateMagnifier(x, y);
+        updateMagnifier(canvasRef.current, magnifierCanvasRef.current, imageRef.current, x, y);
       }
 
       if (draggedPoint) {
-        const constrainedPos = getConstrainedPosition(x, y);
-        const normalizedPos = getNormalizedPosition(constrainedPos.x, constrainedPos.y);
-        const newColor = getPixelColor(constrainedPos.x, constrainedPos.y);
+        const constrainedPos = getConstrainedPosition(imageRef.current, x, y);
+        const normalizedPos = getNormalizedPosition(imageRef.current, constrainedPos.x, constrainedPos.y);
+        const newColor = getPixelColor(canvasRef.current, imageRef.current, constrainedPos.x, constrainedPos.y);
 
         setColorPoints((prev) =>
           prev.map((point) =>
@@ -293,7 +128,7 @@ export default function PickerColors({ image, colors, autoExtract = false, onCol
         );
       }
     },
-    [draggedPoint, showMagnifier, getPixelColor, updateMagnifier, getConstrainedPosition, getNormalizedPosition]
+    [draggedPoint, showMagnifier]
   );
 
   const handleMouseUp = useCallback(() => {
@@ -358,7 +193,7 @@ export default function PickerColors({ image, colors, autoExtract = false, onCol
 
         {!imageLoading &&
           colorPoints.map((point) => {
-            const displayPos = getDisplayPosition(point.x, point.y);
+            const displayPos = getDisplayPosition(imageRef.current, containerRef.current, point.x, point.y);
             return (
               <div
                 key={point.id}
