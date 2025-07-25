@@ -62,11 +62,14 @@ export function withSave<P extends object>(WrappedComponent: ComponentType<P>) {
       };
     };
 
-    const handleDownload = async (fileName?: string, scale?: number) => {
+    const handleDownload = async ({ fileName, scale, mask = true }: { fileName?: string; scale?: number; mask?: boolean }) => {
       try {
         const targetElement = getTargetElement();
         const options = createOptions(targetElement, scale);
         const className = targetElement.className;
+        if (!mask) {
+          targetElement.removeChild(targetElement.querySelector("#logo-mask") as HTMLElement);
+        }
         targetElement.classList.remove("rounded-md", "overflow-hidden", "border", "rounded-lg");
         const dataUrl = await domtoimage.toPng(targetElement, options);
         const link = document.createElement("a");
@@ -82,7 +85,7 @@ export function withSave<P extends object>(WrappedComponent: ComponentType<P>) {
     useImperativeHandle(ref, () => ({
       saveAsImage: async (filename = "palette.png", scale?: number) => {
         try {
-          await handleDownload(filename, scale);
+          await handleDownload({ fileName: filename, scale });
         } catch (error) {
           console.error("Error saving image:", error);
         }
@@ -109,7 +112,7 @@ export function withSave<P extends object>(WrappedComponent: ComponentType<P>) {
           <div className="absolute inset-0 bg-black/50 flex items-center justify-center transition-all duration-200">
             <div className="text-center grid space-y-2">
               {props.id && <div className="text-sm font-mono opacity-80 text-white">ID: {props.id}</div>}
-              <Button variant="secondary" size="sm" onClick={() => handleDownload()} className="bg-white/20 hover:bg-white/30 text-white border-white/20">
+              <Button variant="secondary" size="sm" onClick={() => handleDownload({ mask: false })} className="bg-white/20 hover:bg-white/30 text-white border-white/20">
                 <Download className="w-4 h-4 mr-2" />
                 Download
               </Button>

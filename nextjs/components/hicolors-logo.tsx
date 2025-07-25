@@ -8,12 +8,13 @@ interface HiColorsLogoProps {
 }
 
 export const HiColorsLogo = ({ className, style, variant = "solid", gradientColors = ["#000", "#666"] }: HiColorsLogoProps) => {
-  const baseClasses = "font-serif italic opacity-50";
+  const baseClasses = "font-serif italic text-sm opacity-50 tracking-tight";
   const text = "hicolors.org";
 
   if (variant === "gradient") {
     return (
       <div
+        id="logo-mask"
         className={cn(baseClasses, "text-transparent bg-clip-text", className)}
         style={{
           backgroundImage: `linear-gradient(135deg, ${gradientColors.join(", ")})`,
@@ -26,7 +27,7 @@ export const HiColorsLogo = ({ className, style, variant = "solid", gradientColo
   }
 
   return (
-    <div className={cn(baseClasses, className)} style={style}>
+    <div id="logo-mask" className={cn(baseClasses, className)} style={style}>
       {text}
     </div>
   );
