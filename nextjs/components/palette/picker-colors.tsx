@@ -60,12 +60,6 @@ const PickerColors = forwardRef<PickerColorsRefs, PickerColorsProps & { classNam
     [setColorPoints, onColorsChange, onColorsChangeEnter]
   );
 
-  useEffect(() => {
-    if (!imageLoading) {
-      updateCanvas();
-    }
-  }, [imageLoading]);
-
   const getPixelColor = useCallback((x: number, y: number): string => {
     if (!canvasRef.current || !imageRef.current) return "#ffffff";
 
@@ -99,7 +93,13 @@ const PickerColors = forwardRef<PickerColorsRefs, PickerColorsProps & { classNam
     canvas.width = imageRef.current.naturalWidth;
     canvas.height = imageRef.current.naturalHeight;
     ctx.drawImage(imageRef.current, 0, 0);
-  }, []);
+  }, [imageRef, canvasRef]);
+
+  useEffect(() => {
+    if (!imageLoading) {
+      updateCanvas();
+    }
+  }, [imageLoading, updateCanvas]);
 
   // Convert display coordinates to normalized coordinates
   const getNormalizedPosition = useCallback((displayX: number, displayY: number) => {
@@ -112,35 +112,6 @@ const PickerColors = forwardRef<PickerColorsRefs, PickerColorsProps & { classNam
       y: (displayY / (rect.width * aspectRatio)) * 384,
     };
   }, []);
-
-  // useEffect(() => {
-  //   if (!canvasRef.current || !imageRef.current) {
-  //     return;
-  //   }
-
-  //   const init = () => {
-  //     setImageLoading(true);
-  //     updateCanvas();
-  //     if (!initialPoints || initialPoints.length === 0) {
-  //       const extractedColors = extractMainColors(canvasRef.current!, imageRef.current!, getNormalizedPosition, 5);
-  //       setColorPoints(extractedColors);
-  //       onColorsChangeEnter?.(extractedColors);
-  //       onColorsChange?.(extractedColors);
-  //     } else {
-  //       setColorPoints(initialPoints);
-  //     }
-
-  //     setImageLoading(false);
-  //   };
-
-  //   if (imageRef.current.complete) {
-  //     init();
-  //   } else {
-  //     imageRef.current.onload = () => {
-  //       init();
-  //     };
-  //   }
-  // }, [canvasRef, imageRef, updateCanvas, getNormalizedPosition, onColorsChangeEnter, onColorsChange, initialPoints]);
 
   const getConstrainedPosition = useCallback((x: number, y: number) => {
     if (!imageRef.current) return { x, y };
