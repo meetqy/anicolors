@@ -71,46 +71,45 @@ const PickerColors = forwardRef<
     setDraggedPoint(pointId);
     setShowMagnifier(pointId);
 
-    const rect = imageRef.current?.getBoundingClientRect();
-    const containerRect = containerRef.current?.getBoundingClientRect();
-    if (rect && containerRect) {
-      const x = e.clientX - rect.left;
-      const y = e.clientY - rect.top;
+    const container = containerRef.current;
+    if (!imageRef.current || !container) return;
 
-      setMagnifierPos({
-        x: e.clientX - containerRect.left,
-        y: e.clientY - containerRect.top,
-      });
+    const containerRect = container.getBoundingClientRect();
+    const x = e.clientX - containerRect.left;
+    const y = e.clientY - containerRect.top;
 
-      setTimeout(() => {
-        updateMagnifier(canvasRef.current, magnifierCanvasRef.current, imageRef.current, x, y);
-      }, 0);
-    }
+    setMagnifierPos({
+      x,
+      y,
+    });
+
+    setTimeout(() => {
+      updateMagnifier(canvasRef.current, magnifierCanvasRef.current, imageRef.current, x, y);
+    }, 0);
   };
 
   const handleMouseMove = useCallback(
     (e: MouseEvent) => {
-      if (!imageRef.current || (!draggedPoint && !showMagnifier)) return;
+      if (!imageRef.current || !containerRef.current || (!draggedPoint && !showMagnifier)) return;
 
-      const rect = imageRef.current.getBoundingClientRect();
-      const containerRect = containerRef.current?.getBoundingClientRect();
-      const x = e.clientX - rect.left;
-      const y = e.clientY - rect.top;
+      const container = containerRef.current;
+      const containerRect = container.getBoundingClientRect();
+      const x = e.clientX - containerRect.left;
+      const y = e.clientY - containerRect.top;
 
-      if (containerRect) {
-        setMagnifierPos({
-          x: e.clientX - containerRect.left,
-          y: e.clientY - containerRect.top,
-        });
-      }
+      setMagnifierPos({
+        x,
+        y,
+      });
 
       if (showMagnifier) {
         updateMagnifier(canvasRef.current, magnifierCanvasRef.current, imageRef.current, x, y);
       }
 
       if (draggedPoint) {
-        const constrainedPos = getConstrainedPosition(imageRef.current, x, y);
-        const normalizedPos = getNormalizedPosition(imageRef.current, constrainedPos.x, constrainedPos.y);
+        // 约束点位在图片可见区域
+        const constrainedPos = getConstrainedPosition(imageRef.current, x, y, container);
+        const normalizedPos = getNormalizedPosition(imageRef.current, constrainedPos.x, constrainedPos.y, container);
         const newColor = getPixelColor(canvasRef.current, imageRef.current, constrainedPos.x, constrainedPos.y);
 
         setColorPoints((prev) =>

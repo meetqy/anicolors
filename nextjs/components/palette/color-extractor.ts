@@ -132,13 +132,27 @@ export const extractMainColors = (canvas: HTMLCanvasElement, imageElement: HTMLI
     const positions = colorInfo.positions;
     const centerPos = positions[Math.floor(positions.length / 2)];
 
-    // 转换为显示坐标系
-    const rect = imageElement.getBoundingClientRect();
-    const displayX = (centerPos.x / canvas.width) * rect.width;
-    const displayY = (centerPos.y / canvas.height) * rect.height;
+    // 计算标准化坐标，需考虑object-contain容器
+    // 先将canvas像素坐标映射到图片natural尺寸
+    const imgX = centerPos.x;
+    const imgY = centerPos.y;
 
-    // 转换为标准化坐标（直接用本地 getNormalizedPosition）
-    const normalizedPos = getNormalizedPosition(imageElement, displayX, displayY);
+    // 再映射到容器坐标（假设图片object-contain填充container）
+    // 这里需要父组件传递containerRef.current，或你可以在extractMainColors参数中加container参数
+    // 这里假设container为imageElement.parentElement
+    const container = imageElement.parentElement as HTMLDivElement | null;
+
+    // 计算图片在容器内的渲染区域
+    let displayX = imgX,
+      displayY = imgY;
+    if (container) {
+      const { renderWidth, renderHeight, offsetX, offsetY } = getImageContainRect(imageElement, container);
+      displayX = offsetX + (imgX / imageElement.naturalWidth) * renderWidth;
+      displayY = offsetY + (imgY / imageElement.naturalHeight) * renderHeight;
+    }
+
+    // 转换为标准化坐标
+    const normalizedPos = getNormalizedPosition(imageElement, displayX, displayY, container);
 
     return {
       id: index + 1,
