@@ -18,7 +18,7 @@ export const PickerPalette = forwardRef<PickerColorsRefs, PickerPaletteProps>((p
     () => ({
       extractMainColors: (...args) => pickerRef.current?.extractMainColors(...args) ?? [],
     }),
-    [pickerRef.current]
+    [pickerRef]
   );
 
   return (
@@ -59,3 +59,5 @@ export const PickerPalette = forwardRef<PickerColorsRefs, PickerPaletteProps>((p
     </>
   );
 });
+
+PickerPalette.displayName = "PickerPalette";

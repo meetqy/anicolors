@@ -1,5 +1,5 @@
 "use client";
-import { useState, useCallback, useEffect, useRef } from "react";
+import { useState, useEffect, useRef } from "react";
 import { getColorName } from "@/lib/nearest";
 import Color from "color";
 import { ChooseImage } from "./choose-image";

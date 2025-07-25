@@ -42,7 +42,7 @@ const PickerColors = forwardRef<
 
   useEffect(() => {
     setColorPoints(points || []);
-  }, [points]);
+  }, [points, setColorPoints]);
 
   useImperativeHandle(
     ref,
@@ -56,7 +56,7 @@ const PickerColors = forwardRef<
         return result;
       },
     }),
-    []
+    [setColorPoints, onColorsChange, onColorsChangeEnter]
   );
 
   useEffect(() => {
@@ -243,4 +243,5 @@ const PickerColors = forwardRef<
   );
 });
 
+PickerColors.displayName = "PickerColors";
 export default PickerColors;
