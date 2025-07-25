@@ -89,6 +89,9 @@ importers:
       tailwind-merge:
         specifier: ^3.3.1
         version: 3.3.1
+      use-eye-dropper:
+        specifier: ^1.7.1
+        version: 1.7.1(react@19.1.0)
       usehooks-ts:
         specifier: ^3.1.1
         version: 3.1.1(react@19.1.0)
@@ -2312,6 +2315,11 @@ packages:
 
   uri-js@4.4.1:
     resolution: {integrity: sha512-7rKUyy33Q1yc98pQ1DAmLtwX109F7TIfWlW1Ydo8Wl1ii1SeHieeh0HHfPeL2fMXK6z0s8ecKs9frCuLJvndBg==}
+
+  use-eye-dropper@1.7.1:
+    resolution: {integrity: sha512-92JkEEQehxp9XAyMrfDPAz+FPzjlTASRoAB2WpxjV9GmZIJoF1spMlD9/5AE3UAyLD/TtX6Ro4aVMC/Vk/MJgg==}
+    peerDependencies:
+      react: ^0.13.0 || ^0.14.0 || >=15
 
   usehooks-ts@3.1.1:
     resolution: {integrity: sha512-I4diPp9Cq6ieSUH2wu+fDAVQO43xwtulo+fKEidHUwZPnYImbtkTjzIJYcDcJqxgmX31GVqNFURodvcgHcW0pA==}
@@ -4668,6 +4676,10 @@ snapshots:
   uri-js@4.4.1:
     dependencies:
       punycode: 2.3.1
+
+  use-eye-dropper@1.7.1(react@19.1.0):
+    dependencies:
+      react: 19.1.0
 
   usehooks-ts@3.1.1(react@19.1.0):
     dependencies:

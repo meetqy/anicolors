@@ -37,12 +37,7 @@ const getColorVibrancy = (rgb: number[]) => {
   return saturation * brightnessWeight;
 };
 
-export const extractMainColors = (
-  canvas: HTMLCanvasElement,
-  imageElement: HTMLImageElement,
-  getNormalizedPosition: (displayX: number, displayY: number) => { x: number; y: number },
-  count: number = 5
-): ColorPoint[] => {
+export const extractMainColors = (canvas: HTMLCanvasElement, imageElement: HTMLImageElement, count: number = 5): ColorPoint[] => {
   const ctx = canvas.getContext("2d");
   if (!ctx) return [];
 
@@ -137,13 +132,27 @@ export const extractMainColors = (
     const positions = colorInfo.positions;
     const centerPos = positions[Math.floor(positions.length / 2)];
 
-    // 转换为显示坐标系
-    const rect = imageElement.getBoundingClientRect();
-    const displayX = (centerPos.x / canvas.width) * rect.width;
-    const displayY = (centerPos.y / canvas.height) * rect.height;
+    // 计算标准化坐标，需考虑object-contain容器
+    // 先将canvas像素坐标映射到图片natural尺寸
+    const imgX = centerPos.x;
+    const imgY = centerPos.y;
+
+    // 再映射到容器坐标（假设图片object-contain填充container）
+    // 这里需要父组件传递containerRef.current，或你可以在extractMainColors参数中加container参数
+    // 这里假设container为imageElement.parentElement
+    const container = imageElement.parentElement as HTMLDivElement | null;
+
+    // 计算图片在容器内的渲染区域
+    let displayX = imgX,
+      displayY = imgY;
+    if (container) {
+      const { renderWidth, renderHeight, offsetX, offsetY } = getImageContainRect(imageElement, container);
+      displayX = offsetX + (imgX / imageElement.naturalWidth) * renderWidth;
+      displayY = offsetY + (imgY / imageElement.naturalHeight) * renderHeight;
+    }
 
     // 转换为标准化坐标
-    const normalizedPos = getNormalizedPosition(displayX, displayY);
+    const normalizedPos = getNormalizedPosition(imageElement, displayX, displayY, container);
 
     return {
       id: index + 1,
@@ -155,4 +164,211 @@ export const extractMainColors = (
       isWarm: isWarmColor([r, g, b]),
     };
   });
+};
+
+// 获取像素颜色
+export const getPixelColor = (canvas: HTMLCanvasElement | null, image: HTMLImageElement | null, x: number, y: number): string => {
+  if (!canvas || !image) return "#ffffff";
+
+  const ctx = canvas.getContext("2d");
+  if (!ctx) return "#ffffff";
+
+  const rect = image.getBoundingClientRect();
+  const scaleX = canvas.width / rect.width;
+  const scaleY = canvas.height / rect.height;
+
+  const canvasX = Math.floor(x * scaleX);
+  const canvasY = Math.floor(y * scaleY);
+
+  try {
+    const imageData = ctx.getImageData(canvasX, canvasY, 1, 1);
+    const [r, g, b] = imageData.data;
+    return `rgb(${r}, ${g}, ${b})`;
+  } catch {
+    return "#ffffff";
+  }
+};
+
+// 更新canvas内容
+export const updateCanvas = (canvas: HTMLCanvasElement | null, image: HTMLImageElement | null) => {
+  if (!image || !canvas) return;
+
+  const ctx = canvas.getContext("2d");
+  if (!ctx) return;
+
+  canvas.width = image.naturalWidth;
+  canvas.height = image.naturalHeight;
+  ctx.drawImage(image, 0, 0);
+};
+
+// 获取图片在容器中的缩放和偏移（object-contain）
+function getImageContainRect(image: HTMLImageElement, container: HTMLDivElement) {
+  const containerRect = container.getBoundingClientRect();
+  const imgNaturalWidth = image.naturalWidth;
+  const imgNaturalHeight = image.naturalHeight;
+  const containerWidth = containerRect.width;
+  const containerHeight = containerRect.height;
+
+  const imgAspect = imgNaturalWidth / imgNaturalHeight;
+  const containerAspect = containerWidth / containerHeight;
+
+  let renderWidth = containerWidth;
+  let renderHeight = containerHeight;
+  let offsetX = 0;
+  let offsetY = 0;
+
+  if (imgAspect > containerAspect) {
+    // 图片宽度撑满容器，高度居中
+    renderWidth = containerWidth;
+    renderHeight = containerWidth / imgAspect;
+    offsetY = (containerHeight - renderHeight) / 2;
+  } else {
+    // 图片高度撑满容器，宽度居中
+    renderHeight = containerHeight;
+    renderWidth = containerHeight * imgAspect;
+    offsetX = (containerWidth - renderWidth) / 2;
+  }
+
+  return {
+    renderWidth,
+    renderHeight,
+    offsetX,
+    offsetY,
+  };
+}
+
+// 显示坐标转标准化坐标（支持object-contain）
+export const getNormalizedPosition = (image: HTMLImageElement | null, displayX: number, displayY: number, container?: HTMLDivElement | null) => {
+  if (!image) return { x: displayX, y: displayY };
+  if (!container) {
+    // fallback: old logic
+    const rect = image.getBoundingClientRect();
+    const aspectRatio = image.naturalHeight / image.naturalWidth;
+    return {
+      x: (displayX / rect.width) * 384,
+      y: (displayY / (rect.width * aspectRatio)) * 384,
+    };
+  }
+
+  const { renderWidth, renderHeight, offsetX, offsetY } = getImageContainRect(image, container);
+
+  // 转换为图片内坐标
+  const imgX = displayX - offsetX;
+  const imgY = displayY - offsetY;
+
+  // 超出图片区域则返回边界
+  const safeX = Math.max(0, Math.min(imgX, renderWidth));
+  const safeY = Math.max(0, Math.min(imgY, renderHeight));
+
+  // 映射到标准化坐标
+  return {
+    x: (safeX / renderWidth) * 384,
+    y: (safeY / renderHeight) * 384,
+  };
+};
+
+// 标准化坐标转显示坐标（支持object-contain）
+export const getDisplayPosition = (image: HTMLImageElement | null, container: HTMLDivElement | null, normalizedX: number, normalizedY: number) => {
+  if (!image || !container) return { x: 0, y: 0 };
+
+  const { renderWidth, renderHeight, offsetX, offsetY } = getImageContainRect(image, container);
+
+  const x = offsetX + (normalizedX / 384) * renderWidth;
+  const y = offsetY + (normalizedY / 384) * renderHeight;
+
+  return {
+    x: isFinite(x) ? x : 0,
+    y: isFinite(y) ? y : 0,
+  };
+};
+
+// 更新放大镜
+export const updateMagnifier = (canvas: HTMLCanvasElement | null, magnifierCanvas: HTMLCanvasElement | null, image: HTMLImageElement | null, x: number, y: number) => {
+  if (!canvas || !magnifierCanvas || !image) return;
+
+  const sourceCtx = canvas.getContext("2d");
+  const magnifierCtx = magnifierCanvas.getContext("2d");
+
+  if (!sourceCtx || !magnifierCtx) return;
+
+  const rect = image.getBoundingClientRect();
+  const scaleX = canvas.width / rect.width;
+  const scaleY = canvas.height / rect.height;
+
+  const sourceX = x * scaleX;
+  const sourceY = y * scaleY;
+
+  magnifierCanvas.width = 150;
+  magnifierCanvas.height = 150;
+  magnifierCtx.imageSmoothingEnabled = false;
+
+  try {
+    const regionSize = 10;
+    const halfRegion = regionSize / 2;
+    const sourceRegionX = Math.max(0, Math.min(sourceX - halfRegion, canvas.width - regionSize));
+    const sourceRegionY = Math.max(0, Math.min(sourceY - halfRegion, canvas.height - regionSize));
+    magnifierCtx.drawImage(canvas, sourceRegionX, sourceRegionY, regionSize, regionSize, 0, 0, magnifierCanvas.width, magnifierCanvas.height);
+
+    magnifierCtx.strokeStyle = "rgba(255, 255, 255, 0.8)";
+    magnifierCtx.lineWidth = 1;
+    const gridSize = magnifierCanvas.width / regionSize;
+
+    for (let i = 0; i <= regionSize; i++) {
+      const pos = i * gridSize;
+      magnifierCtx.beginPath();
+      magnifierCtx.moveTo(pos, 0);
+      magnifierCtx.lineTo(pos, magnifierCanvas.height);
+      magnifierCtx.stroke();
+
+      magnifierCtx.beginPath();
+      magnifierCtx.moveTo(0, pos);
+      magnifierCtx.lineTo(magnifierCanvas.width, pos);
+      magnifierCtx.stroke();
+    }
+
+    const centerX = magnifierCanvas.width / 2;
+    const centerY = magnifierCanvas.height / 2;
+
+    magnifierCtx.strokeStyle = "#ff0000";
+    magnifierCtx.lineWidth = 2;
+
+    magnifierCtx.beginPath();
+    magnifierCtx.moveTo(centerX, centerY - 15);
+    magnifierCtx.lineTo(centerX, centerY + 15);
+    magnifierCtx.stroke();
+
+    magnifierCtx.beginPath();
+    magnifierCtx.moveTo(centerX - 15, centerY);
+    magnifierCtx.lineTo(centerX + 15, centerY);
+    magnifierCtx.stroke();
+
+    magnifierCtx.fillStyle = "#ff0000";
+    magnifierCtx.fillRect(centerX - 1, centerY - 1, 2, 2);
+  } catch (error) {
+    console.error("Error updating magnifier:", error);
+  }
+};
+
+// 约束坐标在图片可见区域（object-contain模式下）
+export const getConstrainedPosition = (image: HTMLImageElement | null, x: number, y: number, container?: HTMLDivElement | null) => {
+  if (!image) return { x, y };
+  if (!container) {
+    // fallback: 仅约束在 image 元素范围
+    const rect = image.getBoundingClientRect();
+    return {
+      x: Math.max(0, Math.min(x, rect.width)),
+      y: Math.max(0, Math.min(y, rect.height)),
+    };
+  }
+
+  const { renderWidth, renderHeight, offsetX, offsetY } = getImageContainRect(image, container);
+
+  // 约束在图片可见区域
+  const safeX = Math.max(offsetX, Math.min(x, offsetX + renderWidth));
+  const safeY = Math.max(offsetY, Math.min(y, offsetY + renderHeight));
+
+  return {
+    x: safeX,
+    y: safeY,
+  };
 };
