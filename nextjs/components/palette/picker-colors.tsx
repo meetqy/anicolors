@@ -14,32 +14,44 @@ export interface ColorPoint {
   name?: string;
 }
 
-interface PickerColorsProps {
+export interface PickerColorsProps {
   image?: string;
   points?: ColorPoint[];
-  classNames?: {
-    image?: string;
-  };
   onColorsChange?: (points: ColorPoint[]) => void;
   onColorsChangeEnter?: (points: ColorPoint[]) => void;
+  onImageLoaded?: () => void;
 }
 
 export type PickerColorsRefs = {
   extractMainColors: (count?: number) => ColorPoint[];
 };
 
-const PickerColors = forwardRef<PickerColorsRefs, PickerColorsProps>(({ image, points, onColorsChange, classNames, onColorsChangeEnter }, ref) => {
+const PickerColors = forwardRef<
+  PickerColorsRefs,
+  PickerColorsProps & {
+    classNames?: {
+      image?: string;
+    };
+  }
+>(({ image, onImageLoaded, points, onColorsChange, classNames, onColorsChangeEnter }, ref) => {
   const [colorPoints, setColorPoints] = useState<ColorPoint[]>([]);
   const [draggedPoint, setDraggedPoint] = useState<number | null>(null);
   const [showMagnifier, setShowMagnifier] = useState<number | null>(null);
   const [magnifierPos, setMagnifierPos] = useState({ x: 0, y: 0 });
   const [imageLoading, setImageLoading] = useState(true);
 
+  console.log(image);
+
   useImperativeHandle(
     ref,
     () => ({
       extractMainColors: (count: number = 5) => {
-        return extractMainColors(canvasRef.current!, imageRef.current!, count);
+        const result = extractMainColors(canvasRef.current!, imageRef.current!, count);
+        onColorsChange?.(result);
+        onColorsChangeEnter?.(result);
+        setColorPoints(result);
+
+        return result;
       },
     }),
     []
@@ -48,11 +60,8 @@ const PickerColors = forwardRef<PickerColorsRefs, PickerColorsProps>(({ image, p
   useEffect(() => {
     if (!imageLoading) {
       updateCanvas(canvasRef.current, imageRef.current);
-      if (points && points.length > 0) {
-        setColorPoints(points);
-      }
     }
-  }, [points, setColorPoints, imageLoading]);
+  }, [imageLoading]);
 
   const imageRef = useRef<HTMLImageElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -179,7 +188,13 @@ const PickerColors = forwardRef<PickerColorsRefs, PickerColorsProps>(({ image, p
         <picture>
           <img
             fetchPriority="high"
-            onLoad={() => setImageLoading(false)}
+            onLoad={() => {
+              console.log("Image loaded", image);
+              updateCanvas(canvasRef.current, imageRef.current);
+              setColorPoints(points || []);
+              onImageLoaded?.();
+              setImageLoading(false);
+            }}
             ref={imageRef}
             src={image}
             crossOrigin="anonymous"

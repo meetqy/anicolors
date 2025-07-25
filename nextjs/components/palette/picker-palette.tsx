@@ -3,18 +3,15 @@ import { forwardRef, useImperativeHandle, useRef } from "react";
 import Color from "color";
 import { LuX } from "react-icons/lu";
 import { Button } from "../ui/button";
-import PickerColors, { PickerColorsRefs, type ColorPoint } from "./picker-colors";
+import PickerColors, { PickerColorsProps, PickerColorsRefs } from "./picker-colors";
 
-interface PickerPaletteProps {
-  image?: string;
-  points?: ColorPoint[];
-  onColorsChange?: (points: ColorPoint[]) => void;
-  onColorsChangeEnter?: (points: ColorPoint[]) => void;
+interface PickerPaletteProps extends PickerColorsProps {
   onDeleteColor: (id: number) => void;
 }
 
-export const PickerPalette = forwardRef<PickerColorsRefs, PickerPaletteProps>(({ points, onDeleteColor, image, onColorsChange, onColorsChangeEnter }, ref) => {
+export const PickerPalette = forwardRef<PickerColorsRefs, PickerPaletteProps>((props, ref) => {
   const pickerRef = useRef<PickerColorsRefs>(null);
+  const { points, onDeleteColor } = props;
 
   useImperativeHandle(
     ref,
@@ -27,7 +24,7 @@ export const PickerPalette = forwardRef<PickerColorsRefs, PickerPaletteProps>(({
   return (
     <>
       <div className="bg-muted flex lg:aspect-[5/4] h-full w-full lg:min-w-96 items-center justify-center p-4 lg:w-2/3 lg:border-r">
-        <PickerColors ref={pickerRef} key={image} points={points} image={image} onColorsChange={onColorsChange} onColorsChangeEnter={onColorsChangeEnter} />
+        <PickerColors {...props} ref={pickerRef} />
       </div>
 
       <aside className="flex w-full flex-col p-4 lg:w-1/3">

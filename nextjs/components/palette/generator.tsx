@@ -42,16 +42,24 @@ export function Generator({ initialPoints = [], onColorsChangeEnter, initialImag
 
   const handleImageUpload = (newImage: string) => {
     setImage(newImage);
-    setPoints(pickerRef.current?.extractMainColors(5) || []);
     onImageChange?.(newImage);
   };
-
-  console.log(points);
 
   return (
     <div className="px-4 xl:px-0">
       <ChooseImage onChange={handleImageUpload} image={image}>
-        {image && <PickerPalette ref={pickerRef} points={points} onDeleteColor={deletePoint} image={image} onColorsChangeEnter={setPoints} />}
+        <PickerPalette
+          onImageLoaded={() => {
+            if (!image?.startsWith("http")) {
+              setPoints(pickerRef.current?.extractMainColors(5) || []);
+            }
+          }}
+          ref={pickerRef}
+          points={points}
+          onDeleteColor={deletePoint}
+          image={image}
+          onColorsChangeEnter={setPoints}
+        />
       </ChooseImage>
     </div>
   );

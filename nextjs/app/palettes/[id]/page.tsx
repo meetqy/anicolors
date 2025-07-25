@@ -81,7 +81,7 @@ export default async function Page({ params }: { params: Promise<{ id: string }>
           </ul>
         </div>
 
-        <Generator initialPoints={points} initImage={image} />
+        <Generator initialPoints={points} initialImage={image} />
         <PaletteActions id={id} palette={palette} />
 
         <div className="flex gap-2 max-w-screen-md justify-center mx-auto px-4 lg:px-0 mt-24">
