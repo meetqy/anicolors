@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useRef, useCallback, useEffect, useImperativeHandle } from "react";
+import React, { useState, useRef, useCallback, useEffect, useImperativeHandle, forwardRef } from "react";
 import { cn } from "@/lib/utils";
 import { getColorName } from "@/lib/nearest";
 import Color from "color";
@@ -24,16 +24,26 @@ interface PickerColorsProps {
   onColorsChangeEnter?: (points: ColorPoint[]) => void;
 }
 
-type PickerColorsHandle = {
+export type PickerColorsRefs = {
   extractMainColors: (count?: number) => ColorPoint[];
 };
 
-const PickerColors = React.forwardRef<PickerColorsHandle, PickerColorsProps>(function PickerColors({ image, points, onColorsChange, classNames, onColorsChangeEnter }, ref) {
+const PickerColors = forwardRef<PickerColorsRefs, PickerColorsProps>(({ image, points, onColorsChange, classNames, onColorsChangeEnter }, ref) => {
   const [colorPoints, setColorPoints] = useState<ColorPoint[]>([]);
   const [draggedPoint, setDraggedPoint] = useState<number | null>(null);
   const [showMagnifier, setShowMagnifier] = useState<number | null>(null);
   const [magnifierPos, setMagnifierPos] = useState({ x: 0, y: 0 });
   const [imageLoading, setImageLoading] = useState(true);
+
+  useImperativeHandle(
+    ref,
+    () => ({
+      extractMainColors: (count: number = 5) => {
+        return extractMainColors(canvasRef.current!, imageRef.current!, count);
+      },
+    }),
+    []
+  );
 
   useEffect(() => {
     if (!imageLoading) {
@@ -48,16 +58,6 @@ const PickerColors = React.forwardRef<PickerColorsHandle, PickerColorsProps>(fun
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const magnifierCanvasRef = useRef<HTMLCanvasElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
-
-  useImperativeHandle(
-    ref,
-    () => ({
-      extractMainColors: (count: number = 5) => {
-        return extractMainColors(canvasRef.current!, imageRef.current!, count);
-      },
-    }),
-    []
-  );
 
   const handleMouseDown = (e: React.MouseEvent, pointId: number) => {
     e.preventDefault();

@@ -1,60 +1,58 @@
 "use client";
-import { useState, useCallback, useEffect } from "react";
+import { useState, useCallback, useEffect, useRef } from "react";
 import { getColorName } from "@/lib/nearest";
 import Color from "color";
 import { ChooseImage } from "./choose-image";
 import { PickerPalette } from "./picker-palette";
-import { ColorPoint } from "./picker-colors";
+import { ColorPoint, PickerColorsRefs } from "./picker-colors";
 
-type GeneratorProps = { initialPoints?: ColorPoint[]; autoExtract?: boolean; onColorsChangeEnter?: (points: ColorPoint[]) => void; initImage?: string; onImageChange?: (image: string) => void };
+type GeneratorProps = { initialPoints?: ColorPoint[]; onColorsChangeEnter?: (points: ColorPoint[]) => void; initialImage?: string; onImageChange?: (image: string) => void };
 
-export function Generator({ initialPoints = [], onColorsChangeEnter, initImage, autoExtract, onImageChange }: GeneratorProps) {
+export function Generator({ initialPoints = [], onColorsChangeEnter, initialImage, onImageChange }: GeneratorProps) {
   const [image, setImage] = useState<string>();
-  const [colors, setColors] = useState<ColorPoint[]>([]);
+  const [points, setPoints] = useState<ColorPoint[]>([]);
+  const pickerRef = useRef<PickerColorsRefs>(null);
 
   useEffect(() => {
     if (initialPoints.length > 0) {
-      setColors(initialPoints);
+      setPoints(initialPoints);
     }
   }, [initialPoints]);
 
   useEffect(() => {
-    if (initImage) {
-      setImage(initImage);
+    if (initialImage) {
+      setImage(initialImage);
     }
-  }, [initImage]);
+  }, [initialImage]);
 
   useEffect(() => {
     onColorsChangeEnter?.(
-      colors.map((item) => {
+      points.map((item) => {
         return {
           ...item,
           name: getColorName(Color(item.color).hex())?.name,
         };
       })
     );
-  }, [colors, onColorsChangeEnter]);
+  }, [points, onColorsChangeEnter]);
 
-  const deleteColor = useCallback((id: number) => {
-    setColors((prev) => prev.filter((color) => color.id !== id));
+  const deletePoint = useCallback((id: number) => {
+    setPoints((prev) => prev.filter((point) => point.id !== id));
   }, []);
 
-  const handleImageUpload = useCallback(
-    (newImage: string) => {
-      setImage(newImage);
-      setColors([]);
-      onImageChange?.(newImage);
-    },
-    [onImageChange]
-  );
+  const handleImageUpload = (newImage: string) => {
+    setImage(newImage);
+    setPoints(pickerRef.current?.extractMainColors(5) || []);
+    onImageChange?.(newImage);
+  };
+
+  console.log(points);
 
   return (
     <div className="px-4 xl:px-0">
-      <div className="mx-auto flex w-full max-w-screen-lg flex-col overflow-hidden rounded-md border lg:flex-row relative">
-        <ChooseImage onChange={handleImageUpload} image={image} />
-
-        {image && <PickerPalette autoExtract={autoExtract} colors={colors} onDeleteColor={deleteColor} image={image} onColorsChange={setColors} />}
-      </div>
+      <ChooseImage onChange={handleImageUpload} image={image}>
+        {image && <PickerPalette ref={pickerRef} points={points} onDeleteColor={deletePoint} image={image} onColorsChangeEnter={setPoints} />}
+      </ChooseImage>
     </div>
   );
 }
