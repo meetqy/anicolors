@@ -40,8 +40,6 @@ const PickerColors = forwardRef<
   const [magnifierPos, setMagnifierPos] = useState({ x: 0, y: 0 });
   const [imageLoading, setImageLoading] = useState(true);
 
-  console.log(image);
-
   useImperativeHandle(
     ref,
     () => ({
@@ -184,25 +182,22 @@ const PickerColors = forwardRef<
 
   return (
     image && (
-      <div ref={containerRef} className="relative overflow-hidden">
-        <picture>
-          <img
-            fetchPriority="high"
-            onLoad={() => {
-              console.log("Image loaded", image);
-              updateCanvas(canvasRef.current, imageRef.current);
-              setColorPoints(points || []);
-              onImageLoaded?.();
-              setImageLoading(false);
-            }}
-            ref={imageRef}
-            src={image}
-            crossOrigin="anonymous"
-            alt="Color picker"
-            className={cn("mx-auto lg:max-h-[512px]", classNames?.image)}
-            draggable={false}
-          />
-        </picture>
+      <div ref={containerRef} className="relative flex-1 overflow-hidden size-full">
+        <img
+          fetchPriority="high"
+          onLoad={() => {
+            updateCanvas(canvasRef.current, imageRef.current);
+            setColorPoints(points || []);
+            onImageLoaded?.();
+            setImageLoading(false);
+          }}
+          ref={imageRef}
+          src={image}
+          crossOrigin="anonymous"
+          alt="Color picker"
+          className={cn("object-contain size-full", classNames?.image)}
+          draggable={false}
+        />
 
         <canvas ref={canvasRef} className="hidden" />
         <canvas ref={magnifierCanvasRef} className="hidden" />

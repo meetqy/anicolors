@@ -37,7 +37,7 @@ export function ChooseImage({ onChange, image, children }: ChooseImageProps) {
   return (
     <div
       {...getRootProps()}
-      className={`mx-auto flex w-full max-w-screen-lg flex-col overflow-hidden rounded-md border lg:flex-row relative ${isDragActive ? "ring-2 ring-primary ring-offset-2" : ""}`}
+      className={`mx-auto flex w-full max-w-screen-lg aspect-video flex-col overflow-hidden rounded-md border lg:flex-row relative ${isDragActive ? "ring-2 ring-primary ring-offset-2" : ""}`}
     >
       <input {...getInputProps()} />
       {isDragActive && (

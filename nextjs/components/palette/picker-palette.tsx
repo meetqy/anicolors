@@ -23,7 +23,7 @@ export const PickerPalette = forwardRef<PickerColorsRefs, PickerPaletteProps>((p
 
   return (
     <>
-      <div className="bg-muted flex lg:aspect-[5/4] h-full w-full lg:min-w-96 items-center justify-center p-4 lg:w-2/3 lg:border-r">
+      <div className="bg-muted flex h-full w-full items-center justify-center p-4 lg:w-2/3 lg:border-r">
         <PickerColors {...props} ref={pickerRef} />
       </div>
 

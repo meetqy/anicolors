@@ -187,45 +187,80 @@ export const updateCanvas = (canvas: HTMLCanvasElement | null, image: HTMLImageE
   ctx.drawImage(image, 0, 0);
 };
 
-// 显示坐标转标准化坐标
-export const getNormalizedPosition = (image: HTMLImageElement | null, displayX: number, displayY: number) => {
+// 获取图片在容器中的缩放和偏移（object-contain）
+function getImageContainRect(image: HTMLImageElement, container: HTMLDivElement) {
+  const containerRect = container.getBoundingClientRect();
+  const imgNaturalWidth = image.naturalWidth;
+  const imgNaturalHeight = image.naturalHeight;
+  const containerWidth = containerRect.width;
+  const containerHeight = containerRect.height;
+
+  const imgAspect = imgNaturalWidth / imgNaturalHeight;
+  const containerAspect = containerWidth / containerHeight;
+
+  let renderWidth = containerWidth;
+  let renderHeight = containerHeight;
+  let offsetX = 0;
+  let offsetY = 0;
+
+  if (imgAspect > containerAspect) {
+    // 图片宽度撑满容器，高度居中
+    renderWidth = containerWidth;
+    renderHeight = containerWidth / imgAspect;
+    offsetY = (containerHeight - renderHeight) / 2;
+  } else {
+    // 图片高度撑满容器，宽度居中
+    renderHeight = containerHeight;
+    renderWidth = containerHeight * imgAspect;
+    offsetX = (containerWidth - renderWidth) / 2;
+  }
+
+  return {
+    renderWidth,
+    renderHeight,
+    offsetX,
+    offsetY,
+  };
+}
+
+// 显示坐标转标准化坐标（支持object-contain）
+export const getNormalizedPosition = (image: HTMLImageElement | null, displayX: number, displayY: number, container?: HTMLDivElement | null) => {
   if (!image) return { x: displayX, y: displayY };
+  if (!container) {
+    // fallback: old logic
+    const rect = image.getBoundingClientRect();
+    const aspectRatio = image.naturalHeight / image.naturalWidth;
+    return {
+      x: (displayX / rect.width) * 384,
+      y: (displayY / (rect.width * aspectRatio)) * 384,
+    };
+  }
 
-  const rect = image.getBoundingClientRect();
-  const aspectRatio = image.naturalHeight / image.naturalWidth;
+  const { renderWidth, renderHeight, offsetX, offsetY } = getImageContainRect(image, container);
+
+  // 转换为图片内坐标
+  const imgX = displayX - offsetX;
+  const imgY = displayY - offsetY;
+
+  // 超出图片区域则返回边界
+  const safeX = Math.max(0, Math.min(imgX, renderWidth));
+  const safeY = Math.max(0, Math.min(imgY, renderHeight));
+
+  // 映射到标准化坐标
   return {
-    x: (displayX / rect.width) * 384,
-    y: (displayY / (rect.width * aspectRatio)) * 384,
+    x: (safeX / renderWidth) * 384,
+    y: (safeY / renderHeight) * 384,
   };
 };
 
-// 约束坐标在图片范围内
-export const getConstrainedPosition = (image: HTMLImageElement | null, x: number, y: number) => {
-  if (!image) return { x, y };
-
-  const rect = image.getBoundingClientRect();
-  return {
-    x: Math.max(0, Math.min(x, rect.width)),
-    y: Math.max(0, Math.min(y, rect.height)),
-  };
-};
-
-// 标准化坐标转显示坐标
+// 标准化坐标转显示坐标（支持object-contain）
 export const getDisplayPosition = (image: HTMLImageElement | null, container: HTMLDivElement | null, normalizedX: number, normalizedY: number) => {
   if (!image || !container) return { x: 0, y: 0 };
 
-  const imageRect = image.getBoundingClientRect();
-  const containerRect = container.getBoundingClientRect();
+  const { renderWidth, renderHeight, offsetX, offsetY } = getImageContainRect(image, container);
 
-  if (!imageRect.width || !imageRect.height || !image.naturalWidth || !image.naturalHeight) {
-    return { x: 0, y: 0 };
-  }
-
-  const imageOffsetX = imageRect.left - containerRect.left;
-  const imageOffsetY = imageRect.top - containerRect.top;
-
-  const x = imageOffsetX + (normalizedX / 384) * imageRect.width;
-  const y = imageOffsetY + (normalizedY / 384) * (imageRect.width * (image.naturalHeight / image.naturalWidth));
+  const x = offsetX + (normalizedX / 384) * renderWidth;
+  const y = offsetY + (normalizedY / 384) * renderHeight;
 
   return {
     x: isFinite(x) ? x : 0,
@@ -298,4 +333,28 @@ export const updateMagnifier = (canvas: HTMLCanvasElement | null, magnifierCanva
   } catch (error) {
     console.error("Error updating magnifier:", error);
   }
+};
+
+// 约束坐标在图片可见区域（object-contain模式下）
+export const getConstrainedPosition = (image: HTMLImageElement | null, x: number, y: number, container?: HTMLDivElement | null) => {
+  if (!image) return { x, y };
+  if (!container) {
+    // fallback: 仅约束在 image 元素范围
+    const rect = image.getBoundingClientRect();
+    return {
+      x: Math.max(0, Math.min(x, rect.width)),
+      y: Math.max(0, Math.min(y, rect.height)),
+    };
+  }
+
+  const { renderWidth, renderHeight, offsetX, offsetY } = getImageContainRect(image, container);
+
+  // 约束在图片可见区域
+  const safeX = Math.max(offsetX, Math.min(x, offsetX + renderWidth));
+  const safeY = Math.max(offsetY, Math.min(y, offsetY + renderHeight));
+
+  return {
+    x: safeX,
+    y: safeY,
+  };
 };
