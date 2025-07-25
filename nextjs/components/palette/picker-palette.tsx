@@ -50,6 +50,7 @@ export const PickerPalette = forwardRef<PickerColorsRefs, PickerPaletteProps>((p
               >
                 <LuX className="size-6 text-red-600" />
               </Button>
+              <div className="size-4 rounded-full absolute right-4 top-2 bg-background/90 text-foreground flex justify-center items-center text-xs">{point.id}</div>
               <span className="absolute lg:inline-block hidden right-4 bottom-2 font-mono text-sm opacity-90">{Color(point.color).hex()}</span>
             </div>
           ))}

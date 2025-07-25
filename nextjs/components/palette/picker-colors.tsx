@@ -40,6 +40,10 @@ const PickerColors = forwardRef<
   const [magnifierPos, setMagnifierPos] = useState({ x: 0, y: 0 });
   const [imageLoading, setImageLoading] = useState(true);
 
+  useEffect(() => {
+    setColorPoints(points || []);
+  }, [points]);
+
   useImperativeHandle(
     ref,
     () => ({

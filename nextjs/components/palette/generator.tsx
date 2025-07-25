@@ -36,10 +36,6 @@ export function Generator({ initialPoints = [], onColorsChangeEnter, initialImag
     );
   }, [points, onColorsChangeEnter]);
 
-  const deletePoint = useCallback((id: number) => {
-    setPoints((prev) => prev.filter((point) => point.id !== id));
-  }, []);
-
   const handleImageUpload = (newImage: string) => {
     setImage(newImage);
     onImageChange?.(newImage);
@@ -56,7 +52,9 @@ export function Generator({ initialPoints = [], onColorsChangeEnter, initialImag
           }}
           ref={pickerRef}
           points={points}
-          onDeleteColor={deletePoint}
+          onDeleteColor={(id) => {
+            setPoints((prev) => prev.filter((point) => point.id !== id));
+          }}
           image={image}
           onColorsChangeEnter={setPoints}
         />
