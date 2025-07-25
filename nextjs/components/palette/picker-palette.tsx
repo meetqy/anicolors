@@ -1,5 +1,5 @@
 "use client";
-import { forwardRef, useCallback, useImperativeHandle, useRef } from "react";
+import { forwardRef, useImperativeHandle, useRef } from "react";
 import Color from "color";
 import { LuX } from "react-icons/lu";
 import { Button } from "../ui/button";
