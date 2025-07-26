@@ -17,7 +17,11 @@ import { Shades } from "./shades";
 const getPaletteData = async (id: string) => {
   const res = await getClient().query({
     query: GET_PALETTE,
-    variables: { documentId: id },
+    variables: {
+      documentId: id,
+      // 图片的分页
+      pagination: { pageSize: 100, page: 1 },
+    },
   });
 
   const palette = res.data.palette as Palette;
@@ -32,7 +36,6 @@ const getPaletteData = async (id: string) => {
 export const generateMetadata = async ({ params }: { params: Promise<{ id: string }> }): Promise<Metadata> => {
   const { id } = await params;
   const palette = await getPaletteData(id);
-  console.log(palette);
   const imageUrl = getAssetUrl(palette.cover.url, 960);
 
   const hexs = palette.points.map((item) => Color(item.color).hex()).join(", ");
