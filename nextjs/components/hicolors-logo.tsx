@@ -9,7 +9,7 @@ interface HiColorsLogoProps {
 
 export const HiColorsLogo = ({ className, style, variant = "solid", gradientColors = ["#000", "#666"] }: HiColorsLogoProps) => {
   const baseClasses = "font-serif italic text-sm opacity-50 tracking-tight";
-  const text = "hicolors.org";
+  const text = "hicolors";
 
   if (variant === "gradient") {
     return (
