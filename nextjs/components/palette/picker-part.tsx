@@ -3,6 +3,8 @@
 import { useCallback, useState } from "react";
 import useEyeDropper from "use-eye-dropper";
 import { getColorName } from "@/lib/nearest";
+import { Button } from "../ui/button";
+import { toast } from "sonner";
 
 const _parts = ["eye", "hair"];
 
@@ -43,23 +45,33 @@ export const PickerPart = ({ onColorsChange, className }: PickerPartProps) => {
     [open, parts, onColorsChange]
   );
 
+  const copy = () => {
+    // 排除 透明色
+    const filteredParts = Object.fromEntries(Object.entries(parts).filter(([_, value]) => value.color !== "transparent"));
+    navigator.clipboard.writeText(JSON.stringify(filteredParts));
+    toast.success("Colors copied to clipboard!");
+  };
+
   return (
     <div className={`mb-4 ${className}`}>
-      <div className="flex gap-3 mx-auto max-w-screen-lg">
-        {_parts.map((part) => (
-          <button
-            key={part}
-            onClick={() => pickColor(part)}
-            disabled={!isSupported}
-            className="flex cursor-pointer items-center gap-2 px-4 py-1 bg-background border border-input rounded-md hover:bg-accent hover:text-accent-foreground transition-colors disabled:opacity-50"
-          >
-            <div className="w-6 h-6 rounded-full border border-border" style={{ backgroundColor: parts[part]?.color }} />
-            <div className="text-left">
-              <p className="text-sm font-medium capitalize">{part}</p>
-              <p className="text-xs text-muted-foreground font-mono">{parts[part]?.color}</p>
-            </div>
-          </button>
-        ))}
+      <div className="flex items-center mx-auto max-w-screen-lg" suppressHydrationWarning>
+        <div className="flex-1 flex flex-wrap gap-3">
+          {_parts.map((part) => (
+            <button
+              key={part}
+              onClick={() => pickColor(part)}
+              disabled={!isSupported}
+              className="flex cursor-pointer items-center gap-2 px-4 py-1 bg-background border border-input rounded-md hover:bg-accent hover:text-accent-foreground transition-colors disabled:opacity-50"
+            >
+              <div className="w-6 h-6 rounded-full border border-border" style={{ backgroundColor: parts[part]?.color }} />
+              <div className="text-left">
+                <p className="text-sm font-medium capitalize">{part}</p>
+                <p className="text-xs text-muted-foreground font-mono">{parts[part]?.color}</p>
+              </div>
+            </button>
+          ))}
+        </div>
+        <Button onClick={copy}>Copy</Button>
       </div>
       {!isSupported && <p className="text-xs text-muted-foreground text-center mt-2">Eye dropper not supported in this browser</p>}
     </div>
