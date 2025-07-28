@@ -2,7 +2,6 @@
 import { forwardRef, useImperativeHandle, useRef } from "react";
 import Color from "color";
 import { LuX } from "react-icons/lu";
-import { Button } from "../ui/button";
 import PickerColors, { PickerColorsProps, PickerColorsRefs } from "./picker-colors";
 
 interface PickerPaletteProps extends PickerColorsProps {
@@ -43,14 +42,14 @@ export const PickerPalette = forwardRef<PickerColorsRefs, PickerPaletteProps>((p
               }}
               className="relative flex flex-1 lg:flex-auto lg:aspect-auto aspect-square w-full items-center overflow-hidden rounded-lg lg:h-16 group"
             >
-              <Button
+              <button
                 onClick={() => onDeleteColor(point.id)}
-                className="absolute top-0 flex justify-center items-center left-0 h-full aspect-square rounded-r-none group-hover:opacity-100 opacity-0 bg-black/20 hover:bg-black/40 transition-colors"
+                className="absolute cursor-pointer top-0 flex z-50 justify-center items-center right-0 h-full aspect-square rounded-l-none bg-black/70 group-hover:opacity-100 opacity-0 transition-all"
                 aria-label="Delete color"
               >
                 <LuX className="size-6 text-red-600" />
-              </Button>
-              <div className="size-4 rounded-full absolute right-4 top-2 bg-background/90 text-foreground flex justify-center items-center text-xs">{point.id}</div>
+              </button>
+              <div className="size-8 rounded-full absolute left-4 bg-background/50 text-foreground flex justify-center items-center text-xs">{point.id}</div>
               <span className="absolute lg:inline-block hidden right-4 bottom-2 font-mono text-sm opacity-90">{Color(point.color).hex()}</span>
             </div>
           ))}

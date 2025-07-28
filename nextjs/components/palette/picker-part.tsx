@@ -7,10 +7,11 @@ import { getColorName } from "@/lib/nearest";
 const _parts = ["eye", "hair"];
 
 interface PickerPartProps {
+  className?: string;
   onColorsChange?: (parts: { [key: string]: { color: string; name: string } }) => void;
 }
 
-export const PickerPart = ({ onColorsChange }: PickerPartProps) => {
+export const PickerPart = ({ onColorsChange, className }: PickerPartProps) => {
   const { open, isSupported } = useEyeDropper();
   const [parts, setParts] = useState<{
     [key in string]: {
@@ -43,7 +44,7 @@ export const PickerPart = ({ onColorsChange }: PickerPartProps) => {
   );
 
   return (
-    <div className="mb-4">
+    <div className={`mb-4 ${className}`}>
       <div className="flex gap-3 mx-auto max-w-screen-lg">
         {_parts.map((part) => (
           <button

@@ -5,6 +5,7 @@ import Color from "color";
 import { ChooseImage } from "./choose-image";
 import { PickerPalette } from "./picker-palette";
 import { ColorPoint, PickerColorsRefs } from "./picker-colors";
+import { PickerPart } from "./picker-part";
 
 type GeneratorProps = { initialPoints?: ColorPoint[]; onColorsChangeEnter?: (points: ColorPoint[]) => void; initialImage?: string; onImageChange?: (image: string) => void };
 
@@ -43,6 +44,12 @@ export function Generator({ initialPoints = [], onColorsChangeEnter, initialImag
 
   return (
     <div className="px-4 xl:px-0">
+      <PickerPart
+        className="mb-6"
+        onColorsChange={(e) => {
+          console.log("Picked colors:", e);
+        }}
+      />
       <ChooseImage onChange={handleImageUpload} image={image}>
         <PickerPalette
           onImageLoaded={() => {
