@@ -179,6 +179,13 @@ export default function Introduction() {
               <div className="w-2 h-2 bg-primary rounded-full"></div>
               <span>Works with any image, from low-res memes to 4K wallpapers</span>
             </div>
+            {/* 新增：支持部位选择 */}
+            <div className="flex items-center space-x-3">
+              <div className="w-2 h-2 bg-primary rounded-full"></div>
+              <span>
+                Supports picking colors for specific parts: <b>eye</b>, <b>hair</b>, <b>clothes</b>, <b>shirt</b>, <b>pants</b>, <b>shoes</b>
+              </span>
+            </div>
           </div>
         </Card>
 
