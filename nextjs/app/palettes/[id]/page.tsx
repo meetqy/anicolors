@@ -90,6 +90,8 @@ export default async function Page({ params }: { params: Promise<{ id: string }>
           ))}
         </div>
 
+        <ExtendPart palette={palette} />
+
         <div className="flex flex-wrap gap-x-2 gap-y-4 max-w-screen-md mx-auto px-4 lg:px-0 mt-12 lg:justify-center">
           <Button variant="outline" className="rounded-full capitalize" size="sm" asChild>
             <Link href={`/category/${palette.category}`}>
@@ -106,8 +108,6 @@ export default async function Page({ params }: { params: Promise<{ id: string }>
             </Button>
           ))}
         </div>
-
-        <ExtendPart palette={palette} />
 
         <div className="max-w-screen-xl prose mx-auto px-4 mt-24">
           <h2>{palette.name} Color Palette Gallery</h2>
