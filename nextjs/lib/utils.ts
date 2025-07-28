@@ -1,7 +1,25 @@
 import { clsx, type ClassValue } from "clsx";
 import { twMerge } from "tailwind-merge";
 
-export const partsConstant = ["eye", "hair", "clothes", "shirt", "pants", "shoes"] as const;
+export const partsConstant = [
+  // 人体特征
+  "eye", // 瞳孔颜色（Iris）
+  "hair", // 头发颜色（Hair）
+  "skin", // 肤色（Skin Tone）
+  "lips", // 嘴唇颜色（Lips）
+
+  // 衣物分类
+  "clothes", // 整体服装颜色（如制服或连体衣）
+  "shirt", // 上衣颜色（Shirt / Top）
+  "pants", // 裤子颜色（Pants / Bottom）
+  "shoes", // 鞋子颜色（Shoes）
+  "coat", // 外套颜色（Coat / Jacket）
+
+  // 配件装饰（可选）
+  "hat", // 帽子颜色（Hat）
+  "accessory", // 饰品颜色（项链、耳环等）
+  "weapon", // 武器颜色（如剑、枪等）
+] as const;
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
