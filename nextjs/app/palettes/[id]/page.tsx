@@ -12,7 +12,6 @@ import { Shapes } from "lucide-react";
 import { MoreList } from "./more-list";
 import Color from "color";
 import { Extend } from "./extend";
-import { Shades } from "./shades";
 import { ExtendPart } from "./extend-part";
 import { PickerPart } from "@/components/palette/picker-part";
 
@@ -117,7 +116,6 @@ export default async function Page({ params }: { params: Promise<{ id: string }>
           </p>
           <Gallery palette={palette} />
           <Extend palette={palette} />
-          <Shades palette={palette} />
 
           <h2>Explore More Color Palettes</h2>
           <MoreList category={palette.category} colors={points.map((item) => item.name!)} />
