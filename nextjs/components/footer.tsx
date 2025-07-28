@@ -18,7 +18,7 @@ export const Footer = () => {
     { name: "UtilPortal", url: "https://utilportal.com" },
     { name: "AI Toolz Dir", url: "https://www.aitoolzdir.com" },
     { name: "AI Best Top", url: "https://aibesttop.com" },
-    { name: "Free Image to Prompt AI", url: "https://artiverse.app/ai/fluxproweb-com-image-to-prompt/" },
+    { name: "Tap4AI", url: "https://tap4.ai" },
   ];
 
   return (
