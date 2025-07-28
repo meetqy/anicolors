@@ -34,8 +34,6 @@ export const PickerPart = ({ onColorsChange, className, colors }: PickerPartProp
     }));
   }, [colors]);
 
-  console.log("PickerPart colors", colors, parts);
-
   const pickColor = useCallback(
     (part: string) => {
       const openPicker = async () => {
@@ -58,7 +56,7 @@ export const PickerPart = ({ onColorsChange, className, colors }: PickerPartProp
 
   const copy = () => {
     // 排除 透明色
-    const filteredParts = Object.fromEntries(Object.entries(parts).filter(([_, value]) => value.color !== "transparent"));
+    const filteredParts = Object.fromEntries(Object.entries(parts).filter(([, value]) => value.color !== "transparent"));
     navigator.clipboard.writeText(JSON.stringify(filteredParts));
     toast.success("Colors copied to clipboard!");
   };
