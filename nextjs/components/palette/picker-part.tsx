@@ -6,7 +6,16 @@ import { getColorName } from "@/lib/nearest";
 import { Button } from "../ui/button";
 import { toast } from "sonner";
 import { PartColors } from "@/query/palette";
-import { partsConstant } from "@/lib/utils";
+import { cn, partsConstant } from "@/lib/utils";
+
+const baseParts = [
+  "hair", // Hair Color
+  "eyes", // Eye Color
+  "skin", // Skin Color
+  "shirt", // Shirt or inner clothing
+  "pants", // Pants or trousers
+  "shoes", // Footwear
+] as const;
 
 interface PickerPartProps {
   className?: string;
@@ -27,6 +36,8 @@ export const PickerPart = ({ onColorsChange, className, colors }: PickerPartProp
       return acc;
     }, {} as Record<string, { color: string; name: string }>)
   );
+
+  const [showAll, setShowAll] = useState(false);
 
   useEffect(() => {
     setParts((prev) => ({
@@ -62,11 +73,19 @@ export const PickerPart = ({ onColorsChange, className, colors }: PickerPartProp
     toast.success("Colors copied to clipboard!");
   };
 
+  // 控制显示的部位
+  const displayParts = showAll ? partsConstant : baseParts;
+
   return (
     <div className={`mb-4 ${className}`}>
-      <div className="flex mx-auto max-w-screen-lg" suppressHydrationWarning>
+      <div
+        className={cn("flex mx-auto max-w-screen-lg transition-all", {
+          "items-center": !showAll,
+        })}
+        suppressHydrationWarning
+      >
         <div className="flex-1 flex flex-wrap gap-3">
-          {partsConstant.map((part) => (
+          {displayParts.map((part) => (
             <button
               key={part}
               onClick={() => pickColor(part)}
@@ -84,6 +103,13 @@ export const PickerPart = ({ onColorsChange, className, colors }: PickerPartProp
         <Button onClick={copy} size={"lg"}>
           Copy
         </Button>
+      </div>
+      <div className="mt-2 text-center">
+        {partsConstant.length > baseParts.length && (
+          <button className="text-primary underline text-sm" onClick={() => setShowAll((v) => !v)}>
+            {showAll ? "Collapse" : "Show All"}
+          </button>
+        )}
       </div>
       {!isSupported && <p className="text-xs text-muted-foreground text-center mt-2">Eye dropper not supported in this browser</p>}
     </div>
