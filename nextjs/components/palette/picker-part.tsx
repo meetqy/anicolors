@@ -6,8 +6,7 @@ import { getColorName } from "@/lib/nearest";
 import { Button } from "../ui/button";
 import { toast } from "sonner";
 import { PartColors } from "@/query/palette";
-
-const _parts = ["eye", "hair"];
+import { partsConstant } from "@/lib/utils";
 
 interface PickerPartProps {
   className?: string;
@@ -65,7 +64,7 @@ export const PickerPart = ({ onColorsChange, className, colors }: PickerPartProp
     <div className={`mb-4 ${className}`}>
       <div className="flex items-center mx-auto max-w-screen-lg" suppressHydrationWarning>
         <div className="flex-1 flex flex-wrap gap-3">
-          {_parts.map((part) => (
+          {partsConstant.map((part) => (
             <button
               key={part}
               onClick={() => pickColor(part)}

@@ -1,7 +1,6 @@
 import { Palette } from "@/query/palette";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-
-const _parts = ["eye", "hair"];
+import { partsConstant } from "@/lib/utils";
 
 export const ExtendPart = ({ palette }: { palette: Palette }) => {
   const extend = palette.extend;
@@ -19,7 +18,7 @@ export const ExtendPart = ({ palette }: { palette: Palette }) => {
           </TableRow>
         </TableHeader>
         <TableBody>
-          {_parts.map((item) => {
+          {partsConstant.map((item) => {
             const part = extend.parts?.[item];
             if (!part) return null;
 
