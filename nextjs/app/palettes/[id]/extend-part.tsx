@@ -14,19 +14,20 @@ export const ExtendPart = ({ palette }: { palette: Palette }) => {
         <TableHeader>
           <TableRow>
             <TableHead>Part</TableHead>
-            <TableHead>Color Name</TableHead>
+            <TableHead>ColorName</TableHead>
             <TableHead>Hex</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
           {_parts.map((item) => {
-            const part = extend[item as keyof typeof extend] as { name: string; color: string };
+            const part = extend.parts?.[item];
+            if (!part) return null;
 
             return (
               <TableRow key={item}>
                 <TableCell className="capitalize">{item}</TableCell>
                 <TableCell>{part?.name}</TableCell>
-                <TableCell>{part?.color}</TableCell>
+                <TableCell className="uppercase">{part?.color}</TableCell>
               </TableRow>
             );
           })}

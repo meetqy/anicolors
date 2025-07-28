@@ -1,19 +1,21 @@
 "use client";
 
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import useEyeDropper from "use-eye-dropper";
 import { getColorName } from "@/lib/nearest";
 import { Button } from "../ui/button";
 import { toast } from "sonner";
+import { PartColors } from "@/query/palette";
 
 const _parts = ["eye", "hair"];
 
 interface PickerPartProps {
   className?: string;
-  onColorsChange?: (parts: { [key: string]: { color: string; name: string } }) => void;
+  colors?: PartColors;
+  onColorsChange?: (parts: PartColors) => void;
 }
 
-export const PickerPart = ({ onColorsChange, className }: PickerPartProps) => {
+export const PickerPart = ({ onColorsChange, className, colors }: PickerPartProps) => {
   const { open, isSupported } = useEyeDropper();
   const [parts, setParts] = useState<{
     [key in string]: {
@@ -24,6 +26,15 @@ export const PickerPart = ({ onColorsChange, className }: PickerPartProps) => {
     eye: { color: "transparent", name: "Transparent" },
     hair: { color: "transparent", name: "Transparent" },
   });
+
+  useEffect(() => {
+    setParts((prev) => ({
+      ...prev,
+      ...colors,
+    }));
+  }, [colors]);
+
+  console.log("PickerPart colors", colors, parts);
 
   const pickColor = useCallback(
     (part: string) => {

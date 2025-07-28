@@ -30,6 +30,13 @@ export const GET_PALETTE = gql`
   }
 `;
 
+export type PartColors = {
+  [key: string]: {
+    color: string;
+    name: string;
+  };
+};
+
 export type Palette = {
   name: string;
   category: string;
@@ -41,8 +48,7 @@ export type Palette = {
     suitableUse?: string[];
     colorMeanings?: string[];
     unsuitableUse?: string[];
-    eye?: { name: string; color: string };
-    hair?: { name: string; color: string };
+    parts?: PartColors;
   };
   points: ColorPoint[];
   cover: { url: string };
