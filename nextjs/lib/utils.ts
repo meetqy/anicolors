@@ -15,6 +15,7 @@ export const partsConstant = [
   "shoes", // 鞋子颜色（Shoes）
   "coat", // 外套颜色（Coat / Jacket）
   "dress", // 连衣裙颜色（Dress）
+  "socks", // 袜子颜色（Socks）
 
   // 配件装饰（可选）
   "hat", // 帽子颜色（Hat）
