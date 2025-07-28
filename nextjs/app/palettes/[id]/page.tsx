@@ -13,6 +13,7 @@ import { MoreList } from "./more-list";
 import Color from "color";
 import { Extend } from "./extend";
 import { Shades } from "./shades";
+import { ExtendPart } from "./extend-part";
 
 const getPaletteData = async (id: string) => {
   const res = await getClient().query({
@@ -104,6 +105,8 @@ export default async function Page({ params }: { params: Promise<{ id: string }>
             </Button>
           ))}
         </div>
+
+        <ExtendPart palette={palette} />
 
         <div className="max-w-screen-xl prose mx-auto px-4 mt-24">
           <h2>{palette.name} Color Palette Gallery</h2>

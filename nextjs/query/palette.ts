@@ -38,9 +38,11 @@ export type Palette = {
   image: { url: string };
   likes: number;
   extend?: {
-    suitableUse: string[];
-    colorMeanings: string[];
-    unsuitableUse: string[];
+    suitableUse?: string[];
+    colorMeanings?: string[];
+    unsuitableUse?: string[];
+    eye?: { name: string; color: string };
+    hair?: { name: string; color: string };
   };
   points: ColorPoint[];
   cover: { url: string };
