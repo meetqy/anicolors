@@ -21,10 +21,12 @@ export const PickerPart = ({ onColorsChange, className, colors }: PickerPartProp
       color: string;
       name: string;
     };
-  }>({
-    eye: { color: "transparent", name: "Transparent" },
-    hair: { color: "transparent", name: "Transparent" },
-  });
+  }>(
+    partsConstant.reduce((acc, part) => {
+      acc[part] = { color: "transparent", name: "" };
+      return acc;
+    }, {} as Record<string, { color: string; name: string }>)
+  );
 
   useEffect(() => {
     setParts((prev) => ({
@@ -62,7 +64,7 @@ export const PickerPart = ({ onColorsChange, className, colors }: PickerPartProp
 
   return (
     <div className={`mb-4 ${className}`}>
-      <div className="flex items-center mx-auto max-w-screen-lg" suppressHydrationWarning>
+      <div className="flex mx-auto max-w-screen-lg" suppressHydrationWarning>
         <div className="flex-1 flex flex-wrap gap-3">
           {partsConstant.map((part) => (
             <button
@@ -79,7 +81,9 @@ export const PickerPart = ({ onColorsChange, className, colors }: PickerPartProp
             </button>
           ))}
         </div>
-        <Button onClick={copy}>Copy</Button>
+        <Button onClick={copy} size={"lg"}>
+          Copy
+        </Button>
       </div>
       {!isSupported && <p className="text-xs text-muted-foreground text-center mt-2">Eye dropper not supported in this browser</p>}
     </div>
