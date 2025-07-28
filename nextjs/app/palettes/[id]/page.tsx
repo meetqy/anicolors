@@ -5,7 +5,7 @@ import { PaletteActions } from "./actions";
 import { getClient } from "@/lib/apollo-client";
 import { getAssetUrl, capitalize } from "@/lib/utils";
 import { Gallery } from "./gallery";
-import { GET_PALETTE, Palette } from "@/query/palette";
+import { GET_PALETTE, Palette, PartColors } from "@/query/palette";
 import { Metadata } from "next";
 import Link from "next/link";
 import { Shapes } from "lucide-react";
@@ -14,6 +14,7 @@ import Color from "color";
 import { Extend } from "./extend";
 import { Shades } from "./shades";
 import { ExtendPart } from "./extend-part";
+import { PickerPart } from "@/components/palette/picker-part";
 
 const getPaletteData = async (id: string) => {
   const res = await getClient().query({
@@ -80,6 +81,7 @@ export default async function Page({ params }: { params: Promise<{ id: string }>
           </ul>
         </div>
 
+        <PickerPart className="mb-6" colors={palette.extend?.parts as PartColors} />
         <Generator initialPoints={points} initialImage={image} />
         <PaletteActions id={id} palette={palette} />
 
