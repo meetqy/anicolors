@@ -1,5 +1,5 @@
 import { Palette } from "@/query/palette";
-import { Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 
 const _parts = ["eye", "hair"];
 
