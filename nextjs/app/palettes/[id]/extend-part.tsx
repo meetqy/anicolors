@@ -7,7 +7,7 @@ export const ExtendPart = ({ palette }: { palette: Palette }) => {
   if (!extend) return null;
 
   return (
-    <div className="mx-auto prose max-w-screen-lg mt-12">
+    <div className="mx-auto prose max-w-screen-lg mt-12 px-4 lg:px-0">
       <table>
         <thead>
           <tr>
