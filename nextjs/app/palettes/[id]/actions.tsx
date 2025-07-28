@@ -37,7 +37,7 @@ export const PaletteActions = ({ palette, id }: PaletteActionsProps) => {
     <div className="max-w-screen-lg px-4 lg:px-0 mt-4 mx-auto ">
       <div className="mb-4 text-end">
         <time suppressHydrationWarning className="text-muted-foreground">
-          {new Date(palette.createdAt).toLocaleString()}
+          Last Updated: {new Date(palette.updatedAt).toLocaleString()}
         </time>
       </div>
 

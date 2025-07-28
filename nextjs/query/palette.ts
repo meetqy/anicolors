@@ -20,6 +20,7 @@ export const GET_PALETTE = gql`
       }
       points
       name
+      updatedAt
       publishedAt
       createdAt
       cover {
@@ -41,6 +42,7 @@ export type Palette = {
   name: string;
   category: string;
   publishedAt: string;
+  updatedAt: string;
   createdAt: string;
   image: { url: string };
   likes: number;
