@@ -6,7 +6,6 @@ export const partsConstant = [
   "eye", // 瞳孔颜色（Iris）
   "hair", // 头发颜色（Hair）
   "skin", // 肤色（Skin Tone）
-  "lips", // 嘴唇颜色（Lips）
 
   // 衣物分类
   "clothes", // 整体服装颜色（如制服或连体衣）
