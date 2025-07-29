@@ -1,5 +1,6 @@
 import { InstagramIcon, TwitterIcon } from "lucide-react";
 import Link from "next/link";
+import { Logo } from "./logo";
 
 interface FriendLink {
   name: string;
@@ -28,11 +29,10 @@ export const Footer = () => {
         <div className="grid md:grid-cols-3 gap-8">
           {/* Brand Section */}
           <div className="space-y-4">
-            <div className="flex items-end">
-              <img src="/logo.svg" alt="HiColors Logo" className="h-8" />
-              <span className="text-xl font-bold font-serif italic relative top-1">Colors</span>
+            <div>
+              <Logo />
+              <p className="text-sm text-muted-foreground max-w-sm mt-2">Discover and create anime colors.</p>
             </div>
-            <p className="text-sm text-muted-foreground max-w-sm">Discover Anime Color Palettes & Create Your Own.</p>
             <div className="flex items-center gap-x-4 gap-y-2">
               <Link href={"https://x.com/hi_colors"} aria-label="View the Twitter profile" target="_blank" className="text-muted-foreground hover:text-foreground transition-colors">
                 <TwitterIcon />
@@ -82,7 +82,7 @@ export const Footer = () => {
         {/* Bottom Section */}
         <div className="mt-8 pt-8 border-t border-border">
           <div className="text-center">
-            <p className="text-xs text-muted-foreground">© 2025 HiColors. All rights reserved.</p>
+            <p className="text-xs text-muted-foreground">© 2025 AniColors. All rights reserved.</p>
           </div>
         </div>
       </div>

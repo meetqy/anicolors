@@ -62,7 +62,7 @@ export async function generateMetadata({ params, searchParams }: CategoryPagePro
   const categoryName = decodeURIComponent(name);
 
   return {
-    title: `${categoryName} Color Palettes – Page ${page} | HiColors`,
+    title: `${categoryName} Color Palettes – Page ${page} | AniColors`,
     description: `Page ${page} of beautiful ${categoryName} color palettes from characters and scenes.`,
   };
 }

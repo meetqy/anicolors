@@ -4,19 +4,19 @@ import { MetadataRoute } from "next";
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const base: MetadataRoute.Sitemap = [
     {
-      url: "https://hicolors.org",
+      url: "https://anicolors.com",
       lastModified: new Date(),
       changeFrequency: "daily",
       priority: 1,
     },
     {
-      url: "https://hicolors.org/palettes",
+      url: "https://anicolors.com/palettes",
       lastModified: new Date(),
       changeFrequency: "daily",
       priority: 0.8,
     },
     {
-      url: "https://hicolors.org/create",
+      url: "https://anicolors.com/create",
       lastModified: new Date(),
       changeFrequency: "monthly",
       priority: 0.6,
@@ -24,7 +24,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   ];
 
   try {
-    const response = await fetch("https://strapi.hicolors.org/api/strapi-5-sitemap-plugin/sitemap.xml", {
+    const response = await fetch("https://strapi.anicolors.com/api/strapi-5-sitemap-plugin/sitemap.xml", {
       next: { revalidate: 86400 }, // Cache for 1 day
     });
 

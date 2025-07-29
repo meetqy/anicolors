@@ -2,9 +2,9 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/
 
 const faqData = [
   {
-    question: "What is HiColors?",
+    question: "What is AniColors?",
     answer:
-      "HiColors is a platform that curates and generates color palettes from popular anime, games, and illustrations. You can also upload your own images to extract beautiful color palettes instantly.",
+      "AniColors is a platform that curates and generates color palettes from popular anime, games, and illustrations. You can also upload your own images to extract beautiful color palettes instantly.",
   },
   {
     question: "What kind of sources are used for palettes?",
@@ -12,24 +12,24 @@ const faqData = [
   },
   {
     question: "How do I generate a color palette from an image?",
-    answer: "Simply click the “Create Palette” button on the homepage, upload your image, and HiColors will extract the dominant colors for you. The process is fast and automatic.",
+    answer: "Simply click the “Create Palette” button on the homepage, upload your image, and AniColors will extract the dominant colors for you. The process is fast and automatic.",
   },
   {
     question: "Can I save or download palettes?",
     answer: "Yes, every palette page includes a download button to save the palette as an image or copy the HEX values.",
   },
   {
-    question: "Is HiColors free to use?",
-    answer: "Yes, HiColors is 100% free for everyone. No account or registration is required.",
+    question: "Is AniColors free to use?",
+    answer: "Yes, AniColors is 100% free for everyone. No account or registration is required.",
   },
   {
     question: "How often are new palettes added?",
     answer: "New palettes are added daily. We frequently update the site with new content from trending shows and games.",
   },
   {
-    question: "How is HiColors different from ColorHunt?",
+    question: "How is AniColors different from ColorHunt?",
     answer:
-      "ColorHunt offers general-purpose, user-submitted color palettes, while HiColors focuses on palettes extracted from visual media like anime, games, and illustrations, providing emotional insights, usage recommendations, and full shade expansions for each color.",
+      "ColorHunt offers general-purpose, user-submitted color palettes, while AniColors focuses on palettes extracted from visual media like anime, games, and illustrations, providing emotional insights, usage recommendations, and full shade expansions for each color.",
   },
 ];
 

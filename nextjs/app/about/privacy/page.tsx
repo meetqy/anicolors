@@ -9,7 +9,7 @@ export default function Page() {
       </p>
 
       <p>
-        Welcome to <Link href="/">hicolors.org</Link> ("we", "our", or "us"). Your privacy is important to us. This Privacy Policy explains how we collect, use, and protect your information when you
+        Welcome to <Link href="/">anicolors.com</Link> ("we", "our", or "us"). Your privacy is important to us. This Privacy Policy explains how we collect, use, and protect your information when you
         visit our website.
       </p>
 

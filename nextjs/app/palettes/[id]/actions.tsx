@@ -30,8 +30,8 @@ export const PaletteActions = ({ palette, id }: PaletteActionsProps) => {
     toast.success("Palette link copied to clipboard!");
   };
 
-  const title = `${palette.category} ${palette.name} Palette - HiColors \n\n #hicolors #${toCamelCase(palette.category)} #${toCamelCase(palette.name)} #palette`;
-  const host = process.env.NEXT_PUBLIC_SITE_URL || "https://hicolors.org";
+  const title = `${palette.category} ${palette.name} Palette - AniColors \n\n #anicolors #${toCamelCase(palette.category)} #${toCamelCase(palette.name)} #palette`;
+  const host = process.env.NEXT_PUBLIC_SITE_URL || "https://anicolors.com";
 
   return (
     <div className="max-w-screen-lg px-4 lg:px-0 mt-4 mx-auto ">

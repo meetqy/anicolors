@@ -1,10 +1,10 @@
-# HiColors - 发现和制作 ACG 色彩调色板
+# AniColors - 发现与创造动漫色彩
 
-![cover](https://hicolors.org/og.jpg)
+![cover](https://anicolors.com/og.jpg)
 
-HiColors 不仅仅是一个图片拾色器还是 ACG 色彩档案馆。
+AniColors 是一个专注于动漫色彩的调色板生成器，帮助用户发现和创造独特的色彩组合。
 
-在线 DEMO：[hicolors.org](https://hicolors.org)
+在线 DEMO：[anicolors.com](https://anicolors.com)
 
 开源地址：
 

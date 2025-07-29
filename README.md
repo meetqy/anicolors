@@ -1,10 +1,10 @@
-# HiColors - Discover and Create Anime & Game Color Palettes
+# AniColors - Discover & Create Anime Colors
 
-![cover](https://hicolors.org/og.jpg)
+![cover](https://anicolors.com/og.jpg)
 
-HiColors is more than just an image color picker; it's a color archive inspired by the worlds of **anime, manga, and games.**
+AniColors is a palette generator focused on anime colors, helping users discover and create unique color combinations.
 
-Live DEMO: [hicolors.org](https://hicolors.org)
+Live DEMO: [anicolors.com](https://anicolors.com)
 
 Open Source:
 

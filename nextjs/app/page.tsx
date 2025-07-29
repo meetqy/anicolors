@@ -12,14 +12,14 @@ import { FAQs } from "./_components/faqs";
 export const dynamic = "force-dynamic";
 
 export const metadata: Metadata = {
-  title: "Discover Anime Color Palettes & Create Your Own - HiColors",
-  description: "Extract the iconic colors from your favorite anime and game scenes. Upload any image to instantly generate a beautiful, shareable color palette with HiColors.",
+  title: "Discover & Create Anime Colors | AniColors",
+  description: "Extract the iconic colors from your favorite anime and game scenes. Upload any image to instantly generate a beautiful, shareable color palette with AniColors.",
   icons: [{ rel: "icon", url: "/favicon.ico" }],
   twitter: {
-    images: ["https://hicolors.org/og.jpg"],
+    images: ["https://anicolors.com/og.jpg"],
   },
   openGraph: {
-    images: ["https://hicolors.org/og.jpg"],
+    images: ["https://anicolors.com/og.jpg"],
   },
 };
 
@@ -102,7 +102,7 @@ export default async function Page() {
           {/* Bottom CTA */}
           <div className="text-center pb-12">
             <h3 className="text-2xl font-bold mb-4">Ready to Create Your Own?</h3>
-            <p className="text-muted-foreground mb-8 max-w-2xl mx-auto">Upload any image and extract beautiful color palettes in seconds. Join thousands of creators using HiColors.</p>
+            <p className="text-muted-foreground mb-8 max-w-2xl mx-auto">Upload any image and extract beautiful color palettes in seconds. Join thousands of creators using AniColors.</p>
             <Button asChild size="lg">
               <Link href="/create" className="flex items-center gap-2">
                 <Upload className="w-5 h-5" />

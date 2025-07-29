@@ -9,7 +9,7 @@ export default function TermsPage() {
       </p>
 
       <p>
-        Welcome to <Link href="/">hicolors.org</Link> ("we", "our", "us"). By accessing or using our website, you agree to be bound by these Terms of Use. Please read them carefully.
+        Welcome to <Link href="/">anicolors.com</Link> ("we", "our", "us"). By accessing or using our website, you agree to be bound by these Terms of Use. Please read them carefully.
       </p>
 
       <h2>1. Acceptance of Terms</h2>

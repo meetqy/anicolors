@@ -10,10 +10,10 @@ import { Footer } from "@/components/footer";
 import NextTopLoader from "nextjs-toploader";
 
 export const metadata: Metadata = {
-  title: "Discover Anime Color Palettes & Create Your Own - HiColors",
-  description: "Extract the iconic colors from your favorite anime and game scenes. Upload any image to instantly generate a beautiful, shareable color palette with HiColors.",
+  title: "Discover & Create Anime Color Palettes - AniColors",
+  description: "Extract the iconic colors from your favorite anime and game scenes. Upload any image to instantly generate a beautiful, shareable color palette with AniColors.",
   icons: [{ rel: "icon", url: "/favicon.ico" }],
-  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || "https://hicolors.org"),
+  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || "https://anicolors.com"),
 };
 
 const geist = Geist({

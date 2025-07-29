@@ -1,4 +1,5 @@
 import { cn } from "@/lib/utils";
+import Link from "next/link";
 
 interface LogoMaskProps {
   className?: string;
@@ -30,5 +31,14 @@ export const LogoMask = ({ className, style, variant = "solid", gradientColors =
     <div id="logo-mask" className={cn(baseClasses, className)} style={style}>
       {text}
     </div>
+  );
+};
+
+export const Logo = () => {
+  return (
+    <Link href="/" className="flex font-serif gap-0.5 text-2xl italic items-end">
+      <span>Ani</span>
+      <span className="font-bold underline">Colors</span>
+    </Link>
   );
 };
