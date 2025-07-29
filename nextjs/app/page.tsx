@@ -51,7 +51,7 @@ export default async function Page() {
               Anime & Game Color Palettes
             </Badge>
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight mb-6 max-w-3xl mx-auto">
-              Discover and Create <br /> Anime & Game Colors
+              Discover and Create <br /> <span className="font-serif italic">Anime Colors</span>
             </h1>
             <p className="text-xl text-muted-foreground max-w-4xl mx-auto leading-relaxed mb-8">
               Browse thousands of color palettes created from anime characters, artworks, games, and user-uploaded images. Discover unique color combinations and layout styles.
