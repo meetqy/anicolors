@@ -5,12 +5,12 @@ import { withSave } from "../with-save";
 import { cn } from "@/lib/utils";
 import { ColorPointsOverlay } from "@/components/color-points-overlay";
 import { CardPaletteProps } from "./common";
-import { HiColorsLogo } from "@/components/hicolors-logo";
+import { LogoMask } from "@/components/logo";
 
 const CardPalette3Base = ({ points, className, style, image }: CardPaletteProps) => {
   return (
     <div style={style} className={cn("w-[375px] flex flex-col aspect-square relative bg-background", className)}>
-      <HiColorsLogo className="absolute right-2 top-2" />
+      <LogoMask className="absolute right-2 top-2" />
       <div className="w-full h-[70%] bg-muted">
         <ColorPointsOverlay className="size-full z-50 top-5 scale-110" points={points} image={image} />
       </div>

@@ -1,15 +1,15 @@
 import { cn } from "@/lib/utils";
 
-interface HiColorsLogoProps {
+interface LogoMaskProps {
   className?: string;
   style?: React.CSSProperties;
   variant?: "solid" | "gradient";
   gradientColors?: string[];
 }
 
-export const HiColorsLogo = ({ className, style, variant = "solid", gradientColors = ["#000", "#666"] }: HiColorsLogoProps) => {
+export const LogoMask = ({ className, style, variant = "solid", gradientColors = ["#000", "#666"] }: LogoMaskProps) => {
   const baseClasses = "font-serif italic text-xs opacity-50 tracking-tight";
-  const text = "hicolors.org";
+  const text = "AniColors";
 
   if (variant === "gradient") {
     return (

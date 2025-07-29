@@ -5,14 +5,14 @@ import { withSave } from "../with-save";
 import { cn } from "@/lib/utils";
 import { ColorPointsOverlay } from "@/components/color-points-overlay";
 import { CardPaletteProps } from "./common";
-import { HiColorsLogo } from "@/components/hicolors-logo";
+import { LogoMask } from "@/components/logo";
 
 const CardPalette5Base = ({ points, className, style, image }: CardPaletteProps) => {
   const first = points[0];
 
   return (
     <div style={{ backgroundColor: first.color, ...style }} className={cn("w-[375px] flex aspect-[16/9] relative", className)}>
-      <HiColorsLogo className="absolute right-2 top-2" style={{ color: Color(first.color).isDark() ? "#fff" : "#000" }} />
+      <LogoMask className="absolute right-2 top-2" style={{ color: Color(first.color).isDark() ? "#fff" : "#000" }} />
       <ColorPointsOverlay className="size-full z-50" points={points} image={image} />
       <div className="absolute bottom-0 left-0 h-4 w-full flex z-10">
         {points.map((item) => {
