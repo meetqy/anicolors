@@ -3,7 +3,7 @@ import { Maker } from "./components/maker";
 import Introduction from "./components/introduction";
 
 export const metadata: Metadata = {
-  title: "Anime & Game Color Palette Generator - AniColors",
+  title: "Anime Color Palette Generator - AniColors",
   description:
     "Upload any screenshot from your favorite anime, game, or comic, and hand-pick the exact colors from characters, scenes, or designs. Instantly generate the perfect palette for your fanart, cosplay, or creative projects.",
   alternates: {

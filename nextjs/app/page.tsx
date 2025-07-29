@@ -48,7 +48,7 @@ export default async function Page() {
           <div className="text-center mb-12">
             <Badge variant="outline" className="mb-4">
               <Sparkles className="w-4 h-4 mr-2" />
-              Anime & Game Color Palettes
+              Anime Color Palettes
             </Badge>
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight mb-6 max-w-3xl mx-auto">
               Discover and Create <br /> <span className="font-serif italic">Anime Colors</span>
