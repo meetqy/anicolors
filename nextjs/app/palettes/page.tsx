@@ -46,7 +46,7 @@ export default async function Page({ searchParams }: PageProps) {
       ) : (
         <>
           <div className="mb-8">
-            <h1 className="text-3xl font-bold capitalize mb-2">AniColors Palettes</h1>
+            <h1 className="text-3xl font-bold capitalize mb-2">Anime Color Palettes</h1>
             <p className="text-muted-foreground">Extracted from Genshin Impact, Studio Ghibli, fashion, UI and more. Visual color inspiration at your fingertips.</p>
           </div>
 
