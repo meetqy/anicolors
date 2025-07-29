@@ -34,11 +34,11 @@ export const Footer = () => {
               <p className="text-sm text-muted-foreground max-w-sm mt-2">Discover and create anime colors.</p>
             </div>
             <div className="flex items-center gap-x-4 gap-y-2">
-              <Link href={"https://x.com/hi_colors"} aria-label="View the Twitter profile" target="_blank" className="text-muted-foreground hover:text-foreground transition-colors">
+              <Link href={"https://x.com/anicolors"} aria-label="View the Twitter profile" target="_blank" className="text-muted-foreground hover:text-foreground transition-colors">
                 <TwitterIcon />
               </Link>
 
-              <Link href={"https://www.instagram.com/hicolors_org/"} aria-label="View the Instagram profile" target="_blank" className="text-muted-foreground hover:text-foreground transition-colors">
+              <Link href={"https://www.instagram.com/anicolors_com/"} aria-label="View the Instagram profile" target="_blank" className="text-muted-foreground hover:text-foreground transition-colors">
                 <InstagramIcon />
               </Link>
             </div>
