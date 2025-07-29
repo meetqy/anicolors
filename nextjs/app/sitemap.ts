@@ -24,7 +24,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   ];
 
   try {
-    const response = await fetch("https://strapi.anicolors.com/api/strapi-5-sitemap-plugin/sitemap.xml", {
+    const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/strapi-5-sitemap-plugin/sitemap.xml`, {
       next: { revalidate: 86400 }, // Cache for 1 day
     });
 
