@@ -9,7 +9,7 @@ interface PaletteCardProps {
 }
 
 export const PaletteCard = ({ palette }: PaletteCardProps) => {
-  const bgColor = palette.points[0].color;
+  const bgColor = palette.points[0]!.color;
 
   return (
     <div className="relative">

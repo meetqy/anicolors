@@ -13,7 +13,7 @@ const CardPalette5Base = ({
   style,
   image,
 }: CardPaletteProps) => {
-  const first = points[0];
+  const first = points[0]!;
 
   return (
     <div

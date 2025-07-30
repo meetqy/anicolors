@@ -7,7 +7,7 @@ import { type CardPaletteProps } from "./common";
 import { LogoMask } from "@/components/logo";
 
 const CardPalette2Base = ({ points, className, style }: CardPaletteProps) => {
-  const end = Color(points[points.length - 1].color);
+  const end = Color(points[points.length - 1]!.color);
 
   return (
     <div
