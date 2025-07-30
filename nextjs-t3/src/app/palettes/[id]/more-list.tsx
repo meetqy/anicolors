@@ -1,40 +1,53 @@
 "use client";
 
 import { useQuery } from "@apollo/client";
-import { GET_PALETTE_LIST, PaletteListResponse, PaletteListItem } from "@/query/palette";
+import {
+  GET_PALETTE_LIST,
+  type PaletteListResponse,
+  type PaletteListItem,
+} from "@/query/palette";
 import { PaletteCard } from "../components/palette-card";
 import { useState, useCallback, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Loader2 } from "lucide-react";
 import { useIntersectionObserver } from "usehooks-ts";
 
-export const MoreList = ({ category, colors }: { category: string; colors: string[] }) => {
+export const MoreList = ({
+  category,
+  colors,
+}: {
+  category: string;
+  colors: string[];
+}) => {
   const [page, setPage] = useState(1);
   const [allPalettes, setAllPalettes] = useState<PaletteListItem[]>([]);
   const [hasMore, setHasMore] = useState(true);
   const [isLoadingMore, setIsLoadingMore] = useState(false);
 
-  const { loading, error, data, fetchMore } = useQuery<PaletteListResponse>(GET_PALETTE_LIST, {
-    variables: {
-      pagination: {
-        pageSize: 24,
-        page: 1,
-      },
-      sort: ["publishedAt:desc"],
-      filters: {
-        or: [
-          {
-            colors: {
-              or: colors.map((color) => ({
-                name: { containsi: color },
-              })),
+  const { loading, error, data, fetchMore } = useQuery<PaletteListResponse>(
+    GET_PALETTE_LIST,
+    {
+      variables: {
+        pagination: {
+          pageSize: 24,
+          page: 1,
+        },
+        sort: ["publishedAt:desc"],
+        filters: {
+          or: [
+            {
+              colors: {
+                or: colors.map((color) => ({
+                  name: { containsi: color },
+                })),
+              },
             },
-          },
-          { category: { containsi: category } },
-        ],
+            { category: { containsi: category } },
+          ],
+        },
       },
     },
-  });
+  );
 
   // Handle initial data loading
   useEffect(() => {
@@ -61,7 +74,10 @@ export const MoreList = ({ category, colors }: { category: string; colors: strin
       });
 
       if (newData?.palettes_connection?.nodes) {
-        setAllPalettes((prev) => [...prev, ...newData.palettes_connection.nodes]);
+        setAllPalettes((prev) => [
+          ...prev,
+          ...newData.palettes_connection.nodes,
+        ]);
         setPage(nextPage);
         setHasMore(nextPage < newData.palettes_connection.pageInfo.pageCount);
       }
@@ -84,20 +100,27 @@ export const MoreList = ({ category, colors }: { category: string; colors: strin
   }, [isIntersecting, hasMore, loading, isLoadingMore, loadMore]);
 
   if (error) {
-    return <div className="text-center text-red-500">Error loading palettes: {error.message}</div>;
+    return (
+      <div className="text-center text-red-500">
+        Error loading palettes: {error.message}
+      </div>
+    );
   }
 
   return (
     <div className="not-prose">
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-x-4 gap-y-8 mb-12">
+      <div className="mb-12 grid grid-cols-1 gap-x-4 gap-y-8 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
         {allPalettes.map((palette, index) => (
-          <PaletteCard key={`${palette.documentId}-${index}`} palette={palette} />
+          <PaletteCard
+            key={`${palette.documentId}-${index}`}
+            palette={palette}
+          />
         ))}
       </div>
 
       {(loading || isLoadingMore) && (
-        <div className="flex justify-center items-center py-8">
-          <Loader2 className="w-6 h-6 animate-spin" />
+        <div className="flex items-center justify-center py-8">
+          <Loader2 className="h-6 w-6 animate-spin" />
           <span className="ml-2">Loading more palettes...</span>
         </div>
       )}
@@ -110,7 +133,11 @@ export const MoreList = ({ category, colors }: { category: string; colors: strin
         </div>
       )}
 
-      {!hasMore && allPalettes.length > 0 && <div className="text-center text-muted-foreground py-8">No more palettes to load</div>}
+      {!hasMore && allPalettes.length > 0 && (
+        <div className="text-muted-foreground py-8 text-center">
+          No more palettes to load
+        </div>
+      )}
 
       {/* Intersection Observer Target */}
       <div ref={ref} className="h-4" />

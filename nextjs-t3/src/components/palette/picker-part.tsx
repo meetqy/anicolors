@@ -5,7 +5,7 @@ import useEyeDropper from "use-eye-dropper";
 import { getColorName } from "@/lib/nearest";
 import { Button } from "../ui/button";
 import { toast } from "sonner";
-import { PartColors } from "@/query/palette";
+import { type PartColors } from "@/query/palette";
 import { cn, partsConstant } from "@/lib/utils";
 
 const baseParts = [
@@ -23,18 +23,23 @@ interface PickerPartProps {
   onColorsChange?: (parts: PartColors) => void;
 }
 
-export const PickerPart = ({ onColorsChange, className, colors }: PickerPartProps) => {
+export const PickerPart = ({
+  onColorsChange,
+  className,
+  colors,
+}: PickerPartProps) => {
   const { open, isSupported } = useEyeDropper();
-  const [parts, setParts] = useState<{
-    [key in string]: {
+  const [parts, setParts] = useState<Record<string, {
       color: string;
       name: string;
-    };
-  }>(
-    partsConstant.reduce((acc, part) => {
-      acc[part] = { color: "transparent", name: "" };
-      return acc;
-    }, {} as Record<string, { color: string; name: string }>)
+    }>>(
+    partsConstant.reduce(
+      (acc, part) => {
+        acc[part] = { color: "transparent", name: "" };
+        return acc;
+      },
+      {} as Record<string, { color: string; name: string }>,
+    ),
   );
 
   const [showAll, setShowAll] = useState(false);
@@ -53,7 +58,10 @@ export const PickerPart = ({ onColorsChange, className, colors }: PickerPartProp
           const color = await open();
           const newParts = {
             ...parts,
-            [part]: { color: color.sRGBHex, name: getColorName(color.sRGBHex)?.name || "Unknown" },
+            [part]: {
+              color: color.sRGBHex,
+              name: getColorName(color.sRGBHex)?.name || "Unknown",
+            },
           };
           setParts(newParts);
           onColorsChange?.(newParts);
@@ -63,12 +71,16 @@ export const PickerPart = ({ onColorsChange, className, colors }: PickerPartProp
       };
       openPicker();
     },
-    [open, parts, onColorsChange]
+    [open, parts, onColorsChange],
   );
 
   const copy = () => {
     // 排除 透明色
-    const filteredParts = Object.fromEntries(Object.entries(parts).filter(([, value]) => value.color !== "transparent"));
+    const filteredParts = Object.fromEntries(
+      Object.entries(parts).filter(
+        ([, value]) => value.color !== "transparent",
+      ),
+    );
     navigator.clipboard.writeText(JSON.stringify(filteredParts));
     toast.success("Colors copied to clipboard!");
   };
@@ -79,23 +91,28 @@ export const PickerPart = ({ onColorsChange, className, colors }: PickerPartProp
   return (
     <div className={`mb-4 ${className}`}>
       <div
-        className={cn("flex mx-auto max-w-screen-lg transition-all", {
+        className={cn("mx-auto flex max-w-screen-lg transition-all", {
           "items-center": !showAll,
         })}
         suppressHydrationWarning
       >
-        <div className="flex-1 flex flex-wrap gap-3">
+        <div className="flex flex-1 flex-wrap gap-3">
           {displayParts.map((part) => (
             <button
               key={part}
               onClick={() => pickColor(part)}
               disabled={!isSupported}
-              className="flex cursor-pointer items-center gap-2 px-4 py-1 bg-background border border-input rounded-md hover:bg-accent hover:text-accent-foreground transition-colors disabled:opacity-50"
+              className="bg-background border-input hover:bg-accent hover:text-accent-foreground flex cursor-pointer items-center gap-2 rounded-md border px-4 py-1 transition-colors disabled:opacity-50"
             >
-              <div className="w-6 h-6 rounded-full border border-border" style={{ backgroundColor: parts[part]?.color }} />
+              <div
+                className="border-border h-6 w-6 rounded-full border"
+                style={{ backgroundColor: parts[part]?.color }}
+              />
               <div className="text-left">
                 <p className="text-sm font-medium capitalize">{part}</p>
-                <p className="text-xs text-muted-foreground font-mono">{parts[part]?.color}</p>
+                <p className="text-muted-foreground font-mono text-xs">
+                  {parts[part]?.color}
+                </p>
               </div>
             </button>
           ))}
@@ -106,12 +123,19 @@ export const PickerPart = ({ onColorsChange, className, colors }: PickerPartProp
       </div>
       <div className="mt-2 text-center">
         {partsConstant.length > baseParts.length && (
-          <button className="text-primary underline text-sm" onClick={() => setShowAll((v) => !v)}>
+          <button
+            className="text-primary text-sm underline"
+            onClick={() => setShowAll((v) => !v)}
+          >
             {showAll ? "Collapse" : "Show All"}
           </button>
         )}
       </div>
-      {!isSupported && <p className="text-xs text-muted-foreground text-center mt-2">Eye dropper not supported in this browser</p>}
+      {!isSupported && (
+        <p className="text-muted-foreground mt-2 text-center text-xs">
+          Eye dropper not supported in this browser
+        </p>
+      )}
     </div>
   );
 };

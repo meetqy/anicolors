@@ -1,4 +1,4 @@
-import { ColorPoint } from "@/components/palette/picker-colors";
+import { type ColorPoint } from "@/components/palette/picker-colors";
 
 export interface CardPaletteProps {
   points: ColorPoint[];

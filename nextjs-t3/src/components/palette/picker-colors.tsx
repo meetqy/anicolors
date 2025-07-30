@@ -1,6 +1,13 @@
 "use client";
 
-import React, { useState, useRef, useCallback, useEffect, forwardRef, useImperativeHandle } from "react";
+import React, {
+  useState,
+  useRef,
+  useCallback,
+  useEffect,
+  forwardRef,
+  useImperativeHandle,
+} from "react";
 import { cn } from "@/lib/utils";
 import { getColorName } from "@/lib/nearest";
 import Color from "color";
@@ -26,9 +33,19 @@ export type PickerColorsRefs = {
   extractMainColors: (count?: number) => ColorPoint[];
 };
 
-const PickerColors = forwardRef<PickerColorsRefs, PickerColorsProps & { classNames?: { image?: string } }>(function PickerColors(
-  { image, points, onColorsChange, onImageLoaded, classNames, onColorsChangeEnter },
-  ref
+const PickerColors = forwardRef<
+  PickerColorsRefs,
+  PickerColorsProps & { classNames?: { image?: string } }
+>(function PickerColors(
+  {
+    image,
+    points,
+    onColorsChange,
+    onImageLoaded,
+    classNames,
+    onColorsChangeEnter,
+  },
+  ref,
 ) {
   const [colorPoints, setColorPoints] = useState<ColorPoint[]>([]);
   const [draggedPoint, setDraggedPoint] = useState<number | null>(null);
@@ -48,8 +65,12 @@ const PickerColors = forwardRef<PickerColorsRefs, PickerColorsProps & { classNam
   useImperativeHandle(
     ref,
     () => ({
-      extractMainColors: (count: number = 5) => {
-        const result = extractMainColors(canvasRef.current!, imageRef.current!, count);
+      extractMainColors: (count = 5) => {
+        const result = extractMainColors(
+          canvasRef.current!,
+          imageRef.current!,
+          count,
+        );
         onColorsChange?.(result);
         onColorsChangeEnter?.(result);
         setColorPoints(result);
@@ -57,7 +78,7 @@ const PickerColors = forwardRef<PickerColorsRefs, PickerColorsProps & { classNam
         return result;
       },
     }),
-    [setColorPoints, onColorsChange, onColorsChangeEnter]
+    [setColorPoints, onColorsChange, onColorsChangeEnter],
   );
 
   const getPixelColor = useCallback((x: number, y: number): string => {
@@ -102,16 +123,20 @@ const PickerColors = forwardRef<PickerColorsRefs, PickerColorsProps & { classNam
   }, [imageLoading, updateCanvas]);
 
   // Convert display coordinates to normalized coordinates
-  const getNormalizedPosition = useCallback((displayX: number, displayY: number) => {
-    if (!imageRef.current) return { x: displayX, y: displayY };
+  const getNormalizedPosition = useCallback(
+    (displayX: number, displayY: number) => {
+      if (!imageRef.current) return { x: displayX, y: displayY };
 
-    const rect = imageRef.current.getBoundingClientRect();
-    const aspectRatio = imageRef.current.naturalHeight / imageRef.current.naturalWidth;
-    return {
-      x: (displayX / rect.width) * 384,
-      y: (displayY / (rect.width * aspectRatio)) * 384,
-    };
-  }, []);
+      const rect = imageRef.current.getBoundingClientRect();
+      const aspectRatio =
+        imageRef.current.naturalHeight / imageRef.current.naturalWidth;
+      return {
+        x: (displayX / rect.width) * 384,
+        y: (displayY / (rect.width * aspectRatio)) * 384,
+      };
+    },
+    [],
+  );
 
   const getConstrainedPosition = useCallback((x: number, y: number) => {
     if (!imageRef.current) return { x, y };
@@ -124,33 +149,46 @@ const PickerColors = forwardRef<PickerColorsRefs, PickerColorsProps & { classNam
   }, []);
 
   // Convert normalized coordinates to actual display coordinates
-  const getDisplayPosition = useCallback((normalizedX: number, normalizedY: number) => {
-    if (!imageRef.current || !containerRef.current) return { x: 0, y: 0 };
+  const getDisplayPosition = useCallback(
+    (normalizedX: number, normalizedY: number) => {
+      if (!imageRef.current || !containerRef.current) return { x: 0, y: 0 };
 
-    const imageRect = imageRef.current.getBoundingClientRect();
-    const containerRect = containerRef.current.getBoundingClientRect();
+      const imageRect = imageRef.current.getBoundingClientRect();
+      const containerRect = containerRef.current.getBoundingClientRect();
 
-    // Check if dimensions are valid
-    if (!imageRect.width || !imageRect.height || !imageRef.current.naturalWidth || !imageRef.current.naturalHeight) {
-      return { x: 0, y: 0 };
-    }
+      // Check if dimensions are valid
+      if (
+        !imageRect.width ||
+        !imageRect.height ||
+        !imageRef.current.naturalWidth ||
+        !imageRef.current.naturalHeight
+      ) {
+        return { x: 0, y: 0 };
+      }
 
-    // Calculate position relative to container
-    const imageOffsetX = imageRect.left - containerRect.left;
-    const imageOffsetY = imageRect.top - containerRect.top;
+      // Calculate position relative to container
+      const imageOffsetX = imageRect.left - containerRect.left;
+      const imageOffsetY = imageRect.top - containerRect.top;
 
-    const x = imageOffsetX + (normalizedX / 384) * imageRect.width;
-    const y = imageOffsetY + (normalizedY / 384) * (imageRect.width * (imageRef.current.naturalHeight / imageRef.current.naturalWidth));
+      const x = imageOffsetX + (normalizedX / 384) * imageRect.width;
+      const y =
+        imageOffsetY +
+        (normalizedY / 384) *
+          (imageRect.width *
+            (imageRef.current.naturalHeight / imageRef.current.naturalWidth));
 
-    // Ensure values are finite numbers
-    return {
-      x: isFinite(x) ? x : 0,
-      y: isFinite(y) ? y : 0,
-    };
-  }, []);
+      // Ensure values are finite numbers
+      return {
+        x: isFinite(x) ? x : 0,
+        y: isFinite(y) ? y : 0,
+      };
+    },
+    [],
+  );
 
   const updateMagnifier = useCallback((x: number, y: number) => {
-    if (!canvasRef.current || !magnifierCanvasRef.current || !imageRef.current) return;
+    if (!canvasRef.current || !magnifierCanvasRef.current || !imageRef.current)
+      return;
 
     const sourceCanvas = canvasRef.current;
     const sourceCtx = sourceCanvas.getContext("2d");
@@ -179,11 +217,27 @@ const PickerColors = forwardRef<PickerColorsRefs, PickerColorsProps & { classNam
       const halfRegion = regionSize / 2;
 
       // 获取源区域
-      const sourceRegionX = Math.max(0, Math.min(sourceX - halfRegion, sourceCanvas.width - regionSize));
-      const sourceRegionY = Math.max(0, Math.min(sourceY - halfRegion, sourceCanvas.height - regionSize));
+      const sourceRegionX = Math.max(
+        0,
+        Math.min(sourceX - halfRegion, sourceCanvas.width - regionSize),
+      );
+      const sourceRegionY = Math.max(
+        0,
+        Math.min(sourceY - halfRegion, sourceCanvas.height - regionSize),
+      );
 
       // 将10x10像素区域放大到150x150
-      magnifierCtx.drawImage(sourceCanvas, sourceRegionX, sourceRegionY, regionSize, regionSize, 0, 0, magnifierCanvas.width, magnifierCanvas.height);
+      magnifierCtx.drawImage(
+        sourceCanvas,
+        sourceRegionX,
+        sourceRegionY,
+        regionSize,
+        regionSize,
+        0,
+        0,
+        magnifierCanvas.width,
+        magnifierCanvas.height,
+      );
 
       // 绘制网格线
       magnifierCtx.strokeStyle = "rgba(255, 255, 255, 0.8)";
@@ -275,7 +329,10 @@ const PickerColors = forwardRef<PickerColorsRefs, PickerColorsProps & { classNam
 
       if (draggedPoint) {
         const constrainedPos = getConstrainedPosition(x, y);
-        const normalizedPos = getNormalizedPosition(constrainedPos.x, constrainedPos.y);
+        const normalizedPos = getNormalizedPosition(
+          constrainedPos.x,
+          constrainedPos.y,
+        );
         const newColor = getPixelColor(constrainedPos.x, constrainedPos.y);
 
         setColorPoints((prev) =>
@@ -287,12 +344,19 @@ const PickerColors = forwardRef<PickerColorsRefs, PickerColorsProps & { classNam
                   y: normalizedPos.y,
                   color: newColor,
                 }
-              : point
-          )
+              : point,
+          ),
         );
       }
     },
-    [draggedPoint, showMagnifier, getPixelColor, updateMagnifier, getConstrainedPosition, getNormalizedPosition]
+    [
+      draggedPoint,
+      showMagnifier,
+      getPixelColor,
+      updateMagnifier,
+      getConstrainedPosition,
+      getNormalizedPosition,
+    ],
   );
 
   const handleMouseUp = useCallback(() => {
@@ -307,7 +371,7 @@ const PickerColors = forwardRef<PickerColorsRefs, PickerColorsProps & { classNam
             ...item,
             name: getColorName(Color(item.color).hex())?.name || "unknown",
           };
-        })
+        }),
       );
     }
   }, [onColorsChangeEnter, colorPoints]);
@@ -387,19 +451,28 @@ const PickerColors = forwardRef<PickerColorsRefs, PickerColorsProps & { classNam
                 {/* White border ring */}
                 <div className="relative h-8 w-8 rounded-full border-3 border-white shadow-2xl">
                   {/* Color fill */}
-                  <div className="h-full w-full rounded-full border-2 border-black/20" style={{ backgroundColor: point.color }} />
+                  <div
+                    className="h-full w-full rounded-full border-2 border-black/20"
+                    style={{ backgroundColor: point.color }}
+                  />
                   {/* Center dot for precision */}
                   <div className="absolute top-1/2 left-1/2 h-1.5 w-1.5 -translate-x-1/2 -translate-y-1/2 rounded-full bg-white shadow-sm" />
                 </div>
                 {/* Point number label */}
-                <div className="absolute -bottom-8 left-1/2 -translate-x-1/2 rounded-full bg-black/80 px-2 py-1 text-xs font-medium text-white">{point.id}</div>
+                <div className="absolute -bottom-8 left-1/2 -translate-x-1/2 rounded-full bg-black/80 px-2 py-1 text-xs font-medium text-white">
+                  {point.id}
+                </div>
               </div>
             );
           })}
 
         {showMagnifier && (
           <div style={getMagnifierStyle()}>
-            <canvas ref={magnifierCanvasRef} className="h-full w-full rounded-full" style={{ imageRendering: "pixelated" }} />
+            <canvas
+              ref={magnifierCanvasRef}
+              className="h-full w-full rounded-full"
+              style={{ imageRendering: "pixelated" }}
+            />
           </div>
         )}
       </div>

@@ -1,7 +1,15 @@
 "use client";
 
-import { Pagination, PaginationContent, PaginationEllipsis, PaginationItem, PaginationLink, PaginationNext, PaginationPrevious } from "@/components/ui/pagination";
-import { PageInfo } from "@/query/palette";
+import {
+  Pagination,
+  PaginationContent,
+  PaginationEllipsis,
+  PaginationItem,
+  PaginationLink,
+  PaginationNext,
+  PaginationPrevious,
+} from "@/components/ui/pagination";
+import { type PageInfo } from "@/query/palette";
 
 export const PaginationControls = ({ page, pageCount }: PageInfo) => {
   const hasPrevious = page > 1;
@@ -13,7 +21,11 @@ export const PaginationControls = ({ page, pageCount }: PageInfo) => {
     const range = [];
     const rangeWithDots = [];
 
-    for (let i = Math.max(2, page - delta); i <= Math.min(pageCount - 1, page + delta); i++) {
+    for (
+      let i = Math.max(2, page - delta);
+      i <= Math.min(pageCount - 1, page + delta);
+      i++
+    ) {
       range.push(i);
     }
 
@@ -40,7 +52,10 @@ export const PaginationControls = ({ page, pageCount }: PageInfo) => {
     <Pagination>
       <PaginationContent>
         <PaginationItem>
-          <PaginationPrevious href={hasPrevious ? `?page=${page - 1}` : undefined} className={!hasPrevious ? "pointer-events-none opacity-50" : ""} />
+          <PaginationPrevious
+            href={hasPrevious ? `?page=${page - 1}` : undefined}
+            className={!hasPrevious ? "pointer-events-none opacity-50" : ""}
+          />
         </PaginationItem>
 
         {getVisiblePages().map((_page, index) => (
@@ -56,7 +71,10 @@ export const PaginationControls = ({ page, pageCount }: PageInfo) => {
         ))}
 
         <PaginationItem>
-          <PaginationNext href={hasNext ? `?page=${page + 1}` : undefined} className={!hasNext ? "pointer-events-none opacity-50" : ""} />
+          <PaginationNext
+            href={hasNext ? `?page=${page + 1}` : undefined}
+            className={!hasNext ? "pointer-events-none opacity-50" : ""}
+          />
         </PaginationItem>
       </PaginationContent>
     </Pagination>

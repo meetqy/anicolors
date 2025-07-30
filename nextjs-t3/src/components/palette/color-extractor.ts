@@ -1,6 +1,6 @@
 import { getColorName } from "@/lib/nearest";
 import Color from "color";
-import { ColorPoint } from "@/components/palette/picker-colors";
+import { type ColorPoint } from "@/components/palette/picker-colors";
 
 // 计算两个颜色之间的距离
 const colorDistance = (color1: number[], color2: number[]) => {
@@ -32,12 +32,19 @@ const getColorVibrancy = (rgb: number[]) => {
 
   // 计算艳丽度：饱和度 * 适中的亮度权重
   // 亮度在 0.3-0.8 之间的颜色更艳丽
-  const brightnessWeight = brightness < 0.3 || brightness > 0.8 ? Math.max(0, 1 - Math.abs(brightness - 0.55) * 2) : 1;
+  const brightnessWeight =
+    brightness < 0.3 || brightness > 0.8
+      ? Math.max(0, 1 - Math.abs(brightness - 0.55) * 2)
+      : 1;
 
   return saturation * brightnessWeight;
 };
 
-export const extractMainColors = (canvas: HTMLCanvasElement, imageElement: HTMLImageElement, count: number = 5): ColorPoint[] => {
+export const extractMainColors = (
+  canvas: HTMLCanvasElement,
+  imageElement: HTMLImageElement,
+  count = 5,
+): ColorPoint[] => {
   const ctx = canvas.getContext("2d");
   if (!ctx) return [];
 
@@ -45,7 +52,10 @@ export const extractMainColors = (canvas: HTMLCanvasElement, imageElement: HTMLI
   const pixels = imageData.data;
 
   // 收集所有像素颜色及其位置
-  const colorMap = new Map<string, { count: number; positions: { x: number; y: number }[]; rgb: number[] }>();
+  const colorMap = new Map<
+    string,
+    { count: number; positions: { x: number; y: number }[]; rgb: number[] }
+  >();
 
   for (let y = 0; y < canvas.height; y += 8) {
     for (let x = 0; x < canvas.width; x += 8) {
@@ -69,7 +79,11 @@ export const extractMainColors = (canvas: HTMLCanvasElement, imageElement: HTMLI
       const colorKey = `${quantizedR},${quantizedG},${quantizedB}`;
 
       if (!colorMap.has(colorKey)) {
-        colorMap.set(colorKey, { count: 0, positions: [], rgb: [quantizedR, quantizedG, quantizedB] });
+        colorMap.set(colorKey, {
+          count: 0,
+          positions: [],
+          rgb: [quantizedR, quantizedG, quantizedB],
+        });
       }
 
       const colorInfo = colorMap.get(colorKey)!;
@@ -92,7 +106,10 @@ export const extractMainColors = (canvas: HTMLCanvasElement, imageElement: HTMLI
     selectedColors.push(candidateColors[0]);
 
     // 依次选择与已选颜色差距最大的颜色
-    while (selectedColors.length < count && selectedColors.length < candidateColors.length) {
+    while (
+      selectedColors.length < count &&
+      selectedColors.length < candidateColors.length
+    ) {
       let maxMinDistance = 0;
       let bestColorIndex = -1;
 
@@ -100,7 +117,8 @@ export const extractMainColors = (canvas: HTMLCanvasElement, imageElement: HTMLI
         const candidate = candidateColors[i];
 
         // 跳过已选择的颜色
-        if (selectedColors.some((selected) => selected[0] === candidate[0])) continue;
+        if (selectedColors.some((selected) => selected[0] === candidate[0]))
+          continue;
 
         // 计算与所有已选颜色的最小距离
         let minDistance = Infinity;
@@ -146,20 +164,27 @@ export const extractMainColors = (canvas: HTMLCanvasElement, imageElement: HTMLI
     let displayX = imgX,
       displayY = imgY;
     if (container) {
-      const { renderWidth, renderHeight, offsetX, offsetY } = getImageContainRect(imageElement, container);
+      const { renderWidth, renderHeight, offsetX, offsetY } =
+        getImageContainRect(imageElement, container);
       displayX = offsetX + (imgX / imageElement.naturalWidth) * renderWidth;
       displayY = offsetY + (imgY / imageElement.naturalHeight) * renderHeight;
     }
 
     // 转换为标准化坐标
-    const normalizedPos = getNormalizedPosition(imageElement, displayX, displayY, container);
+    const normalizedPos = getNormalizedPosition(
+      imageElement,
+      displayX,
+      displayY,
+      container,
+    );
 
     return {
       id: index + 1,
       x: normalizedPos.x,
       y: normalizedPos.y,
       color: `rgb(${r}, ${g}, ${b})`,
-      name: getColorName(Color(`rgb(${r}, ${g}, ${b})`).hex())?.name || "unknown",
+      name:
+        getColorName(Color(`rgb(${r}, ${g}, ${b})`).hex())?.name || "unknown",
       vibrancy: getColorVibrancy([r, g, b]),
       isWarm: isWarmColor([r, g, b]),
     };
@@ -167,7 +192,10 @@ export const extractMainColors = (canvas: HTMLCanvasElement, imageElement: HTMLI
 };
 
 // 获取图片在容器中的缩放和偏移（object-contain）
-function getImageContainRect(image: HTMLImageElement, container: HTMLDivElement) {
+function getImageContainRect(
+  image: HTMLImageElement,
+  container: HTMLDivElement,
+) {
   const containerRect = container.getBoundingClientRect();
   const imgNaturalWidth = image.naturalWidth;
   const imgNaturalHeight = image.naturalHeight;
@@ -203,7 +231,12 @@ function getImageContainRect(image: HTMLImageElement, container: HTMLDivElement)
 }
 
 // 显示坐标转标准化坐标（支持object-contain）
-export const getNormalizedPosition = (image: HTMLImageElement | null, displayX: number, displayY: number, container?: HTMLDivElement | null) => {
+export const getNormalizedPosition = (
+  image: HTMLImageElement | null,
+  displayX: number,
+  displayY: number,
+  container?: HTMLDivElement | null,
+) => {
   if (!image) return { x: displayX, y: displayY };
   if (!container) {
     // fallback: old logic
@@ -215,7 +248,10 @@ export const getNormalizedPosition = (image: HTMLImageElement | null, displayX: 
     };
   }
 
-  const { renderWidth, renderHeight, offsetX, offsetY } = getImageContainRect(image, container);
+  const { renderWidth, renderHeight, offsetX, offsetY } = getImageContainRect(
+    image,
+    container,
+  );
 
   // 转换为图片内坐标
   const imgX = displayX - offsetX;

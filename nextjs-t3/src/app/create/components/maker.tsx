@@ -7,7 +7,7 @@ import { useQuery } from "@apollo/client";
 import { getAssetUrl } from "@/lib/utils";
 import "react-photo-album/columns.css";
 import { DomGallery } from "./dom-gallery";
-import { GET_PALETTE, Palette, PartColors } from "@/query/palette";
+import { GET_PALETTE, type Palette, type PartColors } from "@/query/palette";
 import { PickerPart } from "@/components/palette/picker-part";
 
 export const Maker = ({ id }: { id: string }) => {
@@ -27,15 +27,32 @@ export const Maker = ({ id }: { id: string }) => {
   return (
     <>
       {loading ? (
-        <div className="flex items-center justify-center aspect-video bg-muted text-muted-foreground max-w-screen-lg mx-auto border rounded-md">Loading...</div>
+        <div className="bg-muted text-muted-foreground mx-auto flex aspect-video max-w-screen-lg items-center justify-center rounded-md border">
+          Loading...
+        </div>
       ) : (
         <>
-          <PickerPart className="mb-6" colors={data?.palette.extend?.parts as PartColors} />
-          <Generator initialPoints={data?.palette.points || []} initialImage={image} onColorsChangeEnter={setPoints} onImageChange={setImage} />
+          <PickerPart
+            className="mb-6"
+            colors={data?.palette.extend?.parts}
+          />
+          <Generator
+            initialPoints={data?.palette.points || []}
+            initialImage={image}
+            onColorsChangeEnter={setPoints}
+            onImageChange={setImage}
+          />
         </>
       )}
 
-      {image && <DomGallery image={image} points={points} id={id} gallery={data?.palette.gallery || []} />}
+      {image && (
+        <DomGallery
+          image={image}
+          points={points}
+          id={id}
+          gallery={data?.palette.gallery || []}
+        />
+      )}
     </>
   );
 };

@@ -4,11 +4,21 @@ import { getColorName } from "@/lib/nearest";
 import Color from "color";
 import { ChooseImage } from "./choose-image";
 import { PickerPalette } from "./picker-palette";
-import { ColorPoint, PickerColorsRefs } from "./picker-colors";
+import { type ColorPoint, type PickerColorsRefs } from "./picker-colors";
 
-type GeneratorProps = { initialPoints?: ColorPoint[]; onColorsChangeEnter?: (points: ColorPoint[]) => void; initialImage?: string; onImageChange?: (image: string) => void };
+type GeneratorProps = {
+  initialPoints?: ColorPoint[];
+  onColorsChangeEnter?: (points: ColorPoint[]) => void;
+  initialImage?: string;
+  onImageChange?: (image: string) => void;
+};
 
-export function Generator({ initialPoints = [], onColorsChangeEnter, initialImage, onImageChange }: GeneratorProps) {
+export function Generator({
+  initialPoints = [],
+  onColorsChangeEnter,
+  initialImage,
+  onImageChange,
+}: GeneratorProps) {
   const [image, setImage] = useState<string>();
   const [points, setPoints] = useState<ColorPoint[]>([]);
   const pickerRef = useRef<PickerColorsRefs>(null);
@@ -32,7 +42,7 @@ export function Generator({ initialPoints = [], onColorsChangeEnter, initialImag
           ...item,
           name: getColorName(Color(item.color).hex())?.name,
         };
-      })
+      }),
     );
   }, [points, onColorsChangeEnter]);
 

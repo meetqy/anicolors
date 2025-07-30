@@ -8,7 +8,12 @@ interface LogoMaskProps {
   gradientColors?: string[];
 }
 
-export const LogoMask = ({ className, style, variant = "solid", gradientColors = ["#000", "#666"] }: LogoMaskProps) => {
+export const LogoMask = ({
+  className,
+  style,
+  variant = "solid",
+  gradientColors = ["#000", "#666"],
+}: LogoMaskProps) => {
   const baseClasses = "font-serif italic text-xs opacity-50 tracking-tight";
   const text = "AniColors";
 
@@ -16,7 +21,7 @@ export const LogoMask = ({ className, style, variant = "solid", gradientColors =
     return (
       <div
         id="logo-mask"
-        className={cn(baseClasses, "text-transparent bg-clip-text", className)}
+        className={cn(baseClasses, "bg-clip-text text-transparent", className)}
         style={{
           backgroundImage: `linear-gradient(135deg, ${gradientColors.join(", ")})`,
           ...style,
@@ -36,7 +41,10 @@ export const LogoMask = ({ className, style, variant = "solid", gradientColors =
 
 export const Logo = () => {
   return (
-    <Link href="/" className="flex font-serif gap-0.5 text-2xl italic items-end">
+    <Link
+      href="/"
+      className="flex items-end gap-0.5 font-serif text-2xl italic"
+    >
       <span>Ani</span>
       <span className="font-bold underline">Colors</span>
     </Link>

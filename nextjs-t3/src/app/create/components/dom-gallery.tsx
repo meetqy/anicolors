@@ -8,12 +8,12 @@ import { CardPalette3 } from "@/components/card/palette/3";
 import { CardPalette4 } from "@/components/card/palette/4";
 import { CardPalette5 } from "@/components/card/palette/5";
 import { CardPalette6 } from "@/components/card/palette/6";
-import { SaveableCardRef } from "@/components/card/with-save";
-import { ColorPoint } from "@/components/palette/picker-colors";
+import { type SaveableCardRef } from "@/components/card/with-save";
+import { type ColorPoint } from "@/components/palette/picker-colors";
 import { Button } from "@/components/ui/button";
-import { Palette } from "@/query/palette";
+import { type Palette } from "@/query/palette";
 import Link from "next/link";
-import { CSSProperties, useRef, useMemo, useState } from "react";
+import { type CSSProperties, useRef, useMemo, useState } from "react";
 import { ColumnsPhotoAlbum } from "react-photo-album";
 import { toast } from "sonner";
 
@@ -32,7 +32,17 @@ const photosData = {
   ],
 };
 
-export const DomGallery = ({ image, points, id, gallery }: { image: string; points: ColorPoint[]; id?: string; gallery: Palette["gallery"] }) => {
+export const DomGallery = ({
+  image,
+  points,
+  id,
+  gallery,
+}: {
+  image: string;
+  points: ColorPoint[];
+  id?: string;
+  gallery: Palette["gallery"];
+}) => {
   // 使用 Map 来管理多个 palette refs
   const myRefs = useRef<Map<string, SaveableCardRef>>(new Map());
   const admin = !!localStorage.getItem("admin");
@@ -47,8 +57,8 @@ export const DomGallery = ({ image, points, id, gallery }: { image: string; poin
         const id = `palette-${index + 1}`;
         return {
           src: id,
-          width: parseInt(width, 10),
-          height: parseInt(height, 10),
+          width: parseInt(width!, 10),
+          height: parseInt(height!, 10),
           component: (props: { style?: CSSProperties; className?: string }) => {
             const Component = palette.component;
 
@@ -124,21 +134,26 @@ export const DomGallery = ({ image, points, id, gallery }: { image: string; poin
   };
 
   return (
-    <div className="prose mx-auto mt-12 max-w-screen-xl px-4 xl:px-0 ">
+    <div className="prose mx-auto mt-12 max-w-screen-xl px-4 xl:px-0">
       <div className="flex gap-4">
         <Button size={"lg"} disabled={saving} onClick={saveAllImage}>
           Download All Assets
         </Button>
         {admin && (
-          <Button disabled={saving} size={"lg"} variant="outline" onClick={saveMissImage}>
+          <Button
+            disabled={saving}
+            size={"lg"}
+            variant="outline"
+            onClick={saveMissImage}
+          >
             Download Missing Assets
           </Button>
         )}
         <Button
           size={"lg"}
           variant="outline"
-          onClick={() => {
-            navigator.clipboard.writeText(JSON.stringify(points));
+          onClick={async () => {
+            await navigator.clipboard.writeText(JSON.stringify(points));
             toast.success("Points copied to clipboard!");
           }}
         >
@@ -148,7 +163,10 @@ export const DomGallery = ({ image, points, id, gallery }: { image: string; poin
       <h2>Colors</h2>
       <div className="not-prose grid gap-4 md:grid-cols-2 lg:grid-cols-3">
         {points.map((item, index) => (
-          <div className="w-full border rounded-md overflow-hidden" key={item.id}>
+          <div
+            className="w-full overflow-hidden rounded-md border"
+            key={item.id}
+          >
             <CardColor1
               ref={(ref) => {
                 if (ref) myRefs.current.set(`color-${index}`, ref);
@@ -190,14 +208,15 @@ export const DomGallery = ({ image, points, id, gallery }: { image: string; poin
                     width: context.width,
                     height: context.height,
                   }}
-                  className="rounded-md overflow-hidden"
+                  className="overflow-hidden rounded-md"
                 >
                   <Com
                     style={{
                       transform: `scale(${scale})`,
                       transformOrigin: "top left",
                       width: 375,
-                      height: (context.photo.height / context.photo.width) * 375,
+                      height:
+                        (context.photo.height / context.photo.width) * 375,
                     }}
                   />
                 </div>

@@ -1,5 +1,5 @@
-import { Palette } from "@/query/palette";
-import Color, { ColorInstance } from "color";
+import { type Palette } from "@/query/palette";
+import Color, { type ColorInstance } from "color";
 import Link from "next/link";
 
 export const Shades = ({ palette }: { palette: Palette }) => {
@@ -23,10 +23,13 @@ export const Shades = ({ palette }: { palette: Palette }) => {
 
   return (
     <article className="space-y-12">
-      <h2>Explore the 12-step light-to-dark shades for each color in this palette.</h2>
+      <h2>
+        Explore the 12-step light-to-dark shades for each color in this palette.
+      </h2>
       <p>
-        These gradients reveal how each tone transforms across brightness levels — from airy pastels to deep, rich hues — giving you more creative control for backgrounds, highlights, shadows, and UI
-        accents.
+        These gradients reveal how each tone transforms across brightness levels
+        — from airy pastels to deep, rich hues — giving you more creative
+        control for backgrounds, highlights, shadows, and UI accents.
       </p>
       {points.map((point, index) => {
         const color = Color(point.color);
@@ -35,19 +38,28 @@ export const Shades = ({ palette }: { palette: Palette }) => {
         return (
           <div key={index} className="space-y-6">
             <h3>
-              <Link className="no-underline border-b-2 font-bold" href={`/color/${point.name}`} style={{ borderColor: color.hex() }}>
+              <Link
+                className="border-b-2 font-bold no-underline"
+                href={`/color/${point.name}`}
+                style={{ borderColor: color.hex() }}
+              >
                 {point.name}
               </Link>{" "}
               <span className="sr-only">– 12 Shades from Light to Dark</span>
             </h3>
 
-            <div className="grid grid-cols-6 lg:grid-cols-11 gap-4">
+            <div className="grid grid-cols-6 gap-4 lg:grid-cols-11">
               {shades.map((shade, shadeIndex) => (
                 <div key={shadeIndex} className="space-y-2">
-                  <div className="w-full rounded-lg aspect-square border" style={{ backgroundColor: shade.color }} />
-                  <div className="text-center space-y-1 not-prose">
+                  <div
+                    className="aspect-square w-full rounded-lg border"
+                    style={{ backgroundColor: shade.color }}
+                  />
+                  <div className="not-prose space-y-1 text-center">
                     <p className="text-sm font-medium">{shade.label}</p>
-                    <p className="text-xs text-muted-foreground font-mono">{shade.color.toUpperCase()}</p>
+                    <p className="text-muted-foreground font-mono text-xs">
+                      {shade.color.toUpperCase()}
+                    </p>
                   </div>
                 </div>
               ))}

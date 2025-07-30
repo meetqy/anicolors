@@ -1,6 +1,6 @@
 import { cn } from "@/lib/utils";
 import { withSave } from "../with-save";
-import { CardPaletteProps } from "./common";
+import { type CardPaletteProps } from "./common";
 import { ColorPointsOverlay } from "@/components/color-points-overlay";
 import Color from "color";
 import { LogoMask } from "@/components/logo";
@@ -9,7 +9,9 @@ const _heights = ["h-1/2", "h-1/3", "h-2/5", "h-1/6", "h-2/7"];
 
 const CardPalette6Base = ({ points, className, image }: CardPaletteProps) => {
   const bgColor = points[0].color;
-  const heights = _heights.slice(0, points.length).sort(() => Math.random() - 0.5);
+  const heights = _heights
+    .slice(0, points.length)
+    .sort(() => Math.random() - 0.5);
 
   // 计算颜色亮度来调整阴影强度
   const getLuminance = (color: string) => {
@@ -25,16 +27,16 @@ const CardPalette6Base = ({ points, className, image }: CardPaletteProps) => {
 
   return (
     <div
-      className={cn("group aspect-[4/5] rounded-md overflow-hidden", className)}
+      className={cn("group aspect-[4/5] overflow-hidden rounded-md", className)}
       style={{
         perspective: "1000px",
         transformStyle: "preserve-3d",
       }}
     >
-      <LogoMask className="absolute right-1 top-1 z-20" />
+      <LogoMask className="absolute top-1 right-1 z-20" />
       <div className="relative h-full pt-[105px]">
         <div
-          className="absolute z-10 bottom-[-85px] left-1/2 w-56 h-56 rounded-full -translate-x-1/2 rotate-x-[80deg]"
+          className="absolute bottom-[-85px] left-1/2 z-10 h-56 w-56 -translate-x-1/2 rotate-x-[80deg] rounded-full"
           style={{
             background: Color(bgColor).hex() + "70",
             boxShadow: `
@@ -49,13 +51,23 @@ const CardPalette6Base = ({ points, className, image }: CardPaletteProps) => {
             transform: "rotateX(80deg) rotateY(-5deg)",
           }}
         />
-        <div className="relative h-full z-10 scale-130 translate-y-[-60px] rotate-x-[15deg] drop-shadow-2xl">
-          <ColorPointsOverlay className="size-full z-50" points={points} image={image} />
+        <div className="relative z-10 h-full translate-y-[-60px] scale-130 rotate-x-[15deg] drop-shadow-2xl">
+          <ColorPointsOverlay
+            className="z-50 size-full"
+            points={points}
+            image={image}
+          />
         </div>
-        <div className="flex w-full h-full absolute bottom-0 left-0 items-end flex-row-reverse">
+        <div className="absolute bottom-0 left-0 flex h-full w-full flex-row-reverse items-end">
           {points.map((point, index) => {
             const randomHeight = heights[index % heights.length];
-            return <div className={`w-full rounded-t-md ${randomHeight}`} key={index} style={{ backgroundColor: point.color }}></div>;
+            return (
+              <div
+                className={`w-full rounded-t-md ${randomHeight}`}
+                key={index}
+                style={{ backgroundColor: point.color }}
+              ></div>
+            );
           })}
         </div>
       </div>

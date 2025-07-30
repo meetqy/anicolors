@@ -1,7 +1,7 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import { Palette } from "@/query/palette";
+import { type Palette } from "@/query/palette";
 import { useToggleLike } from "@/hooks/use-toggle-like";
 import Link from "next/link";
 import { MdFavoriteBorder, MdFavorite, MdLink } from "react-icons/md";
@@ -16,7 +16,9 @@ interface PaletteActionsProps {
 
 // 转换空格后的字符为首字母大写并删除空格
 const toCamelCase = (str: string) => {
-  return str.replace(/\s+(.)/g, (_, char) => char.toUpperCase()).replace(/\s+/g, "");
+  return str
+    .replace(/\s+(.)/g, (_, char) => char.toUpperCase())
+    .replace(/\s+/g, "");
 };
 
 export const PaletteActions = ({ palette, id }: PaletteActionsProps) => {
@@ -34,15 +36,15 @@ export const PaletteActions = ({ palette, id }: PaletteActionsProps) => {
   const host = process.env.NEXT_PUBLIC_SITE_URL || "https://anicolors.com";
 
   return (
-    <div className="max-w-screen-lg px-4 lg:px-0 mt-4 mx-auto ">
+    <div className="mx-auto mt-4 max-w-screen-lg px-4 lg:px-0">
       <div className="mb-4 text-end">
         <time suppressHydrationWarning className="text-muted-foreground">
           Last Updated: {new Date(palette.updatedAt).toLocaleString()}
         </time>
       </div>
 
-      <div className="flex items-center flex-wrap justify-between gap-4">
-        <div className="flex gap-2 flex-wrap items-center">
+      <div className="flex flex-wrap items-center justify-between gap-4">
+        <div className="flex flex-wrap items-center gap-2">
           <Button
             variant="outline"
             className={cn({
@@ -51,21 +53,28 @@ export const PaletteActions = ({ palette, id }: PaletteActionsProps) => {
             onClick={toggleLike}
             disabled={isLoading}
           >
-            {isLiked ? <MdFavorite className="size-5 text-red-500" /> : <MdFavoriteBorder className="size-5" />}
+            {isLiked ? (
+              <MdFavorite className="size-5 text-red-500" />
+            ) : (
+              <MdFavoriteBorder className="size-5" />
+            )}
             {likes}
           </Button>
           <Button variant="outline" onClick={onLink}>
             <MdLink className="size-5" /> Link
           </Button>
           <Button variant={"outline"} asChild>
-            <Link target="_blank" href={`https://twitter.com/intent/tweet?text=${encodeURIComponent(title)}&url=${encodeURIComponent(`${host}/palettes/${id}`)}`}>
+            <Link
+              target="_blank"
+              href={`https://twitter.com/intent/tweet?text=${encodeURIComponent(title)}&url=${encodeURIComponent(`${host}/palettes/${id}`)}`}
+            >
               <TwitterIcon /> Twitter
             </Link>
           </Button>
         </div>
 
-        <div className="flex lg:justify-end items-center flex-1 gap-4">
-          <div className="flex gap-2 items-center">
+        <div className="flex flex-1 items-center gap-4 lg:justify-end">
+          <div className="flex items-center gap-2">
             <Button variant="outline">
               <Link href={getOriginalUrl(palette.image.url)} download>
                 Download Transparent PNG

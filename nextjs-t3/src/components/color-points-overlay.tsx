@@ -1,4 +1,4 @@
-import { ColorPoint } from "@/components/palette/picker-colors";
+import { type ColorPoint } from "@/components/palette/picker-colors";
 import { useState, useRef, useEffect } from "react";
 
 interface ColorPointsOverlayProps {
@@ -8,9 +8,19 @@ interface ColorPointsOverlayProps {
   imageClassName?: string;
 }
 
-export const ColorPointsOverlay = ({ points, image, className, imageClassName }: ColorPointsOverlayProps) => {
+export const ColorPointsOverlay = ({
+  points,
+  image,
+  className,
+  imageClassName,
+}: ColorPointsOverlayProps) => {
   const [imageLoaded, setImageLoaded] = useState(false);
-  const [imageDimensions, setImageDimensions] = useState({ width: 0, height: 0, displayWidth: 0, displayHeight: 0 });
+  const [imageDimensions, setImageDimensions] = useState({
+    width: 0,
+    height: 0,
+    displayWidth: 0,
+    displayHeight: 0,
+  });
   const [containerSize, setContainerSize] = useState({ width: 0, height: 0 });
   const imgRef = useRef<HTMLImageElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
@@ -86,7 +96,13 @@ export const ColorPointsOverlay = ({ points, image, className, imageClassName }:
   return (
     <div ref={containerRef} className={`relative ${className}`}>
       <picture>
-        <img ref={imgRef} alt="point image" src={image} className={`object-contain h-full mx-auto ${imageClassName}`} onLoad={() => setImageLoaded(true)} />
+        <img
+          ref={imgRef}
+          alt="point image"
+          src={image}
+          className={`mx-auto h-full object-contain ${imageClassName}`}
+          onLoad={() => setImageLoaded(true)}
+        />
       </picture>
 
       {imageLoaded && imageDimensions.displayWidth > 0 && (
@@ -109,7 +125,7 @@ export const ColorPointsOverlay = ({ points, image, className, imageClassName }:
             return (
               <div
                 key={point.id}
-                className="absolute w-4 h-4 rounded-full border-2 border-white shadow-lg transform -translate-x-1/2 -translate-y-1/2 z-20"
+                className="absolute z-20 h-4 w-4 -translate-x-1/2 -translate-y-1/2 transform rounded-full border-2 border-white shadow-lg"
                 style={{
                   left: imgOffsetX + relativeX,
                   top: imgOffsetY + relativeY,

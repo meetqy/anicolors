@@ -1,7 +1,7 @@
 "use client";
 import { cn, getAssetUrl } from "@/lib/utils";
 import { timeAgo } from "@/lib/time-utils";
-import { PaletteListItem } from "@/query/palette";
+import { type PaletteListItem } from "@/query/palette";
 import Link from "next/link";
 
 interface PaletteCardProps {
@@ -21,16 +21,19 @@ export const PaletteCard = ({ palette }: PaletteCardProps) => {
           transformStyle: "preserve-3d",
         }}
       >
-        <div className="rounded-md relative">
+        <div className="relative rounded-md">
           <div
-            className="absolute bottom-0 left-1/2 w-full h-full rounded-md -translate-x-1/2 transition-all duration-300 group-hover:w-56 group-hover:h-56 group-hover:rounded-full group-hover:bottom-[-85px] group-hover:rotate-x-[80deg]"
+            className="absolute bottom-0 left-1/2 h-full w-full -translate-x-1/2 rounded-md transition-all duration-300 group-hover:bottom-[-85px] group-hover:h-56 group-hover:w-56 group-hover:rotate-x-[80deg] group-hover:rounded-full"
             style={{
               backgroundColor: bgColor,
               boxShadow: "0 20px 40px rgba(0,0,0,0.1)",
             }}
           />
           {/* 额外的流畅背景层 */}
-          <div style={{ backgroundColor: bgColor }} className="absolute inset-0 rounded-md opacity-100 group-hover:opacity-0 transition-opacity duration-300" />
+          <div
+            style={{ backgroundColor: bgColor }}
+            className="absolute inset-0 rounded-md opacity-100 transition-opacity duration-300 group-hover:opacity-0"
+          />
           <img
             src={getAssetUrl(palette.image.url, 320)}
             srcSet={`
@@ -40,24 +43,36 @@ export const PaletteCard = ({ palette }: PaletteCardProps) => {
             `}
             alt={palette.name}
             className={cn(
-              "w-full z-10 relative aspect-square object-contain transition-transform duration-300 group-hover:scale-130 group-hover:translate-y-[-60px] group-hover:rotate-x-[15deg] group-hover:drop-shadow-2xl"
+              "relative z-10 aspect-square w-full object-contain transition-transform duration-300 group-hover:translate-y-[-60px] group-hover:scale-130 group-hover:rotate-x-[15deg] group-hover:drop-shadow-2xl",
             )}
           />
-          <div className="flex w-full rounded-b-md overflow-hidden absolute bottom-0 left-0">
+          <div className="absolute bottom-0 left-0 flex w-full overflow-hidden rounded-b-md">
             {palette.points.map((point, index) => {
-              return <div className="w-full h-3" key={index} style={{ backgroundColor: point.color }}></div>;
+              return (
+                <div
+                  className="h-3 w-full"
+                  key={index}
+                  style={{ backgroundColor: point.color }}
+                ></div>
+              );
             })}
           </div>
         </div>
       </Link>
-      <div className="py-2 flex justify-between items-center">
+      <div className="flex items-center justify-between py-2">
         <div>
-          <h2 className="capitalize font-medium">{palette.name}</h2>
-          <Link href={`/category/${palette.category}`} className="text-muted-foreground line-clamp-1 hover:text-foreground hover:underline capitalize text-sm">
+          <h2 className="font-medium capitalize">{palette.name}</h2>
+          <Link
+            href={`/category/${palette.category}`}
+            className="text-muted-foreground hover:text-foreground line-clamp-1 text-sm capitalize hover:underline"
+          >
             {palette.category}
           </Link>
         </div>
-        <time suppressHydrationWarning className="text-sm text-muted-foreground shrink-0">
+        <time
+          suppressHydrationWarning
+          className="text-muted-foreground shrink-0 text-sm"
+        >
           {timeAgo(palette.createdAt)}
         </time>
       </div>

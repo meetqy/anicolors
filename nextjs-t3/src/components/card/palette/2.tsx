@@ -3,21 +3,30 @@
 import Color from "color";
 import { withSave } from "../with-save";
 import { cn } from "@/lib/utils";
-import { CardPaletteProps } from "./common";
+import { type CardPaletteProps } from "./common";
 import { LogoMask } from "@/components/logo";
 
 const CardPalette2Base = ({ points, className, style }: CardPaletteProps) => {
   const end = Color(points[points.length - 1].color);
 
   return (
-    <div style={style} className={cn("w-[375px] aspect-video flex relative bg-background", className)}>
-      <LogoMask className="absolute right-2 top-2" style={{ color: end.isDark() ? "#fff" : "#000" }} />
+    <div
+      style={style}
+      className={cn(
+        "bg-background relative flex aspect-video w-[375px]",
+        className,
+      )}
+    >
+      <LogoMask
+        className="absolute top-2 right-2"
+        style={{ color: end.isDark() ? "#fff" : "#000" }}
+      />
       {points.map((item) => {
         const color = Color(item.color);
         return (
           <div
             key={item.id}
-            className="flex-1 flex items-center justify-end font-mono text-sm px-4"
+            className="flex flex-1 items-center justify-end px-4 font-mono text-sm"
             style={{
               backgroundColor: color.hex(),
               color: color.isDark() ? "#fff" : "#000",

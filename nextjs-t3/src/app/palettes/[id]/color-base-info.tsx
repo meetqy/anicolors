@@ -1,6 +1,6 @@
 "use client";
 
-import { ColorPoint } from "@/components/palette/picker-colors";
+import { type ColorPoint } from "@/components/palette/picker-colors";
 import Color from "color";
 import { toast } from "sonner";
 
@@ -15,11 +15,17 @@ export const ColorBaseInfo = ({ point }: { point: ColorPoint }) => {
   };
 
   return (
-    <div className="bg-card overflow-hidden rounded-lg flex justify-center w-1/5">
-      <div className="flex-col flex justify-center items-center gap-x-2 gap-y-4">
-        <div className="size-12 rounded-full" style={{ backgroundColor: hex }}></div>
+    <div className="bg-card flex w-1/5 justify-center overflow-hidden rounded-lg">
+      <div className="flex flex-col items-center justify-center gap-x-2 gap-y-4">
+        <div
+          className="size-12 rounded-full"
+          style={{ backgroundColor: hex }}
+        ></div>
         <p onClick={() => copyToClipboard(hex)}>{hex}</p>
-        <p className="lg:block hidden text-sm" onClick={() => copyToClipboard(rgb)}>
+        <p
+          className="hidden text-sm lg:block"
+          onClick={() => copyToClipboard(rgb)}
+        >
           {rgb}
         </p>
       </div>

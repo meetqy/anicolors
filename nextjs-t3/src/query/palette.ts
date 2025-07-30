@@ -1,4 +1,4 @@
-import { ColorPoint } from "@/components/palette/picker-colors";
+import { type ColorPoint } from "@/components/palette/picker-colors";
 import { gql } from "@apollo/client";
 
 /**
@@ -31,12 +31,10 @@ export const GET_PALETTE = gql`
   }
 `;
 
-export type PartColors = {
-  [key: string]: {
+export type PartColors = Record<string, {
     color: string;
     name: string;
-  };
-};
+  }>;
 
 export type Palette = {
   name: string;
@@ -61,8 +59,16 @@ export type Palette = {
  * Fetches a list of palettes with their basic information.
  */
 export const GET_PALETTE_LIST = gql`
-  query Palettes_connection($pagination: PaginationArg, $sort: [String], $filters: PaletteFiltersInput) {
-    palettes_connection(pagination: $pagination, sort: $sort, filters: $filters) {
+  query Palettes_connection(
+    $pagination: PaginationArg
+    $sort: [String]
+    $filters: PaletteFiltersInput
+  ) {
+    palettes_connection(
+      pagination: $pagination
+      sort: $sort
+      filters: $filters
+    ) {
       nodes {
         likes
         name

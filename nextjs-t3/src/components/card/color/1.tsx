@@ -1,4 +1,4 @@
-import { ColorPoint } from "@/components/palette/picker-colors";
+import { type ColorPoint } from "@/components/palette/picker-colors";
 import { cn } from "@/lib/utils";
 import Color from "color";
 import { withSave } from "../with-save";
@@ -15,7 +15,13 @@ type CardColor1Props = {
   maskExtra?: React.ReactNode;
 };
 
-const CardColor1Base = ({ point, index, className, style, classNames }: CardColor1Props) => {
+const CardColor1Base = ({
+  point,
+  index,
+  className,
+  style,
+  classNames,
+}: CardColor1Props) => {
   const color = Color(point.color);
   const hex = color.hex();
   const rgb = color.rgb().string();
@@ -50,16 +56,19 @@ const CardColor1Base = ({ point, index, className, style, classNames }: CardColo
       }}
     >
       <div
-        className="aspect-[5/4] flex flex-col bg-background origin-top-left"
+        className="bg-background flex aspect-[5/4] origin-top-left flex-col"
         style={{
           transform: `scale(${scale})`,
           width: "375px",
         }}
       >
         {/* Color preview bar */}
-        <div className="relative flex-shrink-0 flex h-20 w-full items-center justify-between px-6" style={{ backgroundColor: point.color }}>
+        <div
+          className="relative flex h-20 w-full flex-shrink-0 items-center justify-between px-6"
+          style={{ backgroundColor: point.color }}
+        >
           <h3
-            className="text-lg font-medium truncate pr-4"
+            className="truncate pr-4 text-lg font-medium"
             style={{
               color: color.isDark() ? "white" : "black",
             }}
@@ -68,7 +77,7 @@ const CardColor1Base = ({ point, index, className, style, classNames }: CardColo
           </h3>
           {index && (
             <span
-              className="text-sm opacity-75 flex-shrink-0"
+              className="flex-shrink-0 text-sm opacity-75"
               style={{
                 color: color.isDark() ? "white" : "black",
               }}
@@ -79,25 +88,38 @@ const CardColor1Base = ({ point, index, className, style, classNames }: CardColo
         </div>
 
         {/* Color values */}
-        <div className={cn("flex flex-col justify-between flex-1 p-4", classNames?.valuesContainer)}>
-          <button className="bg-muted border-muted flex w-full items-center justify-between rounded-md border p-2 ">
+        <div
+          className={cn(
+            "flex flex-1 flex-col justify-between p-4",
+            classNames?.valuesContainer,
+          )}
+        >
+          <button className="bg-muted border-muted flex w-full items-center justify-between rounded-md border p-2">
             <div className="text-left">
-              <div className="text-muted-foreground text-xs font-medium tracking-wider uppercase">HEX</div>
+              <div className="text-muted-foreground text-xs font-medium tracking-wider uppercase">
+                HEX
+              </div>
               <div className="font-mono text-sm font-medium">{hex}</div>
             </div>
           </button>
 
-          <button className="bg-muted border-muted flex w-full items-center justify-between rounded-md border p-2 ">
+          <button className="bg-muted border-muted flex w-full items-center justify-between rounded-md border p-2">
             <div className="text-left">
-              <div className="text-muted-foreground text-xs font-medium tracking-wider uppercase">RGB</div>
+              <div className="text-muted-foreground text-xs font-medium tracking-wider uppercase">
+                RGB
+              </div>
               <div className="font-mono text-sm font-medium">{rgb}</div>
             </div>
           </button>
 
-          <button className="bg-muted border-muted flex w-full items-center justify-between rounded-md border p-2 ">
+          <button className="bg-muted border-muted flex w-full items-center justify-between rounded-md border p-2">
             <div className="text-left">
-              <div className="text-muted-foreground text-xs font-medium tracking-wider uppercase">CMYK</div>
-              <div className="truncate font-mono text-sm font-medium">{cmyk}</div>
+              <div className="text-muted-foreground text-xs font-medium tracking-wider uppercase">
+                CMYK
+              </div>
+              <div className="truncate font-mono text-sm font-medium">
+                {cmyk}
+              </div>
             </div>
           </button>
         </div>
