@@ -59,7 +59,7 @@ const PickerColors = forwardRef<
   const containerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    setColorPoints(points || []);
+    setColorPoints(points ?? []);
   }, [points, setColorPoints]);
 
   useImperativeHandle(
@@ -369,7 +369,7 @@ const PickerColors = forwardRef<
         colorPoints.map((item) => {
           return {
             ...item,
-            name: getColorName(Color(item.color).hex())?.name || "unknown",
+            name: getColorName(Color(item.color).hex())?.name ?? "unknown",
           };
         }),
       );
@@ -417,7 +417,7 @@ const PickerColors = forwardRef<
             fetchPriority="high"
             onLoad={() => {
               updateCanvas();
-              setColorPoints(points || []);
+              setColorPoints(points ?? []);
               onImageLoaded?.();
               setImageLoading(false);
             }}

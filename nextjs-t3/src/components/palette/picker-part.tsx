@@ -29,10 +29,15 @@ export const PickerPart = ({
   colors,
 }: PickerPartProps) => {
   const { open, isSupported } = useEyeDropper();
-  const [parts, setParts] = useState<Record<string, {
-      color: string;
-      name: string;
-    }>>(
+  const [parts, setParts] = useState<
+    Record<
+      string,
+      {
+        color: string;
+        name: string;
+      }
+    >
+  >(
     partsConstant.reduce(
       (acc, part) => {
         acc[part] = { color: "transparent", name: "" };
@@ -60,7 +65,7 @@ export const PickerPart = ({
             ...parts,
             [part]: {
               color: color.sRGBHex,
-              name: getColorName(color.sRGBHex)?.name || "Unknown",
+              name: getColorName(color.sRGBHex)?.name ?? "Unknown",
             },
           };
           setParts(newParts);
@@ -69,19 +74,19 @@ export const PickerPart = ({
           console.error("Error picking color:", error);
         }
       };
-      openPicker();
+      void openPicker();
     },
     [open, parts, onColorsChange],
   );
 
-  const copy = () => {
+  const copy = async () => {
     // 排除 透明色
     const filteredParts = Object.fromEntries(
       Object.entries(parts).filter(
         ([, value]) => value.color !== "transparent",
       ),
     );
-    navigator.clipboard.writeText(JSON.stringify(filteredParts));
+    await navigator.clipboard.writeText(JSON.stringify(filteredParts));
     toast.success("Colors copied to clipboard!");
   };
 

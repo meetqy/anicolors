@@ -1,11 +1,11 @@
 "use client";
 import { forwardRef, useImperativeHandle, useRef } from "react";
 import Color from "color";
-import { LuX } from "react-icons/lu";
 import PickerColors, {
   type PickerColorsProps,
   type PickerColorsRefs,
 } from "./picker-colors";
+import { X } from "lucide-react";
 
 interface PickerPaletteProps extends PickerColorsProps {
   onDeleteColor: (id: number) => void;
@@ -54,7 +54,7 @@ export const PickerPalette = forwardRef<PickerColorsRefs, PickerPaletteProps>(
                   className="absolute top-0 right-0 z-50 flex aspect-square h-full cursor-pointer items-center justify-center rounded-l-none bg-black/70 opacity-0 transition-all group-hover:opacity-100"
                   aria-label="Delete color"
                 >
-                  <LuX className="size-6 text-red-600" />
+                  <X className="size-6 text-red-600" />
                 </button>
                 <div className="bg-background/50 text-foreground absolute left-4 flex size-8 items-center justify-center rounded-full text-xs">
                   {point.id}

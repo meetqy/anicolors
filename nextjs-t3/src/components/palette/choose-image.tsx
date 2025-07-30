@@ -1,7 +1,7 @@
 "use client";
+import { Upload } from "lucide-react";
 import { useCallback } from "react";
 import { useDropzone } from "react-dropzone";
-import { LuUpload } from "react-icons/lu";
 
 interface ChooseImageProps {
   onChange: (image: string) => void;
@@ -58,7 +58,7 @@ export function ChooseImage({ onChange, image, children }: ChooseImageProps) {
           <div className="border-muted-foreground/25 hover:border-muted-foreground/50 relative flex size-full cursor-pointer items-center justify-center rounded-lg border-2 border-dashed p-8 text-center transition-colors">
             <div className="flex flex-col items-center gap-4">
               <div className="bg-muted flex items-center justify-center rounded-full p-4">
-                <LuUpload className="text-muted-foreground size-8" />
+                <Upload className="text-muted-foreground size-8" />
               </div>
               <div className="space-y-2">
                 <p className="text-lg font-medium">Upload Image</p>
