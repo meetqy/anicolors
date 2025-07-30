@@ -31,10 +31,13 @@ export const GET_PALETTE = gql`
   }
 `;
 
-export type PartColors = Record<string, {
+export type PartColors = Record<
+  string,
+  {
     color: string;
     name: string;
-  }>;
+  }
+>;
 
 export type Palette = {
   name: string;
@@ -90,6 +93,22 @@ export const GET_PALETTE_LIST = gql`
     }
   }
 `;
+
+export const GET_CATEGORIES = gql`
+  query Categories($filters: CategoryFiltersInput) {
+    categories(filters: $filters) {
+      cover {
+        url
+      }
+    }
+  }
+`;
+
+export type CategoriesResponse = {
+  categories: {
+    cover: { url: string };
+  }[];
+};
 
 export type PaletteListItem = {
   name: string;

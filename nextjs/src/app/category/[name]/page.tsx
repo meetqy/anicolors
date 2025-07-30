@@ -1,9 +1,36 @@
 import { PaletteCard } from "@/app/palettes/components/palette-card";
 import { PaginationControls } from "@/components/pagination-controls";
 import { getClient } from "@/lib/apollo-client";
-import { GET_PALETTE_LIST, type PaletteListResponse } from "@/query/palette";
+import {
+  GET_CATEGORIES,
+  GET_PALETTE_LIST,
+  type CategoriesResponse,
+  type PaletteListResponse,
+} from "@/query/palette";
+import type { Metadata } from "next";
+import { notFound } from "next/navigation";
 
 const pageSize = 24;
+
+const getCategory = async (name: string) => {
+  const res = await getClient().query<CategoriesResponse>({
+    query: GET_CATEGORIES,
+    variables: {
+      filters: {
+        name: {
+          containsi: decodeURIComponent(name),
+        },
+      },
+    },
+  });
+
+  const category = res.data.categories[0];
+  if (!category) {
+    return notFound();
+  }
+
+  return category;
+};
 
 const getPalettesList = async (name: string, page = 1) => {
   const res = await getClient().query<PaletteListResponse>({
@@ -71,13 +98,18 @@ export default async function CategoryPage({
 export async function generateMetadata({
   params,
   searchParams,
-}: CategoryPageProps) {
+}: CategoryPageProps): Promise<Metadata> {
   const { name } = await params;
   const page = parseInt((await searchParams).page ?? "1");
   const categoryName = decodeURIComponent(name);
+  const category = await getCategory(categoryName);
+
+  const images = category?.cover ? [category.cover.url] : [];
 
   return {
     title: `${categoryName} Color Palettes - Page ${page} | AniColors`,
     description: `Browse more color palettes from ${categoryName}, page ${page}.`,
+    openGraph: { images },
+    twitter: { images },
   };
 }
