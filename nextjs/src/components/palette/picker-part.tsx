@@ -10,11 +10,12 @@ import { cn, partsConstant } from "@/lib/utils";
 
 const baseParts = [
   "hair", // Hair Color
-  "eyes", // Eye Color
+  "eye", // Eye Color
   "skin", // Skin Color
   "shirt", // Shirt or inner clothing
   "pants", // Pants or trousers
   "shoes", // Footwear
+  "socks", // Socks or stockings
 ] as const;
 
 interface PickerPartProps {
@@ -116,7 +117,9 @@ export const PickerPart = ({
               <div className="text-left">
                 <p className="text-sm font-medium capitalize">{part}</p>
                 <p className="text-muted-foreground font-mono text-xs">
-                  {parts[part]?.color}
+                  {parts[part]?.color === "transparent"
+                    ? "none"
+                    : parts[part]?.color}
                 </p>
               </div>
             </button>
