@@ -4,14 +4,14 @@ import { type ColorPoint } from "@/components/palette/picker-colors";
 
 // 计算两个颜色之间的距离
 const colorDistance = (color1: number[], color2: number[]) => {
-  const [r1, g1, b1] = color1;
-  const [r2, g2, b2] = color2;
+  const [r1 = 0, g1 = 0, b1 = 0] = color1;
+  const [r2 = 0, g2 = 0, b2 = 0] = color2;
   return Math.sqrt((r1 - r2) ** 2 + (g1 - g2) ** 2 + (b1 - b2) ** 2);
 };
 
 // 计算颜色是否为暖色调
 const isWarmColor = (rgb: number[]) => {
-  const [r, g, b] = rgb;
+  const [r = 0, g = 0, b = 0] = rgb;
 
   // 暖色调通常红色和黄色成分较高，蓝色成分较低
   // 红色 > 蓝色，且 (红色 + 绿色) > 蓝色 * 1.5
@@ -20,7 +20,7 @@ const isWarmColor = (rgb: number[]) => {
 
 // 计算颜色的饱和度和亮度
 const getColorVibrancy = (rgb: number[]) => {
-  const [r, g, b] = rgb;
+  const [r = 0, g = 0, b = 0] = rgb;
 
   // 计算饱和度
   const max = Math.max(r, g, b);
@@ -60,10 +60,10 @@ export const extractMainColors = (
   for (let y = 0; y < canvas.height; y += 8) {
     for (let x = 0; x < canvas.width; x += 8) {
       const i = (y * canvas.width + x) * 4;
-      const r = pixels[i];
-      const g = pixels[i + 1];
-      const b = pixels[i + 2];
-      const a = pixels[i + 3];
+      const r = pixels[i]!;
+      const g = pixels[i + 1]!;
+      const b = pixels[i + 2]!;
+      const a = pixels[i + 3]!;
 
       if (a < 128) continue;
 
@@ -103,7 +103,7 @@ export const extractMainColors = (
 
   if (candidateColors.length > 0) {
     // 先选择出现频率最高的颜色
-    selectedColors.push(candidateColors[0]);
+    selectedColors.push(candidateColors[0]!);
 
     // 依次选择与已选颜色差距最大的颜色
     while (
@@ -114,7 +114,7 @@ export const extractMainColors = (
       let bestColorIndex = -1;
 
       for (let i = 0; i < candidateColors.length; i++) {
-        const candidate = candidateColors[i];
+        const candidate = candidateColors[i]!;
 
         // 跳过已选择的颜色
         if (selectedColors.some((selected) => selected[0] === candidate[0]))
@@ -135,7 +135,7 @@ export const extractMainColors = (
       }
 
       if (bestColorIndex >= 0) {
-        selectedColors.push(candidateColors[bestColorIndex]);
+        selectedColors.push(candidateColors[bestColorIndex]!);
       } else {
         break;
       }
@@ -144,11 +144,14 @@ export const extractMainColors = (
 
   return selectedColors.map((colorEntry, index) => {
     const [, colorInfo] = colorEntry;
-    const [r, g, b] = colorInfo.rgb;
+    const [r = 0, g = 0, b = 0] = colorInfo.rgb;
 
     // 选择该颜色的中心位置
     const positions = colorInfo.positions;
-    const centerPos = positions[Math.floor(positions.length / 2)];
+    const centerPos = positions[Math.floor(positions.length / 2)] ?? {
+      x: 0,
+      y: 0,
+    };
 
     // 计算标准化坐标，需考虑object-contain容器
     // 先将canvas像素坐标映射到图片natural尺寸
@@ -184,8 +187,8 @@ export const extractMainColors = (
       y: normalizedPos.y,
       color: `rgb(${r}, ${g}, ${b})`,
       name:
-        getColorName(Color(`rgb(${r}, ${g}, ${b})`).hex())?.name || "unknown",
-      vibrancy: getColorVibrancy([r, g, b]),
+        getColorName(Color(`rgb(${r}, ${g}, ${b})`).hex())?.name ?? "unknown",
+      vibrancy: getColorVibrancy([g, g, b]),
       isWarm: isWarmColor([r, g, b]),
     };
   });

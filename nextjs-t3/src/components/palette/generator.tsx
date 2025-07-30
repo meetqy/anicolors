@@ -57,7 +57,7 @@ export function Generator({
         <PickerPalette
           onImageLoaded={() => {
             if (!image?.startsWith("http")) {
-              setPoints(pickerRef.current?.extractMainColors(5) || []);
+              setPoints(pickerRef.current?.extractMainColors(5) ?? []);
             }
           }}
           ref={pickerRef}
