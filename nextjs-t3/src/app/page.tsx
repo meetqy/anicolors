@@ -2,7 +2,7 @@ import { GET_PALETTE_LIST, type PaletteListResponse } from "@/query/palette";
 import { getClient } from "@/lib/apollo-client";
 import { Button } from "@/components/ui/button";
 import { Sparkles, Upload, Palette, ArrowRight, Grid3X3 } from "lucide-react";
-// import { PaletteCard } from "./palettes/components/palette-card";
+import { PaletteCard } from "./palettes/components/palette-card";
 import { Badge } from "@/components/ui/badge";
 import Link from "next/link";
 import { Stats } from "./_components/stats";
@@ -17,10 +17,10 @@ export const metadata: Metadata = {
     "Extract the iconic colors from your favorite anime and game scenes. Upload any image to instantly generate a beautiful, shareable color palette with AniColors.",
   icons: [{ rel: "icon", url: "/favicon.ico" }],
   twitter: {
-    images: ["https://anicolors.com/og.jpg"],
+    images: ["og.jpg"],
   },
   openGraph: {
-    images: ["https://anicolors.com/og.jpg"],
+    images: ["og.jpg"],
   },
 };
 
@@ -104,12 +104,12 @@ export default async function Page() {
                 </Button>
               </div>
               <div className="grid grid-cols-1 gap-x-4 gap-y-8 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-                {/* {featuredPalettes.map((palette, index) => (
+                {featuredPalettes.map((palette, index) => (
                   <PaletteCard
                     key={`${palette.documentId}-${index}`}
                     palette={palette}
                   />
-                ))} */}
+                ))}
               </div>
             </div>
           )}
