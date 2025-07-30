@@ -5,6 +5,13 @@
 import "./src/env.js";
 
 /** @type {import("next").NextConfig} */
-const config = {};
+const config = {
+  images: {
+    remotePatterns: [
+      new URL("http://localhost:1337/**/*"),
+      new URL("https://r2.hicolors.org/**/*"),
+    ],
+  },
+};
 
 export default config;
