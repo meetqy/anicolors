@@ -7,7 +7,7 @@ export const ExtendPart = ({ palette }: { palette: Palette }) => {
   if (!extend) return null;
 
   return (
-    <div className="prose mx-auto mt-12 max-w-screen-lg px-4 lg:px-0">
+    <div className="prose prose-th:text-center prose-td:text-center mx-auto mt-12 max-w-screen-lg px-4 lg:px-0">
       <table>
         <thead>
           <tr>
@@ -25,11 +25,11 @@ export const ExtendPart = ({ palette }: { palette: Palette }) => {
               <tr key={item}>
                 <td className="capitalize">{item}</td>
                 <td>{part?.name}</td>
-                <td className="flex items-center gap-1 font-mono uppercase">
+                <td className="flex items-center justify-center gap-1 font-mono uppercase">
                   <div
                     className="size-4 rounded-full"
                     style={{ backgroundColor: part?.color }}
-                  ></div>
+                  />
                   {part?.color}
                 </td>
               </tr>
