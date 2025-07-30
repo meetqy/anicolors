@@ -41,11 +41,14 @@
     "sonner": "^2.0.6",
     "tailwind-merge": "^3.3.1",
     "use-eye-dropper": "^1.7.1",
+    "usehooks-ts": "^3.1.1",
     "zod": "^3.24.2"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3.3.1",
     "@tailwindcss/postcss": "^4.0.15",
+    "@tailwindcss/typography": "^0.5.16",
+    "@types/dom-to-image": "^2.6.7",
     "@types/nearest-color": "^0.4.1",
     "@types/node": "^20.14.10",
     "@types/react": "^19.0.0",

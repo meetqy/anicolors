@@ -8,7 +8,7 @@ import { LogoMask } from "@/components/logo";
 const _heights = ["h-1/2", "h-1/3", "h-2/5", "h-1/6", "h-2/7"];
 
 const CardPalette6Base = ({ points, className, image }: CardPaletteProps) => {
-  const bgColor = points[0].color;
+  const bgColor = points[0]!.color;
   const heights = _heights
     .slice(0, points.length)
     .sort(() => Math.random() - 0.5);
@@ -22,7 +22,7 @@ const CardPalette6Base = ({ points, className, image }: CardPaletteProps) => {
     return (0.299 * r + 0.587 * g + 0.114 * b) / 255;
   };
 
-  const luminance = getLuminance(points[0]?.color || "#000000");
+  const luminance = getLuminance(points[0]?.color ?? "#000000");
   const isDark = luminance < 0.5;
 
   return (

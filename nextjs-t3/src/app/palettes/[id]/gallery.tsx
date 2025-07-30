@@ -41,7 +41,7 @@ export const Gallery = ({ palette }: { palette: Palette }) => {
         render={{
           image: (props) => {
             const src = props.src as string;
-            const filename = src.split("/").pop() || "image";
+            const filename = src.split("/").pop() ?? "image";
             // 删除 filename 中最后一个_和后面的部分
             const cleanedFilename = filename.split("_").slice(0, -1).join("_");
 

@@ -7,7 +7,7 @@ import { useQuery } from "@apollo/client";
 import { getAssetUrl } from "@/lib/utils";
 import "react-photo-album/columns.css";
 import { DomGallery } from "./dom-gallery";
-import { GET_PALETTE, type Palette, type PartColors } from "@/query/palette";
+import { GET_PALETTE, type Palette } from "@/query/palette";
 import { PickerPart } from "@/components/palette/picker-part";
 
 export const Maker = ({ id }: { id: string }) => {
@@ -32,12 +32,9 @@ export const Maker = ({ id }: { id: string }) => {
         </div>
       ) : (
         <>
-          <PickerPart
-            className="mb-6"
-            colors={data?.palette.extend?.parts}
-          />
+          <PickerPart className="mb-6" colors={data?.palette.extend?.parts} />
           <Generator
-            initialPoints={data?.palette.points || []}
+            initialPoints={data?.palette.points ?? []}
             initialImage={image}
             onColorsChangeEnter={setPoints}
             onImageChange={setImage}
@@ -50,7 +47,7 @@ export const Maker = ({ id }: { id: string }) => {
           image={image}
           points={points}
           id={id}
-          gallery={data?.palette.gallery || []}
+          gallery={data?.palette.gallery ?? []}
         />
       )}
     </>

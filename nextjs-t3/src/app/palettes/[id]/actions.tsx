@@ -4,10 +4,10 @@ import { Button } from "@/components/ui/button";
 import { type Palette } from "@/query/palette";
 import { useToggleLike } from "@/hooks/use-toggle-like";
 import Link from "next/link";
-import { MdFavoriteBorder, MdFavorite, MdLink } from "react-icons/md";
 import { toast } from "sonner";
 import { cn, getOriginalUrl } from "@/lib/utils";
-import { TwitterIcon } from "lucide-react";
+import { Heart, TwitterIcon, LinkIcon } from "lucide-react";
+import { env } from "@/env";
 
 interface PaletteActionsProps {
   palette: Palette;
@@ -27,13 +27,15 @@ export const PaletteActions = ({ palette, id }: PaletteActionsProps) => {
     initialLikes: palette.likes,
   });
 
-  const onLink = () => {
-    navigator.clipboard.writeText(`${window.location.origin}/palettes/${id}`);
+  const onLink = async () => {
+    await navigator.clipboard.writeText(
+      `${window.location.origin}/palettes/${id}`,
+    );
     toast.success("Palette link copied to clipboard!");
   };
 
-  const title = `${palette.category} ${palette.name} Palette - AniColors \n\n #anicolors #${toCamelCase(palette.category)} #${toCamelCase(palette.name)} #palette`;
-  const host = process.env.NEXT_PUBLIC_SITE_URL || "https://anicolors.com";
+  const title = `${palette.category} ${palette.name} Palette - AniColors \n\n #anicolors #hicolors #${toCamelCase(palette.category)} #${toCamelCase(palette.name)} #palette`;
+  const host = env.NEXT_PUBLIC_SITE_URL;
 
   return (
     <div className="mx-auto mt-4 max-w-screen-lg px-4 lg:px-0">
@@ -45,23 +47,18 @@ export const PaletteActions = ({ palette, id }: PaletteActionsProps) => {
 
       <div className="flex flex-wrap items-center justify-between gap-4">
         <div className="flex flex-wrap items-center gap-2">
-          <Button
-            variant="outline"
-            className={cn({
-              "bg-muted border-muted": isLiked,
-            })}
-            onClick={toggleLike}
-            disabled={isLoading}
-          >
-            {isLiked ? (
-              <MdFavorite className="size-5 text-red-500" />
-            ) : (
-              <MdFavoriteBorder className="size-5" />
-            )}
+          <Button variant="outline" onClick={toggleLike} disabled={isLoading}>
+            <Heart
+              className={cn("size-5", {
+                "text-red-500": isLiked,
+                "text-muted-foreground": !isLiked,
+              })}
+              fill={isLiked ? "currentColor" : "none"}
+            />
             {likes}
           </Button>
           <Button variant="outline" onClick={onLink}>
-            <MdLink className="size-5" /> Link
+            <LinkIcon className="size-5" /> Link
           </Button>
           <Button variant={"outline"} asChild>
             <Link

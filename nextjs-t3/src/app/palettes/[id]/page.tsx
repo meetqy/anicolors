@@ -5,7 +5,7 @@ import { PaletteActions } from "./actions";
 import { getClient } from "@/lib/apollo-client";
 import { getAssetUrl, capitalize } from "@/lib/utils";
 import { Gallery } from "./gallery";
-import { GET_PALETTE, type Palette, type PartColors } from "@/query/palette";
+import { GET_PALETTE, type Palette } from "@/query/palette";
 import { type Metadata } from "next";
 import Link from "next/link";
 import { Shapes } from "lucide-react";
@@ -99,10 +99,7 @@ export default async function Page({
           </ul>
         </div>
 
-        <PickerPart
-          className="mb-6"
-          colors={palette.extend?.parts}
-        />
+        <PickerPart className="mb-6" colors={palette.extend?.parts} />
         <Generator initialPoints={points} initialImage={image} />
         <PaletteActions id={id} palette={palette} />
 

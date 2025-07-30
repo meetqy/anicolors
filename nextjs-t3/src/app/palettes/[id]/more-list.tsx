@@ -95,7 +95,9 @@ export const MoreList = ({
   // Trigger load more when the element is visible
   useEffect(() => {
     if (isIntersecting && hasMore && !loading && !isLoadingMore) {
-      loadMore();
+      loadMore().catch((error) => {
+        console.error("Error in intersection observer loadMore:", error);
+      });
     }
   }, [isIntersecting, hasMore, loading, isLoadingMore, loadMore]);
 

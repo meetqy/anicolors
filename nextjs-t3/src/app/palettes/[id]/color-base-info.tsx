@@ -9,8 +9,8 @@ export const ColorBaseInfo = ({ point }: { point: ColorPoint }) => {
   const hex = item.hex();
   const rgb = item.rgb().string();
 
-  const copyToClipboard = (text: string) => {
-    navigator.clipboard.writeText(text);
+  const copyToClipboard = async (text: string) => {
+    await navigator.clipboard.writeText(text);
     toast.success("Copied to clipboard");
   };
 

@@ -96,7 +96,7 @@ export function withSave<P extends object>(WrappedComponent: ComponentType<P>) {
           );
           const dataUrl = await domtoimage.toPng(targetElement, options);
           const link = document.createElement("a");
-          link.download = fileName || `palette-${props.id || Date.now()}.png`;
+          link.download = fileName ?? `palette-${props.id ?? Date.now()}.png`;
           link.href = dataUrl;
           link.click();
           targetElement.className = className;
@@ -162,7 +162,7 @@ export function withSave<P extends object>(WrappedComponent: ComponentType<P>) {
     },
   );
 
-  WithSaveComponent.displayName = `withSave(${WrappedComponent.displayName || WrappedComponent.name})`;
+  WithSaveComponent.displayName = `withSave(${WrappedComponent.displayName ?? WrappedComponent.name})`;
 
   return WithSaveComponent;
 }
