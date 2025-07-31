@@ -14,11 +14,7 @@ const generatorData = async (event) => {
   data.data = blog.palettes.map((item) => {
     const value = getNestedValue(item, field);
 
-    return {
-      character: item.name,
-      documentId: item.documentId,
-      ...value,
-    };
+    return value;
   });
 };
 
