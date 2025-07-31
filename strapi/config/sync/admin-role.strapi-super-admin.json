@@ -6,6 +6,84 @@
   "locale": null,
   "permissions": [
     {
+      "documentId": "fh4jr09x6e2er2j2prmob5od",
+      "action": "plugin::content-manager.explorer.create",
+      "actionParameters": {},
+      "subject": "api::blog.blog",
+      "properties": {
+        "fields": [
+          "title",
+          "description",
+          "slug",
+          "palettes",
+          "content",
+          "cover",
+          "data",
+          "field"
+        ]
+      },
+      "conditions": [],
+      "locale": null
+    },
+    {
+      "documentId": "jh7t1fd64h58sp2a1dvpe96p",
+      "action": "plugin::content-manager.explorer.delete",
+      "actionParameters": {},
+      "subject": "api::blog.blog",
+      "properties": {},
+      "conditions": [],
+      "locale": null
+    },
+    {
+      "documentId": "xn92hcm12cxhkdtmc4qdujdb",
+      "action": "plugin::content-manager.explorer.publish",
+      "actionParameters": {},
+      "subject": "api::blog.blog",
+      "properties": {},
+      "conditions": [],
+      "locale": null
+    },
+    {
+      "documentId": "g5jdtb3cg29mwl17r2mlye4o",
+      "action": "plugin::content-manager.explorer.read",
+      "actionParameters": {},
+      "subject": "api::blog.blog",
+      "properties": {
+        "fields": [
+          "title",
+          "description",
+          "slug",
+          "palettes",
+          "content",
+          "cover",
+          "data",
+          "field"
+        ]
+      },
+      "conditions": [],
+      "locale": null
+    },
+    {
+      "documentId": "hwlhc01cg9kiqvmbnjxrkhj4",
+      "action": "plugin::content-manager.explorer.update",
+      "actionParameters": {},
+      "subject": "api::blog.blog",
+      "properties": {
+        "fields": [
+          "title",
+          "description",
+          "slug",
+          "palettes",
+          "content",
+          "cover",
+          "data",
+          "field"
+        ]
+      },
+      "conditions": [],
+      "locale": null
+    },
+    {
       "documentId": "b7d1j6sr2i9fql0uf14tqwrp",
       "action": "plugin::content-manager.explorer.create",
       "actionParameters": {},
@@ -132,7 +210,7 @@
       "locale": null
     },
     {
-      "documentId": "v442qi7j9q3aa505mdb5kxft",
+      "documentId": "dkmp2lqtrdjalkjidtc70cm2",
       "action": "plugin::content-manager.explorer.create",
       "actionParameters": {},
       "subject": "api::palette.palette",
@@ -147,7 +225,9 @@
           "gallery",
           "cover",
           "categoryExtend",
-          "extend"
+          "extend",
+          "blogs",
+          "avatar"
         ]
       },
       "conditions": [],
@@ -172,7 +252,7 @@
       "locale": null
     },
     {
-      "documentId": "de6oshy0awrsv223esmmi8rt",
+      "documentId": "asmvqrmp4l45lwambibmpg4l",
       "action": "plugin::content-manager.explorer.read",
       "actionParameters": {},
       "subject": "api::palette.palette",
@@ -187,14 +267,16 @@
           "gallery",
           "cover",
           "categoryExtend",
-          "extend"
+          "extend",
+          "blogs",
+          "avatar"
         ]
       },
       "conditions": [],
       "locale": null
     },
     {
-      "documentId": "dv3g2zjvsdgyyx7wtd2wqybc",
+      "documentId": "wkngabprbfwpyjn3jqsxjg2h",
       "action": "plugin::content-manager.explorer.update",
       "actionParameters": {},
       "subject": "api::palette.palette",
@@ -209,7 +291,9 @@
           "gallery",
           "cover",
           "categoryExtend",
-          "extend"
+          "extend",
+          "blogs",
+          "avatar"
         ]
       },
       "conditions": [],
