@@ -42,7 +42,7 @@ export default function RootLayout({
           <Toaster richColors />
         </ApolloWrapper>
       </body>
-      <GoogleAnalytics gaId="G-CZV2BT21C2" />
+      <GoogleAnalytics gaId="G-N89HB3J99M" />
     </html>
   );
 }
