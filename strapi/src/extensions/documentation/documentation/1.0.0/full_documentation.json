@@ -14,7 +14,7 @@
       "name": "Apache 2.0",
       "url": "https://www.apache.org/licenses/LICENSE-2.0.html"
     },
-    "x-generation-date": "2025-07-31T09:14:43.830Z"
+    "x-generation-date": "2025-07-31T09:22:38.304Z"
   },
   "x-strapi-config": {
     "plugins": [
@@ -3524,7 +3524,8 @@
             "required": [
               "title",
               "description",
-              "slug"
+              "slug",
+              "field"
             ],
             "type": "object",
             "properties": {
@@ -3564,6 +3565,9 @@
                 "example": "string or id"
               },
               "data": {},
+              "field": {
+                "type": "string"
+              },
               "locale": {
                 "type": "string"
               },
@@ -3625,7 +3629,8 @@
         "required": [
           "title",
           "description",
-          "slug"
+          "slug",
+          "field"
         ],
         "properties": {
           "id": {
@@ -4982,6 +4987,9 @@
                         }
                       },
                       "data": {},
+                      "field": {
+                        "type": "string"
+                      },
                       "createdAt": {
                         "type": "string",
                         "format": "date-time"
@@ -5350,6 +5358,9 @@
             }
           },
           "data": {},
+          "field": {
+            "type": "string"
+          },
           "createdAt": {
             "type": "string",
             "format": "date-time"
@@ -7001,6 +7012,9 @@
                         }
                       },
                       "data": {},
+                      "field": {
+                        "type": "string"
+                      },
                       "createdAt": {
                         "type": "string",
                         "format": "date-time"
@@ -8741,6 +8755,9 @@
                         }
                       },
                       "data": {},
+                      "field": {
+                        "type": "string"
+                      },
                       "createdAt": {
                         "type": "string",
                         "format": "date-time"
@@ -10511,6 +10528,9 @@
                               }
                             },
                             "data": {},
+                            "field": {
+                              "type": "string"
+                            },
                             "createdAt": {
                               "type": "string",
                               "format": "date-time"

@@ -9,8 +9,8 @@ import { type PartColors } from "@/query/palette";
 import { cn, partsConstant } from "@/lib/utils";
 
 const baseParts = [
-  "hair", // Hair Color
   "eye", // Eye Color
+  "hair", // Hair Color
   "skin", // Skin Color
   "shirt", // Shirt or inner clothing
   "pants", // Pants or trousers

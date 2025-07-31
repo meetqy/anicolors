@@ -44,6 +44,11 @@
     },
     "data": {
       "type": "json"
+    },
+    "field": {
+      "type": "string",
+      "private": true,
+      "required": true
     }
   }
 }
