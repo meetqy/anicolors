@@ -22,6 +22,7 @@ export const Footer = () => {
     { name: "Tap4AI", url: "https://tap4.ai" },
     { name: "Kontext AI", url: "https://kontext-ai.com" },
     { name: "SimilarLabs", url: "https://similarlabs.com" },
+    { name: "AIShenqi", url: "https://aishenqi.net" },
   ];
 
   return (
