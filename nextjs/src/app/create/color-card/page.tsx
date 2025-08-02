@@ -4,18 +4,25 @@ import { Badge } from "@/components/ui/badge";
 import { getAssetUrl } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
+import { env } from "@/env";
 
 export const metadata: Metadata = {
   title: "Color Card Generator – Create, Download, Share – Free Online Tool",
   description: `Create beautiful 4:5 color cards with HEX, RGB & CMYK codes. Perfect for designers, artists, and color enthusiasts. Download high-quality cards instantly.`,
   openGraph: {
     images: [
-      getAssetUrl("https://r2.hicolors.org/1/color_1_18515360cf.png", 1200),
+      getAssetUrl(
+        `${env.NEXT_PUBLIC_ASSET_URL}/1/color_1_18515360cf.png`,
+        1200,
+      ),
     ],
   },
   twitter: {
     images: [
-      getAssetUrl("https://r2.hicolors.org/1/color_1_18515360cf.png", 1200),
+      getAssetUrl(
+        `${env.NEXT_PUBLIC_ASSET_URL}/1/color_1_18515360cf.png`,
+        1200,
+      ),
     ],
     card: "summary_large_image",
   },
