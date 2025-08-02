@@ -13,14 +13,18 @@ const connectColorName = async (event) => {
   const { data, where } = event.params;
   if (!where.id) return;
 
-  const { points } = data;
+  let { points } = data;
+  if (!points) return;
+  if (typeof points === "string") {
+    points = JSON.parse(points);
+  }
+
   const palette = await strapi.db.query("api::palette.palette").findOne({
     where: { id: where.id },
     populate: { colors: true },
   });
 
   if (!palette) return;
-  if (!points) return;
   if (palette.colors.length > 0) return;
 
   const names = points.map((item) => item.name);
