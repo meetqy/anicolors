@@ -11,6 +11,8 @@ const syncCategory = async (event) => {
 
 const connectColorName = async (event) => {
   const { data, where } = event.params;
+  if (!where.id) return;
+
   const { points } = data;
   const palette = await strapi.db.query("api::palette.palette").findOne({
     where: { id: where.id },
