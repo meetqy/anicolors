@@ -9,12 +9,34 @@ const syncCategory = async (event) => {
   }
 };
 
+const connectColorName = async (event) => {
+  const { data, where } = event.params;
+  const { points } = data;
+  const palette = await strapi.db.query("api::palette.palette").findOne({
+    where: { id: where.id },
+    populate: { colors: true },
+  });
+
+  if (!palette) return;
+  if (!points) return;
+  if (palette.colors.length > 0) return;
+
+  const names = points.map((item) => item.name);
+  const colorList = await strapi.db.query("api::color.color").findMany({
+    where: { name: { $in: names } },
+  });
+
+  event.params.data.colors = {
+    connect: colorList.map((item) => item.id),
+  };
+};
+
 export default {
   async beforeCreate(event) {
-    await syncCategory(event);
+    await Promise.all([connectColorName(event), syncCategory(event)]);
   },
 
   async beforeUpdate(event) {
-    await syncCategory(event);
+    await Promise.all([connectColorName(event), syncCategory(event)]);
   },
 };
