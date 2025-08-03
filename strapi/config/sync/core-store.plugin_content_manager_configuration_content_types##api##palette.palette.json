@@ -258,13 +258,6 @@
       }
     },
     "layouts": {
-      "list": [
-        "id",
-        "name",
-        "likes",
-        "image",
-        "createdAt"
-      ],
       "edit": [
         [
           {
@@ -322,6 +315,14 @@
             "size": 6
           }
         ]
+      ],
+      "list": [
+        "id",
+        "image",
+        "name",
+        "category",
+        "likes",
+        "createdAt"
       ]
     },
     "uid": "api::palette.palette"
