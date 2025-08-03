@@ -23,6 +23,7 @@ export const Footer = () => {
     { name: "Kontext AI", url: "https://kontext-ai.com" },
     { name: "SimilarLabs", url: "https://similarlabs.com" },
     { name: "Fazier badge", url: "https://fazier.com/launches/anicolors.com" },
+    { name: "AiFinder", url: "https://aifinder.site" },
   ];
 
   return (
