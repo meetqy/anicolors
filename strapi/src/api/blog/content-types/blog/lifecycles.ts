@@ -3,6 +3,7 @@ const generatorData = async (event) => {
   const { field } = data;
 
   if (data.data && data.content) return;
+  if (!where.id) return;
 
   const blog = await strapi.db.query("api::blog.blog").findOne({
     where: { id: where.id },
