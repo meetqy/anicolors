@@ -14,6 +14,7 @@ export const ExtendPart = ({ palette }: { palette: Palette }) => {
             <th>Part</th>
             <th>ColorName</th>
             <th>Hex</th>
+            <th>Color Sample</th>
           </tr>
         </thead>
         <tbody>
@@ -26,11 +27,13 @@ export const ExtendPart = ({ palette }: { palette: Palette }) => {
                 <td className="capitalize">{item}</td>
                 <td>{part?.name}</td>
                 <td className="flex items-center justify-center gap-1 font-mono uppercase">
-                  <div
-                    className="size-4 rounded-full"
+                  {part?.color}
+                </td>
+                <td>
+                  <span
+                    className="inline-block size-4 rounded-full"
                     style={{ backgroundColor: part?.color }}
                   />
-                  {part?.color}
                 </td>
               </tr>
             );
