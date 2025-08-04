@@ -6,7 +6,7 @@
   "locale": null,
   "permissions": [
     {
-      "documentId": "fh4jr09x6e2er2j2prmob5od",
+      "documentId": "cvxy0ckeanp4xplk933vc7vk",
       "action": "plugin::content-manager.explorer.create",
       "actionParameters": {},
       "subject": "api::blog.blog",
@@ -16,9 +16,7 @@
           "description",
           "slug",
           "palettes",
-          "content",
           "cover",
-          "data",
           "field"
         ]
       },
@@ -44,7 +42,7 @@
       "locale": null
     },
     {
-      "documentId": "g5jdtb3cg29mwl17r2mlye4o",
+      "documentId": "bsp16vx3x3a7l82n6hn1ml6o",
       "action": "plugin::content-manager.explorer.read",
       "actionParameters": {},
       "subject": "api::blog.blog",
@@ -54,9 +52,7 @@
           "description",
           "slug",
           "palettes",
-          "content",
           "cover",
-          "data",
           "field"
         ]
       },
@@ -64,7 +60,7 @@
       "locale": null
     },
     {
-      "documentId": "hwlhc01cg9kiqvmbnjxrkhj4",
+      "documentId": "t90sy6a9n8s2389jmt2pfj7w",
       "action": "plugin::content-manager.explorer.update",
       "actionParameters": {},
       "subject": "api::blog.blog",
@@ -74,9 +70,7 @@
           "description",
           "slug",
           "palettes",
-          "content",
           "cover",
-          "data",
           "field"
         ]
       },

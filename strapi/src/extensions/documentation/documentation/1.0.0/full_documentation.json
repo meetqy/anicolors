@@ -14,7 +14,7 @@
       "name": "Apache 2.0",
       "url": "https://www.apache.org/licenses/LICENSE-2.0.html"
     },
-    "x-generation-date": "2025-08-04T08:45:24.453Z"
+    "x-generation-date": "2025-08-04T09:01:19.481Z"
   },
   "x-strapi-config": {
     "plugins": [
@@ -3552,7 +3552,6 @@
                   "example": "string or id"
                 }
               },
-              "content": {},
               "cover": {
                 "oneOf": [
                   {
@@ -3564,7 +3563,6 @@
                 ],
                 "example": "string or id"
               },
-              "data": {},
               "field": {
                 "type": "string"
               },
@@ -4856,7 +4854,6 @@
                           }
                         }
                       },
-                      "content": {},
                       "cover": {
                         "type": "object",
                         "properties": {
@@ -4986,7 +4983,6 @@
                           }
                         }
                       },
-                      "data": {},
                       "field": {
                         "type": "string"
                       },
@@ -5227,7 +5223,6 @@
               }
             }
           },
-          "content": {},
           "cover": {
             "type": "object",
             "properties": {
@@ -5357,7 +5352,6 @@
               }
             }
           },
-          "data": {},
           "field": {
             "type": "string"
           },
@@ -6881,7 +6875,6 @@
                           }
                         }
                       },
-                      "content": {},
                       "cover": {
                         "type": "object",
                         "properties": {
@@ -7011,7 +7004,6 @@
                           }
                         }
                       },
-                      "data": {},
                       "field": {
                         "type": "string"
                       },
@@ -8624,7 +8616,6 @@
                           }
                         }
                       },
-                      "content": {},
                       "cover": {
                         "type": "object",
                         "properties": {
@@ -8754,7 +8745,6 @@
                           }
                         }
                       },
-                      "data": {},
                       "field": {
                         "type": "string"
                       },
@@ -10397,7 +10387,6 @@
                                 }
                               }
                             },
-                            "content": {},
                             "cover": {
                               "type": "object",
                               "properties": {
@@ -10527,7 +10516,6 @@
                                 }
                               }
                             },
-                            "data": {},
                             "field": {
                               "type": "string"
                             },

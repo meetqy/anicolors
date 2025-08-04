@@ -30,10 +30,6 @@
       "target": "api::palette.palette",
       "inversedBy": "blogs"
     },
-    "content": {
-      "type": "blocks",
-      "required": false
-    },
     "cover": {
       "type": "media",
       "multiple": false,
@@ -41,9 +37,6 @@
       "allowedTypes": [
         "images"
       ]
-    },
-    "data": {
-      "type": "json"
     },
     "field": {
       "type": "string",

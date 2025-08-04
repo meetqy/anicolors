@@ -76,20 +76,6 @@
           "sortable": false
         }
       },
-      "content": {
-        "edit": {
-          "label": "content",
-          "description": "",
-          "placeholder": "",
-          "visible": true,
-          "editable": true
-        },
-        "list": {
-          "label": "content",
-          "searchable": false,
-          "sortable": false
-        }
-      },
       "cover": {
         "edit": {
           "label": "cover",
@@ -100,20 +86,6 @@
         },
         "list": {
           "label": "cover",
-          "searchable": false,
-          "sortable": false
-        }
-      },
-      "data": {
-        "edit": {
-          "label": "data",
-          "description": "",
-          "placeholder": "",
-          "visible": true,
-          "editable": true
-        },
-        "list": {
-          "label": "data",
           "searchable": false,
           "sortable": false
         }
@@ -200,6 +172,12 @@
       }
     },
     "layouts": {
+      "list": [
+        "id",
+        "title",
+        "slug",
+        "palettes"
+      ],
       "edit": [
         [
           {
@@ -230,25 +208,7 @@
             "name": "cover",
             "size": 6
           }
-        ],
-        [
-          {
-            "name": "data",
-            "size": 12
-          }
-        ],
-        [
-          {
-            "name": "content",
-            "size": 12
-          }
         ]
-      ],
-      "list": [
-        "id",
-        "title",
-        "slug",
-        "palettes"
       ]
     },
     "uid": "api::blog.blog"
