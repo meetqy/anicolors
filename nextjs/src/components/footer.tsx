@@ -25,6 +25,7 @@ export const Footer = () => {
     { name: "Fazier badge", url: "https://fazier.com/launches/anicolors.com" },
     { name: "AiFinder", url: "https://aifinder.site" },
     { name: "Startupslab", url: "https://startupslab.site" },
+    { name: "SimilarLabs", url: "https://similarlabs.com" },
   ];
 
   return (
