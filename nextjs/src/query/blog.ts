@@ -7,7 +7,9 @@ export const GET_BLOG = gql`
       title
       field
       description
-      cover
+      cover {
+        url
+      }
       palettes(pagination: $pagination) {
         documentId
         extend
