@@ -41,9 +41,11 @@ export const Gallery = ({ palette }: { palette: Palette }) => {
         render={{
           image: (props) => {
             const src = props.src as string;
-            const filename = src.split("/").pop() ?? "image";
-            // 删除 filename 中最后一个_和后面的部分
-            const cleanedFilename = filename.split("_").slice(0, -1).join("_");
+            // 匹配 palette_num, color_num, gradient_lighten_num
+            const match = /(palette|color|gradient_lighten)_(\d+)/.exec(src);
+            const cleanedFilename = match
+              ? match[0]
+              : (src.split("/").pop() ?? "image");
 
             return (
               <div className="group relative overflow-hidden rounded-md">

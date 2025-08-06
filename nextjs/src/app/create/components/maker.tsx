@@ -13,7 +13,7 @@ import { PickerPart } from "@/components/palette/picker-part";
 export const Maker = ({ id }: { id: string }) => {
   const [points, setPoints] = useState<ColorPoint[]>([]);
   const { data, loading } = useQuery<{ palette: Palette }>(GET_PALETTE, {
-    variables: { documentId: id },
+    variables: { documentId: id, pagination: { pageSize: 100, page: 1 } },
   });
 
   const [image, setImage] = useState<string>();
