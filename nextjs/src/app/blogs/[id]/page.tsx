@@ -79,22 +79,27 @@ export default async function Page({ params }: PageProps) {
             <tr key={index}>
               <td className="flex flex-col items-center justify-center gap-2 capitalize">
                 <img
-                  className="not-prose size-16 rounded-full border bg-black"
+                  className="not-prose size-16 rounded-full border"
                   src={item.avatar}
                   alt={item.character}
-                />
-              </td>
-              <td className="not-prose">
-                <div
-                  className="mx-auto flex h-10 w-2/3 items-center gap-2 rounded-md pl-4"
                   style={{
                     backgroundColor: item.color,
                   }}
                 />
-                <p className="mx-auto flex w-2/3 justify-end gap-4 text-right">
-                  <span>{item.name}</span>
-                  <span className="font-mono uppercase">{item.color}</span>
-                </p>
+              </td>
+              <td className="not-prose">
+                <div className="ml-auto flex w-2/3 items-center justify-start gap-2">
+                  <div
+                    className="size-12 rounded-full"
+                    style={{
+                      backgroundColor: item.color,
+                    }}
+                  />
+                  <div className="text-left">
+                    <p>{item.name}</p>
+                    <p className="font-mono uppercase">{item.color}</p>
+                  </div>
+                </div>
               </td>
             </tr>
           ))}
