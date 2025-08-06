@@ -40,7 +40,6 @@
     },
     "field": {
       "type": "string",
-      "private": true,
       "required": true
     }
   }
