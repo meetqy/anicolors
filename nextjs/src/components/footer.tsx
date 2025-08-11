@@ -1,4 +1,4 @@
-import { InstagramIcon, TwitterIcon } from "lucide-react";
+import { GithubIcon, InstagramIcon, TwitterIcon } from "lucide-react";
 import Link from "next/link";
 import { Logo } from "./logo";
 
@@ -40,6 +40,14 @@ export const Footer = () => {
               </p>
             </div>
             <div className="flex items-center gap-x-4 gap-y-2">
+              <Link
+                href={"https://github.com/meetqy/anicolors"}
+                aria-label="View the GitHub"
+                target="_blank"
+                className="text-muted-foreground hover:text-foreground transition-colors"
+              >
+                <GithubIcon />
+              </Link>
               <Link
                 href={"https://x.com/anicolors"}
                 aria-label="View the Twitter profile"

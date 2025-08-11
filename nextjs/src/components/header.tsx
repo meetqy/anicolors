@@ -1,6 +1,5 @@
 import Link from "next/link";
 import { Button } from "./ui/button";
-import { GithubIcon } from "lucide-react";
 import { Logo } from "./logo";
 
 export function Header() {
@@ -25,15 +24,6 @@ export function Header() {
           <Button asChild className="hidden lg:block">
             <Link href="/create" aria-label="Create a new color palette">
               Make a Palette
-            </Link>
-          </Button>
-          <Button variant="ghost" size="icon" asChild>
-            <Link
-              href="https://github.com/meetqy/hicolors"
-              aria-label="View the GitHub repository"
-              target="_blank"
-            >
-              <GithubIcon className="size-6" />
             </Link>
           </Button>
         </div>
