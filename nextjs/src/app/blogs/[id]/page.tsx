@@ -2,6 +2,7 @@ import { getClient } from "@/lib/apollo-client";
 import { getAssetUrl } from "@/lib/utils";
 import { GET_BLOG, type BlogResponse } from "@/query/blog";
 import type { Metadata } from "next";
+import Link from "next/link";
 import { notFound } from "next/navigation";
 
 /**
@@ -70,14 +71,16 @@ export default async function Page({ params }: PageProps) {
       <div className="not-prose grid grid-cols-2 gap-x-4 gap-y-6 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6">
         {data.map((item) => (
           <div key={item.documentId} className="flex flex-col items-center">
-            <img
-              className="not-prose size-16 rounded-full border"
-              src={item.avatar}
-              alt={item.character}
-              style={{
-                backgroundColor: item.color,
-              }}
-            />
+            <Link href={`/palettes/${item.documentId}`}>
+              <img
+                className="not-prose size-24 rounded-full border"
+                src={item.avatar}
+                alt={item.character}
+                style={{
+                  backgroundColor: item.color,
+                }}
+              />
+            </Link>
             <div className="mt-2 text-center">
               <p className="text-muted-foreground text-sm capitalize">
                 {item.character}

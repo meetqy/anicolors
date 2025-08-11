@@ -13,8 +13,13 @@ export function Header() {
         {/* Auth Buttons */}
         <div className="flex items-center gap-2">
           <Button variant="link" asChild>
+            <Link href="/blogs" aria-label="View all blogs">
+              Blogs
+            </Link>
+          </Button>
+          <Button variant="link" asChild>
             <Link href="/palettes" aria-label="View all color palettes">
-              All Palettes
+              Palettes
             </Link>
           </Button>
           <Button asChild className="hidden lg:block">

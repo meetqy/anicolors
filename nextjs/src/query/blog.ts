@@ -40,3 +40,27 @@ export type BlogResponse = {
     }[];
   };
 };
+
+export const GET_BLOG_LIST = gql`
+  query Query($pagination: PaginationArg, $sort: [String]) {
+    blogs(pagination: $pagination, sort: $sort) {
+      documentId
+      title
+      description
+      cover {
+        url
+      }
+      publishedAt
+    }
+  }
+`;
+
+export type BlogListResponse = {
+  blogs: {
+    documentId: string;
+    title: string;
+    description: string;
+    cover: { url: string };
+    publishedAt: string;
+  }[];
+};
