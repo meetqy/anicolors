@@ -61,50 +61,32 @@ export default async function Page({ params }: PageProps) {
   });
 
   return (
-    <article className="container mx-auto py-24">
+    <article className="prose container mx-auto py-24">
       <div className="mx-auto mb-12 max-w-screen-md text-center">
-        <h1 className="h1">{blog.title}</h1>
-        <p className="p">{blog.description}</p>
+        <h1>{blog.title}</h1>
+        <p>{blog.description}</p>
       </div>
 
-      <table className="prose prose-th:text-center prose-td:text-center mx-auto w-full text-center">
-        <thead>
-          <tr>
-            <th>Character</th>
-            <th className="capitalize">{blog.field.split(".").pop()} Color</th>
-          </tr>
-        </thead>
-        <tbody>
-          {data.map((item, index) => (
-            <tr key={index}>
-              <td className="flex flex-col items-center justify-center gap-2 capitalize">
-                <img
-                  className="not-prose size-16 rounded-full border"
-                  src={item.avatar}
-                  alt={item.character}
-                  style={{
-                    backgroundColor: item.color,
-                  }}
-                />
-              </td>
-              <td className="not-prose">
-                <div className="ml-auto flex w-2/3 items-center justify-start gap-2">
-                  <div
-                    className="size-12 rounded-full"
-                    style={{
-                      backgroundColor: item.color,
-                    }}
-                  />
-                  <div className="text-left">
-                    <p>{item.name}</p>
-                    <p className="font-mono uppercase">{item.color}</p>
-                  </div>
-                </div>
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
+      <div className="not-prose grid grid-cols-2 gap-x-4 gap-y-6 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6">
+        {data.map((item) => (
+          <div key={item.documentId} className="flex flex-col items-center">
+            <img
+              className="not-prose size-16 rounded-full border"
+              src={item.avatar}
+              alt={item.character}
+              style={{
+                backgroundColor: item.color,
+              }}
+            />
+            <div className="mt-2 text-center">
+              <p className="text-muted-foreground text-sm capitalize">
+                {item.character}
+              </p>
+              <p className="font-mono uppercase">{item.color}</p>
+            </div>
+          </div>
+        ))}
+      </div>
     </article>
   );
 }
