@@ -2,6 +2,7 @@ import { PaletteCard } from "@/app/palettes/components/palette-card";
 import { PaginationControls } from "@/components/pagination-controls";
 import { getClient } from "@/lib/apollo-client";
 import { GET_PALETTE_LIST, type PaletteListResponse } from "@/query/palette";
+import type { Metadata } from "next";
 
 const pageSize = 24;
 
@@ -67,7 +68,7 @@ export default async function CategoryPage({
 export async function generateMetadata({
   params,
   searchParams,
-}: CategoryPageProps) {
+}: CategoryPageProps): Promise<Metadata> {
   const { name } = await params;
   const page = parseInt((await searchParams).page ?? "1");
   const categoryName = decodeURIComponent(name);
@@ -75,5 +76,8 @@ export async function generateMetadata({
   return {
     title: `${categoryName} Color Palettes – Page ${page} | AniColors`,
     description: `Page ${page} of beautiful ${categoryName} color palettes from characters and scenes.`,
+    alternates: {
+      canonical: `/color/${name}`,
+    },
   };
 }

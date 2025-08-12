@@ -22,6 +22,9 @@ export const metadata: Metadata = {
   openGraph: {
     images: ["og.jpg"],
   },
+  alternates: {
+    canonical: "/",
+  },
 };
 
 const getPalettesList = async (
