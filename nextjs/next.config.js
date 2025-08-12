@@ -12,6 +12,11 @@ const config = {
       new URL("https://r2.hicolors.org/**/*"),
     ],
   },
+  async rewrites() {
+    return {
+      beforeFiles: [{ source: "/sitemap.xml", destination: "/api/sitemap" }],
+    };
+  },
 };
 
 export default config;
