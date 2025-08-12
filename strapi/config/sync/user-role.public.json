@@ -51,6 +51,16 @@
       "locale": null
     },
     {
+      "documentId": "m7um4ym6rwtf3ihr36q6lbe1",
+      "action": "api::tool.tool.find",
+      "locale": null
+    },
+    {
+      "documentId": "hnyzp4axsiqnaos6jjdhdqen",
+      "action": "api::tool.tool.findOne",
+      "locale": null
+    },
+    {
       "documentId": "lksi6v0fp3q2enr3kyzfi20a",
       "action": "plugin::strapi-5-sitemap-plugin.controller.getSitemap",
       "locale": null
