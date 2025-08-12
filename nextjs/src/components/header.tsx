@@ -13,7 +13,7 @@ export function Header() {
 
   const search = useImeEnter(() => {
     window.open(
-      `https://www.google.com/search?q=site:anicolors.com/t%20${query}`,
+      `https://www.google.com/search?q=site:anicolors.com%20${query}`,
     );
   });
 
