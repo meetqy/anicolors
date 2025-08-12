@@ -6,6 +6,7 @@ import { Input } from "./ui/input";
 import { Logo } from "./logo";
 import { useState } from "react";
 import { useImeEnter } from "@/hooks/use-ime-enter";
+import { SearchIcon } from "lucide-react";
 
 export function Header() {
   const [query, setQuery] = useState("");
@@ -18,35 +19,40 @@ export function Header() {
 
   return (
     <header className="border-border bg-background/90 sticky top-0 z-50 backdrop-blur-md">
-      <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-6">
+      <div className="mx-auto flex h-16 max-w-7xl items-center justify-between gap-4 px-6">
         {/* Logo */}
-        <Logo />
+        <Logo className="text-base lg:text-2xl" />
 
         {/* Auth Buttons */}
-        <div className="flex items-center gap-2">
-          <div className="max-w-96">
+        <div className="flex flex-1 items-center justify-end gap-2">
+          <div className="relative flex max-w-72 flex-1 items-center">
+            <SearchIcon className="text-muted-foreground absolute left-2 z-10 size-4" />
             <Input
-              placeholder="Search..."
+              placeholder="Search colors..."
+              className="bg-muted border-muted focus-visible:bg-muted/50 pl-8 focus-visible:border-transparent focus-visible:ring-transparent"
               value={query}
               onChange={(e) => setQuery(e.target.value)}
               {...search}
             />
           </div>
-          <Button variant="link" asChild>
-            <Link href="/blogs" aria-label="View all blogs">
-              Blogs
-            </Link>
-          </Button>
-          <Button variant="link" asChild>
-            <Link href="/palettes" aria-label="View all color palettes">
-              Palettes
-            </Link>
-          </Button>
-          <Button asChild className="hidden lg:block">
-            <Link href="/create" aria-label="Create a new color palette">
-              Make a Palette
-            </Link>
-          </Button>
+
+          <div className="hidden lg:flex">
+            <Button variant="link" asChild>
+              <Link href="/blogs" aria-label="View all blogs">
+                Blogs
+              </Link>
+            </Button>
+            <Button variant="link" asChild>
+              <Link href="/palettes" aria-label="View all color palettes">
+                Palettes
+              </Link>
+            </Button>
+            <Button asChild className="hidden lg:block">
+              <Link href="/create" aria-label="Create a new color palette">
+                Make a Palette
+              </Link>
+            </Button>
+          </div>
         </div>
       </div>
     </header>

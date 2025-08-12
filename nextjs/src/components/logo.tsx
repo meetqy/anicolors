@@ -39,11 +39,14 @@ export const LogoMask = ({
   );
 };
 
-export const Logo = () => {
+export const Logo = ({ className }: { className?: string }) => {
   return (
     <Link
       href="/"
-      className="flex items-end gap-0.5 font-serif text-2xl italic"
+      className={cn(
+        "flex items-end gap-0.5 font-serif text-2xl italic",
+        className,
+      )}
     >
       <span>Ani</span>
       <span className="font-bold underline">Colors</span>
