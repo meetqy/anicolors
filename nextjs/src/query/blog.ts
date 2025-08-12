@@ -2,8 +2,8 @@ import { gql } from "@apollo/client";
 import type { Palette } from "./palette";
 
 export const GET_BLOG = gql`
-  query Query($documentId: ID!, $pagination: PaginationArg) {
-    blog(documentId: $documentId) {
+  query Query($filters: BlogFiltersInput, $pagination: PaginationArg) {
+    blogs(filters: $filters, pagination: $pagination) {
       title
       field
       description
@@ -26,7 +26,7 @@ export const GET_BLOG = gql`
 `;
 
 export type BlogResponse = {
-  blog: {
+  blogs: {
     title: string;
     field: string;
     description: string;
@@ -38,14 +38,14 @@ export type BlogResponse = {
       image: { url: string };
       avatar: { url: string };
     }[];
-  };
+  }[];
 };
 
 export const GET_BLOG_LIST = gql`
   query Query($pagination: PaginationArg, $sort: [String]) {
     blogs(pagination: $pagination, sort: $sort) {
-      documentId
       title
+      slug
       description
       cover {
         url
@@ -57,8 +57,8 @@ export const GET_BLOG_LIST = gql`
 
 export type BlogListResponse = {
   blogs: {
-    documentId: string;
     title: string;
+    slug: string;
     description: string;
     cover: { url: string };
     publishedAt: string;

@@ -30,27 +30,27 @@ function getValueByPath<T = unknown>(
   }, obj as unknown) as T | undefined;
 }
 
-const getData = async (id: string) => {
+const getData = async (slug: string) => {
   const res = await getClient().query<BlogResponse>({
     query: GET_BLOG,
     variables: {
-      documentId: id,
-      pagination: { pageSize: 100 },
+      filters: { slug: { eqi: slug } },
+      pagination: { pageSize: 999, page: 1 },
     },
   });
 
-  if (!res.data.blog) {
+  if (!res.data.blogs.length) {
     notFound();
   }
 
-  return res.data.blog;
+  return res.data.blogs[0]!;
 };
 
-type PageProps = { params: Promise<{ id: string }> };
+type PageProps = { params: Promise<{ slug: string }> };
 
 export default async function Page({ params }: PageProps) {
-  const { id } = await params;
-  const blog = await getData(id);
+  const { slug } = await params;
+  const blog = await getData(slug);
   const data = blog.palettes.map((palette) => {
     return {
       ...getValueByPath<{ color: string; name: string }>(palette, blog.field),
@@ -97,17 +97,15 @@ export default async function Page({ params }: PageProps) {
 export async function generateMetadata({
   params,
 }: PageProps): Promise<Metadata> {
-  const { id } = await params;
-  const blog = await getData(id);
+  const { slug } = await params;
+  const blog = await getData(slug);
   const images = blog?.cover?.url && [getAssetUrl(blog.cover.url, 1200)];
 
   return {
     title: blog.title,
     description: blog.description,
     openGraph: { images },
-    alternates: {
-      canonical: `/blogs/${id}`,
-    },
+    alternates: { canonical: `/blogs/${slug}` },
     twitter: {
       card: "summary_large_image",
       images,

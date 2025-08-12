@@ -40,8 +40,9 @@ export default async function Page({
       <div className="container mx-auto px-4 pb-8 md:pb-16 lg:pb-20">
         <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
           {data.map((blog) => (
-            <article
-              key={blog.documentId}
+            <Link
+              key={blog.slug}
+              href={`/blogs/${blog.slug}`}
               className="group bg-background overflow-hidden rounded-lg border shadow-sm transition-all hover:shadow-md"
             >
               <div className="aspect-video overflow-hidden">
@@ -74,30 +75,10 @@ export default async function Page({
                         day: "numeric",
                       })}
                     </time>
-
-                    <Link
-                      href={`/blogs/${blog.documentId}`}
-                      className="text-primary inline-flex items-center text-sm font-medium hover:underline"
-                    >
-                      Read more
-                      <svg
-                        className="ml-1 h-4 w-4"
-                        fill="none"
-                        stroke="currentColor"
-                        viewBox="0 0 24 24"
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          strokeWidth={2}
-                          d="M9 5l7 7-7 7"
-                        />
-                      </svg>
-                    </Link>
                   </div>
                 </div>
               </div>
-            </article>
+            </Link>
           ))}
         </div>
       </div>
