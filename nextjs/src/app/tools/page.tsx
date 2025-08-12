@@ -37,7 +37,7 @@ export default async function Page({
         title="Anime Colors Tools"
         description="Create anime color palettes, swap character colors, design gradient cards, and check color accessibility—all in one place for artists and anime fans."
       />
-      <div className="container mx-auto px-4 py-16">
+      <div className="container mx-auto px-4 pb-8 md:pb-16 lg:pb-20">
         <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
           {data.map((tool) => (
             <Link
