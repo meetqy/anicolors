@@ -84,9 +84,8 @@ export function withSave<P extends object>(WrappedComponent: ComponentType<P>) {
           const options = createOptions(targetElement, scale);
           const className = targetElement.className;
           if (!mask) {
-            targetElement.removeChild(
-              targetElement.querySelector("#logo-mask")!,
-            );
+            const logoMask = targetElement.querySelector("#logo-mask");
+            if (logoMask) targetElement.removeChild(logoMask);
           }
           targetElement.classList.remove(
             "rounded-md",

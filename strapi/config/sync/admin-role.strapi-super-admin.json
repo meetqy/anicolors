@@ -294,6 +294,75 @@
       "locale": null
     },
     {
+      "documentId": "uzbmebsf8oi5ot71524wp2u8",
+      "action": "plugin::content-manager.explorer.create",
+      "actionParameters": {},
+      "subject": "api::tool.tool",
+      "properties": {
+        "fields": [
+          "name",
+          "description",
+          "cover",
+          "keywords",
+          "slug"
+        ]
+      },
+      "conditions": [],
+      "locale": null
+    },
+    {
+      "documentId": "tf72lddeidta41zy129n2lfq",
+      "action": "plugin::content-manager.explorer.delete",
+      "actionParameters": {},
+      "subject": "api::tool.tool",
+      "properties": {},
+      "conditions": [],
+      "locale": null
+    },
+    {
+      "documentId": "yaxq9pue0fgggu2cnfdr3sal",
+      "action": "plugin::content-manager.explorer.publish",
+      "actionParameters": {},
+      "subject": "api::tool.tool",
+      "properties": {},
+      "conditions": [],
+      "locale": null
+    },
+    {
+      "documentId": "n4w9asfg06seubco8tc7ouqy",
+      "action": "plugin::content-manager.explorer.read",
+      "actionParameters": {},
+      "subject": "api::tool.tool",
+      "properties": {
+        "fields": [
+          "name",
+          "description",
+          "cover",
+          "keywords",
+          "slug"
+        ]
+      },
+      "conditions": [],
+      "locale": null
+    },
+    {
+      "documentId": "i7qtt8zdt6hcqgdazhpsfikp",
+      "action": "plugin::content-manager.explorer.update",
+      "actionParameters": {},
+      "subject": "api::tool.tool",
+      "properties": {
+        "fields": [
+          "name",
+          "description",
+          "cover",
+          "keywords",
+          "slug"
+        ]
+      },
+      "conditions": [],
+      "locale": null
+    },
+    {
       "documentId": "v86so982r24hh7ebsg09jkgk",
       "action": "admin::api-tokens.access",
       "actionParameters": {},
