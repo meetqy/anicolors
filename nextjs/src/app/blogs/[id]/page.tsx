@@ -105,6 +105,9 @@ export async function generateMetadata({
     title: blog.title,
     description: blog.description,
     openGraph: { images },
+    alternates: {
+      canonical: `/blogs/${id}`,
+    },
     twitter: {
       card: "summary_large_image",
       images,

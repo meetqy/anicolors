@@ -47,6 +47,11 @@ export function Header() {
                 Palettes
               </Link>
             </Button>
+            <Button variant="link" asChild>
+              <Link href="/tools" aria-label="View all tools">
+                Tools
+              </Link>
+            </Button>
             <Button asChild className="hidden lg:block">
               <Link href="/create" aria-label="Create a new color palette">
                 Make a Palette
