@@ -1,6 +1,8 @@
+import { Hero } from "@/components/hero";
 import { getClient } from "@/lib/apollo-client";
 import { getAssetUrl } from "@/lib/utils";
 import { GET_BLOG_LIST, type BlogListResponse } from "@/query/blog";
+import type { Metadata } from "next";
 import Link from "next/link";
 
 const getData = async (page = 1) => {
@@ -14,6 +16,12 @@ const getData = async (page = 1) => {
   return res.data.blogs;
 };
 
+export const metadata: Metadata = {
+  title: "Anime Colors Blogs",
+  description:
+    "Explore hair colors, eye colors, and outfit colors from your favorite anime and games. Find accurate HEX codes, color names, and design inspiration.",
+};
+
 export default async function Page({
   searchParams,
 }: {
@@ -24,76 +32,75 @@ export default async function Page({
   const data = await getData(page);
 
   return (
-    <div className="container mx-auto px-4 py-16">
-      <div className="mb-12 text-center">
-        <h1 className="h1">Blogs</h1>
-        <p className="p text-muted-foreground">
-          Discover color palettes and design inspiration
-        </p>
-      </div>
+    <>
+      <Hero
+        title="Anime Colors Blogs"
+        description="Explore hair colors, eye colors, and outfit colors from your favorite anime and games. Find accurate HEX codes, color names, and design inspiration."
+      />
+      <div className="container mx-auto px-4 pb-8 md:pb-16 lg:pb-20">
+        <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
+          {data.map((blog) => (
+            <article
+              key={blog.documentId}
+              className="group bg-background overflow-hidden rounded-lg border shadow-sm transition-all hover:shadow-md"
+            >
+              <div className="aspect-video overflow-hidden">
+                <img
+                  src={getAssetUrl(blog.cover.url, 512)}
+                  alt={blog.title}
+                  className="h-full w-full object-cover transition-transform group-hover:scale-105"
+                />
+              </div>
 
-      <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
-        {data.map((blog) => (
-          <article
-            key={blog.documentId}
-            className="group bg-background overflow-hidden rounded-lg border shadow-sm transition-all hover:shadow-md"
-          >
-            <div className="aspect-video overflow-hidden">
-              <img
-                src={getAssetUrl(blog.cover.url, 512)}
-                alt={blog.title}
-                className="h-full w-full object-cover transition-transform group-hover:scale-105"
-              />
-            </div>
+              <div className="p-6">
+                <div className="space-y-3">
+                  <h2 className="line-clamp-2 text-xl leading-tight font-semibold tracking-tight">
+                    {blog.title}
+                  </h2>
 
-            <div className="p-6">
-              <div className="space-y-3">
-                <h2 className="line-clamp-2 text-xl leading-tight font-semibold tracking-tight">
-                  {blog.title}
-                </h2>
+                  <p className="text-muted-foreground line-clamp-2 text-sm leading-relaxed">
+                    {blog.description}
+                  </p>
 
-                <p className="text-muted-foreground line-clamp-2 text-sm leading-relaxed">
-                  {blog.description}
-                </p>
-
-                <div className="flex items-center justify-between pt-2">
-                  <time
-                    dateTime={blog.publishedAt}
-                    className="text-muted-foreground text-xs"
-                    suppressHydrationWarning
-                  >
-                    {new Date(blog.publishedAt).toLocaleDateString("en-US", {
-                      year: "numeric",
-                      month: "short",
-                      day: "numeric",
-                    })}
-                  </time>
-
-                  <Link
-                    href={`/blogs/${blog.documentId}`}
-                    className="text-primary inline-flex items-center text-sm font-medium hover:underline"
-                  >
-                    Read more
-                    <svg
-                      className="ml-1 h-4 w-4"
-                      fill="none"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
+                  <div className="flex items-center justify-between pt-2">
+                    <time
+                      dateTime={blog.publishedAt}
+                      className="text-muted-foreground text-xs"
+                      suppressHydrationWarning
                     >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        d="M9 5l7 7-7 7"
-                      />
-                    </svg>
-                  </Link>
+                      {new Date(blog.publishedAt).toLocaleDateString("en-US", {
+                        year: "numeric",
+                        month: "short",
+                        day: "numeric",
+                      })}
+                    </time>
+
+                    <Link
+                      href={`/blogs/${blog.documentId}`}
+                      className="text-primary inline-flex items-center text-sm font-medium hover:underline"
+                    >
+                      Read more
+                      <svg
+                        className="ml-1 h-4 w-4"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth={2}
+                          d="M9 5l7 7-7 7"
+                        />
+                      </svg>
+                    </Link>
+                  </div>
                 </div>
               </div>
-            </div>
-          </article>
-        ))}
+            </article>
+          ))}
+        </div>
       </div>
-    </div>
+    </>
   );
 }
