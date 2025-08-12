@@ -62,10 +62,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
             "weekly",
           priority: priorityMatch?.[1] ? parseFloat(priorityMatch[1]) : 0.5,
           images: imagesMatch.map((img) => {
-            return getAssetUrl(
-              img.replace(/<image:loc>(.*?)<\/image:loc>/, "$1").trim(),
-              960,
-            );
+            return img.replace(/<image:loc>(.*?)<\/image:loc>/, "$1").trim();
           }),
         };
       })
