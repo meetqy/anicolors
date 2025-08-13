@@ -31,6 +31,7 @@ export const Footer = () => {
     { name: "AiFinder", url: "https://aifinder.site" },
     { name: "Startupslab", url: "https://startupslab.site" },
     { name: "What Is Ai Tools", url: "https://whatisaitools.com/" },
+    { name: "All in AI Tools", url: "https://allinai.tools" },
   ];
 
   return (
