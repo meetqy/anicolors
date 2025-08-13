@@ -1,3 +1,5 @@
+import { getHexByName } from "@/lib/nearest";
+
 // 生成字符串的哈希值 - 使用多个哈希函数
 export function hashString(str: string): number {
   // 使用多个不同的哈希函数来增加随机性
@@ -30,8 +32,63 @@ export function hashString(str: string): number {
   return Math.abs(combined + lengthBonus);
 }
 
+// 将 hex 字符串转换为 RGB 和 HSL
+function hexToRgbHsl(hex: string): {
+  hex: string;
+  rgb: { r: number; g: number; b: number };
+  hsl: { h: number; s: number; l: number };
+} {
+  // 移除 # 符号
+  const cleanHex = hex.replace("#", "");
+
+  // 转换为 RGB
+  const r = parseInt(cleanHex.substr(0, 2), 16);
+  const g = parseInt(cleanHex.substr(2, 2), 16);
+  const b = parseInt(cleanHex.substr(4, 2), 16);
+
+  // RGB 转 HSL
+  const rNorm = r / 255;
+  const gNorm = g / 255;
+  const bNorm = b / 255;
+
+  const max = Math.max(rNorm, gNorm, bNorm);
+  const min = Math.min(rNorm, gNorm, bNorm);
+
+  const l = (max + min) / 2;
+  let h = 0;
+  let s = 0;
+
+  if (max !== min) {
+    const d = max - min;
+    s = l > 0.5 ? d / (2 - max - min) : d / (max + min);
+
+    switch (max) {
+      case rNorm:
+        h = (gNorm - bNorm) / d + (gNorm < bNorm ? 6 : 0);
+        break;
+      case gNorm:
+        h = (bNorm - rNorm) / d + 2;
+        break;
+      case bNorm:
+        h = (rNorm - gNorm) / d + 4;
+        break;
+    }
+    h /= 6;
+  }
+
+  return {
+    hex,
+    rgb: { r, g, b },
+    hsl: {
+      h: Math.round(h * 360),
+      s: Math.round(s * 100),
+      l: Math.round(l * 100),
+    },
+  };
+}
+
 // 将哈希值转换为颜色 - 使用更好的分布
-export function hashToColor(hash: number): {
+function hashToColor(hash: number): {
   hex: string;
   rgb: { r: number; g: number; b: number };
   hsl: { h: number; s: number; l: number };
@@ -81,5 +138,31 @@ export function hashToColor(hash: number): {
       s: Math.round(saturation),
       l: Math.round(lightness),
     },
+  };
+}
+
+// 主函数：根据输入字符串生成颜色
+export function getColorFromString(str: string): {
+  hex: string;
+  rgb: { r: number; g: number; b: number };
+  hsl: { h: number; s: number; l: number };
+  isColorName: boolean;
+} {
+  // 首先尝试作为颜色名称查找
+  const colorHex = getHexByName(str);
+
+  if (colorHex) {
+    // 如果找到了对应的颜色名称，直接返回该颜色
+    return {
+      ...hexToRgbHsl(colorHex),
+      isColorName: true,
+    };
+  }
+
+  // 如果不是颜色名称，则使用哈希算法生成颜色
+  const hash = hashString(str);
+  return {
+    ...hashToColor(hash),
+    isColorName: false,
   };
 }

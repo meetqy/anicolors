@@ -3,7 +3,8 @@ import { useState, useMemo } from "react";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
-import { hashString, hashToColor } from "./utils";
+import { Badge } from "@/components/ui/badge";
+import { getColorFromString } from "./utils";
 import { withSave } from "@/components/card/with-save";
 import Color from "color";
 
@@ -31,11 +32,10 @@ export const Generator = () => {
   const colorData = useMemo(() => {
     if (!inputText.trim()) return null;
 
-    const hash = hashString(inputText.trim());
-    const colors = hashToColor(hash);
+    const colors = getColorFromString(inputText.trim());
     const textColor = Color(colors.hex).isLight() ? "#000000" : "#FFFFFF";
 
-    return { ...colors, textColor, hash };
+    return { ...colors, textColor };
   }, [inputText]);
 
   return (
@@ -59,13 +59,22 @@ export const Generator = () => {
         {/* Color Preview */}
         {colorData && (
           <div className="space-y-6">
-            <ColorCard
-              hex={colorData.hex}
-              text={inputText}
-              textColor={colorData.textColor}
-              className="flex w-full justify-center"
-              id={`color-${inputText.replace(/\s+/g, "-").toLowerCase()}`}
-            />
+            <div className="space-y-2">
+              <div className="flex items-center justify-center gap-2">
+                {colorData.isColorName && (
+                  <Badge variant="secondary" className="text-xs">
+                    Color Name
+                  </Badge>
+                )}
+              </div>
+              <ColorCard
+                hex={colorData.hex}
+                text={inputText}
+                textColor={colorData.textColor}
+                className="flex w-full justify-center"
+                id={`color-${inputText.replace(/\s+/g, "-").toLowerCase()}`}
+              />
+            </div>
 
             {/* Color Values */}
             <div className="space-y-4">
