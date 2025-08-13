@@ -61,6 +61,20 @@
           "sortable": true
         }
       },
+      "useTypes": {
+        "edit": {
+          "label": "useTypes",
+          "description": "",
+          "placeholder": "",
+          "visible": true,
+          "editable": true
+        },
+        "list": {
+          "label": "useTypes",
+          "searchable": true,
+          "sortable": true
+        }
+      },
       "palettes": {
         "edit": {
           "label": "palettes",
@@ -102,6 +116,34 @@
           "label": "field",
           "searchable": true,
           "sortable": true
+        }
+      },
+      "markdown": {
+        "edit": {
+          "label": "markdown",
+          "description": "",
+          "placeholder": "",
+          "visible": true,
+          "editable": true
+        },
+        "list": {
+          "label": "markdown",
+          "searchable": false,
+          "sortable": false
+        }
+      },
+      "content": {
+        "edit": {
+          "label": "content",
+          "description": "",
+          "placeholder": "",
+          "visible": true,
+          "editable": true
+        },
+        "list": {
+          "label": "content",
+          "searchable": false,
+          "sortable": false
         }
       },
       "createdAt": {
@@ -172,26 +214,24 @@
       }
     },
     "layouts": {
-      "list": [
-        "id",
-        "title",
-        "slug",
-        "palettes"
-      ],
       "edit": [
         [
           {
             "name": "title",
-            "size": 6
+            "size": 4
           },
           {
             "name": "slug",
-            "size": 6
+            "size": 4
+          },
+          {
+            "name": "field",
+            "size": 4
           }
         ],
         [
           {
-            "name": "field",
+            "name": "useTypes",
             "size": 6
           },
           {
@@ -208,7 +248,25 @@
             "name": "cover",
             "size": 6
           }
+        ],
+        [
+          {
+            "name": "markdown",
+            "size": 12
+          }
+        ],
+        [
+          {
+            "name": "content",
+            "size": 12
+          }
         ]
+      ],
+      "list": [
+        "id",
+        "title",
+        "slug",
+        "palettes"
       ]
     },
     "uid": "api::blog.blog"

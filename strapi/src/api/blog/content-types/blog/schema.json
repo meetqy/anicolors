@@ -24,6 +24,11 @@
       "targetField": "title",
       "required": true
     },
+    "useTypes": {
+      "type": "string",
+      "default": "fileds",
+      "required": true
+    },
     "palettes": {
       "type": "relation",
       "relation": "manyToMany",
@@ -40,7 +45,13 @@
     },
     "field": {
       "type": "string",
-      "required": true
+      "required": false
+    },
+    "markdown": {
+      "type": "richtext"
+    },
+    "content": {
+      "type": "blocks"
     }
   }
 }

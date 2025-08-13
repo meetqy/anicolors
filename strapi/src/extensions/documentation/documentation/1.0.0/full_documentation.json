@@ -14,7 +14,7 @@
       "name": "Apache 2.0",
       "url": "https://www.apache.org/licenses/LICENSE-2.0.html"
     },
-    "x-generation-date": "2025-08-12T07:08:19.090Z"
+    "x-generation-date": "2025-08-13T14:58:08.907Z"
   },
   "x-strapi-config": {
     "plugins": [
@@ -4031,7 +4031,7 @@
               "title",
               "description",
               "slug",
-              "field"
+              "useTypes"
             ],
             "type": "object",
             "properties": {
@@ -4042,6 +4042,9 @@
                 "type": "string"
               },
               "slug": {
+                "type": "string"
+              },
+              "useTypes": {
                 "type": "string"
               },
               "palettes": {
@@ -4072,6 +4075,10 @@
               "field": {
                 "type": "string"
               },
+              "markdown": {
+                "type": "string"
+              },
+              "content": {},
               "locale": {
                 "type": "string"
               },
@@ -4134,7 +4141,7 @@
           "title",
           "description",
           "slug",
-          "field"
+          "useTypes"
         ],
         "properties": {
           "id": {
@@ -4150,6 +4157,9 @@
             "type": "string"
           },
           "slug": {
+            "type": "string"
+          },
+          "useTypes": {
             "type": "string"
           },
           "palettes": {
@@ -5346,6 +5356,9 @@
                       "slug": {
                         "type": "string"
                       },
+                      "useTypes": {
+                        "type": "string"
+                      },
                       "palettes": {
                         "type": "array",
                         "items": {
@@ -5492,6 +5505,10 @@
                       "field": {
                         "type": "string"
                       },
+                      "markdown": {
+                        "type": "string"
+                      },
+                      "content": {},
                       "createdAt": {
                         "type": "string",
                         "format": "date-time"
@@ -5861,6 +5878,10 @@
           "field": {
             "type": "string"
           },
+          "markdown": {
+            "type": "string"
+          },
+          "content": {},
           "createdAt": {
             "type": "string",
             "format": "date-time"
@@ -7367,6 +7388,9 @@
                       "slug": {
                         "type": "string"
                       },
+                      "useTypes": {
+                        "type": "string"
+                      },
                       "palettes": {
                         "type": "array",
                         "items": {
@@ -7513,6 +7537,10 @@
                       "field": {
                         "type": "string"
                       },
+                      "markdown": {
+                        "type": "string"
+                      },
+                      "content": {},
                       "createdAt": {
                         "type": "string",
                         "format": "date-time"
@@ -9108,6 +9136,9 @@
                       "slug": {
                         "type": "string"
                       },
+                      "useTypes": {
+                        "type": "string"
+                      },
                       "palettes": {
                         "type": "array",
                         "items": {
@@ -9254,6 +9285,10 @@
                       "field": {
                         "type": "string"
                       },
+                      "markdown": {
+                        "type": "string"
+                      },
+                      "content": {},
                       "createdAt": {
                         "type": "string",
                         "format": "date-time"
@@ -10879,6 +10914,9 @@
                             "slug": {
                               "type": "string"
                             },
+                            "useTypes": {
+                              "type": "string"
+                            },
                             "palettes": {
                               "type": "array",
                               "items": {
@@ -11025,6 +11063,10 @@
                             "field": {
                               "type": "string"
                             },
+                            "markdown": {
+                              "type": "string"
+                            },
+                            "content": {},
                             "createdAt": {
                               "type": "string",
                               "format": "date-time"
