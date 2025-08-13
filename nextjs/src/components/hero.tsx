@@ -19,7 +19,7 @@ export function Hero({
         {title}
       </h1>
 
-      <p className="text-foreground max-w-3xl text-base text-balance sm:text-lg">
+      <p className="text-muted-foreground max-w-3xl text-base text-balance sm:text-lg">
         {description}
       </p>
 
