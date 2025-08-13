@@ -3,7 +3,6 @@ import { useState, useMemo } from "react";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
-import { Badge } from "@/components/ui/badge";
 import { getColorFromString } from "./utils";
 import { withSave } from "@/components/card/with-save";
 import Color from "color";
@@ -59,22 +58,13 @@ export const Generator = () => {
         {/* Color Preview */}
         {colorData && (
           <div className="space-y-6">
-            <div className="space-y-2">
-              <div className="flex items-center justify-center gap-2">
-                {colorData.isColorName && (
-                  <Badge variant="secondary" className="text-xs">
-                    Color Name
-                  </Badge>
-                )}
-              </div>
-              <ColorCard
-                hex={colorData.hex}
-                text={inputText}
-                textColor={colorData.textColor}
-                className="flex w-full justify-center"
-                id={`color-${inputText.replace(/\s+/g, "-").toLowerCase()}`}
-              />
-            </div>
+            <ColorCard
+              hex={colorData.hex}
+              text={inputText}
+              textColor={colorData.textColor}
+              className="flex w-full justify-center"
+              id={`color-${inputText.replace(/\s+/g, "-").toLowerCase()}`}
+            />
 
             {/* Color Values */}
             <div className="space-y-4">

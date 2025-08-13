@@ -53,7 +53,7 @@ export default async function Page({ searchParams }: PageProps) {
         description="Explore a curated collection of color palettes inspired by anime, games, and illustrations."
       />
 
-      <div className="mx-auto max-w-screen-xl px-4 pb-8 md:pb-16 lg:px-0 lg:pb-20">
+      <div className="mx-auto max-w-screen-xl px-4 lg:px-0">
         <div className="mb-12 grid grid-cols-1 gap-x-4 gap-y-8 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
           {palettes.map((palette, index) => (
             <PaletteCard key={`${palette.name}-${index}`} palette={palette} />

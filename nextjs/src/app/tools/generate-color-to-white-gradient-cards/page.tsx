@@ -1,14 +1,10 @@
-import { TwitterIcon } from "lucide-react";
 import { Generator } from "./generator";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import Link from "next/link";
 import { getClient } from "@/lib/apollo-client";
 import { GET_TOOL, type ToolResponse } from "@/query/tool";
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import { getAssetUrl } from "@/lib/utils";
-import { env } from "@/env";
+import { ToolHero } from "@/components/tool-hero";
 
 const getData = async () => {
   const res = await getClient().query<ToolResponse>({
@@ -48,43 +44,12 @@ export default async function Page() {
   const tool = await getData();
 
   return (
-    <div className="container mx-auto py-8">
-      <div className="mb-12 space-y-6">
-        <div className="space-y-3">
-          <h1 className="h1 text-left">{tool.name}</h1>
-          <p className="p text-muted-foreground">{tool.description}</p>
-        </div>
+    <>
+      <ToolHero tool={tool} />
 
-        <div className="flex flex-wrap gap-2">
-          {tool.keywords.split(", ").map((item) => (
-            <Badge
-              key={item}
-              variant="secondary"
-              className="hover:bg-secondary/80 cursor-pointer"
-            >
-              <Link href={`#${item}`} className="capitalize">
-                {item}
-              </Link>
-            </Badge>
-          ))}
-        </div>
-
-        <div className="flex flex-wrap gap-3">
-          <Button size="sm" className="gap-2" asChild>
-            <Link
-              target="_blank"
-              href={`https://x.com/intent/tweet?text=${encodeURIComponent(tool.name)}&url=${encodeURIComponent(env.NEXT_PUBLIC_SITE_URL + "/tools/" + tool.slug)}`}
-            >
-              <TwitterIcon className="h-4 w-4" />
-              Share on Twitter
-            </Link>
-          </Button>
-        </div>
-      </div>
-
-      <div className="bg-card text-card-foreground rounded-lg border">
+      <div className="from-muted/20 to-muted/0 text-card-foreground container rounded-lg bg-gradient-to-b lg:border">
         <Generator />
       </div>
-    </div>
+    </>
   );
 }

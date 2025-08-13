@@ -28,7 +28,7 @@ export const Footer = () => {
   ];
 
   return (
-    <footer className="bg-muted/30 border-t">
+    <footer className="bg-muted/30 mt-8 border-t md:mt-16 lg:mt-20">
       <div className="mx-auto max-w-7xl px-4 py-12">
         <div className="grid gap-8 md:grid-cols-3">
           {/* Brand Section */}
