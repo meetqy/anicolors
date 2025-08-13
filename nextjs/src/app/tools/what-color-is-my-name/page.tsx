@@ -8,6 +8,7 @@ import { GET_TOOL, type ToolResponse } from "@/query/tool";
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import { getAssetUrl } from "@/lib/utils";
+import { env } from "@/env";
 
 const getData = async () => {
   const res = await getClient().query<ToolResponse>({
@@ -69,9 +70,13 @@ export default async function Page() {
         </div>
 
         <div className="flex flex-wrap gap-3">
-          <Button size="sm" className="gap-2">
-            <TwitterIcon className="h-4 w-4" />
-            Share on Twitter
+          <Button size="sm" className="gap-2" asChild>
+            <Link
+              href={`https://x.com/intent/tweet?text=${encodeURIComponent(tool.name)}&url=${encodeURIComponent(env.NEXT_PUBLIC_SITE_URL + "/tools/" + tool.slug)}`}
+            >
+              <TwitterIcon className="h-4 w-4" />
+              Share on Twitter
+            </Link>
           </Button>
         </div>
       </div>
