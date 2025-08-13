@@ -20,7 +20,7 @@ export const ToolHero = ({ tool }: ToolHeroProps) => {
         <h1 className="scroll-m-20 text-4xl font-extrabold tracking-tight lg:text-5xl">
           {tool.name}
         </h1>
-        <p className="text-muted-foreground mx-auto max-w-3xl text-xl">
+        <p className="text-muted-foreground mx-auto max-w-3xl">
           {tool.description}
         </p>
       </div>
