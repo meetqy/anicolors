@@ -1,6 +1,10 @@
+"use client";
+
 import { GithubIcon, InstagramIcon, TwitterIcon } from "lucide-react";
 import Link from "next/link";
 import { Logo } from "./logo";
+import { usePathname } from "next/navigation";
+import { cn } from "@/lib/utils";
 
 interface FriendLink {
   name: string;
@@ -8,6 +12,7 @@ interface FriendLink {
 }
 
 export const Footer = () => {
+  const pathname = usePathname();
   const friendLinks: FriendLink[] = [
     { name: "ShowMeBestAI", url: "https://www.showmebest.ai" },
     { name: "Twelve Tools", url: "https://twelve.tools" },
@@ -28,7 +33,11 @@ export const Footer = () => {
   ];
 
   return (
-    <footer className="bg-muted/30 mt-8 border-t md:mt-16 lg:mt-20">
+    <footer
+      className={cn("bg-muted/30 border-t", {
+        "mt-8 md:mt-16 lg:mt-20": pathname != "/",
+      })}
+    >
       <div className="mx-auto max-w-7xl px-4 py-12">
         <div className="grid gap-8 md:grid-cols-3">
           {/* Brand Section */}
