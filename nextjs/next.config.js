@@ -12,6 +12,15 @@ const config = {
       new URL("https://r2.hicolors.org/**/*"),
     ],
   },
+  redirects: async () => {
+    return [
+      {
+        source: "/blogs/piqxyna9zquhn0qk534idx7p",
+        destination: "/blogs/genshin-impact-hair-colors-full-character-list",
+        permanent: true,
+      },
+    ];
+  },
   async rewrites() {
     return {
       beforeFiles: [{ source: "/sitemap.xml", destination: "/api/sitemap" }],
