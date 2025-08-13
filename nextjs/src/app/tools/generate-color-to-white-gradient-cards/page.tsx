@@ -72,6 +72,7 @@ export default async function Page() {
         <div className="flex flex-wrap gap-3">
           <Button size="sm" className="gap-2" asChild>
             <Link
+              target="_blank"
               href={`https://x.com/intent/tweet?text=${encodeURIComponent(tool.name)}&url=${encodeURIComponent(env.NEXT_PUBLIC_SITE_URL + "/tools/" + tool.slug)}`}
             >
               <TwitterIcon className="h-4 w-4" />
