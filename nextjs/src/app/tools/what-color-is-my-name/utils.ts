@@ -1,75 +1,75 @@
-// 生成字符串的哈希值 - 改进版
+// 生成字符串的哈希值 - 使用多个哈希函数
 export function hashString(str: string): number {
-  let hash = 5381; // 使用更好的初始值
+  // 使用多个不同的哈希函数来增加随机性
+  let hash1 = 5381;
+  let hash2 = 7919;
+  let hash3 = 9973;
 
   for (let i = 0; i < str.length; i++) {
     const char = str.charCodeAt(i);
-    hash = (hash << 5) + hash + char; // hash * 33 + char
+    const pos = i + 1;
+
+    // 第一个哈希函数 (djb2)
+    hash1 = (hash1 << 5) + hash1 + char;
+
+    // 第二个哈希函数 (sdbm)
+    hash2 = char + (hash2 << 6) + (hash2 << 16) - hash2;
+
+    // 第三个哈希函数 (考虑位置)
+    hash3 = hash3 * 31 + char * pos;
   }
 
-  // 为了增加单字符的随机性，添加字符串长度的影响
-  hash = hash + str.length * 1000;
+  // 合并三个哈希值
+  const combined = Math.abs(hash1) ^ Math.abs(hash2) ^ Math.abs(hash3);
 
-  // 如果字符串很短，添加一些额外的随机性
-  if (str.length <= 2) {
-    hash = hash * 31 + str.charCodeAt(0) * 17;
-    if (str.length === 2) {
-      hash = hash * 37 + str.charCodeAt(1) * 19;
-    }
-  }
+  // 为短字符串添加额外的区分度
+  const length = str.length;
+  const lengthBonus =
+    length < 3 ? length * 50000 + str.charCodeAt(0) * 1000 : 0;
 
-  return Math.abs(hash);
+  return Math.abs(combined + lengthBonus);
 }
 
-// 将哈希值转换为颜色 - 改进版
+// 将哈希值转换为颜色 - 使用更好的分布
 export function hashToColor(hash: number): {
   hex: string;
   rgb: { r: number; g: number; b: number };
   hsl: { h: number; s: number; l: number };
 } {
-  // 使用更大的数值范围来避免重复
-  const hue = (hash * 137.508) % 360; // 使用黄金角度
-  const saturation = 60 + ((hash * 97) % 35); // 60-95%
-  const lightness = 40 + ((hash * 71) % 25); // 40-65%
+  // 使用不同的种子来生成色相、饱和度、亮度
+  const hue = (hash * 0.618033988749895) % 360; // 黄金比例
+  const saturation = 65 + ((hash >> 8) % 30); // 65-95%
+  const lightness = 45 + ((hash >> 16) % 20); // 45-65%
 
+  // HSL 转 RGB
+  const h = hue / 360;
   const s = saturation / 100;
   const l = lightness / 100;
-  const c = (1 - Math.abs(2 * l - 1)) * s;
-  const x = c * (1 - Math.abs(((hue / 60) % 2) - 1));
-  const m = l - c / 2;
-  let r = 0,
-    g = 0,
-    b = 0;
 
-  if (0 <= hue && hue < 60) {
-    r = c;
-    g = x;
-    b = 0;
-  } else if (60 <= hue && hue < 120) {
-    r = x;
-    g = c;
-    b = 0;
-  } else if (120 <= hue && hue < 180) {
-    r = 0;
-    g = c;
-    b = x;
-  } else if (180 <= hue && hue < 240) {
-    r = 0;
-    g = x;
-    b = c;
-  } else if (240 <= hue && hue < 300) {
-    r = x;
-    g = 0;
-    b = c;
-  } else if (300 <= hue && hue < 360) {
-    r = c;
-    g = 0;
-    b = x;
+  const hue2rgb = (p: number, q: number, t: number) => {
+    if (t < 0) t += 1;
+    if (t > 1) t -= 1;
+    if (t < 1 / 6) return p + (q - p) * 6 * t;
+    if (t < 1 / 2) return q;
+    if (t < 2 / 3) return p + (q - p) * (2 / 3 - t) * 6;
+    return p;
+  };
+
+  let r, g, b;
+
+  if (s === 0) {
+    r = g = b = l; // 无色
+  } else {
+    const q = l < 0.5 ? l * (1 + s) : l + s - l * s;
+    const p = 2 * l - q;
+    r = hue2rgb(p, q, h + 1 / 3);
+    g = hue2rgb(p, q, h);
+    b = hue2rgb(p, q, h - 1 / 3);
   }
 
-  const red = Math.round((r + m) * 255);
-  const green = Math.round((g + m) * 255);
-  const blue = Math.round((b + m) * 255);
+  const red = Math.round(r * 255);
+  const green = Math.round(g * 255);
+  const blue = Math.round(b * 255);
 
   const hex = `#${red.toString(16).padStart(2, "0")}${green.toString(16).padStart(2, "0")}${blue.toString(16).padStart(2, "0")}`;
 
