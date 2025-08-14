@@ -17,7 +17,7 @@ export const ToolHero = ({ tool }: ToolHeroProps) => {
   return (
     <div className="container flex flex-col items-center gap-6 py-8 text-center md:py-16 lg:py-20">
       <div className="space-y-4">
-        <h1 className="scroll-m-20 text-4xl font-extrabold tracking-tight lg:text-5xl">
+        <h1 className="max-w-3xl scroll-m-20 text-4xl font-extrabold tracking-tight lg:text-5xl">
           {tool.name}
         </h1>
         <p className="text-muted-foreground mx-auto max-w-3xl">
