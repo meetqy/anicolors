@@ -12,7 +12,7 @@ const getData = async () => {
     variables: {
       filters: {
         slug: {
-          eqi: "what-color-is-my-name",
+          eqi: "mtg-color-combo-explorer-for-magic-the-gathering",
         },
       },
     },
