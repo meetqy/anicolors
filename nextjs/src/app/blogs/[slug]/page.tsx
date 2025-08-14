@@ -4,6 +4,8 @@ import { GET_BLOG, type BlogResponse } from "@/query/blog";
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import { MDXRemote } from "next-mdx-remote-client/rsc";
+import remarkGfm from "remark-gfm";
 
 /**
  * 通过路径字符串获取对象中的值
@@ -61,12 +63,32 @@ export default async function Page({ params }: PageProps) {
     };
   });
 
+  const Title = () => (
+    <div className="mx-auto mb-12 max-w-screen-md text-center">
+      <h1>{blog.title}</h1>
+      <p>{blog.description}</p>
+    </div>
+  );
+
+  if (blog.useTypes === "markdown") {
+    return (
+      <article className="prose mx-auto max-w-screen-lg py-24">
+        <Title />
+        <MDXRemote
+          source={blog.markdown}
+          options={{
+            mdxOptions: {
+              remarkPlugins: [remarkGfm],
+            },
+          }}
+        />
+      </article>
+    );
+  }
+
   return (
     <article className="prose container mx-auto py-24">
-      <div className="mx-auto mb-12 max-w-screen-md text-center">
-        <h1>{blog.title}</h1>
-        <p>{blog.description}</p>
-      </div>
+      <Title />
 
       <div className="not-prose grid grid-cols-2 gap-x-4 gap-y-6 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6">
         {data.map((item) => (

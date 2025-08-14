@@ -3,9 +3,14 @@
  * for Docker builds.
  */
 import "./src/env.js";
+import createMDX from "@next/mdx";
+import remarkGfm from "remark-gfm";
 
 /** @type {import("next").NextConfig} */
-const config = {
+const nextConfig = {
+  pageExtensions: ["js", "jsx", "md", "mdx", "ts", "tsx"],
+  transpilePackages: ["next-mdx-remote"],
+
   images: {
     remotePatterns: [
       new URL("http://localhost:1337/**/*"),
@@ -28,4 +33,11 @@ const config = {
   },
 };
 
-export default config;
+const withMDX = createMDX({
+  options: {
+    remarkPlugins: [remarkGfm],
+    rehypePlugins: [],
+  },
+});
+
+export default withMDX(nextConfig);

@@ -7,6 +7,9 @@ export const GET_BLOG = gql`
       title
       field
       description
+      useTypes
+      markdown
+      content
       cover {
         url
       }
@@ -31,6 +34,9 @@ export type BlogResponse = {
     field: string;
     description: string;
     cover: { url: string };
+    useTypes: string;
+    markdown: string;
+    content: string;
     palettes: {
       documentId: string;
       name: string;
