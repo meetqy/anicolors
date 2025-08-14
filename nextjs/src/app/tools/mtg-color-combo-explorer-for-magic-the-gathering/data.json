@@ -1,0 +1,164 @@
+[
+  {
+    "name": "White",
+    "colors": ["#F8F6E0"],
+    "playstyle": "Lifegain, buffs, mass control",
+    "type": "Mono"
+  },
+  {
+    "name": "Blue",
+    "colors": ["#5D9CEB"],
+    "playstyle": "Counterspells, card draw, control",
+    "type": "Mono"
+  },
+  {
+    "name": "Black",
+    "colors": ["#2F2F2F"],
+    "playstyle": "Removal, reanimation, resource exchange",
+    "type": "Mono"
+  },
+  {
+    "name": "Red",
+    "colors": ["#D64545"],
+    "playstyle": "Aggro, direct damage, burst",
+    "type": "Mono"
+  },
+  {
+    "name": "Green",
+    "colors": ["#3F9B4C"],
+    "playstyle": "Ramp, big creatures, enhancement",
+    "type": "Mono"
+  },
+  {
+    "name": "Azorius",
+    "colors": ["#F8F6E0", "#5D9CEB"],
+    "playstyle": "Control, counterspells, stalling",
+    "type": "Guild"
+  },
+  {
+    "name": "Dimir",
+    "colors": ["#5D9CEB", "#2F2F2F"],
+    "playstyle": "Stealth, discard, manipulation",
+    "type": "Guild"
+  },
+  {
+    "name": "Rakdos",
+    "colors": ["#2F2F2F", "#D64545"],
+    "playstyle": "Aggro, sacrifice, removal",
+    "type": "Guild"
+  },
+  {
+    "name": "Gruul",
+    "colors": ["#D64545", "#3F9B4C"],
+    "playstyle": "Big creatures, fast aggression",
+    "type": "Guild"
+  },
+  {
+    "name": "Selesnya",
+    "colors": ["#3F9B4C", "#F8F6E0"],
+    "playstyle": "Token generation, team buffs",
+    "type": "Guild"
+  },
+  {
+    "name": "Orzhov",
+    "colors": ["#F8F6E0", "#2F2F2F"],
+    "playstyle": "Resource drain, lifegain",
+    "type": "Guild"
+  },
+  {
+    "name": "Izzet",
+    "colors": ["#5D9CEB", "#D64545"],
+    "playstyle": "Spell combos, burst damage",
+    "type": "Guild"
+  },
+  {
+    "name": "Golgari",
+    "colors": ["#2F2F2F", "#3F9B4C"],
+    "playstyle": "Graveyard synergy, value loops",
+    "type": "Guild"
+  },
+  {
+    "name": "Boros",
+    "colors": ["#D64545", "#F8F6E0"],
+    "playstyle": "Aggro, combat tricks",
+    "type": "Guild"
+  },
+  {
+    "name": "Simic",
+    "colors": ["#3F9B4C", "#5D9CEB"],
+    "playstyle": "Growth, evolution, synergy",
+    "type": "Guild"
+  },
+  {
+    "name": "Esper",
+    "colors": ["#F8F6E0", "#5D9CEB", "#2F2F2F"],
+    "playstyle": "Control, artifact synergy",
+    "type": "Shard"
+  },
+  {
+    "name": "Grixis",
+    "colors": ["#5D9CEB", "#2F2F2F", "#D64545"],
+    "playstyle": "Graveyard spells, removal burst",
+    "type": "Shard"
+  },
+  {
+    "name": "Jund",
+    "colors": ["#2F2F2F", "#D64545", "#3F9B4C"],
+    "playstyle": "Removal + big creatures",
+    "type": "Shard"
+  },
+  {
+    "name": "Naya",
+    "colors": ["#D64545", "#3F9B4C", "#F8F6E0"],
+    "playstyle": "Large creatures, aggression",
+    "type": "Shard"
+  },
+  {
+    "name": "Bant",
+    "colors": ["#3F9B4C", "#F8F6E0", "#5D9CEB"],
+    "playstyle": "Buffs, defense",
+    "type": "Shard"
+  },
+  {
+    "name": "Abzan",
+    "colors": ["#F8F6E0", "#2F2F2F", "#3F9B4C"],
+    "playstyle": "Defense, long-term value",
+    "type": "Wedge"
+  },
+  {
+    "name": "Jeskai",
+    "colors": ["#5D9CEB", "#D64545", "#F8F6E0"],
+    "playstyle": "Spell-based, tempo control",
+    "type": "Wedge"
+  },
+  {
+    "name": "Sultai",
+    "colors": ["#2F2F2F", "#3F9B4C", "#5D9CEB"],
+    "playstyle": "Graveyard synergy, value",
+    "type": "Wedge"
+  },
+  {
+    "name": "Mardu",
+    "colors": ["#D64545", "#F8F6E0", "#2F2F2F"],
+    "playstyle": "Aggro, combat tricks",
+    "type": "Wedge"
+  },
+  {
+    "name": "Temur",
+    "colors": ["#3F9B4C", "#5D9CEB", "#D64545"],
+    "playstyle": "Big creatures, explosive plays",
+    "type": "Wedge"
+  },
+  {
+    "name": "Sans White",
+    "colors": ["#5D9CEB", "#2F2F2F", "#D64545", "#3F9B4C"],
+    "playstyle": "Flexible, mixed strategies",
+    "type": "Four-Color"
+  },
+  {
+    "name": "Five-Color / Rainbow",
+    "colors": ["#F8F6E0", "#5D9CEB", "#2F2F2F", "#D64545", "#3F9B4C"],
+    "playstyle": "High versatility, multicolor spells",
+    "type": "Five-Color"
+  }
+]
