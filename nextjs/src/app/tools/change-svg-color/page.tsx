@@ -18,6 +18,8 @@ const getData = async () => {
     },
   });
 
+  console.log("Tool data:", res.data.tools);
+
   if (!res.data.tools || res.data.tools.length === 0) {
     notFound();
   }
@@ -41,11 +43,11 @@ const getData = async () => {
 // };
 
 export default async function Page() {
-  // const tool = await getData();
+  const tool = await getData();
 
   return (
     <>
-      {/* <ToolHero tool={tool} /> */}
+      <ToolHero tool={tool} />
 
       <div className="from-muted/20 to-muted/0 text-card-foreground container rounded-lg bg-gradient-to-b lg:border">
         <Generator />
