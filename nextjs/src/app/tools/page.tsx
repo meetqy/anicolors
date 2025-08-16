@@ -38,7 +38,7 @@ export default async function Page({
         description="Create anime color palettes, swap character colors, design gradient cards, and check color accessibility—all in one place for artists and anime fans."
       />
       <div className="container mx-auto px-4">
-        <div className="columns-1 gap-4 md:columns-2 lg:columns-3">
+        <div className="grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3 grid">
           {data.map((tool) => (
             <ListItemCard
               key={tool.slug}
