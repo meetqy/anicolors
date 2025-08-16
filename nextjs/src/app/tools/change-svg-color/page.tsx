@@ -18,7 +18,7 @@ const getData = async () => {
     },
   });
 
-  console.debug("Tool data:", res.data.tools);
+  console.info("Tool data:", res.data.tools);
 
   if (!res.data.tools || res.data.tools.length === 0) {
     notFound();
