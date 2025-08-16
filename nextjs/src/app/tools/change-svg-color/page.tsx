@@ -18,11 +18,9 @@ const getData = async () => {
     },
   });
 
-  console.info("Tool data:", res.data.tools);
-
-  if (!res.data.tools || res.data.tools.length === 0) {
-    notFound();
-  }
+  // if (!res.data.tools || res.data.tools.length === 0) {
+  //   notFound();
+  // }
 
   return res.data.tools[0]!;
 };
