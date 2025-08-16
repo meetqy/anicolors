@@ -1,32 +1,12 @@
 import { Generator } from "./generator";
-import { getClient } from "@/lib/apollo-client";
-import { GET_TOOL, type ToolResponse } from "@/query/tool";
-import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import { getAssetUrl } from "@/lib/utils";
 import { ToolHero } from "@/components/tool-hero";
+import { getToolData } from "../_utils";
 
-const getData = async () => {
-  const res = await getClient().query<ToolResponse>({
-    query: GET_TOOL,
-    variables: {
-      filters: {
-        slug: {
-          eqi: "what-color-is-my-name",
-        },
-      },
-    },
-  });
-
-  if (!res.data.tools || res.data.tools.length === 0) {
-    notFound();
-  }
-
-  return res.data.tools[0]!;
-};
 
 export const generateMetadata = async (): Promise<Metadata> => {
-  const tool = await getData();
+  const tool = await getToolData("what-color-is-my-name");
   const images = tool.cover ? [getAssetUrl(tool.cover.url, 1200)] : [];
 
   return {
@@ -41,7 +21,7 @@ export const generateMetadata = async (): Promise<Metadata> => {
 };
 
 export default async function Page() {
-  const tool = await getData();
+  const tool = await getToolData("what-color-is-my-name");
 
   return (
     <>

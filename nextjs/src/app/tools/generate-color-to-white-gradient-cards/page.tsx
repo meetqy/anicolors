@@ -1,32 +1,11 @@
 import { Generator } from "./generator";
-import { getClient } from "@/lib/apollo-client";
-import { GET_TOOL, type ToolResponse } from "@/query/tool";
-import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import { getAssetUrl } from "@/lib/utils";
 import { ToolHero } from "@/components/tool-hero";
-
-const getData = async () => {
-  const res = await getClient().query<ToolResponse>({
-    query: GET_TOOL,
-    variables: {
-      filters: {
-        slug: {
-          eqi: "generate-color-to-white-gradient-cards",
-        },
-      },
-    },
-  });
-
-  if (!res.data.tools || res.data.tools.length === 0) {
-    notFound();
-  }
-
-  return res.data.tools[0]!;
-};
+import { getToolData } from "../_utils";
 
 export const generateMetadata = async (): Promise<Metadata> => {
-  const tool = await getData();
+  const tool = await getToolData("generate-color-to-white-gradient-cards");
   const images = tool.cover ? [getAssetUrl(tool.cover.url, 1200)] : [];
 
   return {
@@ -41,7 +20,7 @@ export const generateMetadata = async (): Promise<Metadata> => {
 };
 
 export default async function Page() {
-  const tool = await getData();
+  const tool = await getToolData("generate-color-to-white-gradient-cards");
 
   return (
     <>
