@@ -18,7 +18,7 @@ const getData = async () => {
     },
   });
 
-  console.log("Tool data:", res.data.tools);
+  console.debug("Tool data:", res.data.tools);
 
   if (!res.data.tools || res.data.tools.length === 0) {
     notFound();
@@ -27,20 +27,20 @@ const getData = async () => {
   return res.data.tools[0]!;
 };
 
-// export const generateMetadata = async (): Promise<Metadata> => {
-//   const tool = await getData();
-//   const images = tool.cover ? [getAssetUrl(tool.cover.url, 1200)] : [];
+export const generateMetadata = async (): Promise<Metadata> => {
+  const tool = await getData();
+  const images = tool.cover ? [getAssetUrl(tool.cover.url, 1200)] : [];
 
-//   return {
-//     title: tool.name,
-//     description: tool.description,
-//     twitter: { card: "summary_large_image", images },
-//     openGraph: { images },
-//     alternates: {
-//       canonical: `/tools/${tool.slug}`,
-//     },
-//   };
-// };
+  return {
+    title: tool.name,
+    description: tool.description,
+    twitter: { card: "summary_large_image", images },
+    openGraph: { images },
+    alternates: {
+      canonical: `/tools/${tool.slug}`,
+    },
+  };
+};
 
 export default async function Page() {
   const tool = await getData();
