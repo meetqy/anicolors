@@ -1,9 +1,9 @@
 import { Hero } from "@/components/hero";
+import { ListItemCard } from "@/components/list-item-card";
 import { getClient } from "@/lib/apollo-client";
 import { getAssetUrl } from "@/lib/utils";
 import { GET_BLOG_LIST, type BlogListResponse } from "@/query/blog";
 import type { Metadata } from "next";
-import Link from "next/link";
 
 const getData = async (page = 1) => {
   const res = await getClient().query<BlogListResponse>({
@@ -40,45 +40,13 @@ export default async function Page({
       <div className="container mx-auto px-4">
         <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
           {data.map((blog) => (
-            <Link
+            <ListItemCard
               key={blog.slug}
               href={`/blogs/${blog.slug}`}
-              className="group bg-background overflow-hidden rounded-lg border shadow-sm transition-all hover:shadow-md"
-            >
-              <div className="aspect-video overflow-hidden">
-                <img
-                  src={getAssetUrl(blog.cover.url, 512)}
-                  alt={blog.title}
-                  className="h-full w-full object-cover transition-transform group-hover:scale-105"
-                />
-              </div>
-
-              <div className="p-6">
-                <div className="space-y-3">
-                  <h2 className="line-clamp-2 text-xl leading-tight font-semibold tracking-tight">
-                    {blog.title}
-                  </h2>
-
-                  <p className="text-muted-foreground line-clamp-2 text-sm leading-relaxed">
-                    {blog.description}
-                  </p>
-
-                  <div className="flex items-center justify-between pt-2">
-                    <time
-                      dateTime={blog.publishedAt}
-                      className="text-muted-foreground text-xs"
-                      suppressHydrationWarning
-                    >
-                      {new Date(blog.publishedAt).toLocaleDateString("en-US", {
-                        year: "numeric",
-                        month: "short",
-                        day: "numeric",
-                      })}
-                    </time>
-                  </div>
-                </div>
-              </div>
-            </Link>
+              image={{ src: getAssetUrl(blog.cover.url, 512), alt: blog.title }}
+              title={blog.title}
+              description={blog.description}
+            />
           ))}
         </div>
       </div>
