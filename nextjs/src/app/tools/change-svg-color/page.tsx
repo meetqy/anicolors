@@ -1,7 +1,6 @@
 import { Generator } from "./generator";
 import { getClient } from "@/lib/apollo-client";
 import { GET_TOOL, type ToolResponse } from "@/query/tool";
-import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import { getAssetUrl } from "@/lib/utils";
 import { ToolHero } from "@/components/tool-hero";
