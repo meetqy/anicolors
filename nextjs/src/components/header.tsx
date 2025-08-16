@@ -43,13 +43,13 @@ export function Header() {
               </Link>
             </Button>
             <Button variant="link" asChild>
-              <Link href="/palettes" aria-label="View all color palettes">
-                Palettes
+              <Link href="/tools" aria-label="View all tools">
+                Tools
               </Link>
             </Button>
             <Button variant="link" asChild>
-              <Link href="/tools" aria-label="View all tools">
-                Tools
+              <Link href="/palettes" aria-label="View all color palettes">
+                Palettes
               </Link>
             </Button>
             <Button asChild className="hidden lg:block">
