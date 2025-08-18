@@ -487,6 +487,10 @@ export interface ApiPalettePalette extends Struct.CollectionTypeSchema {
       'manyToOne',
       'api::category.category'
     >;
+    coloring: Schema.Attribute.Media<
+      'images' | 'files' | 'videos' | 'audios',
+      true
+    >;
     colors: Schema.Attribute.Relation<'manyToMany', 'api::color.color'>;
     cover: Schema.Attribute.Media<'images'>;
     createdAt: Schema.Attribute.DateTime;

@@ -80,6 +80,16 @@
       "allowedTypes": [
         "images"
       ]
+    },
+    "coloring": {
+      "type": "media",
+      "multiple": true,
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ]
     }
   }
 }

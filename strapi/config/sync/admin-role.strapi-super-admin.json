@@ -213,7 +213,7 @@
       "locale": null
     },
     {
-      "documentId": "dkmp2lqtrdjalkjidtc70cm2",
+      "documentId": "y009uuhi6nizinayx8mx17wa",
       "action": "plugin::content-manager.explorer.create",
       "actionParameters": {},
       "subject": "api::palette.palette",
@@ -230,7 +230,8 @@
           "categoryExtend",
           "extend",
           "blogs",
-          "avatar"
+          "avatar",
+          "coloring"
         ]
       },
       "conditions": [],
@@ -255,7 +256,7 @@
       "locale": null
     },
     {
-      "documentId": "asmvqrmp4l45lwambibmpg4l",
+      "documentId": "ook0kjye4hna4ffin1md9d88",
       "action": "plugin::content-manager.explorer.read",
       "actionParameters": {},
       "subject": "api::palette.palette",
@@ -272,14 +273,15 @@
           "categoryExtend",
           "extend",
           "blogs",
-          "avatar"
+          "avatar",
+          "coloring"
         ]
       },
       "conditions": [],
       "locale": null
     },
     {
-      "documentId": "wkngabprbfwpyjn3jqsxjg2h",
+      "documentId": "u6jhpno3zycu0257dzina2xz",
       "action": "plugin::content-manager.explorer.update",
       "actionParameters": {},
       "subject": "api::palette.palette",
@@ -296,7 +298,8 @@
           "categoryExtend",
           "extend",
           "blogs",
-          "avatar"
+          "avatar",
+          "coloring"
         ]
       },
       "conditions": [],
