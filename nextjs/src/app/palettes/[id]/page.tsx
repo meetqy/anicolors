@@ -157,7 +157,7 @@ export default async function Page({
             {palette.blogs?.map((blog) => (
               <ListItemCard
                 type="blog"
-                href={`/blog/${blog.slug}`}
+                href={`/blogs/${blog.slug}`}
                 key={blog.slug}
                 title={blog.title}
                 description={blog.description}
