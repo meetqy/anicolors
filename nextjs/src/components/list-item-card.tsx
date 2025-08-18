@@ -1,9 +1,10 @@
+import { getAssetUrl } from "@/lib/utils";
 import { Rss, ToolCase } from "lucide-react";
 import Link from "next/link";
 
 interface ListItemCardProps {
   href: string;
-  image: { src: string; alt: string };
+  image: string
   title: string;
   description: string;
   type?: "blog" | "tool";
@@ -29,7 +30,7 @@ export const ListItemCard = ({
           )}
         </div>
       )}
-      <CardImage src={image.src} alt={image.alt} />
+      <CardImage src={getAssetUrl(image, 512)} alt={title} />
       <CardContent title={title} description={description} />
     </Link>
   );
