@@ -110,39 +110,42 @@ export const MoreList = ({
   }
 
   return (
-    <div className="not-prose">
-      <div className="mb-12 grid grid-cols-1 gap-x-4 gap-y-8 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-        {allPalettes.map((palette, index) => (
-          <PaletteCard
-            key={`${palette.documentId}-${index}`}
-            palette={palette}
-          />
-        ))}
+    <>
+      <h2>Explore More Color Palettes</h2>
+      <div className="not-prose">
+        <div className="mb-12 grid grid-cols-1 gap-x-4 gap-y-8 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+          {allPalettes.map((palette, index) => (
+            <PaletteCard
+              key={`${palette.documentId}-${index}`}
+              palette={palette}
+            />
+          ))}
+        </div>
+
+        {(loading || isLoadingMore) && (
+          <div className="flex items-center justify-center py-8">
+            <Loader2 className="h-6 w-6 animate-spin" />
+            <span className="ml-2">Loading more palettes...</span>
+          </div>
+        )}
+
+        {!loading && !isLoadingMore && hasMore && (
+          <div className="flex justify-center py-8">
+            <Button onClick={loadMore} variant="outline">
+              Load More
+            </Button>
+          </div>
+        )}
+
+        {!hasMore && allPalettes.length > 0 && (
+          <div className="text-muted-foreground py-8 text-center">
+            No more palettes to load
+          </div>
+        )}
+
+        {/* Intersection Observer Target */}
+        <div ref={ref} className="h-4" />
       </div>
-
-      {(loading || isLoadingMore) && (
-        <div className="flex items-center justify-center py-8">
-          <Loader2 className="h-6 w-6 animate-spin" />
-          <span className="ml-2">Loading more palettes...</span>
-        </div>
-      )}
-
-      {!loading && !isLoadingMore && hasMore && (
-        <div className="flex justify-center py-8">
-          <Button onClick={loadMore} variant="outline">
-            Load More
-          </Button>
-        </div>
-      )}
-
-      {!hasMore && allPalettes.length > 0 && (
-        <div className="text-muted-foreground py-8 text-center">
-          No more palettes to load
-        </div>
-      )}
-
-      {/* Intersection Observer Target */}
-      <div ref={ref} className="h-4" />
-    </div>
+    </>
   );
 };

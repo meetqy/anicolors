@@ -27,6 +27,11 @@ export const GET_PALETTE = gql`
           url
         }
       }
+      coloring {
+        url
+        width
+        height
+      }
       points
       name
       updatedAt
@@ -66,6 +71,7 @@ export type Palette = {
   points: ColorPoint[];
   cover: { url: string };
   gallery: { url: string; width: number; height: number; name: string }[];
+  coloring?: { url: string; width: number; height: number }[];
 };
 
 /**
