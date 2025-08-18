@@ -14,6 +14,7 @@ import Color from "color";
 import { Extend } from "./extend";
 import { ExtendPart } from "./extend-part";
 import { PickerPart } from "@/components/palette/picker-part";
+import { ListItemCard } from "@/components/list-item-card";
 
 const getPaletteData = async (id: string) => {
   const res = await getClient().query({
@@ -64,6 +65,7 @@ export default async function Page({
   const palette = await getPaletteData(id);
   const points = palette.points;
   const image = getAssetUrl(palette.image.url, 960);
+  console.log(palette)
 
   return (
     <>
@@ -150,6 +152,20 @@ export default async function Page({
             projects.
           </p>
           <Gallery palette={palette} />
+          <h2>Related Blog Posts About {palette.name}'s</h2>
+          <div className="grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3 grid not-prose">
+            {palette.blogs?.map((blog) => (
+              <ListItemCard
+                type="blog"
+                href={`/blog/${blog.slug}`}
+                key={blog.slug}
+                title={blog.title}
+                description={blog.description}
+                image={blog.cover.url}
+              />
+            ))}
+          </div>
+
           <Extend palette={palette} />
 
           <h2>Explore More Color Palettes</h2>

@@ -1,5 +1,6 @@
 import { type ColorPoint } from "@/components/palette/picker-colors";
 import { gql } from "@apollo/client";
+import type { BlogListResponse } from "./blog";
 
 /**
  * Fetches a specific palette by its document ID, including its details and gallery images.
@@ -17,6 +18,14 @@ export const GET_PALETTE = gql`
       likes
       image {
         url
+      }
+      blogs {
+        title
+        slug
+        description
+        cover {
+          url
+        }
       }
       points
       name
@@ -53,6 +62,7 @@ export type Palette = {
     unsuitableUse?: string[];
     parts?: PartColors;
   };
+  blogs?: BlogListResponse["blogs"];
   points: ColorPoint[];
   cover: { url: string };
   gallery: { url: string; width: number; height: number; name: string }[];

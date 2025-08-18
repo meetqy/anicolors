@@ -1,7 +1,6 @@
 import { Hero } from "@/components/hero";
 import { ListItemCard } from "@/components/list-item-card";
 import { getClient } from "@/lib/apollo-client";
-import { getAssetUrl } from "@/lib/utils";
 import { GET_TOOL_LIST, type ToolListResponse } from "@/query/tool";
 import type { Metadata } from "next";
 
@@ -43,7 +42,7 @@ export default async function Page({
             <ListItemCard
               key={tool.slug}
               href={`/tools/${tool.slug}`}
-              image={{ src: getAssetUrl(tool.cover.url, 512), alt: tool.name }}
+              image={tool.cover.url}
               title={tool.name}
               description={tool.description}
             />
