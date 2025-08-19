@@ -9,7 +9,7 @@ import {
 } from "@/components/ui/popover";
 import { hexToCategory } from "../utils";
 import type { Color } from "./columns";
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import { EllipsisVerticalIcon } from "lucide-react";
 
 interface FilterProps {
@@ -27,14 +27,19 @@ export function FilterBar({
   setColor,
   data,
 }: FilterProps) {
-  // 动态获取所有出现过的分类，保证按钮和数据一致
-  const allCategories = Array.from(
-    new Set(
-      data
-        .map((item) => hexToCategory(item.hex))
-        .filter((c) => c && c !== "Other"),
-    ),
-  ).sort();
+  // 构建 category 索引，避免每次都全量遍历
+  const { allCategories } = useMemo(() => {
+    const index: Record<string, Color[]> = {};
+    data.forEach((item) => {
+      const cat = hexToCategory(item.hex);
+      if (cat && cat !== "Other") {
+        if (!index[cat]) index[cat] = [];
+        index[cat].push(item);
+      }
+    });
+    const cats = Object.keys(index).sort();
+    return { allCategories: cats, categoryIndex: index };
+  }, [data]);
 
   const [popoverOpen, setPopoverOpen] = useState(false);
 
