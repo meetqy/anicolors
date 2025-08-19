@@ -9,8 +9,10 @@ import {
 } from "@/components/ui/popover";
 import { hexToCategory } from "../utils";
 import type { Color } from "./columns";
-import { useState, useMemo } from "react";
+import { useState, useMemo, useCallback, useEffect } from "react";
 import { EllipsisVerticalIcon } from "lucide-react";
+import Link from "next/link";
+import { useSearchParams, usePathname } from "next/navigation";
 
 interface FilterProps {
   search: string;
@@ -27,6 +29,9 @@ export function FilterBar({
   setColor,
   data,
 }: FilterProps) {
+  const searchParams = useSearchParams();
+  const pathname = usePathname();
+
   // 构建 category 索引，避免每次都全量遍历
   const { allCategories } = useMemo(() => {
     const index: Record<string, Color[]> = {};
@@ -41,11 +46,55 @@ export function FilterBar({
     return { allCategories: cats, categoryIndex: index };
   }, [data]);
 
+  // 初始化时根据 searchParams.name 设置默认选中
+  useEffect(() => {
+    const urlCategory = searchParams.get("name");
+    if (urlCategory) {
+      // 查找匹配的分类（忽略大小写）
+      const matchedCategory = allCategories.find(
+        (cat) => cat.toLowerCase() === urlCategory.toLowerCase(),
+      );
+      if (matchedCategory && matchedCategory !== color) {
+        setColor(matchedCategory);
+      }
+    } else if (color !== "") {
+      // URL 中没有分类参数，但当前有选中分类，则重置
+      setColor("");
+    }
+  }, [searchParams, allCategories, color, setColor]);
+
   const [popoverOpen, setPopoverOpen] = useState(false);
 
   // 只展示前5个，剩下的放到 more
   const shownCategories = allCategories.slice(0, 5);
   const moreCategories = allCategories.slice(5);
+
+  // 创建带有 category 参数的 URL - 使用 useCallback 缓存
+  const createCategoryUrl = useCallback(
+    (category: string) => {
+      const params = new URLSearchParams(searchParams.toString());
+      if (category) {
+        params.set("name", category.toLowerCase());
+      } else {
+        params.delete("name");
+      }
+      return `${pathname}?${params.toString()}`;
+    },
+    [searchParams, pathname],
+  );
+
+  // 处理分类点击 - 使用 useCallback 缓存
+  const handleCategoryClick = useCallback(
+    (category: string, e: React.MouseEvent) => {
+      e.preventDefault(); // 阻止默认跳转
+      setColor(category);
+      // 使用 requestAnimationFrame 延迟 URL 更新，避免阻塞 UI
+      requestAnimationFrame(() => {
+        window.history.pushState({}, "", createCategoryUrl(category));
+      });
+    },
+    [setColor, createCategoryUrl],
+  );
 
   return (
     <div className="mb-4 flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
@@ -59,22 +108,24 @@ export function FilterBar({
 
       {/* 筛选按钮 */}
       <div className="flex flex-wrap gap-2">
-        <Button
-          variant={color === "" ? "default" : "outline"}
-          size="sm"
-          onClick={() => setColor("")}
+        <Link
+          href={createCategoryUrl("")}
+          onClick={(e) => handleCategoryClick("", e)}
         >
-          All
-        </Button>
-        {shownCategories.map((c) => (
-          <Button
-            key={c}
-            variant={color === c ? "default" : "outline"}
-            size="sm"
-            onClick={() => setColor(c)}
-          >
-            {c}
+          <Button variant={color === "" ? "default" : "outline"} size="sm">
+            All
           </Button>
+        </Link>
+        {shownCategories.map((c) => (
+          <Link
+            key={c}
+            href={createCategoryUrl(c)}
+            onClick={(e) => handleCategoryClick(c, e)}
+          >
+            <Button variant={color === c ? "default" : "outline"} size="sm">
+              {c}
+            </Button>
+          </Link>
         ))}
         {moreCategories.length > 0 && (
           <Popover open={popoverOpen} onOpenChange={setPopoverOpen}>
@@ -90,18 +141,23 @@ export function FilterBar({
             <PopoverContent className="max-h-64 w-56 overflow-y-auto p-2">
               <div className="grid grid-cols-2 gap-2">
                 {moreCategories.map((c) => (
-                  <Button
+                  <Link
                     key={c}
-                    variant={color === c ? "default" : "outline"}
-                    size="sm"
-                    className="w-full"
-                    onClick={() => {
-                      setColor(c);
+                    href={createCategoryUrl(c)}
+                    onClick={(e) => {
+                      e.preventDefault();
+                      handleCategoryClick(c, e);
                       setPopoverOpen(false);
                     }}
                   >
-                    {c}
-                  </Button>
+                    <Button
+                      variant={color === c ? "default" : "outline"}
+                      size="sm"
+                      className="w-full"
+                    >
+                      {c}
+                    </Button>
+                  </Link>
                 ))}
               </div>
             </PopoverContent>
