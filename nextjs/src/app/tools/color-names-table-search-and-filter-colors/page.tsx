@@ -11,6 +11,7 @@ interface Props {
 const handleToolData = async ({ searchParams }: Props) => {
   const tool = await getToolData("color-names-table-search-and-filter-colors");
   const { name } = await searchParams;
+  console.log(tool);
 
   return {
     ...tool,
