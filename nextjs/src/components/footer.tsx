@@ -117,6 +117,17 @@ export const Footer = () => {
               ))}
 
               <a
+                href="https://findly.tools/anicolors-discover-anime-colors?utm_source=anicolors-discover-anime-colors"
+                target="_blank"
+              >
+                <img
+                  src="https://findly.tools/badges/findly-tools-badge-light.svg"
+                  alt="Featured on findly.tools"
+                  width="150"
+                  className="sr-only"
+                />
+              </a>
+              <a
                 href="https://starterbest.com"
                 target="_blank"
                 rel="noopener noreferrer"
