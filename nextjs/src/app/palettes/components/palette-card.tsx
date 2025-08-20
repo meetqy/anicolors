@@ -49,7 +49,9 @@ export const PaletteCard = ({ palette }: PaletteCardProps) => {
         </div>
         <div className="flex items-end justify-between py-2">
           <div>
-            <h2 className="font-medium capitalize">{palette.name}</h2>
+            <h2 className="line-clamp-1 font-medium capitalize">
+              {palette.name}
+            </h2>
             <Link
               href={`/category/${palette.category}`}
               className="text-muted-foreground hover:text-foreground line-clamp-1 text-sm capitalize hover:underline"
