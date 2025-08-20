@@ -13,7 +13,7 @@
   "attributes": {
     "points": {
       "type": "json",
-      "required": true
+      "required": false
     },
     "colors": {
       "type": "relation",
