@@ -74,87 +74,73 @@ export default async function Page({
           <h1 className="text-left capitalize">
             {palette.name} Color Palette - {palette.category}
           </h1>
-          {palette.points?.length ? (
-            <>
-              <p>
-                This color palette is inspired by the character{" "}
-                <b>{palette.name}</b> from{" "}
-                <Link
-                  className="capitalize underline"
-                  href={`/category/${palette.category}`}
-                >
-                  {palette.category}
-                </Link>
-                . We've extracted these five iconic colors from the official
-                character art. Want to create your own version? Hit the{" "}
-                <b>"Custom Maker"</b> button below to get started!
-              </p>
+          <p>
+            This color palette is inspired by the character{" "}
+            <b>{palette.name}</b> from{" "}
+            <Link
+              className="capitalize underline"
+              href={`/category/${palette.category}`}
+            >
+              {palette.category}
+            </Link>
+            . We've extracted these five iconic colors from the official
+            character art. Want to create your own version? Hit the{" "}
+            <b>"Custom Maker"</b> button below to get started!
+          </p>
 
-              <ul>
-                <li>
-                  {" "}
-                  You can drag the markers to picker different colors, create
-                  your own color palettes.
-                </li>
-                <li>
-                  Free download {palette.category} {palette.name} transparent
-                  background png HD.
-                </li>
-              </ul>
-            </>
-          ) : (
-            <img
-              className="mx-auto max-w-screen-md"
-              src={palette.image.url}
-              alt={palette.name + " color palette"}
-            />
-          )}
+          <ul>
+            <li>
+              {" "}
+              You can drag the markers to picker different colors, create your
+              own color palettes.
+            </li>
+            <li>
+              Free download {palette.category} {palette.name} transparent
+              background png HD.
+            </li>
+          </ul>
         </div>
 
-        {palette.points?.length && (
-          <>
-            <PickerPart className="mb-6" colors={palette.extend?.parts} />
-            <Generator initialPoints={points} initialImage={image} />
-            <PaletteActions id={id} palette={palette} />
-            <div className="mx-auto mt-24 flex max-w-screen-md justify-center gap-2 px-4 lg:px-0">
-              {points.map((item, index) => (
-                <ColorBaseInfo point={item} key={index} />
-              ))}
-            </div>
-            <ExtendPart palette={palette} />
+        <PickerPart className="mb-6" colors={palette.extend?.parts} />
+        <Generator initialPoints={points} initialImage={image} />
+        <PaletteActions id={id} palette={palette} />
+        <div className="mx-auto mt-24 flex max-w-screen-md justify-center gap-2 px-4 lg:px-0">
+          {points.map((item, index) => (
+            <ColorBaseInfo point={item} key={index} />
+          ))}
+        </div>
+        <ExtendPart palette={palette} />
 
-            <div className="mx-auto mt-12 flex max-w-screen-md flex-wrap gap-x-2 gap-y-4 px-4 lg:justify-center lg:px-0">
-              <Button
-                variant="outline"
-                className="rounded-full capitalize"
-                size="sm"
-                asChild
-              >
-                <Link href={`/category/${palette.category}`}>
-                  <Shapes className="size-4" />
-                  {palette.category}
-                </Link>
-              </Button>
-              {points.map((item, index) => (
-                <Button
-                  asChild
-                  variant="outline"
-                  className="rounded-full"
-                  key={index}
-                  size="sm"
-                >
-                  <Link href={`/color/${item.name}`}>
-                    <div
-                      className="size-4 rounded-full"
-                      style={{ backgroundColor: item.color }}
-                    ></div>
-                    {item.name}
-                  </Link>
-                </Button>
-              ))}
-            </div>
-          </>
-        )}
+        <div className="mx-auto mt-12 flex max-w-screen-md flex-wrap gap-x-2 gap-y-4 px-4 lg:justify-center lg:px-0">
+          <Button
+            variant="outline"
+            className="rounded-full capitalize"
+            size="sm"
+            asChild
+          >
+            <Link href={`/category/${palette.category}`}>
+              <Shapes className="size-4" />
+              {palette.category}
+            </Link>
+          </Button>
+          {points.map((item, index) => (
+            <Button
+              asChild
+              variant="outline"
+              className="rounded-full"
+              key={index}
+              size="sm"
+            >
+              <Link href={`/color/${item.name}`}>
+                <div
+                  className="size-4 rounded-full"
+                  style={{ backgroundColor: item.color }}
+                />
+                {item.name}
+              </Link>
+            </Button>
+          ))}
+        </div>
 
         <div className="prose mx-auto mt-24 max-w-screen-xl px-4">
           <Gallery palette={palette} />
@@ -163,7 +149,7 @@ export default async function Page({
           <Extend palette={palette} />
           <MoreList
             category={palette.category}
-            colors={points ? points.map((item) => item.name!) : []}
+            colors={points.map((item) => item.name!)}
           />
         </div>
       </div>

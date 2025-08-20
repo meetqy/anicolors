@@ -96,11 +96,11 @@ export const GET_PALETTE_LIST = gql`
         type
         image {
           url
-          width
-          height
         }
         cover {
           url
+          width
+          height
         }
         documentId
         publishedAt
@@ -136,8 +136,8 @@ export type PaletteListItem = {
   name: string;
   category: string;
   likes: number;
-  image: { url: string; width: number; height: number };
-  cover: { url: string };
+  image: { url: string };
+  cover: { url: string; width: number; height: number };
   points: ColorPoint[];
   type?: "character" | "fragment";
   documentId: string;

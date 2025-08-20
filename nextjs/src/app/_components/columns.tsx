@@ -4,14 +4,16 @@ import type { PaletteListItem } from "@/query/palette";
 import { ColumnsPhotoAlbum } from "react-photo-album";
 import { PaletteCard } from "@/app/palettes/components/palette-card";
 import "react-photo-album/columns.css";
+import "react-photo-view/dist/react-photo-view.css";
+import { PhotoProvider } from "react-photo-view";
 
 export const Columns = ({ palettes }: { palettes: PaletteListItem[] }) => {
   const photos = palettes.map((palette, index) => {
     let width = 1;
     let height = 1;
-    if (!palette.points?.length) {
-      width = palette.image.width;
-      height = palette.image.height;
+    if (palette.type === "fragment") {
+      width = palette.cover.width;
+      height = palette.cover.height;
     }
 
     return {
@@ -24,23 +26,25 @@ export const Columns = ({ palettes }: { palettes: PaletteListItem[] }) => {
   });
 
   return (
-    <ColumnsPhotoAlbum
-      photos={photos}
-      columns={(containerWidth) => {
-        if (containerWidth < 768) return 2;
-        if (containerWidth < 1280) return 3;
-        return 4;
-      }}
-      render={{
-        photo: (props, context) => {
-          return (
-            <PaletteCard
-              key={context.photo.key}
-              palette={context.photo.palette}
-            />
-          );
-        },
-      }}
-    />
+    <PhotoProvider>
+      <ColumnsPhotoAlbum
+        photos={photos}
+        columns={(containerWidth) => {
+          if (containerWidth < 768) return 2;
+          if (containerWidth < 1280) return 3;
+          return 4;
+        }}
+        render={{
+          photo: (props, context) => {
+            return (
+              <PaletteCard
+                key={context.photo.key}
+                palette={context.photo.palette}
+              />
+            );
+          },
+        }}
+      />
+    </PhotoProvider>
   );
 };

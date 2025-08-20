@@ -3,8 +3,8 @@ import { cn, getAssetUrl } from "@/lib/utils";
 import { timeAgo } from "@/lib/time-utils";
 import { type PaletteListItem } from "@/query/palette";
 import Link from "next/link";
-import "react-photo-view/dist/react-photo-view.css";
-import { PhotoView, PhotoProvider } from "react-photo-view";
+
+import { PhotoView } from "react-photo-view";
 
 interface PaletteCardProps {
   palette: PaletteListItem;
@@ -16,30 +16,23 @@ export const PaletteCard = ({ palette }: PaletteCardProps) => {
   if (type === "fragment") {
     return (
       <div className="w-full">
-        <div
-          className="overflow-hidden rounded-md"
-          style={{
-            aspectRatio: palette.image.width / palette.image.height || 1, // 保持宽高比
-          }}
-        >
-          <PhotoProvider>
-            <PhotoView key={palette.documentId} src={palette.cover.url}>
-              <img
-                src={getAssetUrl(palette.cover.url, 320)}
-                srcSet={`
+        <div className="overflow-hidden rounded-md">
+          <PhotoView key={palette.documentId} src={palette.cover.url}>
+            <img
+              src={getAssetUrl(palette.cover.url, 320)}
+              srcSet={`
               ${getAssetUrl(palette.cover.url, 320)} 1x,
               ${getAssetUrl(palette.cover.url, 640)} 2x,
               ${getAssetUrl(palette.cover.url, 960)} 3x
             `}
-                alt={palette.name}
-                className={cn(
-                  "relative z-10 size-full origin-bottom scale-105 object-cover",
-                )}
-              />
-            </PhotoView>
-          </PhotoProvider>
+              alt={palette.name}
+              className={cn(
+                "relative z-10 size-full origin-bottom scale-105 object-cover",
+              )}
+            />
+          </PhotoView>
         </div>
-        <div className="flex items-center justify-between py-2">
+        <div className="flex items-end justify-between py-2">
           <div>
             <h2 className="font-medium capitalize">{palette.name}</h2>
             <Link
@@ -104,13 +97,13 @@ export const PaletteCard = ({ palette }: PaletteCardProps) => {
                   className="h-3 w-full"
                   key={index}
                   style={{ backgroundColor: point.color }}
-                ></div>
+                />
               );
             })}
           </div>
         </div>
       </Link>
-      <div className="flex items-center justify-between py-2">
+      <div className="flex items-end justify-between py-2">
         <div>
           <h2 className="font-medium capitalize">{palette.name}</h2>
           <Link
