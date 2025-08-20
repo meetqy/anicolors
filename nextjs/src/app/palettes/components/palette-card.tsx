@@ -16,7 +16,12 @@ export const PaletteCard = ({ palette }: PaletteCardProps) => {
   if (type === "fragment") {
     return (
       <div className="w-full">
-        <div className="overflow-hidden rounded-md">
+        <div
+          className="bg-muted/50 overflow-hidden rounded-md"
+          style={{
+            aspectRatio: palette.cover.width / palette.cover.height,
+          }}
+        >
           <PhotoView key={palette.documentId} src={palette.cover.url}>
             <img
               src={getAssetUrl(palette.cover.url, 320)}
