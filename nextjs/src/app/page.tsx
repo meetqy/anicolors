@@ -16,12 +16,8 @@ export const metadata: Metadata = {
   description:
     "Extract the iconic colors from your favorite anime and game scenes. Upload any image to instantly generate a beautiful, shareable color palette with AniColors.",
   icons: [{ rel: "icon", url: "/favicon.ico" }],
-  twitter: {
-    images: ["og.jpg"],
-  },
-  openGraph: {
-    images: ["og.jpg"],
-  },
+  twitter: { images: ["og.jpg"] },
+  openGraph: { images: ["og.jpg"] },
   alternates: {
     canonical: "/",
   },

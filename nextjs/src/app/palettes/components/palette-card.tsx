@@ -9,7 +9,25 @@ interface PaletteCardProps {
 }
 
 export const PaletteCard = ({ palette }: PaletteCardProps) => {
-  const bgColor = palette.points[0]!.color;
+  const { points, posterColors, name } = palette;
+
+  if (posterColors && posterColors.length > 0) {
+    return (
+      <Link href={`/palettes/${palette.documentId}`}>
+        <img
+          alt={name + "color palette"}
+          src={getAssetUrl(palette.image.url, 320)}
+          srcSet={`
+              ${getAssetUrl(palette.image.url, 320)} 1x,
+              ${getAssetUrl(palette.image.url, 640)} 2x,
+              ${getAssetUrl(palette.image.url, 960)} 3x
+            `}
+        />
+      </Link>
+    );
+  }
+
+  const bgColor = points[0]!.color;
 
   return (
     <div className="relative">
