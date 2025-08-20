@@ -40,7 +40,6 @@ export const GET_PALETTE = gql`
       cover {
         url
       }
-      posterColors
       extend
     }
   }
@@ -68,7 +67,6 @@ export type Palette = {
     unsuitableUse?: string[];
     parts?: PartColors;
   };
-  posterColors?: { color: string; name: string }[];
   blogs?: BlogListResponse["blogs"];
   points: ColorPoint[];
   cover: { url: string };

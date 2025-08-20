@@ -45,9 +45,7 @@ export const generateMetadata = async ({
   const palette = await getPaletteData(id);
   const imageUrl = getAssetUrl(palette.cover.url, 960);
 
-  const hexs = (palette.posterColors || palette.points)
-    .map((item) => Color(item.color).hex())
-    .join(", ");
+  const hexs = palette.points.map((item) => Color(item.color).hex()).join(", ");
 
   return {
     title: `${palette.name} Color Palette - ${palette.category}`,
