@@ -3,6 +3,8 @@ import { cn, getAssetUrl } from "@/lib/utils";
 import { timeAgo } from "@/lib/time-utils";
 import { type PaletteListItem } from "@/query/palette";
 import Link from "next/link";
+import "react-photo-view/dist/react-photo-view.css";
+import { PhotoView, PhotoProvider } from "react-photo-view";
 
 interface PaletteCardProps {
   palette: PaletteListItem;
@@ -20,20 +22,22 @@ export const PaletteCard = ({ palette }: PaletteCardProps) => {
             aspectRatio: palette.image.width / palette.image.height || 1, // 保持宽高比
           }}
         >
-          <Link href={`/palettes/${palette.documentId}`}>
-            <img
-              src={getAssetUrl(palette.image.url, 320)}
-              srcSet={`
+          <PhotoProvider>
+            <PhotoView key={palette.documentId} src={palette.image.url}>
+              <img
+                src={getAssetUrl(palette.image.url, 320)}
+                srcSet={`
               ${getAssetUrl(palette.image.url, 320)} 1x,
               ${getAssetUrl(palette.image.url, 640)} 2x,
               ${getAssetUrl(palette.image.url, 960)} 3x
             `}
-              alt={palette.name}
-              className={cn(
-                "relative z-10 size-full origin-bottom scale-105 object-cover transition-all hover:scale-150",
-              )}
-            />
-          </Link>
+                alt={palette.name}
+                className={cn(
+                  "relative z-10 size-full origin-bottom scale-105 object-cover",
+                )}
+              />
+            </PhotoView>
+          </PhotoProvider>
         </div>
         <div className="flex items-center justify-between py-2">
           <div>

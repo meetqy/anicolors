@@ -1,21 +1,21 @@
-import { ColorBaseInfo } from "@/app/palettes/[id]/color-base-info";
+import { ColorBaseInfo } from "./_components/color-base-info";
 import { Generator } from "@/components/palette/generator";
 import { Button } from "@/components/ui/button";
-import { PaletteActions } from "./actions";
+import { PaletteActions } from "./_components/actions";
 import { getClient } from "@/lib/apollo-client";
 import { getAssetUrl, capitalize } from "@/lib/utils";
-import { Gallery } from "./gallery";
+import { Gallery } from "./_components/gallery";
 import { GET_PALETTE, type Palette } from "@/query/palette";
 import { type Metadata } from "next";
 import Link from "next/link";
 import { Shapes } from "lucide-react";
-import { MoreList } from "./more-list";
+import { MoreList } from "./_components/more-list";
 import Color from "color";
-import { Extend } from "./extend";
-import { ExtendPart } from "./extend-part";
+import { Extend } from "./_components/extend";
+import { ExtendPart } from "./_components/extend-part";
 import { PickerPart } from "@/components/palette/picker-part";
-import { Blogs } from "./blogs";
-import { Coloring } from "./coloring";
+import { Blogs } from "./_components/blogs";
+import { Coloring } from "./_components/coloring";
 
 const getPaletteData = async (id: string) => {
   const res = await getClient().query({
@@ -76,31 +76,41 @@ export default async function Page({
           <h1 className="text-left capitalize">
             {palette.name} Color Palette - {palette.category}
           </h1>
-          <p>
-            This color palette is inspired by the character{" "}
-            <b>{palette.name}</b> from{" "}
-            <Link
-              className="capitalize underline"
-              href={`/category/${palette.category}`}
-            >
-              {palette.category}
-            </Link>
-            . We've extracted these five iconic colors from the official
-            character art. Want to create your own version? Hit the{" "}
-            <b>"Custom Maker"</b> button below to get started!
-          </p>
+          {palette.points?.length ? (
+            <>
+              <p>
+                This color palette is inspired by the character{" "}
+                <b>{palette.name}</b> from{" "}
+                <Link
+                  className="capitalize underline"
+                  href={`/category/${palette.category}`}
+                >
+                  {palette.category}
+                </Link>
+                . We've extracted these five iconic colors from the official
+                character art. Want to create your own version? Hit the{" "}
+                <b>"Custom Maker"</b> button below to get started!
+              </p>
 
-          <ul>
-            <li>
-              {" "}
-              You can drag the markers to picker different colors, create your
-              own color palettes.
-            </li>
-            <li>
-              Free download {palette.category} {palette.name} transparent
-              background png HD.
-            </li>
-          </ul>
+              <ul>
+                <li>
+                  {" "}
+                  You can drag the markers to picker different colors, create
+                  your own color palettes.
+                </li>
+                <li>
+                  Free download {palette.category} {palette.name} transparent
+                  background png HD.
+                </li>
+              </ul>
+            </>
+          ) : (
+            <img
+              className="mx-auto max-w-screen-md"
+              src={palette.image.url}
+              alt={palette.name + " color palette"}
+            />
+          )}
         </div>
 
         {palette.points?.length && (
