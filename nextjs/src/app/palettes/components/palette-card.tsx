@@ -9,28 +9,57 @@ interface PaletteCardProps {
 }
 
 export const PaletteCard = ({ palette }: PaletteCardProps) => {
-  const { points, name } = palette;
+  const { points } = palette;
 
   if (!points?.length) {
     return (
-      <Link href={`/palettes/${palette.documentId}`}>
-        <img
-          alt={name + "color palette"}
-          src={getAssetUrl(palette.image.url, 320)}
-          srcSet={`
+      <div className="w-full">
+        <div
+          className="overflow-hidden rounded-md"
+          style={{
+            aspectRatio: palette.image.width / palette.image.height || 1, // 保持宽高比
+          }}
+        >
+          <Link href={`/palettes/${palette.documentId}`}>
+            <img
+              src={getAssetUrl(palette.image.url, 320)}
+              srcSet={`
               ${getAssetUrl(palette.image.url, 320)} 1x,
               ${getAssetUrl(palette.image.url, 640)} 2x,
               ${getAssetUrl(palette.image.url, 960)} 3x
             `}
-        />
-      </Link>
+              alt={palette.name}
+              className={cn(
+                "relative z-10 size-full origin-bottom scale-105 object-cover transition-all hover:scale-150",
+              )}
+            />
+          </Link>
+        </div>
+        <div className="flex items-center justify-between py-2">
+          <div>
+            <h2 className="font-medium capitalize">{palette.name}</h2>
+            <Link
+              href={`/category/${palette.category}`}
+              className="text-muted-foreground hover:text-foreground line-clamp-1 text-sm capitalize hover:underline"
+            >
+              {palette.category}
+            </Link>
+          </div>
+          <time
+            suppressHydrationWarning
+            className="text-muted-foreground shrink-0 text-sm"
+          >
+            {timeAgo(palette.createdAt)}
+          </time>
+        </div>
+      </div>
     );
   }
 
   const bgColor = points[0]!.color;
 
   return (
-    <div className="relative">
+    <div className="relative w-full">
       <Link
         href={`/palettes/${palette.documentId}`}
         className="group"
