@@ -19,7 +19,7 @@ export const PaletteCard = ({ palette }: PaletteCardProps) => {
         <div
           className="bg-muted/50 relative overflow-hidden rounded-md"
           style={{
-            aspectRatio: 3 / 4,
+            aspectRatio: 1 / 1,
           }}
         >
           <PhotoView key={palette.documentId} src={palette.cover.url}>
@@ -37,16 +37,14 @@ export const PaletteCard = ({ palette }: PaletteCardProps) => {
             />
           </PhotoView>
 
-          <div className="absolute bottom-0 z-10 w-full bg-white pt-1">
-            <div className="grid w-full grid-cols-5 gap-1">
-              {palette.points.slice(0, 5).map((point, index) => (
-                <div
-                  key={index}
-                  className="aspect-[2/3] w-full"
-                  style={{ backgroundColor: point.color }}
-                />
-              ))}
-            </div>
+          <div className="absolute bottom-0 z-10 grid w-full grid-cols-5">
+            {palette.points.slice(0, 5).map((point, index) => (
+              <div
+                key={index}
+                className="h-3 w-full"
+                style={{ backgroundColor: point.color }}
+              />
+            ))}
           </div>
         </div>
         <div className="flex items-end justify-between py-2">
