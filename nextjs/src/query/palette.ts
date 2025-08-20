@@ -132,7 +132,6 @@ export type PaletteListItem = {
   likes: number;
   image: { url: string };
   points: ColorPoint[];
-  posterColors: { hex: string; name: string }[];
   documentId: string;
   publishedAt: string;
   createdAt: string;

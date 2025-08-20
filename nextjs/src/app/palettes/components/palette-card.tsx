@@ -9,9 +9,9 @@ interface PaletteCardProps {
 }
 
 export const PaletteCard = ({ palette }: PaletteCardProps) => {
-  const { points, posterColors, name } = palette;
+  const { points, name } = palette;
 
-  if (posterColors && posterColors.length > 0) {
+  if (!points?.length) {
     return (
       <Link href={`/palettes/${palette.documentId}`}>
         <img
