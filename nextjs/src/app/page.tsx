@@ -51,44 +51,44 @@ export default async function Page() {
   return (
     <div className="mx-auto">
       <section className="from-background to-muted/50 relative overflow-hidden bg-gradient-to-b py-16">
-        <div className="container mx-auto max-w-7xl px-4">
-          {/* Header Content */}
-          <div className="mb-12 text-center">
-            <Badge variant="outline" className="mb-4">
-              <Sparkles className="mr-2 h-4 w-4" />
-              Anime Color Palettes
-            </Badge>
-            <h1 className="mx-auto mb-6 max-w-3xl text-4xl font-bold tracking-tight md:text-5xl lg:text-6xl">
-              Discover and Create <br />{" "}
-              <span className="font-serif italic">Anime Colors</span>
-            </h1>
-            <p className="text-muted-foreground mx-auto mb-8 max-w-4xl text-xl leading-relaxed">
-              Browse thousands of color palettes created from anime characters,
-              artworks, games, and user-uploaded images. Discover unique color
-              combinations and layout styles.
-            </p>
+        {/* Header Content */}
+        <div className="container mx-auto mb-12 max-w-7xl px-4 text-center">
+          <Badge variant="outline" className="mb-4">
+            <Sparkles className="mr-2 h-4 w-4" />
+            Anime Color Palettes
+          </Badge>
+          <h1 className="mx-auto mb-6 max-w-3xl text-4xl font-bold tracking-tight md:text-5xl lg:text-6xl">
+            Discover and Create <br />{" "}
+            <span className="font-serif italic">Anime Colors</span>
+          </h1>
+          <p className="text-muted-foreground mx-auto mb-8 max-w-4xl text-xl leading-relaxed">
+            Browse thousands of color palettes created from anime characters,
+            artworks, games, and user-uploaded images. Discover unique color
+            combinations and layout styles.
+          </p>
 
-            {/* CTA Buttons */}
-            <div className="mb-12 flex flex-col justify-center gap-4 sm:flex-row">
-              <Button asChild size="lg">
-                <Link href="/create" className="flex items-center gap-2">
-                  <Upload className="h-5 w-5" />
-                  Create Your Palette
-                </Link>
-              </Button>
-              <Button asChild variant="outline" size="lg">
-                <Link href="/palettes" className="flex items-center gap-2">
-                  <Palette className="h-5 w-5" />
-                  Browse All Palettes
-                  <ArrowRight className="h-4 w-4" />
-                </Link>
-              </Button>
-            </div>
-
-            {/* Quick Stats */}
-            <Stats createNumber={pageInfo.total} />
+          {/* CTA Buttons */}
+          <div className="mb-12 flex flex-col justify-center gap-4 sm:flex-row">
+            <Button asChild size="lg">
+              <Link href="/create" className="flex items-center gap-2">
+                <Upload className="h-5 w-5" />
+                Create Your Palette
+              </Link>
+            </Button>
+            <Button asChild variant="outline" size="lg">
+              <Link href="/palettes" className="flex items-center gap-2">
+                <Palette className="h-5 w-5" />
+                Browse All Palettes
+                <ArrowRight className="h-4 w-4" />
+              </Link>
+            </Button>
           </div>
 
+          {/* Quick Stats */}
+          <Stats createNumber={pageInfo.total} />
+        </div>
+
+        <div className="mx-auto max-w-screen-xl">
           {/* Featured Palettes Grid */}
           {featuredPalettes.length > 0 && (
             <div className="mb-12">
@@ -102,6 +102,7 @@ export default async function Page() {
                   </Link>
                 </Button>
               </div>
+
               <Columns palettes={featuredPalettes} />
             </div>
           )}

@@ -135,12 +135,12 @@ export const Generator = () => {
       const colorInstance = Color.rgb(color.rgb[0], color.rgb[1], color.rgb[2]);
       const hex = colorInstance.hex();
       return {
-        hex,
+        color: hex,
         name: getColorName(hex)?.name,
       };
     });
 
-    const colorString = `{"posterPalette": ${JSON.stringify(hexColors)}}`;
+    const colorString = `${JSON.stringify(hexColors)}`;
     await navigator.clipboard.writeText(colorString);
     toast.success(`Copied ${hexColors.length} colors to clipboard`);
   };

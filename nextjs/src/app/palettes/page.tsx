@@ -1,5 +1,4 @@
 import { type Metadata } from "next";
-import { PaletteCard } from "./components/palette-card";
 import { EmptyState } from "./components/empty-state";
 import { getClient } from "@/lib/apollo-client";
 import { GET_PALETTE_LIST, type PaletteListResponse } from "@/query/palette";

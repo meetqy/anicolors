@@ -45,7 +45,9 @@ export const generateMetadata = async ({
   const palette = await getPaletteData(id);
   const imageUrl = getAssetUrl(palette.cover.url, 960);
 
-  const hexs = palette.points.map((item) => Color(item.color).hex()).join(", ");
+  const hexs = (palette.posterColors || palette.points)
+    .map((item) => Color(item.color).hex())
+    .join(", ");
 
   return {
     title: `${palette.name} Color Palette - ${palette.category}`,
@@ -66,7 +68,6 @@ export default async function Page({
   const palette = await getPaletteData(id);
   const points = palette.points;
   const image = getAssetUrl(palette.image.url, 960);
-  console.log(palette);
 
   return (
     <>
@@ -102,64 +103,59 @@ export default async function Page({
           </ul>
         </div>
 
-        <PickerPart className="mb-6" colors={palette.extend?.parts} />
-        <Generator initialPoints={points} initialImage={image} />
-        <PaletteActions id={id} palette={palette} />
+        {palette.points?.length && (
+          <>
+            <PickerPart className="mb-6" colors={palette.extend?.parts} />
+            <Generator initialPoints={points} initialImage={image} />
+            <PaletteActions id={id} palette={palette} />
+            <div className="mx-auto mt-24 flex max-w-screen-md justify-center gap-2 px-4 lg:px-0">
+              {points.map((item, index) => (
+                <ColorBaseInfo point={item} key={index} />
+              ))}
+            </div>
+            <ExtendPart palette={palette} />
 
-        <div className="mx-auto mt-24 flex max-w-screen-md justify-center gap-2 px-4 lg:px-0">
-          {points.map((item, index) => (
-            <ColorBaseInfo point={item} key={index} />
-          ))}
-        </div>
-
-        <ExtendPart palette={palette} />
-
-        <div className="mx-auto mt-12 flex max-w-screen-md flex-wrap gap-x-2 gap-y-4 px-4 lg:justify-center lg:px-0">
-          <Button
-            variant="outline"
-            className="rounded-full capitalize"
-            size="sm"
-            asChild
-          >
-            <Link href={`/category/${palette.category}`}>
-              <Shapes className="size-4" />
-              {palette.category}
-            </Link>
-          </Button>
-          {points.map((item, index) => (
-            <Button
-              asChild
-              variant="outline"
-              className="rounded-full"
-              key={index}
-              size="sm"
-            >
-              <Link href={`/color/${item.name}`}>
-                <div
-                  className="size-4 rounded-full"
-                  style={{ backgroundColor: item.color }}
-                ></div>
-                {item.name}
-              </Link>
-            </Button>
-          ))}
-        </div>
+            <div className="mx-auto mt-12 flex max-w-screen-md flex-wrap gap-x-2 gap-y-4 px-4 lg:justify-center lg:px-0">
+              <Button
+                variant="outline"
+                className="rounded-full capitalize"
+                size="sm"
+                asChild
+              >
+                <Link href={`/category/${palette.category}`}>
+                  <Shapes className="size-4" />
+                  {palette.category}
+                </Link>
+              </Button>
+              {points.map((item, index) => (
+                <Button
+                  asChild
+                  variant="outline"
+                  className="rounded-full"
+                  key={index}
+                  size="sm"
+                >
+                  <Link href={`/color/${item.name}`}>
+                    <div
+                      className="size-4 rounded-full"
+                      style={{ backgroundColor: item.color }}
+                    ></div>
+                    {item.name}
+                  </Link>
+                </Button>
+              ))}
+            </div>
+          </>
+        )}
 
         <div className="prose mx-auto mt-24 max-w-screen-xl px-4">
-          <h2>{palette.name} Color Palette Gallery</h2>
-          <p>
-            Explore unique styles and shades inspired by {palette.name} from{" "}
-            {palette.category}. Perfect for anime art, game design, or cosplay
-            projects.
-          </p>
-
           <Gallery palette={palette} />
           <Coloring palette={palette} />
           <Blogs palette={palette} />
           <Extend palette={palette} />
           <MoreList
             category={palette.category}
-            colors={points.map((item) => item.name!)}
+            colors={points ? points.map((item) => item.name!) : []}
           />
         </div>
       </div>
