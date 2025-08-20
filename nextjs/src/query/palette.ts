@@ -95,6 +95,7 @@ export const GET_PALETTE_LIST = gql`
         name
         category
         points
+        type
         image {
           url
           width
@@ -140,6 +141,7 @@ export type PaletteListItem = {
   image: { url: string; width: number; height: number };
   cover: { url: string };
   points: ColorPoint[];
+  type?: "character" | "fragment";
   documentId: string;
   publishedAt: string;
   createdAt: string;

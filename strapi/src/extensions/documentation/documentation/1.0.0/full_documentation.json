@@ -14,7 +14,7 @@
       "name": "Apache 2.0",
       "url": "https://www.apache.org/licenses/LICENSE-2.0.html"
     },
-    "x-generation-date": "2025-08-20T06:13:37.569Z"
+    "x-generation-date": "2025-08-20T07:53:17.821Z"
   },
   "x-strapi-config": {
     "plugins": [
@@ -5824,7 +5824,13 @@
                     }
                   }
                 },
-                "posterColors": {},
+                "type": {
+                  "type": "string",
+                  "enum": [
+                    "fragment",
+                    "character"
+                  ]
+                },
                 "createdAt": {
                   "type": "string",
                   "format": "date-time"
@@ -7989,7 +7995,13 @@
                     }
                   }
                 },
-                "posterColors": {},
+                "type": {
+                  "type": "string",
+                  "enum": [
+                    "fragment",
+                    "character"
+                  ]
+                },
                 "createdAt": {
                   "type": "string",
                   "format": "date-time"
@@ -9870,7 +9882,13 @@
                     }
                   }
                 },
-                "posterColors": {},
+                "type": {
+                  "type": "string",
+                  "enum": [
+                    "fragment",
+                    "character"
+                  ]
+                },
                 "createdAt": {
                   "type": "string",
                   "format": "date-time"
@@ -10114,7 +10132,13 @@
                   "example": "string or id"
                 }
               },
-              "posterColors": {},
+              "type": {
+                "type": "string",
+                "enum": [
+                  "fragment",
+                  "character"
+                ]
+              },
               "locale": {
                 "type": "string"
               },
@@ -11794,7 +11818,13 @@
                           }
                         }
                       },
-                      "posterColors": {},
+                      "type": {
+                        "type": "string",
+                        "enum": [
+                          "fragment",
+                          "character"
+                        ]
+                      },
                       "createdAt": {
                         "type": "string",
                         "format": "date-time"
@@ -12589,7 +12619,13 @@
               }
             }
           },
-          "posterColors": {},
+          "type": {
+            "type": "string",
+            "enum": [
+              "fragment",
+              "character"
+            ]
+          },
           "createdAt": {
             "type": "string",
             "format": "date-time"

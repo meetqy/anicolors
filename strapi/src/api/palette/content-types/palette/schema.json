@@ -91,8 +91,13 @@
         "audios"
       ]
     },
-    "posterColors": {
-      "type": "json"
+    "type": {
+      "type": "enumeration",
+      "default": "character",
+      "enum": [
+        "fragment",
+        "character"
+      ]
     }
   }
 }

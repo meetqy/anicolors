@@ -11,9 +11,9 @@ interface PaletteCardProps {
 }
 
 export const PaletteCard = ({ palette }: PaletteCardProps) => {
-  const { points } = palette;
+  const { type = "character", points } = palette;
 
-  if (!points?.length) {
+  if (type === "fragment") {
     return (
       <div className="w-full">
         <div

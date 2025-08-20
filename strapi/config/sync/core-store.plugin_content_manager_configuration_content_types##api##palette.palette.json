@@ -204,18 +204,18 @@
           "sortable": false
         }
       },
-      "posterColors": {
+      "type": {
         "edit": {
-          "label": "posterColors",
+          "label": "type",
           "description": "",
           "placeholder": "",
           "visible": true,
           "editable": true
         },
         "list": {
-          "label": "posterColors",
-          "searchable": false,
-          "sortable": false
+          "label": "type",
+          "searchable": true,
+          "sortable": true
         }
       },
       "createdAt": {
@@ -304,11 +304,15 @@
         [
           {
             "name": "name",
-            "size": 6
+            "size": 4
+          },
+          {
+            "name": "type",
+            "size": 4
           },
           {
             "name": "categoryExtend",
-            "size": 6
+            "size": 4
           }
         ],
         [
@@ -320,12 +324,6 @@
         [
           {
             "name": "extend",
-            "size": 12
-          }
-        ],
-        [
-          {
-            "name": "posterColors",
             "size": 12
           }
         ],
