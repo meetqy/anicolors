@@ -23,13 +23,13 @@ export const PaletteCard = ({ palette }: PaletteCardProps) => {
           }}
         >
           <PhotoProvider>
-            <PhotoView key={palette.documentId} src={palette.image.url}>
+            <PhotoView key={palette.documentId} src={palette.cover.url}>
               <img
-                src={getAssetUrl(palette.image.url, 320)}
+                src={getAssetUrl(palette.cover.url, 320)}
                 srcSet={`
-              ${getAssetUrl(palette.image.url, 320)} 1x,
-              ${getAssetUrl(palette.image.url, 640)} 2x,
-              ${getAssetUrl(palette.image.url, 960)} 3x
+              ${getAssetUrl(palette.cover.url, 320)} 1x,
+              ${getAssetUrl(palette.cover.url, 640)} 2x,
+              ${getAssetUrl(palette.cover.url, 960)} 3x
             `}
                 alt={palette.name}
                 className={cn(
