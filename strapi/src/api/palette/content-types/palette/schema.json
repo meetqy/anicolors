@@ -90,6 +90,9 @@
         "videos",
         "audios"
       ]
+    },
+    "posterColors": {
+      "type": "json"
     }
   }
 }

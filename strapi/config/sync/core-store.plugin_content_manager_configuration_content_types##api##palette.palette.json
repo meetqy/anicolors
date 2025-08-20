@@ -204,6 +204,20 @@
           "sortable": false
         }
       },
+      "posterColors": {
+        "edit": {
+          "label": "posterColors",
+          "description": "",
+          "placeholder": "",
+          "visible": true,
+          "editable": true
+        },
+        "list": {
+          "label": "posterColors",
+          "searchable": false,
+          "sortable": false
+        }
+      },
       "createdAt": {
         "edit": {
           "label": "createdAt",
@@ -272,14 +286,6 @@
       }
     },
     "layouts": {
-      "list": [
-        "id",
-        "image",
-        "name",
-        "category",
-        "likes",
-        "createdAt"
-      ],
       "edit": [
         [
           {
@@ -319,6 +325,12 @@
         ],
         [
           {
+            "name": "posterColors",
+            "size": 12
+          }
+        ],
+        [
+          {
             "name": "category",
             "size": 6
           },
@@ -343,6 +355,14 @@
             "size": 6
           }
         ]
+      ],
+      "list": [
+        "id",
+        "image",
+        "name",
+        "category",
+        "likes",
+        "createdAt"
       ]
     },
     "uid": "api::palette.palette"
