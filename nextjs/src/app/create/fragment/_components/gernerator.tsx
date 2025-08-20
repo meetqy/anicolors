@@ -7,9 +7,10 @@ import { useDropzone } from "react-dropzone";
 import { withSave } from "@/components/card/with-save";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
-import { Copy } from "lucide-react";
+import { Copy, UploadIcon } from "lucide-react";
 import Color from "color";
 import { getColorName } from "@/lib/nearest";
+import { sortColors } from "@/lib/sort-colors";
 
 interface ColorData {
   rgb: [number, number, number];
@@ -42,13 +43,17 @@ const PosterContent = ({
           <div className="space-y-3">
             {/* 颜色网格 */}
             <div className="grid grid-cols-6 gap-2 md:grid-cols-12">
-              {colors.map((color, index) => {
+              {sortColors(
+                colors.map((e) =>
+                  Color(`rgb(${e.rgb[0]}, ${e.rgb[1]}, ${e.rgb[2]})`).hex(),
+                ),
+              ).map((color, index) => {
                 return (
                   <div key={index} className="group">
                     <div
                       className="aspect-[9/16] w-full cursor-pointer transition-transform group-hover:scale-105"
                       style={{
-                        backgroundColor: `rgb(${color.rgb[0]}, ${color.rgb[1]}, ${color.rgb[2]})`,
+                        backgroundColor: color,
                       }}
                     />
                   </div>
@@ -180,19 +185,7 @@ export const Generator = () => {
             <input {...getInputProps()} />
             <div className="text-center">
               <div className="bg-muted mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full">
-                <svg
-                  className="h-8 w-8"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"
-                  />
-                </svg>
+                <UploadIcon />
               </div>
               <p className="mb-2 text-xl font-semibold">
                 {isDragActive ? "Drop image here" : "Upload Image"}
