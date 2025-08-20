@@ -17,18 +17,18 @@ export const PaletteCard = ({ palette }: PaletteCardProps) => {
     return (
       <div className="w-full">
         <div
-          className="bg-muted/50 overflow-hidden rounded-md"
+          className="bg-muted/50 relative overflow-hidden rounded-md"
           style={{
-            aspectRatio: palette.cover.width / palette.cover.height,
+            aspectRatio: 3 / 4,
           }}
         >
           <PhotoView key={palette.documentId} src={palette.cover.url}>
             <img
-              src={getAssetUrl(palette.cover.url, 320)}
+              src={getAssetUrl(palette.image.url, 320)}
               srcSet={`
-              ${getAssetUrl(palette.cover.url, 320)} 1x,
-              ${getAssetUrl(palette.cover.url, 640)} 2x,
-              ${getAssetUrl(palette.cover.url, 960)} 3x
+              ${getAssetUrl(palette.image.url, 320)} 1x,
+              ${getAssetUrl(palette.image.url, 640)} 2x,
+              ${getAssetUrl(palette.image.url, 960)} 3x
             `}
               alt={palette.name}
               className={cn(
@@ -36,6 +36,18 @@ export const PaletteCard = ({ palette }: PaletteCardProps) => {
               )}
             />
           </PhotoView>
+
+          <div className="absolute bottom-0 z-10 w-full bg-white pt-1">
+            <div className="grid w-full grid-cols-5 gap-1">
+              {palette.points.slice(0, 5).map((point, index) => (
+                <div
+                  key={index}
+                  className="aspect-[2/3] w-full"
+                  style={{ backgroundColor: point.color }}
+                />
+              ))}
+            </div>
+          </div>
         </div>
         <div className="flex items-end justify-between py-2">
           <div>

@@ -12,8 +12,8 @@ export const Columns = ({ palettes }: { palettes: PaletteListItem[] }) => {
     let width = 1;
     let height = 1;
     if (palette.type === "fragment") {
-      width = palette.cover.width;
-      height = palette.cover.height;
+      width = 3;
+      height = 4;
     }
 
     return {
