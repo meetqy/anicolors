@@ -1,107 +1,35 @@
 "use client";
 
 import { useState, useCallback } from "react";
-import ColorThief from "colorthief";
 import { toast } from "sonner";
 import { useDropzone } from "react-dropzone";
-import { withSave } from "@/components/card/with-save";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { Copy, UploadIcon } from "lucide-react";
-import Color from "color";
 import { getColorName } from "@/lib/nearest";
-import { sortColors } from "@/lib/sort-colors";
-
-interface ColorData {
-  rgb: [number, number, number];
-}
-
-// 图片和调色板展示组件
-const PosterContent = ({
-  image,
-  colors,
-  loading,
-}: {
-  image: string;
-  colors: ColorData[];
-  loading: boolean;
-}) => {
-  return (
-    <div className="flex h-full flex-col gap-2 bg-white p-2">
-      {/* 图片展示区域 - 占用上半部分 */}
-      <div className="flex flex-1 justify-center">
-        <img src={image} alt="Uploaded" className="object-contain" />
-      </div>
-
-      {/* 调色板区域 - 占用下半部分 */}
-      <div>
-        {loading ? (
-          <div className="flex items-center justify-center py-8">
-            <div className="text-muted-foreground">Extracting colors...</div>
-          </div>
-        ) : colors.length > 0 ? (
-          <div className="space-y-3">
-            {/* 颜色网格 */}
-            <div className="grid grid-cols-6 gap-2 md:grid-cols-12">
-              {sortColors(
-                colors.map((e) =>
-                  Color(`rgb(${e.rgb[0]}, ${e.rgb[1]}, ${e.rgb[2]})`).hex(),
-                ),
-              ).map((color, index) => {
-                return (
-                  <div key={index} className="group">
-                    <div
-                      className="aspect-[9/16] w-full cursor-pointer transition-transform group-hover:scale-105"
-                      style={{
-                        backgroundColor: color,
-                      }}
-                    />
-                  </div>
-                );
-              })}
-            </div>
-          </div>
-        ) : null}
-      </div>
-    </div>
-  );
-};
-
-// 使用 withSave 包装图片和调色板组件
-const SaveablePosterContent = withSave(PosterContent);
+import { SaveableContent } from "./content";
+import { getPaletteWithPercentsFromImage, type ColorData } from "../utils";
 
 export const Generator = () => {
   const [image, setImage] = useState<string | null>(null);
-  const [colors, setColors] = useState<ColorData[]>([]);
+  const [colors, setColors] = useState<ColorData>([]);
   const [loading, setLoading] = useState(false);
 
   // 提取颜色
   const extractColors = useCallback((file: File) => {
     setLoading(true);
     const img = new Image();
-    const canvas = document.createElement("canvas");
-    const ctx = canvas.getContext("2d");
 
-    img.onload = () => {
-      canvas.width = img.width;
-      canvas.height = img.height;
-      ctx?.drawImage(img, 0, 0);
-
+    img.onload = async () => {
       try {
-        const colorThief = new ColorThief();
-        const palette = colorThief.getPalette(img, 12); // 获取12种颜色
+        const palette = await getPaletteWithPercentsFromImage(img, 12);
 
-        const extractedColors: ColorData[] = palette.map(
-          (rgb: [number, number, number]) => ({
-            rgb,
-          }),
-        );
-
-        setColors(extractedColors);
-        toast.success(`Extracted ${extractedColors.length} colors from image`);
+        setColors(palette);
+        toast.success(`Extracted ${palette.length} colors from image`);
+        return palette;
       } catch (error) {
         toast.error("Failed to extract colors from image");
-        console.error(error);
+        console.error("Vibrant error:", error);
       } finally {
         setLoading(false);
       }
@@ -137,11 +65,11 @@ export const Generator = () => {
   // 复制颜色数组
   const copyColors = async () => {
     const hexColors = colors.map((color) => {
-      const colorInstance = Color.rgb(color.rgb[0], color.rgb[1], color.rgb[2]);
-      const hex = colorInstance.hex();
+      const hex = color.hex;
       return {
         color: hex,
         name: getColorName(hex)?.name,
+        percent: color.percent,
       };
     });
 
@@ -202,7 +130,7 @@ export const Generator = () => {
           </div>
         ) : (
           <>
-            <SaveablePosterContent
+            <SaveableContent
               id="color-extractor"
               image={image}
               colors={colors}
