@@ -19,8 +19,6 @@ export const CharacterPage = ({ palette }: { palette: Palette }) => {
   const { points } = palette;
   const image = getAssetUrl(palette.image.url, 960);
 
-  console.log(palette);
-
   return (
     <div className="mx-auto py-12">
       <CharacterInfo palette={palette} />
