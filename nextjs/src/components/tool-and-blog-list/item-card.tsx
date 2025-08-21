@@ -2,7 +2,7 @@ import { getAssetUrl } from "@/lib/utils";
 import { Rss, ToolCase } from "lucide-react";
 import Link from "next/link";
 
-export interface ListItemCardProps {
+export interface BlogAndToolItemCardProps {
   href: string;
   image: string;
   title: string;
@@ -10,13 +10,13 @@ export interface ListItemCardProps {
   type?: "blog" | "tool";
 }
 
-export const ListItemCard = ({
+export const BlogAndToolItemCard = ({
   href,
   image,
   title,
   description,
   type,
-}: ListItemCardProps) => {
+}: BlogAndToolItemCardProps) => {
   return (
     <Link
       href={href}
