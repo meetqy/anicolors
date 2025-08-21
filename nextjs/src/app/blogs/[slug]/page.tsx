@@ -6,7 +6,6 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { MDXRemote } from "next-mdx-remote-client/rsc";
 import remarkGfm from "remark-gfm";
-import { ListItemCard } from "@/components/list-item-card";
 import { ToolsAndBlogsList } from "@/components/tool-and-blog-list";
 
 /**

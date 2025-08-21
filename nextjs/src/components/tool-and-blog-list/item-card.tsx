@@ -8,6 +8,7 @@ export interface BlogAndToolItemCardProps {
   title: string;
   description: string;
   type?: "blog" | "tool";
+  showTypeIcon?: boolean;
 }
 
 export const BlogAndToolItemCard = ({
@@ -16,13 +17,14 @@ export const BlogAndToolItemCard = ({
   title,
   description,
   type,
+  showTypeIcon,
 }: BlogAndToolItemCardProps) => {
   return (
     <Link
       href={href}
       className="group bg-background relative inline-block overflow-hidden rounded-lg border transition-all hover:shadow-md"
     >
-      {type && (
+      {showTypeIcon && (
         <div className="bg-background/50 absolute top-2 right-2 z-10 rounded-full p-1 backdrop-blur-lg">
           {type === "blog" && <Rss className="text-background/80 size-4" />}
           {type === "tool" && (

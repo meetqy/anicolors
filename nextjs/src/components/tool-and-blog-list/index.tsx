@@ -12,12 +12,14 @@ interface ToolsAndBlogsListProps {
   data: BlogListResponse["blogs"] | ToolListResponse["tools"];
   type?: keyof typeof basePath;
   className?: string;
+  showTypeIcon?: boolean;
 }
 
 export const ToolsAndBlogsList = ({
   data,
   type = "blog",
   className,
+  showTypeIcon,
 }: ToolsAndBlogsListProps) => {
   return (
     <div
@@ -34,6 +36,7 @@ export const ToolsAndBlogsList = ({
           title={"title" in item ? item.title : item.name}
           description={item.description}
           type={type}
+          showTypeIcon={showTypeIcon}
         />
       ))}
     </div>
