@@ -9,11 +9,6 @@ import { cn, getOriginalUrl } from "@/lib/utils";
 import { Heart, TwitterIcon, LinkIcon } from "lucide-react";
 import { env } from "@/env";
 
-interface PaletteActionsProps {
-  palette: Palette;
-  id: string;
-}
-
 // 转换空格后的字符为首字母大写并删除空格
 const toCamelCase = (str: string) => {
   return str
@@ -21,7 +16,8 @@ const toCamelCase = (str: string) => {
     .replace(/\s+/g, "");
 };
 
-export const PaletteActions = ({ palette, id }: PaletteActionsProps) => {
+export const PaletteActions = ({ palette }: { palette: Palette }) => {
+  const id = palette.documentId;
   const { likes, isLiked, isLoading, toggleLike } = useToggleLike({
     paletteId: id,
     initialLikes: palette.likes,

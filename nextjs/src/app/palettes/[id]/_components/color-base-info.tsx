@@ -1,10 +1,23 @@
 "use client";
 
 import { type ColorPoint } from "@/components/palette/picker-colors";
+import type { Palette } from "@/query/palette";
 import Color from "color";
 import { toast } from "sonner";
 
-export const ColorBaseInfo = ({ point }: { point: ColorPoint }) => {
+export const ColorBaseInfo = ({ palette }: { palette: Palette }) => {
+  const points = palette.points;
+
+  return (
+    <div className="mx-auto mt-24 flex max-w-screen-md justify-center gap-2 px-4 lg:px-0">
+      {points.map((item, index) => (
+        <ColorBaseItem point={item} key={index} />
+      ))}
+    </div>
+  );
+};
+
+const ColorBaseItem = ({ point }: { point: ColorPoint }) => {
   const item = Color(point.color);
   const hex = item.hex();
   const rgb = item.rgb().string();

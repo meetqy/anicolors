@@ -8,6 +8,7 @@ import type { BlogListResponse } from "./blog";
 export const GET_PALETTE = gql`
   query Palette($documentId: ID!, $pagination: PaginationArg) {
     palette(documentId: $documentId) {
+      documentId
       category
       gallery(pagination: $pagination) {
         width
@@ -54,6 +55,7 @@ export type PartColors = Record<
 >;
 
 export type Palette = {
+  documentId: string;
   name: string;
   category: string;
   publishedAt: string;
@@ -68,6 +70,7 @@ export type Palette = {
     parts?: PartColors;
   };
   blogs?: BlogListResponse["blogs"];
+  type: "character" | "fragment";
   points: ColorPoint[];
   cover: { url: string };
   gallery: { url: string; width: number; height: number; name: string }[];
