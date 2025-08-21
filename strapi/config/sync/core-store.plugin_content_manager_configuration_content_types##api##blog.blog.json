@@ -65,7 +65,7 @@
         "edit": {
           "label": "useTypes",
           "description": "",
-          "placeholder": "",
+          "placeholder": "palette filed, content, markd",
           "visible": true,
           "editable": true
         },
@@ -142,6 +142,21 @@
         },
         "list": {
           "label": "content",
+          "searchable": false,
+          "sortable": false
+        }
+      },
+      "tools": {
+        "edit": {
+          "label": "tools",
+          "description": "",
+          "placeholder": "",
+          "visible": true,
+          "editable": true,
+          "mainField": "name"
+        },
+        "list": {
+          "label": "tools",
           "searchable": false,
           "sortable": false
         }
@@ -232,11 +247,15 @@
         [
           {
             "name": "useTypes",
-            "size": 6
+            "size": 4
           },
           {
             "name": "description",
-            "size": 6
+            "size": 4
+          },
+          {
+            "name": "tools",
+            "size": 4
           }
         ],
         [

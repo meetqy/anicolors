@@ -1,4 +1,5 @@
 import { gql } from "@apollo/client";
+import type { BlogListResponse } from "./blog";
 
 export const GET_TOOL = gql`
   query Tool($filters: ToolFiltersInput) {
@@ -7,6 +8,15 @@ export const GET_TOOL = gql`
       name
       keywords
       description
+      blogs {
+        title
+        slug
+        description
+        cover {
+          url
+        }
+        publishedAt
+      }
       cover {
         url
       }
@@ -21,6 +31,7 @@ export type ToolResponse = {
     keywords: string;
     description: string;
     cover: { url: string };
+    blogs: BlogListResponse["blogs"];
   }[];
 };
 

@@ -1,5 +1,5 @@
 import { Hero } from "@/components/hero";
-import { ListItemCard } from "@/components/list-item-card";
+import { ToolsAndBlogsList } from "@/components/tool-and-blog-list";
 import { getClient } from "@/lib/apollo-client";
 import { GET_BLOG_LIST, type BlogListResponse } from "@/query/blog";
 import type { Metadata } from "next";
@@ -36,18 +36,8 @@ export default async function Page({
         title="Anime Colors Blogs"
         description="Explore hair colors, eye colors, and outfit colors from your favorite anime and games. Find accurate HEX codes, color names, and design inspiration."
       />
-      <div className="container mx-auto px-4">
-        <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
-          {data.map((blog) => (
-            <ListItemCard
-              key={blog.slug}
-              href={`/blogs/${blog.slug}`}
-              image={blog.cover.url}
-              title={blog.title}
-              description={blog.description}
-            />
-          ))}
-        </div>
+      <div className="container mx-auto px-4 lg:px-0">
+        <ToolsAndBlogsList data={data} type="blog" />
       </div>
     </>
   );

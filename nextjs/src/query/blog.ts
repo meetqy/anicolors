@@ -1,5 +1,6 @@
 import { gql } from "@apollo/client";
 import type { Palette } from "./palette";
+import type { ToolListResponse } from "./tool";
 
 export const GET_BLOG = gql`
   query Query($filters: BlogFiltersInput, $pagination: PaginationArg) {
@@ -12,6 +13,15 @@ export const GET_BLOG = gql`
       content
       cover {
         url
+      }
+      tools {
+        slug
+        name
+        description
+        cover {
+          url
+        }
+        documentId
       }
       palettes(pagination: $pagination) {
         documentId
@@ -34,6 +44,7 @@ export type BlogResponse = {
     field: string;
     description: string;
     cover: { url: string };
+    tools: ToolListResponse["tools"];
     useTypes: string;
     markdown: string;
     content: string;

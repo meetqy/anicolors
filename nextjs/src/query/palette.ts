@@ -69,7 +69,7 @@ export type Palette = {
     unsuitableUse?: string[];
     parts?: PartColors;
   };
-  blogs?: BlogListResponse["blogs"];
+  blogs: BlogListResponse["blogs"];
   type: "character" | "fragment";
   points: ColorPoint[];
   cover: { url: string };

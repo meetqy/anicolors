@@ -52,6 +52,12 @@
     },
     "content": {
       "type": "blocks"
+    },
+    "tools": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::tool.tool",
+      "inversedBy": "blogs"
     }
   }
 }

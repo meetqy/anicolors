@@ -6,6 +6,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { MDXRemote } from "next-mdx-remote-client/rsc";
 import remarkGfm from "remark-gfm";
+import { ToolsAndBlogsList } from "@/components/tool-and-blog-list";
 
 /**
  * 通过路径字符串获取对象中的值
@@ -70,19 +71,30 @@ export default async function Page({ params }: PageProps) {
     </div>
   );
 
+  const Tools = () =>
+    blog.tools.length > 0 && (
+      <div className="prose mx-auto max-w-screen-xl">
+        <h2>Tools recommendation</h2>
+        <ToolsAndBlogsList data={blog.tools} type="tool" />
+      </div>
+    );
+
   if (blog.useTypes === "markdown") {
     return (
-      <article className="prose mx-auto max-w-screen-lg py-24">
-        <Title />
-        <MDXRemote
-          source={blog.markdown}
-          options={{
-            mdxOptions: {
-              remarkPlugins: [remarkGfm],
-            },
-          }}
-        />
-      </article>
+      <>
+        <article className="prose mx-auto max-w-screen-lg py-24">
+          <Title />
+          <MDXRemote
+            source={blog.markdown}
+            options={{
+              mdxOptions: {
+                remarkPlugins: [remarkGfm],
+              },
+            }}
+          />
+        </article>
+        <Tools />
+      </>
     );
   }
 
@@ -112,6 +124,8 @@ export default async function Page({ params }: PageProps) {
           </div>
         ))}
       </div>
+
+      <Tools />
     </article>
   );
 }
