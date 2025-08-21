@@ -18,7 +18,10 @@ export function Header() {
   });
 
   return (
-    <header className="border-border bg-background/90 sticky top-0 z-50 backdrop-blur-md">
+    <header
+      id="header"
+      className="bg-background/90 sticky top-0 z-50 backdrop-blur-md"
+    >
       <div className="mx-auto flex h-16 max-w-7xl items-center justify-between gap-4 px-6">
         {/* Logo */}
         <Logo className="text-base lg:text-2xl" />

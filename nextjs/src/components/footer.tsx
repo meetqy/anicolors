@@ -5,6 +5,7 @@ import Link from "next/link";
 import { Logo } from "./logo";
 import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
+import { Separator } from "./ui/separator";
 
 interface FriendLink {
   name: string;
@@ -37,7 +38,7 @@ export const Footer = () => {
 
   return (
     <footer
-      className={cn("bg-muted/30 border-t", {
+      className={cn("bg-muted relative z-50 border-t", {
         "mt-8 md:mt-16 lg:mt-20": pathname != "/",
       })}
     >
@@ -157,13 +158,12 @@ export const Footer = () => {
           </div>
         </div>
 
-        {/* Bottom Section */}
-        <div className="border-border mt-8 border-t pt-8">
-          <div className="text-center">
-            <p className="text-muted-foreground text-xs">
-              © 2025 AniColors. All rights reserved.
-            </p>
-          </div>
+        <Separator className="mt-8 mb-12" />
+
+        <div className="text-center">
+          <p className="text-muted-foreground text-xs">
+            © 2025 AniColors. All rights reserved.
+          </p>
         </div>
       </div>
     </footer>

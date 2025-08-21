@@ -19,6 +19,7 @@ export interface ColorPoint {
   y: number;
   color: string;
   name?: string;
+  percent?: number;
 }
 
 export interface PickerColorsProps {

@@ -4,8 +4,6 @@ import { timeAgo } from "@/lib/time-utils";
 import { type PaletteListItem } from "@/query/palette";
 import Link from "next/link";
 
-import { PhotoView } from "react-photo-view";
-
 interface PaletteCardProps {
   palette: PaletteListItem;
 }
@@ -22,7 +20,7 @@ export const PaletteCard = ({ palette }: PaletteCardProps) => {
             aspectRatio: 1 / 1,
           }}
         >
-          <PhotoView key={palette.documentId} src={palette.cover.url}>
+          <Link href={`/palettes/${palette.documentId}`}>
             <img
               src={getAssetUrl(palette.image.url, 320)}
               srcSet={`
@@ -35,7 +33,7 @@ export const PaletteCard = ({ palette }: PaletteCardProps) => {
                 "relative z-10 size-full origin-bottom scale-105 object-cover",
               )}
             />
-          </PhotoView>
+          </Link>
 
           <div className="absolute bottom-0 z-10 grid w-full grid-cols-5">
             {palette.points.slice(0, 5).map((point, index) => (

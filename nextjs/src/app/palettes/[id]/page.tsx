@@ -3,6 +3,7 @@ import { getAssetUrl, capitalize } from "@/lib/utils";
 import { GET_PALETTE, type Palette } from "@/query/palette";
 import { type Metadata } from "next";
 import { CharacterPage } from "./_components/character-page";
+import { FragmentPage } from "./_components/fragement-page";
 
 const getPaletteData = async (id: string) => {
   const res = await getClient().query({
@@ -50,7 +51,11 @@ export default async function Page({
 }) {
   const { id } = await params;
   const palette = await getPaletteData(id);
-  const { type = "character" } = palette;
+  const type = palette.type || "character";
 
-  return type === "character" ? <CharacterPage palette={palette} /> : null;
+  return type === "character" ? (
+    <CharacterPage palette={palette} />
+  ) : (
+    <FragmentPage palette={palette} />
+  );
 }

@@ -35,6 +35,7 @@ export const GET_PALETTE = gql`
       }
       points
       name
+      type
       updatedAt
       publishedAt
       createdAt
