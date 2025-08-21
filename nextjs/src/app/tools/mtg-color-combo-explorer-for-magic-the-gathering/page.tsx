@@ -4,11 +4,12 @@ import type { Metadata } from "next";
 import { getAssetUrl } from "@/lib/utils";
 import { ToolHero } from "@/components/tool-hero";
 import { getToolData } from "../_utils";
-
-
+import { ToolsAndBlogsList } from "@/components/tool-and-blog-list";
 
 export const generateMetadata = async (): Promise<Metadata> => {
-  const tool = await getToolData("mtg-color-combo-explorer-for-magic-the-gathering");
+  const tool = await getToolData(
+    "mtg-color-combo-explorer-for-magic-the-gathering",
+  );
   const images = tool.cover ? [getAssetUrl(tool.cover.url, 1200)] : [];
 
   return {
@@ -23,7 +24,9 @@ export const generateMetadata = async (): Promise<Metadata> => {
 };
 
 export default async function Page() {
-  const tool = await getToolData("mtg-color-combo-explorer-for-magic-the-gathering");
+  const tool = await getToolData(
+    "mtg-color-combo-explorer-for-magic-the-gathering",
+  );
 
   return (
     <>
@@ -31,6 +34,10 @@ export default async function Page() {
 
       <div className="from-muted/20 to-muted/0 text-card-foreground container rounded-lg bg-gradient-to-b lg:border">
         <Generator />
+      </div>
+
+      <div className="container mx-auto px-4 lg:px-0">
+        <ToolsAndBlogsList data={tool.blogs} type="blog" />
       </div>
     </>
   );
