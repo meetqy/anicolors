@@ -6,7 +6,7 @@
   "locale": null,
   "permissions": [
     {
-      "documentId": "eyab8iaqkb0bw1ykpo34mjk1",
+      "documentId": "fownzp1dfrwwyogzu2q6l82j",
       "action": "plugin::content-manager.explorer.create",
       "actionParameters": {},
       "subject": "api::blog.blog",
@@ -20,7 +20,8 @@
           "cover",
           "field",
           "markdown",
-          "content"
+          "content",
+          "tools"
         ]
       },
       "conditions": [],
@@ -45,7 +46,7 @@
       "locale": null
     },
     {
-      "documentId": "oijyf9a08601jylop4q1wc62",
+      "documentId": "zpcq1tgkdo3opfs28fpv1b4t",
       "action": "plugin::content-manager.explorer.read",
       "actionParameters": {},
       "subject": "api::blog.blog",
@@ -59,14 +60,15 @@
           "cover",
           "field",
           "markdown",
-          "content"
+          "content",
+          "tools"
         ]
       },
       "conditions": [],
       "locale": null
     },
     {
-      "documentId": "krya3uzv5d1koy4igo9kquzq",
+      "documentId": "ely87offke5v0e3p7ao7uvsa",
       "action": "plugin::content-manager.explorer.update",
       "actionParameters": {},
       "subject": "api::blog.blog",
@@ -80,7 +82,8 @@
           "cover",
           "field",
           "markdown",
-          "content"
+          "content",
+          "tools"
         ]
       },
       "conditions": [],
@@ -309,7 +312,7 @@
       "locale": null
     },
     {
-      "documentId": "uzbmebsf8oi5ot71524wp2u8",
+      "documentId": "ilsh8j1jz4fwpnnmma2h6g0x",
       "action": "plugin::content-manager.explorer.create",
       "actionParameters": {},
       "subject": "api::tool.tool",
@@ -319,7 +322,8 @@
           "description",
           "cover",
           "keywords",
-          "slug"
+          "slug",
+          "blogs"
         ]
       },
       "conditions": [],
@@ -344,7 +348,7 @@
       "locale": null
     },
     {
-      "documentId": "n4w9asfg06seubco8tc7ouqy",
+      "documentId": "v9nso7w4xjld9kjmhn39yd5a",
       "action": "plugin::content-manager.explorer.read",
       "actionParameters": {},
       "subject": "api::tool.tool",
@@ -354,14 +358,15 @@
           "description",
           "cover",
           "keywords",
-          "slug"
+          "slug",
+          "blogs"
         ]
       },
       "conditions": [],
       "locale": null
     },
     {
-      "documentId": "i7qtt8zdt6hcqgdazhpsfikp",
+      "documentId": "i33qkzd62p2n19ktumekkcdb",
       "action": "plugin::content-manager.explorer.update",
       "actionParameters": {},
       "subject": "api::tool.tool",
@@ -371,7 +376,8 @@
           "description",
           "cover",
           "keywords",
-          "slug"
+          "slug",
+          "blogs"
         ]
       },
       "conditions": [],

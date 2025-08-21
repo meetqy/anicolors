@@ -89,6 +89,21 @@
           "sortable": true
         }
       },
+      "blogs": {
+        "edit": {
+          "label": "blogs",
+          "description": "",
+          "placeholder": "",
+          "visible": true,
+          "editable": true,
+          "mainField": "title"
+        },
+        "list": {
+          "label": "blogs",
+          "searchable": false,
+          "sortable": false
+        }
+      },
       "createdAt": {
         "edit": {
           "label": "createdAt",
@@ -187,6 +202,10 @@
         [
           {
             "name": "slug",
+            "size": 6
+          },
+          {
+            "name": "blogs",
             "size": 6
           }
         ]
