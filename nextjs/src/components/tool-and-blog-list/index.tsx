@@ -21,6 +21,8 @@ export const ToolsAndBlogsList = ({
   className,
   showTypeIcon,
 }: ToolsAndBlogsListProps) => {
+  if (!data || data.length === 0) return null;
+
   return (
     <div
       className={cn(
