@@ -1,4 +1,4 @@
-import { ListItemCard } from "@/components/list-item-card";
+import { ToolsAndBlogsList } from "@/components/tool-and-blog-list";
 import type { Palette } from "@/query/palette";
 
 export const Blogs = ({ palette }: { palette: Palette }) => {
@@ -11,18 +11,7 @@ export const Blogs = ({ palette }: { palette: Palette }) => {
         Explore detailed color guides for {palette.name} and other Genshin
         characters.
       </p>
-      <div className="not-prose grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
-        {palette.blogs?.map((blog) => (
-          <ListItemCard
-            type="blog"
-            href={`/blogs/${blog.slug}`}
-            key={blog.slug}
-            title={blog.title}
-            description={blog.description}
-            image={blog.cover.url}
-          />
-        ))}
-      </div>
+      <ToolsAndBlogsList showTypeIcon type="blog" data={palette.blogs} />
     </>
   );
 };
