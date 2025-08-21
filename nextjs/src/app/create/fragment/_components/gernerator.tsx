@@ -13,11 +13,9 @@ import { getPaletteWithPercentsFromImage, type ColorData } from "../utils";
 export const Generator = () => {
   const [image, setImage] = useState<string | null>(null);
   const [colors, setColors] = useState<ColorData>([]);
-  const [loading, setLoading] = useState(false);
 
   // 提取颜色
   const extractColors = useCallback((file: File) => {
-    setLoading(true);
     const img = new Image();
 
     img.onload = async () => {
@@ -30,14 +28,11 @@ export const Generator = () => {
       } catch (error) {
         toast.error("Failed to extract colors from image");
         console.error("Vibrant error:", error);
-      } finally {
-        setLoading(false);
       }
     };
 
     img.onerror = () => {
       toast.error("Failed to load image");
-      setLoading(false);
     };
 
     img.src = URL.createObjectURL(file);
@@ -134,7 +129,6 @@ export const Generator = () => {
               id="color-extractor"
               image={image}
               colors={colors}
-              loading={loading}
             />
           </>
         )}
