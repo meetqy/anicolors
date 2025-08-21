@@ -33,7 +33,10 @@ export const generateMetadata = async ({
   const palette = await getPaletteData(id);
   const imageUrl = getAssetUrl(palette.cover.url, 960);
 
-  const hexs = palette.points.map((item) => item.color).join(", ");
+  const hexs = palette.points
+    .map((item) => item.color)
+    .slice(0, 5)
+    .join(", ");
 
   return {
     title: `${palette.name} Color Palette - ${palette.category}`,

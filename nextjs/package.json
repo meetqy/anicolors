@@ -20,6 +20,7 @@
     "@apollo/client-integration-nextjs": "^0.12.3",
     "@mdx-js/loader": "^3.1.0",
     "@mdx-js/react": "^3.1.0",
+    "@next/bundle-analyzer": "^15.5.0",
     "@next/mdx": "^15.4.6",
     "@next/third-parties": "^15.4.5",
     "@radix-ui/react-accordion": "^1.2.11",

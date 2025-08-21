@@ -5,6 +5,11 @@
 import "./src/env.js";
 import createMDX from "@next/mdx";
 import remarkGfm from "remark-gfm";
+import bundleAnalyzer from "@next/bundle-analyzer";
+
+const withBundleAnalyzer = bundleAnalyzer({
+  enabled: process.env.ANALYZE === "true",
+});
 
 /** @type {import("next").NextConfig} */
 const nextConfig = {
@@ -40,4 +45,4 @@ const withMDX = createMDX({
   },
 });
 
-export default withMDX(nextConfig);
+export default withBundleAnalyzer(withMDX(nextConfig));
