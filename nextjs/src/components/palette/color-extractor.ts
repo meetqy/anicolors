@@ -1,43 +1,13 @@
 import { getColorName } from "@/lib/nearest";
 import Color from "color";
 import { type ColorPoint } from "@/components/palette/picker-colors";
+import { calculateColorPointPosition } from "./coordinate-utils";
 
 // 计算两个颜色之间的距离
 const colorDistance = (color1: number[], color2: number[]) => {
   const [r1 = 0, g1 = 0, b1 = 0] = color1;
   const [r2 = 0, g2 = 0, b2 = 0] = color2;
   return Math.sqrt((r1 - r2) ** 2 + (g1 - g2) ** 2 + (b1 - b2) ** 2);
-};
-
-// 计算颜色是否为暖色调
-const isWarmColor = (rgb: number[]) => {
-  const [r = 0, g = 0, b = 0] = rgb;
-
-  // 暖色调通常红色和黄色成分较高，蓝色成分较低
-  // 红色 > 蓝色，且 (红色 + 绿色) > 蓝色 * 1.5
-  return r > b && r + g > b * 1.5;
-};
-
-// 计算颜色的饱和度和亮度
-const getColorVibrancy = (rgb: number[]) => {
-  const [r = 0, g = 0, b = 0] = rgb;
-
-  // 计算饱和度
-  const max = Math.max(r, g, b);
-  const min = Math.min(r, g, b);
-  const saturation = max === 0 ? 0 : (max - min) / max;
-
-  // 计算亮度
-  const brightness = (r + g + b) / 3 / 255;
-
-  // 计算艳丽度：饱和度 * 适中的亮度权重
-  // 亮度在 0.3-0.8 之间的颜色更艳丽
-  const brightnessWeight =
-    brightness < 0.3 || brightness > 0.8
-      ? Math.max(0, 1 - Math.abs(brightness - 0.55) * 2)
-      : 1;
-
-  return saturation * brightnessWeight;
 };
 
 export const extractMainColors = (
@@ -153,31 +123,14 @@ export const extractMainColors = (
       y: 0,
     };
 
-    // 计算标准化坐标，需考虑object-contain容器
-    // 先将canvas像素坐标映射到图片natural尺寸
-    const imgX = centerPos.x;
-    const imgY = centerPos.y;
-
-    // 再映射到容器坐标（假设图片object-contain填充container）
-    // 这里需要父组件传递containerRef.current，或你可以在extractMainColors参数中加container参数
-    // 这里假设container为imageElement.parentElement
+    // 获取容器元素
     const container = imageElement.parentElement as HTMLDivElement | null;
 
-    // 计算图片在容器内的渲染区域
-    let displayX = imgX,
-      displayY = imgY;
-    if (container) {
-      const { renderWidth, renderHeight, offsetX, offsetY } =
-        getImageContainRect(imageElement, container);
-      displayX = offsetX + (imgX / imageElement.naturalWidth) * renderWidth;
-      displayY = offsetY + (imgY / imageElement.naturalHeight) * renderHeight;
-    }
-
-    // 转换为标准化坐标
-    const normalizedPos = getNormalizedPosition(
+    // 使用拆分出来的坐标计算函数
+    const normalizedPos = calculateColorPointPosition(
       imageElement,
-      displayX,
-      displayY,
+      centerPos.x,
+      centerPos.y,
       container,
     );
 
@@ -188,85 +141,6 @@ export const extractMainColors = (
       color: `rgb(${r}, ${g}, ${b})`,
       name:
         getColorName(Color(`rgb(${r}, ${g}, ${b})`).hex())?.name ?? "unknown",
-      vibrancy: getColorVibrancy([g, g, b]),
-      isWarm: isWarmColor([r, g, b]),
     };
   });
-};
-
-// 获取图片在容器中的缩放和偏移（object-contain）
-function getImageContainRect(
-  image: HTMLImageElement,
-  container: HTMLDivElement,
-) {
-  const containerRect = container.getBoundingClientRect();
-  const imgNaturalWidth = image.naturalWidth;
-  const imgNaturalHeight = image.naturalHeight;
-  const containerWidth = containerRect.width;
-  const containerHeight = containerRect.height;
-
-  const imgAspect = imgNaturalWidth / imgNaturalHeight;
-  const containerAspect = containerWidth / containerHeight;
-
-  let renderWidth = containerWidth;
-  let renderHeight = containerHeight;
-  let offsetX = 0;
-  let offsetY = 0;
-
-  if (imgAspect > containerAspect) {
-    // 图片宽度撑满容器，高度居中
-    renderWidth = containerWidth;
-    renderHeight = containerWidth / imgAspect;
-    offsetY = (containerHeight - renderHeight) / 2;
-  } else {
-    // 图片高度撑满容器，宽度居中
-    renderHeight = containerHeight;
-    renderWidth = containerHeight * imgAspect;
-    offsetX = (containerWidth - renderWidth) / 2;
-  }
-
-  return {
-    renderWidth,
-    renderHeight,
-    offsetX,
-    offsetY,
-  };
-}
-
-// 显示坐标转标准化坐标（支持object-contain）
-export const getNormalizedPosition = (
-  image: HTMLImageElement | null,
-  displayX: number,
-  displayY: number,
-  container?: HTMLDivElement | null,
-) => {
-  if (!image) return { x: displayX, y: displayY };
-  if (!container) {
-    // fallback: old logic
-    const rect = image.getBoundingClientRect();
-    const aspectRatio = image.naturalHeight / image.naturalWidth;
-    return {
-      x: (displayX / rect.width) * 384,
-      y: (displayY / (rect.width * aspectRatio)) * 384,
-    };
-  }
-
-  const { renderWidth, renderHeight, offsetX, offsetY } = getImageContainRect(
-    image,
-    container,
-  );
-
-  // 转换为图片内坐标
-  const imgX = displayX - offsetX;
-  const imgY = displayY - offsetY;
-
-  // 超出图片区域则返回边界
-  const safeX = Math.max(0, Math.min(imgX, renderWidth));
-  const safeY = Math.max(0, Math.min(imgY, renderHeight));
-
-  // 映射到标准化坐标
-  return {
-    x: (safeX / renderWidth) * 384,
-    y: (safeY / renderHeight) * 384,
-  };
 };
