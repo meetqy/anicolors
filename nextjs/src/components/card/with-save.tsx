@@ -42,7 +42,7 @@ export function withSave<P extends object>(WrappedComponent: ComponentType<P>) {
           // 没有传入 scale 时，使用固定宽度 1080，高度按比例缩放
           const aspectRatio =
             targetElement.offsetHeight / targetElement.offsetWidth;
-          const targetWidth = 2160;
+          const targetWidth = 1080;
           const targetHeight = targetWidth * aspectRatio;
 
           return {
