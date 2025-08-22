@@ -25,12 +25,6 @@ export const FragmentPage = ({ palette }: { palette: Palette }) => {
   }, []);
 
   const title = `${palette.name} Color Palette`;
-  const description = `A color palette extracted from ${palette.category}. Featuring shades like ${palette.points
-    .slice(0, 3)
-    .map((point) => point.color)
-    .join(
-      ", ",
-    )}. Perfect for artists, designers, and fans of ${palette.category}.`;
 
   return (
     <div className="min-h-[calc(100vh-4rem)] pt-4 lg:pt-12">
@@ -67,8 +61,7 @@ export const FragmentPage = ({ palette }: { palette: Palette }) => {
               ]}
             />
 
-            <h1 className="mt-8 mb-0">{title}</h1>
-            <p className="text-muted-foreground">{description}</p>
+            <h1 className="mt-8">{title}</h1>
             <div className="not-prose grid w-full grid-cols-4 gap-x-2 gap-y-4">
               {palette.points.map((p, index) => (
                 <div key={index} className="relative">
