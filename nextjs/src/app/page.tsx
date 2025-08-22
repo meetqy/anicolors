@@ -7,7 +7,7 @@ import Link from "next/link";
 import { Stats } from "./_components/stats";
 import { type Metadata } from "next";
 import { FAQs } from "./_components/faqs";
-import { Columns } from "./_components/columns";
+import { Columns } from "@/components/columns";
 
 export const dynamic = "force-dynamic";
 

@@ -1,4 +1,4 @@
-import { Columns } from "@/app/_components/columns";
+import { Columns } from "@/components/columns";
 import { Hero } from "@/components/hero";
 import { PaginationControls } from "@/components/pagination-controls";
 import { getClient } from "@/lib/apollo-client";

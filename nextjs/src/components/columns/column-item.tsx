@@ -8,65 +8,8 @@ interface PaletteCardProps {
   palette: PaletteListItem;
 }
 
-export const PaletteCard = ({ palette }: PaletteCardProps) => {
-  const { type = "character", points } = palette;
-
-  if (type === "fragment") {
-    return (
-      <div className="w-full">
-        <div
-          className="bg-muted/50 relative overflow-hidden rounded-md"
-          style={{
-            aspectRatio: 1 / 1,
-          }}
-        >
-          <Link href={`/palettes/${palette.documentId}`}>
-            <img
-              src={getAssetUrl(palette.image.url, 320)}
-              srcSet={`
-              ${getAssetUrl(palette.image.url, 320)} 1x,
-              ${getAssetUrl(palette.image.url, 640)} 2x,
-              ${getAssetUrl(palette.image.url, 960)} 3x
-            `}
-              alt={palette.name}
-              className={cn(
-                "relative z-10 size-full origin-bottom scale-105 object-cover",
-              )}
-            />
-          </Link>
-
-          <div className="absolute bottom-0 z-10 grid w-full grid-cols-5">
-            {palette.points.slice(0, 5).map((point, index) => (
-              <div
-                key={index}
-                className="h-3 w-full"
-                style={{ backgroundColor: point.color }}
-              />
-            ))}
-          </div>
-        </div>
-        <div className="flex items-end justify-between py-2">
-          <div>
-            <h2 className="line-clamp-1 font-medium capitalize">
-              {palette.name}
-            </h2>
-            <Link
-              href={`/category/${palette.category}`}
-              className="text-muted-foreground hover:text-foreground line-clamp-1 text-sm capitalize hover:underline"
-            >
-              {palette.category}
-            </Link>
-          </div>
-          <time
-            suppressHydrationWarning
-            className="text-muted-foreground shrink-0 text-sm"
-          >
-            {timeAgo(palette.createdAt)}
-          </time>
-        </div>
-      </div>
-    );
-  }
+export const ColumnItem = ({ palette }: PaletteCardProps) => {
+  const { points } = palette;
 
   const bgColor = points[0]!.color;
 
@@ -102,11 +45,11 @@ export const PaletteCard = ({ palette }: PaletteCardProps) => {
             `}
             alt={palette.name}
             className={cn(
-              "relative z-10 aspect-square w-full object-contain transition-transform duration-300 group-hover:translate-y-[-60px] group-hover:scale-130 group-hover:rotate-x-[15deg] group-hover:drop-shadow-2xl",
+              "relative z-10 aspect-square w-full object-contain transition-transform duration-300 group-hover:z-20 group-hover:translate-y-[-60px] group-hover:scale-130 group-hover:rotate-x-[15deg] group-hover:drop-shadow-2xl",
             )}
           />
           <div className="absolute bottom-0 left-0 flex w-full overflow-hidden rounded-b-md">
-            {palette.points.map((point, index) => {
+            {palette.points.slice(0, 5).map((point, index) => {
               return (
                 <div
                   className="h-3 w-full"

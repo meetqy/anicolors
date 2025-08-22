@@ -11,7 +11,7 @@ import { useState, useCallback, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Loader2 } from "lucide-react";
 import { useIntersectionObserver } from "usehooks-ts";
-import { Columns } from "@/app/_components/columns";
+import { Columns } from "@/components/columns";
 
 export const MoreList = ({
   category,

@@ -4,7 +4,7 @@ import { getClient } from "@/lib/apollo-client";
 import { GET_PALETTE_LIST, type PaletteListResponse } from "@/query/palette";
 import { PaginationControls } from "@/components/pagination-controls";
 import { Hero } from "@/components/hero";
-import { Columns } from "../_components/columns";
+import { Columns } from "@/components/columns";
 
 const pageSize = 24;
 
