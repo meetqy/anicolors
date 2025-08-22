@@ -106,42 +106,46 @@ export const FragmentPage = ({ palette }: { palette: Palette }) => {
           <h2>Color Palette</h2>
           <div className="not-prose grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
             {palette.points.map((p, index) => {
+              // 判断颜色亮度，决定文字颜色
               const isDark = Color(p.color).isDark();
+              const textColor = isDark ? "text-white" : "text-black";
 
               return (
                 <div
                   key={index}
-                  className="relative overflow-hidden rounded-md"
+                  className="relative overflow-hidden rounded-xl"
                   style={{
                     backgroundColor: p.color,
                   }}
                 >
-                  <div className="aspect-[3/2] w-full" />
-                  <div
-                    className="p-4"
-                    style={{
-                      backgroundColor: isDark
-                        ? "rgba(255, 255, 255, 0.9)"
-                        : "rgba(0, 0, 0, 0.9)",
-                      color: isDark ? "#000" : "#fff",
-                    }}
-                  >
-                    <div className="flex items-center justify-between">
-                      <div className="flex-1">
-                        <h3 className="font-mono text-lg font-semibold tracking-wider">
-                          {p.color}
-                        </h3>
-                        <p className="text-sm capitalize opacity-75">
+                  <div className="flex aspect-[4/5] w-full flex-col justify-between p-6">
+                    {/* 顶部区域：颜色名称（主要） */}
+                    <div className={`${textColor}`}>
+                      <h3 className="text-3xl leading-none font-black tracking-tight uppercase">
+                        <Link
+                          href={`/color/${p.name}`}
+                          className={`${textColor} transition-opacity hover:opacity-80`}
+                        >
                           {p.name}
-                        </p>
+                        </Link>
+                      </h3>
+                    </div>
+
+                    {/* 底部区域：HEX值和百分比 */}
+                    <div className={`${textColor} space-y-2`}>
+                      {/* HEX 值（次要但突出） */}
+                      <div className="font-mono text-2xl font-bold tracking-widest">
+                        {p.color}
                       </div>
 
-                      {/* 占比显示 */}
-                      <div className="text-right">
-                        <div className="text-2xl font-bold">
+                      {/* 百分比（最小化） */}
+                      <div className="flex items-center justify-between">
+                        <div className="text-xs font-medium tracking-wider uppercase opacity-60">
+                          Coverage
+                        </div>
+                        <div className="text-sm font-semibold opacity-70">
                           {p.percent === 0 ? "<0.01%" : `${p.percent}%`}
                         </div>
-                        <div className="text-xs opacity-60">percent</div>
                       </div>
                     </div>
                   </div>
