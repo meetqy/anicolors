@@ -102,7 +102,7 @@ export const FragmentPage = ({ palette }: { palette: Palette }) => {
           </div>
         </div>
 
-        <div className="bg-background/95 prose container mx-auto rounded-md p-4 shadow-md backdrop-blur">
+        <div className="bg-background/95 prose container mx-auto rounded-md border p-4 shadow-md backdrop-blur">
           <h2>Color Palette</h2>
           <div className="not-prose grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
             {palette.points.map((p, index) => {
@@ -155,7 +155,7 @@ export const FragmentPage = ({ palette }: { palette: Palette }) => {
           </div>
         </div>
 
-        <div className="bg-background/95 prose container mx-auto rounded-md p-4 shadow-md backdrop-blur">
+        <div className="bg-background/95 prose container mx-auto rounded-md border p-4 shadow-md backdrop-blur">
           <MoreList
             category={palette.category}
             colors={palette.points.map((item) => item.name!)}
