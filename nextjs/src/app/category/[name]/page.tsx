@@ -73,7 +73,7 @@ export default async function CategoryPage({
           description={` ${palettes_connection.pageInfo.total} color palettes in ${decodeURIComponent(name)} category`}
         />
 
-        <div className="mx-auto max-w-screen-xl">
+        <div className="mx-auto max-w-screen-xl space-y-24">
           <Columns palettes={palettes} />
           <PaginationControls {...pageInfo} />
         </div>
@@ -98,5 +98,8 @@ export async function generateMetadata({
     description: `Browse more color palettes from ${categoryName}, page ${page}.`,
     openGraph: { images },
     twitter: { images },
+    alternates: {
+      canonical: `/category/${categoryName}${page > 1 ? `?page=${page}` : ""}`,
+    },
   };
 }

@@ -1,4 +1,5 @@
-import { PaletteCard } from "@/app/palettes/components/palette-card";
+import { Columns } from "@/app/_components/columns";
+import { Hero } from "@/components/hero";
 import { PaginationControls } from "@/components/pagination-controls";
 import { getClient } from "@/lib/apollo-client";
 import { GET_PALETTE_LIST, type PaletteListResponse } from "@/query/palette";
@@ -35,33 +36,17 @@ export default async function CategoryPage({
   const { nodes: palettes, pageInfo } = palettes_connection;
 
   return (
-    <div className="mx-auto max-w-7xl px-4 py-12">
-      <div className="mb-8">
-        <h1 className="mb-2 text-3xl font-bold capitalize">
-          {decodeURIComponent(name)} Color Palettes
-        </h1>
-        <p className="text-muted-foreground">
-          {palettes_connection.pageInfo.total} color palettes in{" "}
-          {decodeURIComponent(name)}.
-        </p>
+    <>
+      <Hero
+        title={decodeURIComponent(name)}
+        description={` ${palettes_connection.pageInfo.total} color palettes in ${decodeURIComponent(name)} category`}
+      />
+
+      <div className="container space-y-24">
+        <Columns palettes={palettes} />
+        <PaginationControls {...pageInfo} />
       </div>
-
-      {palettes.length > 0 ? (
-        <div className="mb-12 grid grid-cols-1 gap-x-6 gap-y-12 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-          {palettes.map((palette) => (
-            <PaletteCard key={palette.documentId} palette={palette} />
-          ))}
-        </div>
-      ) : (
-        <div className="py-12 text-center">
-          <p className="text-muted-foreground">
-            No palettes found in this category.
-          </p>
-        </div>
-      )}
-
-      <PaginationControls {...pageInfo} />
-    </div>
+    </>
   );
 }
 
@@ -77,7 +62,7 @@ export async function generateMetadata({
     title: `${categoryName} Color Palettes – Page ${page} | AniColors`,
     description: `Page ${page} of beautiful ${categoryName} color palettes from characters and scenes.`,
     alternates: {
-      canonical: `/color/${name}`,
+      canonical: `/color/${categoryName}${page > 1 ? `?page=${page}` : ""}`,
     },
   };
 }
