@@ -6,18 +6,11 @@ import type { Palette } from "@/query/palette";
 import Image from "next/image";
 import { Separator } from "@/components/ui/separator";
 import { TwitterIcon } from "lucide-react";
-import {
-  Breadcrumb,
-  BreadcrumbItem,
-  BreadcrumbLink,
-  BreadcrumbList,
-  BreadcrumbPage,
-  BreadcrumbSeparator,
-} from "@/components/ui/breadcrumb";
 import Link from "next/link";
 import { env } from "@/env";
 import { MoreList } from "./more-list";
 import { useEffect } from "react";
+import { CommonBreadcrumb } from "@/components/common-breadcrumb";
 
 export const FragmentPage = ({ palette }: { palette: Palette }) => {
   useEffect(() => {
@@ -63,23 +56,16 @@ export const FragmentPage = ({ palette }: { palette: Palette }) => {
           </div>
 
           <div className="flex-1 p-4">
-            <Breadcrumb className="not-prose">
-              <BreadcrumbList>
-                <BreadcrumbItem>
-                  <BreadcrumbLink href="/">Home</BreadcrumbLink>
-                </BreadcrumbItem>
-                <BreadcrumbSeparator />
-                <BreadcrumbItem>
-                  <BreadcrumbLink href={`/category/${palette.category}`}>
-                    {palette.category}
-                  </BreadcrumbLink>
-                </BreadcrumbItem>
-                <BreadcrumbSeparator />
-                <BreadcrumbItem>
-                  <BreadcrumbPage>{palette.name}</BreadcrumbPage>
-                </BreadcrumbItem>
-              </BreadcrumbList>
-            </Breadcrumb>
+            <CommonBreadcrumb
+              items={[
+                { label: "Home", href: "/" },
+                {
+                  label: palette.category,
+                  href: `/category/${palette.category}`,
+                },
+                { label: palette.name },
+              ]}
+            />
 
             <h1 className="mt-8 mb-0">{title}</h1>
             <p className="text-muted-foreground">{description}</p>
