@@ -2,11 +2,19 @@ import { getClient } from "@/lib/apollo-client";
 import { getAssetUrl } from "@/lib/utils";
 import { GET_BLOG, type BlogResponse } from "@/query/blog";
 import type { Metadata } from "next";
-import Link from "next/link";
 import { notFound } from "next/navigation";
 import { MDXRemote } from "next-mdx-remote-client/rsc";
 import remarkGfm from "remark-gfm";
 import { ToolsAndBlogsList } from "@/components/tool-and-blog-list";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
+import Link from "next/link";
 
 /**
  * 通过路径字符串获取对象中的值
@@ -102,28 +110,48 @@ export default async function Page({ params }: PageProps) {
     <article className="prose container mx-auto py-24">
       <Title />
 
-      <div className="not-prose grid grid-cols-2 gap-x-4 gap-y-6 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6">
-        {data.map((item) => (
-          <div key={item.documentId} className="flex flex-col items-center">
-            <Link href={`/palettes/${item.documentId}`}>
-              <img
-                className="not-prose size-24 rounded-full border"
-                src={item.avatar}
-                alt={item.character}
-                style={{
-                  backgroundColor: item.color,
-                }}
-              />
-            </Link>
-            <div className="mt-2 text-center">
-              <p className="text-muted-foreground text-sm capitalize">
-                {item.character}
-              </p>
-              <p className="font-mono uppercase">{item.color}</p>
-            </div>
-          </div>
-        ))}
-      </div>
+      <Table className="not-prose text-base">
+        <TableHeader>
+          <TableRow>
+            <TableHead>Character</TableHead>
+            <TableHead>Color Name</TableHead>
+            <TableHead>Hex</TableHead>
+            <TableHead>Swatch</TableHead>
+          </TableRow>
+        </TableHeader>
+        <TableBody>
+          {data.map((item) => (
+            <TableRow key={item.documentId}>
+              <TableCell>
+                <Link
+                  href={`/palettes/${item.documentId}`}
+                  className="inline-flex items-center gap-2 capitalize no-underline"
+                >
+                  <img
+                    className="not-prose size-12 rounded-full border"
+                    src={item.avatar}
+                    alt={item.character}
+                    style={{
+                      backgroundColor: item.color,
+                    }}
+                  />
+                  {item.character}
+                </Link>
+              </TableCell>
+              <TableCell>{item.name}</TableCell>
+              <TableCell className="font-mono uppercase">
+                {item.color}
+              </TableCell>
+              <TableCell>
+                <div
+                  className="size-12 rounded-md"
+                  style={{ backgroundColor: item.color }}
+                />
+              </TableCell>
+            </TableRow>
+          ))}
+        </TableBody>
+      </Table>
 
       <Tools />
     </article>
