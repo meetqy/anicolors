@@ -41,10 +41,10 @@ export const FragmentPage = ({ palette }: { palette: Palette }) => {
       <div className="relative z-10 container mx-auto space-y-4 pt-4 lg:space-y-12">
         <div className="bg-background/95 prose flex max-w-full flex-col justify-between overflow-hidden rounded-md border shadow-md backdrop-blur lg:flex-row">
           <div className="not-prose relative aspect-[4/3] w-full lg:w-3/5">
-            <Image
+            <img
               src={getAssetUrl(palette.cover.url, 960)}
               alt={`${palette.name} color palette`}
-              fill
+              className="size-full"
             />
           </div>
 
