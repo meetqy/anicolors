@@ -3,7 +3,6 @@
 import { Button } from "@/components/ui/button";
 import { getAssetUrl } from "@/lib/utils";
 import type { Palette } from "@/query/palette";
-import Image from "next/image";
 import { Separator } from "@/components/ui/separator";
 import { TwitterIcon } from "lucide-react";
 import Link from "next/link";
