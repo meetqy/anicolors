@@ -26,6 +26,8 @@ export default async function Page() {
     "create-cinematic-color-palettes-with-colorpalette-cinema",
   );
 
+  console.log(tool);
+
   return (
     <>
       <ToolHero tool={tool} />
