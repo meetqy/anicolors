@@ -25,7 +25,7 @@ export const ToolHero = ({ tool }: ToolHeroProps) => {
         </p>
       </div>
 
-      <div className="flex flex-wrap justify-center gap-2">
+      <div className="flex max-w-3xl flex-wrap justify-center gap-2">
         {tool.keywords.split(", ").map((item) => (
           <Badge
             key={item}
