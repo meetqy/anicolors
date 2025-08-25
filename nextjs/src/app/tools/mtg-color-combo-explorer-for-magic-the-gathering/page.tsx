@@ -32,11 +32,14 @@ export default async function Page() {
     <>
       <ToolHero tool={tool} />
 
-      <div className="from-muted/20 to-muted/0 text-card-foreground container rounded-lg bg-gradient-to-b lg:border">
-        <Generator />
+      <div className="from-muted/20 to-muted/0 text-card-foreground container bg-gradient-to-b">
+        <div className="rounded-lg lg:border">
+          <Generator />
+        </div>
       </div>
 
-      <div className="container mx-auto px-4 lg:px-0">
+      <div className="prose container mx-auto mt-24">
+        <h2>Blogs recommendation</h2>
         <ToolsAndBlogsList data={tool.blogs} type="blog" />
       </div>
     </>
