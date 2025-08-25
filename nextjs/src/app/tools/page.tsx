@@ -37,7 +37,7 @@ export default async function Page({
         description="Create anime color palettes, swap character colors, design gradient cards, and check color accessibility—all in one place for artists and anime fans."
       />
       <div className="container mx-auto px-4 lg:px-0">
-        <ToolsAndBlogsList data={data} type="tool" />
+        <ToolsAndBlogsList data={data} type="tool" layout="columns" />
       </div>
     </>
   );

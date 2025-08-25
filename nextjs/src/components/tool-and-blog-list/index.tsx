@@ -13,6 +13,7 @@ interface ToolsAndBlogsListProps {
   type?: keyof typeof basePath;
   className?: string;
   showTypeIcon?: boolean;
+  layout?: "grid" | "columns";
 }
 
 export const ToolsAndBlogsList = ({
@@ -20,13 +21,22 @@ export const ToolsAndBlogsList = ({
   type = "blog",
   className,
   showTypeIcon,
+  layout = "grid",
 }: ToolsAndBlogsListProps) => {
   if (!data || data.length === 0) return null;
 
   return (
     <div
       className={cn(
-        "not-prose grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3",
+        "not-prose",
+        {
+          "grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3":
+            layout === "grid",
+        },
+        {
+          "columns-1 gap-4 space-y-4 md:columns-2 lg:columns-3":
+            layout === "columns",
+        },
         className,
       )}
     >
