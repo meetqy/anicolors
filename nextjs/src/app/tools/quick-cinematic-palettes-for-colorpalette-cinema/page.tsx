@@ -6,7 +6,7 @@ import { getToolData } from "../_utils";
 
 export const generateMetadata = async (): Promise<Metadata> => {
   const tool = await getToolData(
-    "Create Cinematic Color Palettes with colorpalette.cinema",
+    "create-cinematic-color-palettes-with-colorpalette-cinema",
   );
   const images = tool.cover ? [getAssetUrl(tool.cover.url, 1200)] : [];
 
@@ -23,7 +23,7 @@ export const generateMetadata = async (): Promise<Metadata> => {
 
 export default async function Page() {
   const tool = await getToolData(
-    "Create Cinematic Color Palettes with colorpalette.cinema",
+    "create-cinematic-color-palettes-with-colorpalette-cinema",
   );
 
   return (
