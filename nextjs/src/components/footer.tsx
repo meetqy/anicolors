@@ -34,6 +34,10 @@ export const Footer = () => {
     { name: "What Is Ai Tools", url: "https://whatisaitools.com/" },
     { name: "All in AI Tools", url: "https://allinai.tools" },
     { name: "AIStage", url: "https://aistage.net" },
+    {
+      name: "Indie.Deals",
+      url: "https://indie.deals?ref=https%3A%2F%2Fanicolors.com",
+    },
   ];
 
   return (
