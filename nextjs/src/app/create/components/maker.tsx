@@ -1,14 +1,28 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { Generator } from "@/components/palette/generator";
 import type { ColorPoint } from "@/components/palette/picker-colors";
 import { useQuery } from "@apollo/client";
 import { getAssetUrl } from "@/lib/utils";
 import "react-photo-album/columns.css";
-import { DomGallery } from "./dom-gallery";
 import { GET_PALETTE, type Palette } from "@/query/palette";
-import { PickerPart } from "@/components/palette/picker-part";
+import dynamic from "next/dynamic";
+
+const DomGallery = dynamic(
+  () => import("./dom-gallery").then((mod) => mod.DomGallery),
+  { ssr: false },
+);
+
+const Generator = dynamic(
+  () => import("@/components/palette/generator").then((mod) => mod.Generator),
+  { ssr: false },
+);
+
+const PickerPart = dynamic(
+  () =>
+    import("@/components/palette/picker-part").then((mod) => mod.PickerPart),
+  { ssr: false },
+);
 
 export const Maker = ({ id }: { id: string }) => {
   const [points, setPoints] = useState<ColorPoint[]>([]);

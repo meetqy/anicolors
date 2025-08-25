@@ -1,8 +1,5 @@
-import { Generator } from "@/components/palette/generator";
-import { PickerPart } from "@/components/palette/picker-part";
 import { Button } from "@/components/ui/button";
 import { Shapes } from "lucide-react";
-import { PaletteActions } from "./actions";
 import { Blogs } from "./blogs";
 import { CharacterInfo } from "./character-info";
 import { ColorBaseInfo } from "./color-base-info";
@@ -12,20 +9,18 @@ import { ExtendPart } from "./extend-part";
 import { Gallery } from "./gallery";
 import { MoreList } from "./more-list";
 import type { Palette } from "@/query/palette";
-import { getAssetUrl } from "@/lib/utils";
 import Link from "next/link";
+import { ClientComponent } from "./client-component";
 
 export const CharacterPage = ({ palette }: { palette: Palette }) => {
   const { points } = palette;
-  const image = getAssetUrl(palette.image.url, 960);
 
   return (
     <div className="mx-auto py-12">
       <CharacterInfo palette={palette} />
-      <PickerPart className="mb-6" colors={palette.extend?.parts} />
-      <Generator initialPoints={points} initialImage={image} />
 
-      <PaletteActions palette={palette} />
+      <ClientComponent palette={palette} />
+
       <ColorBaseInfo palette={palette} />
       <ExtendPart palette={palette} />
 
