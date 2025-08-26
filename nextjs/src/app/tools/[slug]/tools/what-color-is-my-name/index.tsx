@@ -25,7 +25,7 @@ const ColorCard = withSave<{
   );
 });
 
-export const Generator = () => {
+const Generator = () => {
   const [inputText, setInputText] = useState("AniColors");
 
   const colorData = useMemo(() => {
@@ -117,3 +117,5 @@ export const Generator = () => {
     </div>
   );
 };
+
+export default Generator;

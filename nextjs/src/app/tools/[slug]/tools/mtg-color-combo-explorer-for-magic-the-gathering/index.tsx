@@ -21,7 +21,7 @@ const MTG_COLORS = [
   { name: "Green", color: "#3F9B4C", index: 4 },
 ];
 
-export const Generator = () => {
+const Generator = () => {
   const [selectedColors, setSelectedColors] = useState<string[]>([]);
   const [currentCombination, setCurrentCombination] =
     useState<ColorCombination | null>(null);
@@ -218,3 +218,5 @@ export const Generator = () => {
     </div>
   );
 };
+
+export default Generator;

@@ -7,7 +7,7 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-import { hexToCategory } from "../utils";
+import { hexToCategory } from "./utils";
 import type { Color } from "./columns";
 import { useState, useMemo, useCallback, useEffect } from "react";
 import { EllipsisVerticalIcon } from "lucide-react";

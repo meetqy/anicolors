@@ -68,7 +68,7 @@ const PreviewCard = ({
 // 使用 withSave 包装预览组件
 const SaveablePreviewCard = withSave(PreviewCard);
 
-export const Generator = () => {
+const Generator = () => {
   const [image, setImage] = useState<string | null>(null);
   const [purpleIntensity, setPurpleIntensity] = useState([50]);
   const [brightness, setBrightness] = useState([0]);
@@ -206,3 +206,5 @@ export const Generator = () => {
     </div>
   );
 };
+
+export default Generator;

@@ -1,12 +1,12 @@
 "use client";
 import { colornames } from "color-name-list";
-import { DataTable } from "./_components/data-table";
-import { columns } from "./_components/columns";
-import { FilterBar } from "./_components/filter";
+import { DataTable } from "./data-table";
+import { columns } from "./columns";
+import { FilterBar } from "./filter";
 import { useState, useMemo } from "react";
 import { hexToCategory } from "./utils";
 
-export const Generator = () => {
+const ColorNameTableSearchGenerator = () => {
   const [search, setSearch] = useState("");
   const [color, setColor] = useState("");
 
@@ -46,3 +46,5 @@ export const Generator = () => {
     </div>
   );
 };
+
+export default ColorNameTableSearchGenerator;

@@ -35,7 +35,7 @@ const GradientCard = withSave<{
   );
 });
 
-export const Generator = () => {
+const Generator = () => {
   const downRef = useRef<SaveableCardRef>(null);
   const [selectedColor, setSelectedColor] = useState("#ff6b6b");
   const [selectedRatio, setSelectedRatio] = useState("9/16");
@@ -109,3 +109,5 @@ export const Generator = () => {
     </div>
   );
 };
+
+export default Generator;

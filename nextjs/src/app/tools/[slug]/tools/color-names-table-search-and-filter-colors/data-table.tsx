@@ -124,7 +124,7 @@ export function DataTable<TData, TValue>({
       </Table>
 
       {/* Pagination Controls */}
-      <div className="flex items-center justify-between border-t px-4 py-2">
+      <div className="flex flex-wrap items-center justify-end gap-4 border-t px-4 py-2 xl:justify-between">
         <div className="text-muted-foreground flex items-center gap-4 text-sm">
           <span>
             Page
@@ -146,11 +146,12 @@ export function DataTable<TData, TValue>({
               min={1}
               value={pagination.pageSize}
               onChange={handlePageSizeChange}
-              className="mx-2 w-14 rounded border px-2 py-1 text-center text-sm"
+              className="ml-2 w-14 rounded border px-2 py-1 text-center text-sm"
               style={{ WebkitAppearance: "textfield" }}
             />
           </span>
         </div>
+
         <div className="flex items-center gap-2">
           <Button
             variant="outline"

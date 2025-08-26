@@ -18,9 +18,7 @@ export const metadata: Metadata = {
   icons: [{ rel: "icon", url: "/favicon.ico" }],
   twitter: { images: ["og.jpg"] },
   openGraph: { images: ["og.jpg"] },
-  alternates: {
-    canonical: "/",
-  },
+  alternates: { canonical: "/" },
 };
 
 const getPalettesList = async (
