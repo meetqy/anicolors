@@ -1,4 +1,6 @@
+"use client";
 import dynamic from "next/dynamic";
+import { Suspense } from "react";
 
 const tools = {
   "change-svg-color": dynamic(() => import("./change-svg-color")),
@@ -23,12 +25,14 @@ const tools = {
 
 export type Tools = keyof typeof tools;
 
-export const ToolWrapper = async ({ slug }: { slug: Tools }) => {
+export const ToolWrapper = ({ slug }: { slug: Tools }) => {
   const Component = tools[slug];
 
   return (
-    <div className="from-muted/20 to-muted/0 text-card-foreground container rounded-lg bg-gradient-to-b lg:border">
-      <Component />
+    <div className="from-muted/20 to-muted/0 text-card-foreground container min-h-[50vh] rounded-lg bg-gradient-to-b lg:border">
+      <Suspense>
+        <Component />
+      </Suspense>
     </div>
   );
 };
