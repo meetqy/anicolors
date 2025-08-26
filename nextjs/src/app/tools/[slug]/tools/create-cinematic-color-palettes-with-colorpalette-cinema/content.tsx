@@ -1,5 +1,5 @@
 import { withSave } from "@/components/card/with-save";
-import type { ColorData } from "../utils";
+import type { ColorData } from "./utils";
 
 const Content = ({ image, colors }: { image: string; colors: ColorData }) => {
   return (
