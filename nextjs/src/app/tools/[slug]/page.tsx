@@ -3,7 +3,7 @@ import { getAssetUrl } from "@/lib/utils";
 import { ToolHero } from "@/components/tool-hero";
 import { getClient } from "@/lib/apollo-client";
 import { GET_TOOL, type ToolResponse } from "@/query/tool";
-import toolComponents from "./tools";
+import { ToolWrapper, type Tools } from "./tools/tool-wrapper";
 
 type Props = {
   params: Promise<{ slug: string }>;
@@ -44,15 +44,11 @@ export default async function Page({ params }: Props) {
   const { slug } = await params;
   const tool = await getToolData(slug);
 
-  const Component = toolComponents[slug as keyof typeof toolComponents];
-
   return (
     <>
       <ToolHero tool={tool} />
 
-      <div className="from-muted/20 to-muted/0 text-card-foreground container rounded-lg bg-gradient-to-b lg:border">
-        <Component />
-      </div>
+      <ToolWrapper slug={slug as Tools} />
     </>
   );
 }

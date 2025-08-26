@@ -10,7 +10,7 @@ import { getColorName } from "@/lib/nearest";
 import { SaveableContent } from "./content";
 import { getPaletteWithPercentsFromImage, type ColorData } from "./utils";
 
-export const CreateCinematicGenerator = () => {
+const CreateCinematicGenerator = () => {
   const [image, setImage] = useState<string | null>(null);
   const [colors, setColors] = useState<ColorData>([]);
   const inputRef = useRef<HTMLInputElement>(null);
@@ -150,3 +150,5 @@ export const CreateCinematicGenerator = () => {
     </div>
   );
 };
+
+export default CreateCinematicGenerator;
