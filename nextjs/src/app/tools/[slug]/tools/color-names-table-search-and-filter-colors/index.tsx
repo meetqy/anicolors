@@ -6,7 +6,7 @@ import { FilterBar } from "./_components/filter";
 import { useState, useMemo } from "react";
 import { hexToCategory } from "./utils";
 
-export const Generator = () => {
+export const ColorNameTableSearchGenerator = () => {
   const [search, setSearch] = useState("");
   const [color, setColor] = useState("");
 

@@ -8,9 +8,9 @@ import { Button } from "@/components/ui/button";
 import { Copy, UploadIcon } from "lucide-react";
 import { getColorName } from "@/lib/nearest";
 import { SaveableContent } from "./content";
-import { getPaletteWithPercentsFromImage, type ColorData } from "../utils";
+import { getPaletteWithPercentsFromImage, type ColorData } from "./utils";
 
-export const Generator = () => {
+export const CreateCinematicGenerator = () => {
   const [image, setImage] = useState<string | null>(null);
   const [colors, setColors] = useState<ColorData>([]);
   const inputRef = useRef<HTMLInputElement>(null);

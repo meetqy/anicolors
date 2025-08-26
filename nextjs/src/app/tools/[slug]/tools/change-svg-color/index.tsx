@@ -38,7 +38,7 @@ function replaceColor(svg: string, oldRaw: string, newColor: string) {
   });
 }
 
-export const Generator = () => {
+export const ChangeSvgColor = () => {
   const [svgText, setSvgText] = useState<string>("");
   const [fileName, setFileName] = useState<string>("");
   const [colors, setColors] = useState<
