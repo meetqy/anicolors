@@ -1,10 +1,18 @@
+import { CommonBreadcrumb } from "@/components/common-breadcrumb";
 import type { Palette } from "@/query/palette";
 import Link from "next/link";
 
 export const CharacterInfo = ({ palette }: { palette: Palette }) => {
   return (
-    <div className="prose mx-auto mb-12 max-w-screen-lg px-4 lg:px-0">
-      <h1 className="text-left capitalize">
+    <div className="prose container mx-auto mb-12">
+      <CommonBreadcrumb
+        items={[
+          { label: "Home", href: "/" },
+          { label: "Palettes", href: "/palettes" },
+          { label: palette.name },
+        ]}
+      />
+      <h1 className="mt-4 text-left capitalize">
         {palette.name} Color Palette - {palette.category}
       </h1>
       <p>

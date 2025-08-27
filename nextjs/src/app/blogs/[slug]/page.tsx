@@ -15,6 +15,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import Link from "next/link";
+import { CommonBreadcrumb } from "@/components/common-breadcrumb";
 
 /**
  * 通过路径字符串获取对象中的值
@@ -73,10 +74,12 @@ export default async function Page({ params }: PageProps) {
   });
 
   const Title = () => (
-    <div className="mx-auto mb-12 max-w-screen-md text-center">
-      <h1>{blog.title}</h1>
-      <p>{blog.description}</p>
-    </div>
+    <>
+      <div className="mx-auto mb-12 max-w-screen-md text-center">
+        <h1>{blog.title}</h1>
+        <p>{blog.description}</p>
+      </div>
+    </>
   );
 
   const Tools = () =>
@@ -87,9 +90,22 @@ export default async function Page({ params }: PageProps) {
       </div>
     );
 
+  const Breadcrumb = () => (
+    <div className="container">
+      <CommonBreadcrumb
+        items={[
+          { label: "Home", href: "/" },
+          { label: "Blogs", href: "/blogs" },
+          { label: blog.title },
+        ]}
+      />
+    </div>
+  );
+
   if (blog.useTypes === "markdown") {
     return (
       <>
+        <Breadcrumb />
         <article className="prose mx-auto max-w-screen-lg py-24">
           <Title />
           <MDXRemote
@@ -107,54 +123,57 @@ export default async function Page({ params }: PageProps) {
   }
 
   return (
-    <article className="prose container mx-auto py-24">
-      <Title />
+    <>
+      <Breadcrumb />
+      <article className="prose container mx-auto py-24">
+        <Title />
 
-      <Table className="not-prose text-base">
-        <TableHeader>
-          <TableRow>
-            <TableHead>Character</TableHead>
-            <TableHead>Color Name</TableHead>
-            <TableHead>Hex</TableHead>
-            <TableHead>Swatch</TableHead>
-          </TableRow>
-        </TableHeader>
-        <TableBody>
-          {data.map((item) => (
-            <TableRow key={item.documentId}>
-              <TableCell>
-                <Link
-                  href={`/palettes/${item.documentId}`}
-                  className="inline-flex items-center gap-2 capitalize no-underline"
-                >
-                  <img
-                    className="not-prose size-12 rounded-full border"
-                    src={item.avatar}
-                    alt={item.character}
-                    style={{
-                      backgroundColor: item.color,
-                    }}
-                  />
-                  {item.character}
-                </Link>
-              </TableCell>
-              <TableCell>{item.name}</TableCell>
-              <TableCell className="font-mono uppercase">
-                {item.color}
-              </TableCell>
-              <TableCell>
-                <div
-                  className="size-12 rounded-md"
-                  style={{ backgroundColor: item.color }}
-                />
-              </TableCell>
+        <Table className="not-prose text-base">
+          <TableHeader>
+            <TableRow>
+              <TableHead>Character</TableHead>
+              <TableHead>Color Name</TableHead>
+              <TableHead>Hex</TableHead>
+              <TableHead>Swatch</TableHead>
             </TableRow>
-          ))}
-        </TableBody>
-      </Table>
+          </TableHeader>
+          <TableBody>
+            {data.map((item) => (
+              <TableRow key={item.documentId}>
+                <TableCell>
+                  <Link
+                    href={`/palettes/${item.documentId}`}
+                    className="inline-flex items-center gap-2 capitalize no-underline"
+                  >
+                    <img
+                      className="not-prose size-12 rounded-full border"
+                      src={item.avatar}
+                      alt={item.character}
+                      style={{
+                        backgroundColor: item.color,
+                      }}
+                    />
+                    {item.character}
+                  </Link>
+                </TableCell>
+                <TableCell>{item.name}</TableCell>
+                <TableCell className="font-mono uppercase">
+                  {item.color}
+                </TableCell>
+                <TableCell>
+                  <div
+                    className="size-12 rounded-md"
+                    style={{ backgroundColor: item.color }}
+                  />
+                </TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
 
-      <Tools />
-    </article>
+        <Tools />
+      </article>
+    </>
   );
 }
 
