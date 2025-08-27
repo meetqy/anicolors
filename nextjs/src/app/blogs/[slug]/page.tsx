@@ -73,105 +73,87 @@ export default async function Page({ params }: PageProps) {
     };
   });
 
-  const Title = () => (
-    <>
-      <div className="mx-auto mb-12 max-w-screen-md text-center">
-        <h1>{blog.title}</h1>
-        <p>{blog.description}</p>
-      </div>
-    </>
-  );
-
-  const Tools = () =>
-    blog.tools.length > 0 && (
-      <div className="prose mx-auto max-w-screen-xl">
-        <h2>Tools recommendation</h2>
-        <ToolsAndBlogsList data={blog.tools} type="tool" />
-      </div>
-    );
-
-  const Breadcrumb = () => (
-    <div className="container">
-      <CommonBreadcrumb
-        items={[
-          { label: "Home", href: "/" },
-          { label: "Blogs", href: "/blogs" },
-          { label: blog.title },
-        ]}
-      />
-    </div>
-  );
-
-  if (blog.useTypes === "markdown") {
-    return (
-      <>
-        <Breadcrumb />
-        <article className="prose mx-auto max-w-screen-lg py-24">
-          <Title />
-          <MDXRemote
-            source={blog.markdown}
-            options={{
-              mdxOptions: {
-                remarkPlugins: [remarkGfm],
-              },
-            }}
-          />
-        </article>
-        <Tools />
-      </>
-    );
-  }
+  const { useTypes = "field" } = blog;
 
   return (
     <>
-      <Breadcrumb />
-      <article className="prose container mx-auto py-24">
-        <Title />
+      <div className="container">
+        <CommonBreadcrumb
+          items={[
+            { label: "Home", href: "/" },
+            { label: "Blogs", href: "/blogs" },
+            { label: blog.title },
+          ]}
+        />
+      </div>
+      <article className="container mx-auto py-24">
+        <div className="prose mx-auto mb-12 max-w-screen-md text-center">
+          <h1>{blog.title}</h1>
+          <p>{blog.description}</p>
+        </div>
 
-        <Table className="not-prose text-base">
-          <TableHeader>
-            <TableRow>
-              <TableHead>Character</TableHead>
-              <TableHead>Color Name</TableHead>
-              <TableHead>Hex</TableHead>
-              <TableHead>Swatch</TableHead>
-            </TableRow>
-          </TableHeader>
-          <TableBody>
-            {data.map((item) => (
-              <TableRow key={item.documentId}>
-                <TableCell>
-                  <Link
-                    href={`/palettes/${item.documentId}`}
-                    className="inline-flex items-center gap-2 capitalize no-underline"
-                  >
-                    <img
-                      className="not-prose size-12 rounded-full border"
-                      src={item.avatar}
-                      alt={item.character}
-                      style={{
-                        backgroundColor: item.color,
-                      }}
-                    />
-                    {item.character}
-                  </Link>
-                </TableCell>
-                <TableCell>{item.name}</TableCell>
-                <TableCell className="font-mono uppercase">
-                  {item.color}
-                </TableCell>
-                <TableCell>
-                  <div
-                    className="size-12 rounded-md"
-                    style={{ backgroundColor: item.color }}
-                  />
-                </TableCell>
-              </TableRow>
-            ))}
-          </TableBody>
-        </Table>
+        <div className="prose mx-auto max-w-screen-lg">
+          {useTypes === "markdown" && (
+            <MDXRemote
+              source={blog.markdown}
+              options={{
+                mdxOptions: { remarkPlugins: [remarkGfm] },
+              }}
+            />
+          )}
 
-        <Tools />
+          {useTypes === "field" && (
+            <Table className="not-prose text-base">
+              <TableHeader>
+                <TableRow>
+                  <TableHead>Character</TableHead>
+                  <TableHead>Color Name</TableHead>
+                  <TableHead>Hex</TableHead>
+                  <TableHead>Swatch</TableHead>
+                </TableRow>
+              </TableHeader>
+              <TableBody>
+                {data.map((item) => (
+                  <TableRow key={item.documentId}>
+                    <TableCell>
+                      <Link
+                        href={`/palettes/${item.documentId}`}
+                        className="inline-flex items-center gap-2 capitalize no-underline"
+                      >
+                        <img
+                          className="not-prose size-12 rounded-full border"
+                          src={item.avatar}
+                          alt={item.character}
+                          style={{
+                            backgroundColor: item.color,
+                          }}
+                        />
+                        {item.character}
+                      </Link>
+                    </TableCell>
+                    <TableCell>{item.name}</TableCell>
+                    <TableCell className="font-mono uppercase">
+                      {item.color}
+                    </TableCell>
+                    <TableCell>
+                      <div
+                        className="size-12 rounded-md"
+                        style={{ backgroundColor: item.color }}
+                      />
+                    </TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          )}
+        </div>
+
+        {blog.tools.length > 0 && (
+          <div className="prose mx-auto max-w-screen-xl">
+            <h2>Tools recommendation</h2>
+            <ToolsAndBlogsList data={blog.tools} type="tool" />
+          </div>
+        )}
       </article>
     </>
   );
