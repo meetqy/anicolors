@@ -22,7 +22,7 @@ export function Header() {
       id="header"
       className="bg-background/90 sticky top-0 z-50 backdrop-blur-md"
     >
-      <div className="mx-auto flex h-16 max-w-7xl items-center justify-between gap-4 px-6">
+      <div className="container mx-auto flex h-16 items-center justify-between gap-4">
         {/* Logo */}
         <Logo className="text-base lg:text-2xl" />
 
