@@ -120,6 +120,12 @@ export const DomGallery = ({
     // 遍历所有 refs 并依次保存缺失的图片
     for (const [key, ref] of myRefs.current.entries()) {
       const filename = `${prefix}${ref.id}.png`;
+
+      if (
+        filename.startsWith("gradient-lighten-") ||
+        filename.startsWith("color-")
+      )
+        continue;
       if (names.some((e) => filename.includes(e))) continue;
 
       try {
