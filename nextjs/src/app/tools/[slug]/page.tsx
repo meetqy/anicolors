@@ -4,6 +4,7 @@ import { ToolHero } from "@/components/tool-hero";
 import { getClient } from "@/lib/apollo-client";
 import { GET_TOOL, type ToolResponse } from "@/query/tool";
 import { ToolWrapper, type Tools } from "./tools/tool-wrapper";
+import { CommonBreadcrumb } from "@/components/common-breadcrumb";
 
 type Props = {
   params: Promise<{ slug: string }>;
@@ -46,6 +47,15 @@ export default async function Page({ params }: Props) {
 
   return (
     <>
+      <div className="container">
+        <CommonBreadcrumb
+          items={[
+            { label: "Home", href: "/" },
+            { label: "Tools", href: "/tools" },
+            { label: tool.name },
+          ]}
+        />
+      </div>
       <ToolHero tool={tool} />
 
       <ToolWrapper slug={slug as Tools} />
