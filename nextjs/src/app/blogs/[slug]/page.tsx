@@ -74,10 +74,12 @@ export default async function Page({ params }: PageProps) {
   });
 
   const Title = () => (
-    <div className="mx-auto mb-12 max-w-screen-md text-center">
-      <h1>{blog.title}</h1>
-      <p>{blog.description}</p>
-    </div>
+    <>
+      <div className="mx-auto mb-12 max-w-screen-md text-center">
+        <h1>{blog.title}</h1>
+        <p>{blog.description}</p>
+      </div>
+    </>
   );
 
   const Tools = () =>
@@ -88,9 +90,22 @@ export default async function Page({ params }: PageProps) {
       </div>
     );
 
+  const Breadcrumb = () => (
+    <div className="container">
+      <CommonBreadcrumb
+        items={[
+          { label: "Home", href: "/" },
+          { label: "Blogs", href: "/blogs" },
+          { label: blog.title },
+        ]}
+      />
+    </div>
+  );
+
   if (blog.useTypes === "markdown") {
     return (
       <>
+        <Breadcrumb />
         <article className="prose mx-auto max-w-screen-lg py-24">
           <Title />
           <MDXRemote
@@ -109,15 +124,7 @@ export default async function Page({ params }: PageProps) {
 
   return (
     <>
-      <div className="container">
-        <CommonBreadcrumb
-          items={[
-            { label: "Home", href: "/" },
-            { label: "Blogs", href: "/blogs" },
-            { label: blog.title },
-          ]}
-        />
-      </div>
+      <Breadcrumb />
       <article className="prose container mx-auto py-24">
         <Title />
 
