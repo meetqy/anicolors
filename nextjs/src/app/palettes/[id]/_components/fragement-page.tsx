@@ -34,6 +34,9 @@ export const FragmentPage = ({ palette }: { palette: Palette }) => {
           src={getAssetUrl(palette.image.url, 960)}
           alt={`${palette.name} background image`}
           className="fixed top-0 left-0 -z-10 size-full scale-105 object-cover blur-xl"
+          style={{
+            backgroundColor: palette.points[0]?.color,
+          }}
         />
       </>
 
