@@ -1,13 +1,27 @@
 import { withSave } from "@/components/card/with-save";
 import type { ColorData } from "./utils";
 
-const Content = ({ image, colors }: { image: string; colors: ColorData }) => {
+const Content = ({
+  image,
+  colors,
+  imageSize,
+}: {
+  image: string;
+  colors: ColorData;
+  imageSize: { width: number; height: number } | undefined;
+}) => {
+  const aspectRatio = imageSize ? imageSize.width / imageSize.height : 1;
+
   return (
     <div className="flex aspect-[4/3] w-full flex-col bg-white p-1">
       <img
         src={image}
         alt="Uploaded"
         className="aspect-[16/9] w-full object-center"
+        style={{
+          objectFit: aspectRatio > 1 ? "cover" : "contain",
+          backgroundColor: colors[0]?.hex,
+        }}
       />
 
       <div className="grid flex-1 grid-cols-6 gap-1 pt-1 md:grid-cols-12">

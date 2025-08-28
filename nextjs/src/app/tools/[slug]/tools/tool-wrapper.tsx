@@ -28,10 +28,8 @@ export const ToolWrapper = ({ slug }: { slug: Tools }) => {
   const Component = tools[slug];
 
   return (
-    <div className="from-muted/50 to-muted/0 container min-h-[50vh] bg-gradient-to-b">
-      <div className="overflow-hidden rounded-lg p-4 xl:border">
-        <Component />
-      </div>
+    <div className="from-muted/50 to-muted/0 container min-h-96 overflow-hidden rounded-md bg-gradient-to-b p-4 xl:border">
+      <Component />
     </div>
   );
 };
