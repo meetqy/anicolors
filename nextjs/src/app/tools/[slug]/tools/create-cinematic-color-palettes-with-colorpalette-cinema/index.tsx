@@ -28,7 +28,6 @@ const CreateCinematicGenerator = () => {
         const palette = await getPaletteWithPercentsFromImage(img, 12);
 
         setColors(palette);
-        toast.success(`Extracted ${palette.length} colors from image`);
         return palette;
       } catch (error) {
         toast.error("Failed to extract colors from image");
@@ -74,7 +73,7 @@ const CreateCinematicGenerator = () => {
 
   return (
     <div className="flex aspect-video w-full">
-      <div className="flex max-w-sm flex-col justify-between pr-4">
+      <div className="flex w-full max-w-sm flex-col justify-between pr-4">
         <ImageUpload onImageChange={handleImageChange} />
 
         <div className="space-y-3">
@@ -95,6 +94,7 @@ const CreateCinematicGenerator = () => {
           <SaveableContent
             id="color-extractor"
             imageSize={imageSize}
+            targetWidth={1920}
             image={image}
             colors={colors}
           />

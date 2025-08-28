@@ -22,6 +22,7 @@ interface WithSaveProps {
   id?: string;
   className?: string;
   maskExtra?: React.ReactNode;
+  targetWidth?: number; // 新增：目标宽度参数
 }
 
 export function withSave<P extends object>(WrappedComponent: ComponentType<P>) {
@@ -39,10 +40,10 @@ export function withSave<P extends object>(WrappedComponent: ComponentType<P>) {
 
       const createOptions = (targetElement: HTMLElement, scale?: number) => {
         if (!scale) {
-          // 没有传入 scale 时，使用固定宽度 1080，高度按比例缩放
+          // 没有传入 scale 时，使用传入的 targetWidth 或默认宽度 1080，高度按比例缩放
           const aspectRatio =
             targetElement.offsetHeight / targetElement.offsetWidth;
-          const targetWidth = 1080;
+          const targetWidth = props.targetWidth ?? 1080;
           const targetHeight = targetWidth * aspectRatio;
 
           return {
