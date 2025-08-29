@@ -56,8 +56,11 @@ export function Header() {
               </Link>
             </Button>
             <Button asChild className="hidden lg:block">
-              <Link href="/create" aria-label="Create a new color palette">
-                Make a Palette
+              <Link
+                href="/tools/create-cinematic-color-palettes-with-colorpalette-cinema"
+                aria-label="Create a new color palette"
+              >
+                Make Palette
               </Link>
             </Button>
           </div>

@@ -45,4 +45,8 @@ export default {
   async beforeUpdate(event) {
     await Promise.all([connectColorName(event), syncCategory(event)]);
   },
+
+  async beforeFindOne(event) {
+    console.log(event.params);
+  },
 };

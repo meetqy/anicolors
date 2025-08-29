@@ -7,8 +7,8 @@
       "searchable": true,
       "pageSize": 10,
       "mainField": "name",
-      "defaultSortBy": "name",
-      "defaultSortOrder": "ASC"
+      "defaultSortBy": "id",
+      "defaultSortOrder": "DESC"
     },
     "metadatas": {
       "id": {
@@ -172,12 +172,6 @@
       }
     },
     "layouts": {
-      "list": [
-        "id",
-        "name",
-        "description",
-        "cover"
-      ],
       "edit": [
         [
           {
@@ -209,6 +203,12 @@
             "size": 6
           }
         ]
+      ],
+      "list": [
+        "id",
+        "cover",
+        "name",
+        "description"
       ]
     },
     "uid": "api::tool.tool"

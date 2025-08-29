@@ -356,10 +356,10 @@
       ],
       "list": [
         "id",
-        "image",
+        "cover",
         "name",
         "category",
-        "likes",
+        "colors",
         "createdAt"
       ]
     },
