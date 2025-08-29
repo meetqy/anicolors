@@ -74,8 +74,9 @@ export default {
     const { result, params } = event;
 
     if (params.limit > 0) {
+      // 如果没有关联颜色
       result.forEach((item) => {
-        if (item.colors.count === 0) {
+        if (!item.colors || item.colors.count === 0) {
           updateColorName(item.points, item.id);
         }
       });
