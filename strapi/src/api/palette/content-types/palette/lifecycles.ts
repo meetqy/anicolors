@@ -38,14 +38,6 @@ const connectColorName = async (event) => {
 };
 
 const updateColorName = async (points, id) => {
-  const palette = await strapi.db.query("api::palette.palette").findOne({
-    where: { id: id },
-    populate: { colors: true },
-  });
-
-  if (!palette) return;
-  if (palette.colors.length > 0) return;
-
   const names = points.map((item) => item.name);
   const colorList = await strapi.db.query("api::color.color").findMany({
     where: { name: { $in: names } },
@@ -77,6 +69,7 @@ export default {
       // 如果没有关联颜色
       result.forEach((item) => {
         if (!item.colors || item.colors.count === 0) {
+          console.log(item.id);
           updateColorName(item.points, item.id);
         }
       });
