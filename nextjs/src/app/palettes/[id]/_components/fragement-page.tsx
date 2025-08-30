@@ -65,7 +65,11 @@ export const FragmentPage = ({ palette }: { palette: Palette }) => {
             <h1 className="mt-8">{title}</h1>
             <div className="not-prose grid w-full grid-cols-4 gap-x-2 gap-y-4">
               {palette.points.map((p, index) => (
-                <div key={index} className="relative">
+                <Link
+                  href={`/color/${p.name}`}
+                  key={index}
+                  className="relative"
+                >
                   <div
                     className="aspect-video w-full"
                     style={{
@@ -75,7 +79,7 @@ export const FragmentPage = ({ palette }: { palette: Palette }) => {
                   <div className="text-center font-mono uppercase">
                     {p.color}
                   </div>
-                </div>
+                </Link>
               ))}
             </div>
 
