@@ -511,7 +511,7 @@ export interface ApiPalettePalette extends Struct.CollectionTypeSchema {
     points: Schema.Attribute.JSON;
     publishedAt: Schema.Attribute.DateTime;
     type: Schema.Attribute.Enumeration<['fragment', 'character']> &
-      Schema.Attribute.DefaultTo<'character'>;
+      Schema.Attribute.DefaultTo<'fragment'>;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;

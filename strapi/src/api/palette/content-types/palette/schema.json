@@ -93,7 +93,7 @@
     },
     "type": {
       "type": "enumeration",
-      "default": "character",
+      "default": "fragment",
       "enum": [
         "fragment",
         "character"
