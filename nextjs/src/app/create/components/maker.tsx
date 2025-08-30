@@ -38,6 +38,8 @@ export const Maker = ({ id }: { id: string }) => {
     }
   }, [data]);
 
+  const initialPoints = data?.palette.points || [];
+
   return (
     <>
       {loading ? (
@@ -48,7 +50,7 @@ export const Maker = ({ id }: { id: string }) => {
         <>
           <PickerPart className="mb-6" colors={data?.palette.extend?.parts} />
           <Generator
-            initialPoints={data?.palette.points ?? []}
+            initialPoints={initialPoints.length < 5 ? initialPoints : []}
             initialImage={image}
             onColorsChangeEnter={setPoints}
             onImageChange={setImage}

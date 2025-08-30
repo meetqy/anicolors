@@ -93,6 +93,15 @@ export const FragmentPage = ({ palette }: { palette: Palette }) => {
               </Button>
               <Button variant="outline" asChild>
                 <Link
+                  href={`/create?id=${palette.documentId}`}
+                  className="no-underline"
+                  aria-label="Create a custom color palette"
+                >
+                  Custom Maker
+                </Link>
+              </Button>
+              <Button variant="outline" asChild>
+                <Link
                   target="_blank"
                   className="no-underline"
                   href={`https://twitter.com/intent/tweet?text=${encodeURIComponent(palette.name + " Fragment Color Palette")}&url=${encodeURIComponent(`${env.NEXT_PUBLIC_SITE_URL}/palettes/${palette.documentId}`)}`}
