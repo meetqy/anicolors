@@ -6,7 +6,7 @@
   "locale": null,
   "permissions": [
     {
-      "documentId": "zp1xbsqyzplx78ck8nzozowv",
+      "documentId": "cm9rxclek1p72w4jn3p7h7bc",
       "action": "plugin::content-manager.explorer.create",
       "actionParameters": {},
       "subject": "api::blog.blog",
@@ -21,7 +21,8 @@
           "field",
           "markdown",
           "content",
-          "tools"
+          "tools",
+          "views"
         ]
       },
       "conditions": [],
@@ -46,7 +47,7 @@
       "locale": null
     },
     {
-      "documentId": "akn8nxnffej91lx3np90jiy8",
+      "documentId": "et000k3zvzwqzwmoko3zao50",
       "action": "plugin::content-manager.explorer.read",
       "actionParameters": {},
       "subject": "api::blog.blog",
@@ -61,14 +62,15 @@
           "field",
           "markdown",
           "content",
-          "tools"
+          "tools",
+          "views"
         ]
       },
       "conditions": [],
       "locale": null
     },
     {
-      "documentId": "wzej4epnqainmtud8ozz6kq2",
+      "documentId": "fa1ckz9fbh41438k9v76en0y",
       "action": "plugin::content-manager.explorer.update",
       "actionParameters": {},
       "subject": "api::blog.blog",
@@ -83,14 +85,15 @@
           "field",
           "markdown",
           "content",
-          "tools"
+          "tools",
+          "views"
         ]
       },
       "conditions": [],
       "locale": null
     },
     {
-      "documentId": "b7d1j6sr2i9fql0uf14tqwrp",
+      "documentId": "pf8icju9peetp3yv0ndz0dpf",
       "action": "plugin::content-manager.explorer.create",
       "actionParameters": {},
       "subject": "api::category.category",
@@ -99,7 +102,8 @@
           "name",
           "slug",
           "cover",
-          "palettes"
+          "palettes",
+          "views"
         ]
       },
       "conditions": [],
@@ -124,7 +128,7 @@
       "locale": null
     },
     {
-      "documentId": "iwtyqo75mntkh0dvs1x7d40k",
+      "documentId": "nwrjlg95hmuxhajhecg4y8xm",
       "action": "plugin::content-manager.explorer.read",
       "actionParameters": {},
       "subject": "api::category.category",
@@ -133,14 +137,15 @@
           "name",
           "slug",
           "cover",
-          "palettes"
+          "palettes",
+          "views"
         ]
       },
       "conditions": [],
       "locale": null
     },
     {
-      "documentId": "oiow5rmwu419oefb6gzfksin",
+      "documentId": "agyy1cq6a2pola1awutgkj07",
       "action": "plugin::content-manager.explorer.update",
       "actionParameters": {},
       "subject": "api::category.category",
@@ -149,21 +154,23 @@
           "name",
           "slug",
           "cover",
-          "palettes"
+          "palettes",
+          "views"
         ]
       },
       "conditions": [],
       "locale": null
     },
     {
-      "documentId": "gmfgza8ii1xzh0i0xneu6mtd",
+      "documentId": "d9e30fpwx9s8unmvqwsp44pi",
       "action": "plugin::content-manager.explorer.create",
       "actionParameters": {},
       "subject": "api::color.color",
       "properties": {
         "fields": [
           "name",
-          "palettes"
+          "palettes",
+          "views"
         ]
       },
       "conditions": [],
@@ -188,35 +195,37 @@
       "locale": null
     },
     {
-      "documentId": "rim8i09hcdppd56kn290ivn5",
+      "documentId": "nfl5j7h9h8u9rdgw8op5hn7f",
       "action": "plugin::content-manager.explorer.read",
       "actionParameters": {},
       "subject": "api::color.color",
       "properties": {
         "fields": [
           "name",
-          "palettes"
+          "palettes",
+          "views"
         ]
       },
       "conditions": [],
       "locale": null
     },
     {
-      "documentId": "imv79ujvu99w16d6bb7x164o",
+      "documentId": "kre4vxthcl87gt70ckm0xnu3",
       "action": "plugin::content-manager.explorer.update",
       "actionParameters": {},
       "subject": "api::color.color",
       "properties": {
         "fields": [
           "name",
-          "palettes"
+          "palettes",
+          "views"
         ]
       },
       "conditions": [],
       "locale": null
     },
     {
-      "documentId": "rbgvtiimy9s0olpa629pjwlf",
+      "documentId": "h5swmjal4togj93b9k716guq",
       "action": "plugin::content-manager.explorer.create",
       "actionParameters": {},
       "subject": "api::palette.palette",
@@ -235,7 +244,8 @@
           "blogs",
           "avatar",
           "coloring",
-          "type"
+          "type",
+          "views"
         ]
       },
       "conditions": [],
@@ -260,7 +270,7 @@
       "locale": null
     },
     {
-      "documentId": "nqanf1p6wcfqst07wggk4851",
+      "documentId": "wkn3ighktplbmhocwnejgt9u",
       "action": "plugin::content-manager.explorer.read",
       "actionParameters": {},
       "subject": "api::palette.palette",
@@ -279,14 +289,15 @@
           "blogs",
           "avatar",
           "coloring",
-          "type"
+          "type",
+          "views"
         ]
       },
       "conditions": [],
       "locale": null
     },
     {
-      "documentId": "cb5whvn3jowu098ljon2h2of",
+      "documentId": "moqvhsmfls10s7zatn9mwxd1",
       "action": "plugin::content-manager.explorer.update",
       "actionParameters": {},
       "subject": "api::palette.palette",
@@ -305,14 +316,15 @@
           "blogs",
           "avatar",
           "coloring",
-          "type"
+          "type",
+          "views"
         ]
       },
       "conditions": [],
       "locale": null
     },
     {
-      "documentId": "nmyi9dry3xckufiu9tdhapq8",
+      "documentId": "by1rpbaq5y5pstatsx0ri910",
       "action": "plugin::content-manager.explorer.create",
       "actionParameters": {},
       "subject": "api::tool.tool",
@@ -323,7 +335,8 @@
           "cover",
           "keywords",
           "slug",
-          "blogs"
+          "blogs",
+          "views"
         ]
       },
       "conditions": [],
@@ -348,7 +361,7 @@
       "locale": null
     },
     {
-      "documentId": "o5ax02sq2p7v6335hjyyhdma",
+      "documentId": "hv348ax5qxtju1dfs5foi8t0",
       "action": "plugin::content-manager.explorer.read",
       "actionParameters": {},
       "subject": "api::tool.tool",
@@ -359,14 +372,15 @@
           "cover",
           "keywords",
           "slug",
-          "blogs"
+          "blogs",
+          "views"
         ]
       },
       "conditions": [],
       "locale": null
     },
     {
-      "documentId": "zs7pq0w71agi0hksg6zwrk5q",
+      "documentId": "yysdxgz4633qjavi670izgsn",
       "action": "plugin::content-manager.explorer.update",
       "actionParameters": {},
       "subject": "api::tool.tool",
@@ -377,7 +391,8 @@
           "cover",
           "keywords",
           "slug",
-          "blogs"
+          "blogs",
+          "views"
         ]
       },
       "conditions": [],

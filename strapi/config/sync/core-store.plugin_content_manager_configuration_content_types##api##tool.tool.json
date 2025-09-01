@@ -104,6 +104,20 @@
           "sortable": false
         }
       },
+      "views": {
+        "edit": {
+          "label": "views",
+          "description": "",
+          "placeholder": "",
+          "visible": true,
+          "editable": true
+        },
+        "list": {
+          "label": "views",
+          "searchable": true,
+          "sortable": true
+        }
+      },
       "createdAt": {
         "edit": {
           "label": "createdAt",
@@ -202,13 +216,20 @@
             "name": "blogs",
             "size": 6
           }
+        ],
+        [
+          {
+            "name": "views",
+            "size": 4
+          }
         ]
       ],
       "list": [
         "id",
-        "cover",
         "name",
-        "description"
+        "description",
+        "cover",
+        "views"
       ]
     },
     "uid": "api::tool.tool"

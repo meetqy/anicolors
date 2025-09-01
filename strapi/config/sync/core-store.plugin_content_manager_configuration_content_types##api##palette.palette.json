@@ -218,6 +218,20 @@
           "sortable": true
         }
       },
+      "views": {
+        "edit": {
+          "label": "views",
+          "description": "",
+          "placeholder": "",
+          "visible": true,
+          "editable": true
+        },
+        "list": {
+          "label": "views",
+          "searchable": true,
+          "sortable": true
+        }
+      },
       "createdAt": {
         "edit": {
           "label": "createdAt",
@@ -351,16 +365,21 @@
           {
             "name": "coloring",
             "size": 6
+          },
+          {
+            "name": "views",
+            "size": 4
           }
         ]
       ],
       "list": [
         "id",
-        "cover",
         "name",
         "category",
         "colors",
-        "createdAt"
+        "createdAt",
+        "cover",
+        "views"
       ]
     },
     "uid": "api::palette.palette"

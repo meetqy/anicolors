@@ -161,6 +161,20 @@
           "sortable": false
         }
       },
+      "views": {
+        "edit": {
+          "label": "views",
+          "description": "",
+          "placeholder": "",
+          "visible": true,
+          "editable": true
+        },
+        "list": {
+          "label": "views",
+          "searchable": true,
+          "sortable": true
+        }
+      },
       "createdAt": {
         "edit": {
           "label": "createdAt",
@@ -280,11 +294,16 @@
           {
             "name": "tools",
             "size": 6
+          },
+          {
+            "name": "views",
+            "size": 4
           }
         ]
       ],
       "list": [
         "id",
+        "views",
         "title",
         "slug",
         "palettes"
