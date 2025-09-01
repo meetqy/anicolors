@@ -9,5 +9,14 @@ export default {
         policies: [],
       },
     },
+    {
+      method: "GET",
+      path: "/palettes/randomList",
+      handler: "api::palette.palette.randomList",
+      config: {
+        auth: false,
+        policies: [],
+      },
+    },
   ],
 };

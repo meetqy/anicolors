@@ -25,4 +25,34 @@ export default factories.createCoreController("api::palette.palette", ({ strapi 
 
     return result;
   },
+
+  async randomList(ctx) {
+    const { pageSize = 10 } = ctx.params;
+
+    const count = await strapi.db.query("api::palette.palette").count();
+
+    const allPages = Math.ceil(count / pageSize);
+
+    const randomStartPageIndex = Math.floor(Math.random() * allPages);
+
+    const palettes = await strapi.db.query("api::palette.palette").findMany({
+      page: randomStartPageIndex,
+      pageSize,
+      populate: {
+        image: true,
+      },
+    });
+
+    return palettes.map((e) => {
+      e.image = e.image && {
+        url: e.image.url,
+      };
+
+      delete e.extend;
+
+      return {
+        ...e,
+      };
+    });
+  },
 }));
