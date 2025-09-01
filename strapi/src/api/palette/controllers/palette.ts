@@ -27,17 +27,18 @@ export default factories.createCoreController("api::palette.palette", ({ strapi 
   },
 
   async randomList(ctx) {
-    const { pageSize = 10 } = ctx.params;
+    const query = ctx.query as { pageSize: string };
+    const pageSize = Number(query.pageSize || 10);
 
     const count = await strapi.db.query("api::palette.palette").count();
 
     const allPages = Math.ceil(count / pageSize);
 
-    const randomStartPageIndex = Math.floor(Math.random() * allPages);
+    const offset = Math.floor(Math.random() * allPages);
 
     const palettes = await strapi.db.query("api::palette.palette").findMany({
-      page: randomStartPageIndex,
-      pageSize,
+      offset: offset * pageSize,
+      limit: pageSize,
       populate: {
         image: true,
       },
