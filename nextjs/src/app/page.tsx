@@ -1,5 +1,4 @@
-import { GET_PALETTE_LIST, type PaletteListResponse } from "@/query/palette";
-import { getClient } from "@/lib/apollo-client";
+import { type PaletteListResponse } from "@/query/palette";
 import { Button } from "@/components/ui/button";
 import { Sparkles, Upload, Palette, ArrowRight, Grid3X3 } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
@@ -8,6 +7,7 @@ import { Stats } from "./_components/stats";
 import { type Metadata } from "next";
 import { FAQs } from "./_components/faqs";
 import { Columns } from "@/components/columns";
+import { env } from "@/env";
 
 export const dynamic = "force-dynamic";
 
@@ -21,30 +21,18 @@ export const metadata: Metadata = {
   alternates: { canonical: "/" },
 };
 
-const getPalettesList = async (
-  page = 1,
-  pageSize = 24,
-  sort = "publishedAt:desc",
-) => {
-  const res = await getClient().query<PaletteListResponse>({
-    query: GET_PALETTE_LIST,
-    variables: {
-      pagination: { page, pageSize },
-      sort: [sort],
-    },
-  });
+const getPalettesList = async (pageSize = 24) => {
+  const res = await fetch(
+    `${env.NEXT_PUBLIC_API_URL}/api/palettes/randomList?pageSize=${pageSize}`,
+  );
+  const data = await res.json();
 
-  return res.data;
+  return data as PaletteListResponse["palettes_connection"];
 };
 
 export default async function Page() {
   // 获取最新的调色板数据用于展示
-  const { palettes_connection } = await getPalettesList(
-    1,
-    24,
-    "publishedAt:desc",
-  );
-  const { nodes: featuredPalettes, pageInfo } = palettes_connection;
+  const { nodes: featuredPalettes, pageInfo } = await getPalettesList(24);
 
   return (
     <div className="mx-auto">
