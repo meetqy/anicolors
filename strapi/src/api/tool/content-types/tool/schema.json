@@ -40,6 +40,10 @@
       "relation": "manyToMany",
       "target": "api::blog.blog",
       "mappedBy": "tools"
+    },
+    "views": {
+      "type": "integer",
+      "default": 0
     }
   }
 }

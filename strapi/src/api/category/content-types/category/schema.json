@@ -33,6 +33,10 @@
       "relation": "oneToMany",
       "target": "api::palette.palette",
       "mappedBy": "categoryExtend"
+    },
+    "views": {
+      "type": "integer",
+      "default": 0
     }
   }
 }
