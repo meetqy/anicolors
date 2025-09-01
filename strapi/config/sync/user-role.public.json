@@ -46,6 +46,11 @@
       "locale": null
     },
     {
+      "documentId": "c1wo7l1me19ou892sr8zth7z",
+      "action": "api::palette.palette.randomList",
+      "locale": null
+    },
+    {
       "documentId": "up61pb6if4k5wf523y4mwww5",
       "action": "api::palette.palette.toggleLike",
       "locale": null
