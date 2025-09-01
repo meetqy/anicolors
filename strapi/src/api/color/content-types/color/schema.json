@@ -21,6 +21,10 @@
       "relation": "manyToMany",
       "target": "api::palette.palette",
       "inversedBy": "colors"
+    },
+    "views": {
+      "type": "integer",
+      "default": 0
     }
   }
 }

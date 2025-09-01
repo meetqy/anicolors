@@ -58,6 +58,10 @@
       "relation": "manyToMany",
       "target": "api::tool.tool",
       "inversedBy": "blogs"
+    },
+    "views": {
+      "type": "integer",
+      "default": 0
     }
   }
 }

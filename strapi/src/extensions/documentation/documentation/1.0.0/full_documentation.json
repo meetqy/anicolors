@@ -14,7 +14,7 @@
       "name": "Apache 2.0",
       "url": "https://www.apache.org/licenses/LICENSE-2.0.html"
     },
-    "x-generation-date": "2025-08-30T03:07:04.389Z"
+    "x-generation-date": "2025-09-01T06:36:59.215Z"
   },
   "x-strapi-config": {
     "plugins": [
@@ -4093,6 +4093,9 @@
                   "example": "string or id"
                 }
               },
+              "views": {
+                "type": "integer"
+              },
               "locale": {
                 "type": "string"
               },
@@ -4215,6 +4218,9 @@
                             }
                           }
                         }
+                      },
+                      "views": {
+                        "type": "integer"
                       },
                       "createdAt": {
                         "type": "string",
@@ -5296,6 +5302,9 @@
                         }
                       }
                     },
+                    "views": {
+                      "type": "integer"
+                    },
                     "createdAt": {
                       "type": "string",
                       "format": "date-time"
@@ -5689,6 +5698,9 @@
                                 }
                               }
                             },
+                            "views": {
+                              "type": "integer"
+                            },
                             "createdAt": {
                               "type": "string",
                               "format": "date-time"
@@ -5742,6 +5754,9 @@
                             }
                           }
                         }
+                      },
+                      "views": {
+                        "type": "integer"
                       },
                       "createdAt": {
                         "type": "string",
@@ -6065,6 +6080,9 @@
                     "character"
                   ]
                 },
+                "views": {
+                  "type": "integer"
+                },
                 "createdAt": {
                   "type": "string",
                   "format": "date-time"
@@ -6269,6 +6287,9 @@
               }
             }
           },
+          "views": {
+            "type": "integer"
+          },
           "createdAt": {
             "type": "string",
             "format": "date-time"
@@ -6376,6 +6397,9 @@
                   ],
                   "example": "string or id"
                 }
+              },
+              "views": {
+                "type": "integer"
               },
               "locale": {
                 "type": "string"
@@ -7090,6 +7114,9 @@
                           }
                         }
                       },
+                      "views": {
+                        "type": "integer"
+                      },
                       "createdAt": {
                         "type": "string",
                         "format": "date-time"
@@ -7701,6 +7728,9 @@
                         }
                       }
                     },
+                    "views": {
+                      "type": "integer"
+                    },
                     "createdAt": {
                       "type": "string",
                       "format": "date-time"
@@ -8094,6 +8124,9 @@
                                 }
                               }
                             },
+                            "views": {
+                              "type": "integer"
+                            },
                             "createdAt": {
                               "type": "string",
                               "format": "date-time"
@@ -8147,6 +8180,9 @@
                             }
                           }
                         }
+                      },
+                      "views": {
+                        "type": "integer"
                       },
                       "createdAt": {
                         "type": "string",
@@ -8470,6 +8506,9 @@
                     "character"
                   ]
                 },
+                "views": {
+                  "type": "integer"
+                },
                 "createdAt": {
                   "type": "string",
                   "format": "date-time"
@@ -8523,6 +8562,9 @@
                 }
               }
             }
+          },
+          "views": {
+            "type": "integer"
           },
           "createdAt": {
             "type": "string",
@@ -8616,6 +8658,9 @@
                   ],
                   "example": "string or id"
                 }
+              },
+              "views": {
+                "type": "integer"
               },
               "locale": {
                 "type": "string"
@@ -8727,6 +8772,9 @@
                             }
                           }
                         }
+                      },
+                      "views": {
+                        "type": "integer"
                       },
                       "createdAt": {
                         "type": "string",
@@ -9808,6 +9856,9 @@
                         }
                       }
                     },
+                    "views": {
+                      "type": "integer"
+                    },
                     "createdAt": {
                       "type": "string",
                       "format": "date-time"
@@ -10201,6 +10252,9 @@
                                 }
                               }
                             },
+                            "views": {
+                              "type": "integer"
+                            },
                             "createdAt": {
                               "type": "string",
                               "format": "date-time"
@@ -10254,6 +10308,9 @@
                             }
                           }
                         }
+                      },
+                      "views": {
+                        "type": "integer"
                       },
                       "createdAt": {
                         "type": "string",
@@ -10577,6 +10634,9 @@
                     "character"
                   ]
                 },
+                "views": {
+                  "type": "integer"
+                },
                 "createdAt": {
                   "type": "string",
                   "format": "date-time"
@@ -10630,6 +10690,9 @@
                 }
               }
             }
+          },
+          "views": {
+            "type": "integer"
           },
           "createdAt": {
             "type": "string",
@@ -10826,6 +10889,9 @@
                   "fragment",
                   "character"
                 ]
+              },
+              "views": {
+                "type": "integer"
               },
               "locale": {
                 "type": "string"
@@ -11964,6 +12030,9 @@
                               }
                             }
                           },
+                          "views": {
+                            "type": "integer"
+                          },
                           "createdAt": {
                             "type": "string",
                             "format": "date-time"
@@ -12357,6 +12426,9 @@
                                       }
                                     }
                                   },
+                                  "views": {
+                                    "type": "integer"
+                                  },
                                   "createdAt": {
                                     "type": "string",
                                     "format": "date-time"
@@ -12410,6 +12482,9 @@
                                   }
                                 }
                               }
+                            },
+                            "views": {
+                              "type": "integer"
                             },
                             "createdAt": {
                               "type": "string",
@@ -12733,6 +12808,9 @@
                           "character"
                         ]
                       },
+                      "views": {
+                        "type": "integer"
+                      },
                       "createdAt": {
                         "type": "string",
                         "format": "date-time"
@@ -12786,6 +12864,9 @@
                       }
                     }
                   }
+                },
+                "views": {
+                  "type": "integer"
                 },
                 "createdAt": {
                   "type": "string",
@@ -13534,6 +13615,9 @@
               "character"
             ]
           },
+          "views": {
+            "type": "integer"
+          },
           "createdAt": {
             "type": "string",
             "format": "date-time"
@@ -13649,6 +13733,9 @@
                   ],
                   "example": "string or id"
                 }
+              },
+              "views": {
+                "type": "integer"
               },
               "locale": {
                 "type": "string"
@@ -14394,6 +14481,9 @@
                                 }
                               }
                             },
+                            "views": {
+                              "type": "integer"
+                            },
                             "createdAt": {
                               "type": "string",
                               "format": "date-time"
@@ -15005,6 +15095,9 @@
                               }
                             }
                           },
+                          "views": {
+                            "type": "integer"
+                          },
                           "createdAt": {
                             "type": "string",
                             "format": "date-time"
@@ -15340,6 +15433,9 @@
                           "fragment",
                           "character"
                         ]
+                      },
+                      "views": {
+                        "type": "integer"
                       },
                       "createdAt": {
                         "type": "string",
@@ -15697,6 +15793,9 @@
                           }
                         }
                       },
+                      "views": {
+                        "type": "integer"
+                      },
                       "createdAt": {
                         "type": "string",
                         "format": "date-time"
@@ -15751,6 +15850,9 @@
                     }
                   }
                 },
+                "views": {
+                  "type": "integer"
+                },
                 "createdAt": {
                   "type": "string",
                   "format": "date-time"
@@ -15804,6 +15906,9 @@
                 }
               }
             }
+          },
+          "views": {
+            "type": "integer"
           },
           "createdAt": {
             "type": "string",

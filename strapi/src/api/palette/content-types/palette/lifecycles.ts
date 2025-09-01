@@ -62,6 +62,17 @@ export default {
     await Promise.all([connectColorName(event), syncCategory(event)]);
   },
 
+  async afterFindOne(event) {
+    const { result, params } = event;
+
+    strapi.db.query("api::palette.palette").update({
+      where: { documentId: params.where.documentId },
+      data: {
+        views: (result.views || 0) + 1,
+      },
+    });
+  },
+
   async beforeUpdate(event) {
     await Promise.all([connectColorName(event), syncCategory(event)]);
   },
