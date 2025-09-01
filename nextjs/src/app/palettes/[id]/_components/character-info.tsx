@@ -8,7 +8,7 @@ export const CharacterInfo = ({ palette }: { palette: Palette }) => {
       <CommonBreadcrumb
         items={[
           { label: "Home", href: "/" },
-          { label: "Palettes", href: "/palettes" },
+          { label: palette.category, href: `/category/${palette.category}` },
           { label: palette.name },
         ]}
       />
