@@ -44,16 +44,21 @@ export default factories.createCoreController("api::palette.palette", ({ strapi 
       },
     });
 
-    return palettes.map((e) => {
-      e.image = e.image && {
-        url: e.image.url,
-      };
+    return {
+      nodes: palettes.map((e) => {
+        e.image = e.image && {
+          url: e.image.url,
+        };
 
-      delete e.extend;
+        delete e.extend;
 
-      return {
-        ...e,
-      };
-    });
+        return {
+          ...e,
+        };
+      }),
+      pageInfo: {
+        total: count,
+      },
+    };
   },
 }));
