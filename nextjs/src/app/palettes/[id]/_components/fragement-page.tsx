@@ -41,7 +41,7 @@ export const FragmentPage = ({
         {/* 背景图片 - 降低透明度并添加模糊效果 */}
         <img
           src={getAssetUrl(palette.image.url, 960)}
-          alt={`${palette.name} background image`}
+          alt={`${palette.name} color palette`}
           className="fixed top-0 left-0 -z-10 size-full scale-105 object-cover blur-xl"
           style={{
             backgroundColor: palette.points[0]?.color,
@@ -50,58 +50,61 @@ export const FragmentPage = ({
       </>
 
       <div className="relative z-10 container mx-auto space-y-4 pt-4 lg:space-y-12">
-        <div className="bg-background/95 prose flex max-w-full flex-col justify-between overflow-hidden rounded-md border shadow-md backdrop-blur lg:flex-row">
-          <div className="not-prose relative aspect-[4/3] w-full lg:w-3/5">
-            <img
-              src={getAssetUrl(palette.cover.url, 960)}
-              alt={`${palette.name} color palette`}
-              className="size-full"
-            />
-          </div>
-
-          <div className="flex-1 p-4">
-            <CommonBreadcrumb
-              items={[
-                { label: "Home", href: "/" },
-                {
-                  label: palette.category,
-                  href: `/category/${palette.category}`,
-                },
-                { label: palette.name },
-              ]}
-            />
-
-            <h1 className="mt-8">{title}</h1>
-            <div className="not-prose grid w-full grid-cols-4 gap-x-2 gap-y-4">
-              {palette.points.map((p, index) => (
-                <Link
-                  href={`/color/${p.name}`}
-                  key={index}
-                  className="relative"
-                >
-                  <div
-                    className="aspect-video w-full"
-                    style={{
-                      backgroundColor: p.color,
-                    }}
-                  />
-                  <div className="text-center font-mono uppercase">
-                    {p.color}
-                  </div>
-                </Link>
-              ))}
+        <div className="bg-background/95 prose max-w-full flex-col justify-between overflow-hidden rounded-md border shadow-md backdrop-blur lg:flex-row">
+          <div className="flex">
+            <div className="not-prose relative aspect-[4/3] w-full lg:w-3/5">
+              <img
+                src={getAssetUrl(palette.cover.url, 960)}
+                alt={`${palette.name} color palette`}
+                className="size-full"
+              />
             </div>
 
-            <Separator className="my-4" />
+            <div className="flex-1 p-4">
+              <CommonBreadcrumb
+                items={[
+                  { label: "Home", href: "/" },
+                  {
+                    label: palette.category,
+                    href: `/category/${palette.category}`,
+                  },
+                  { label: palette.name },
+                ]}
+              />
 
-            <div className="flex gap-4">
+              <h1 className="mt-8">{title}</h1>
+              <div className="not-prose grid w-full grid-cols-4 gap-x-2 gap-y-4">
+                {palette.points.map((p, index) => (
+                  <Link
+                    href={`/color/${p.name}`}
+                    key={index}
+                    className="relative"
+                  >
+                    <div
+                      className="aspect-video w-full"
+                      style={{
+                        backgroundColor: p.color,
+                      }}
+                    />
+                    <div className="text-center font-mono uppercase">
+                      {p.color}
+                    </div>
+                  </Link>
+                ))}
+              </div>
+            </div>
+          </div>
+
+          <div className="pb-4">
+            <Separator className="my-4" />
+            <div className="flex justify-end gap-4 px-4">
               <Button variant="default" asChild>
                 <Link
                   href={palette.cover.url}
                   className="no-underline"
                   download={`anicolors-${palette.name}`}
                 >
-                  Download Palette
+                  Download Color Palette
                 </Link>
               </Button>
               <Button variant="outline" asChild>
@@ -110,7 +113,16 @@ export const FragmentPage = ({
                   className="no-underline"
                   aria-label="Create a custom color palette"
                 >
-                  Custom Maker
+                  Customize the color extraction
+                </Link>
+              </Button>
+              <Button variant="outline" asChild>
+                <Link
+                  href={`/tools/create-cinematic-color-palettes-with-colorpalette-cinema?id=${palette.documentId}`}
+                  className="no-underline"
+                  aria-label="Create a custom color palette"
+                >
+                  Customize make color palette
                 </Link>
               </Button>
               <Button variant="outline" asChild>
@@ -127,7 +139,7 @@ export const FragmentPage = ({
         </div>
 
         <div className="bg-background/95 prose container mx-auto rounded-md border p-4 shadow-md backdrop-blur">
-          <h2>Color Palette</h2>
+          <h2>Colors in Palette </h2>
           <div className="not-prose grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
             {palette.points.map((p, index) => {
               // 判断颜色亮度，决定文字颜色
