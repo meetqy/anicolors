@@ -114,7 +114,7 @@ export const MoreList = ({
     <>
       <h2>Explore More Color Palettes</h2>
       <div className="not-prose">
-        <Columns palettes={allPalettes} />
+        <Columns as="h3" palettes={allPalettes} />
 
         {(loading || isLoadingMore) && (
           <div className="flex items-center justify-center py-8">

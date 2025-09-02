@@ -6,12 +6,14 @@ import Link from "next/link";
 
 interface PaletteCardProps {
   palette: PaletteListItem;
+  as?: React.ElementType;
 }
 
-export const ColumnItem = ({ palette }: PaletteCardProps) => {
+export const ColumnItem = ({ palette, as }: PaletteCardProps) => {
   const { points } = palette;
 
   const bgColor = points[0]!.color;
+  const Element = as || "h2";
 
   return (
     <div className="relative w-full">
@@ -63,7 +65,7 @@ export const ColumnItem = ({ palette }: PaletteCardProps) => {
       </Link>
       <div className="flex items-end justify-between py-2">
         <div>
-          <h2 className="font-medium capitalize">{palette.name}</h2>
+          <Element className="font-medium capitalize">{palette.name}</Element>
           <Link
             href={`/category/${palette.category}`}
             className="text-muted-foreground hover:text-foreground line-clamp-1 text-sm capitalize hover:underline"

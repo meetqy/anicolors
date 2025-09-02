@@ -181,17 +181,17 @@ export const FragmentPage = ({
 
         <div className="bg-background/95 prose container mx-auto rounded-md border p-4 shadow-md backdrop-blur">
           <h2>Trending Anime Color Palettes</h2>
-          <Columns palettes={palette.mostLikes} />
+          <Columns as="h3" palettes={palette.mostLikes} />
         </div>
 
         <div className="bg-background/95 prose container mx-auto rounded-md border p-4 shadow-md backdrop-blur">
           <h2>Popular Anime Color Palettes</h2>
-          <Columns palettes={palette.mostViews} />
+          <Columns as="h3" palettes={palette.mostViews} />
         </div>
 
         <div className="bg-background/95 prose container mx-auto rounded-md border p-4 shadow-md backdrop-blur">
           <h2>Latest Anime Color Palettes</h2>
-          <Columns palettes={palette.latests} />
+          <Columns as="h3" palettes={palette.latests} />
         </div>
 
         <div className="bg-background/95 prose container mx-auto rounded-md border p-4 shadow-md backdrop-blur">
