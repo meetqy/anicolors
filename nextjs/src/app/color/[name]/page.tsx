@@ -39,7 +39,7 @@ export default async function CategoryPage({
     <>
       <Hero
         title={decodeURIComponent(name) + " color palettes"}
-        description={` ${palettes_connection.pageInfo.total} color palettes in "${decodeURIComponent(name)}" color name.`}
+        description={` ${palettes_connection.pageInfo.total} color palettes including "${decodeURIComponent(name)}".`}
       />
 
       <div className="container space-y-24">
@@ -57,13 +57,13 @@ export async function generateMetadata({
   const { name } = await params;
   const page = parseInt((await searchParams).page ?? "1");
   const { palettes_connection } = await getPalettesList(name, page);
-  const categoryName = decodeURIComponent(name);
+  const colorName = decodeURIComponent(name);
 
   return {
-    title: `${categoryName} Color Palettes – Page ${page} | AniColors`,
-    description: `Page ${page} of beautiful ${categoryName} color palettes.`,
+    title: `${colorName} Color Palettes – Page ${page} | AniColors`,
+    description: `Page ${page} of beautiful ${colorName} color palettes.`,
     alternates: {
-      canonical: `/color/${categoryName}${page > 1 ? `?page=${page}` : ""}`,
+      canonical: `/color/${colorName}${page > 1 ? `?page=${page}` : ""}`,
     },
     robots: {
       index: palettes_connection.pageInfo.total > 24,
