@@ -74,6 +74,12 @@ export const generateMetadata = async ({
     alternates: { canonical: `/palettes/${id}` },
     openGraph: { images: [{ url: imageUrl }] },
     twitter: { images: [imageUrl] },
+    robots: {
+      follow: true,
+      index: !(
+        new Date(palette.createdAt).getTime() > new Date("2025-09-01").getTime()
+      ),
+    },
   };
 };
 
