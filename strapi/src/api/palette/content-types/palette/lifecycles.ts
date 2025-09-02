@@ -63,16 +63,10 @@ export default {
   },
 
   async afterFindOne(event) {
-    const { result, params } = event;
-    if (!result) return;
-    const views = result.views || 0;
-
-    strapi.db.query("api::palette.palette").update({
-      where: { documentId: params.where.documentId },
-      data: {
-        views: views + 1,
-      },
-    });
+    const { result } = event;
+    if (result.points) {
+      await strapi.db.connection("palettes").where("id", result.id).increment("views", 1);
+    }
   },
 
   async beforeUpdate(event) {
