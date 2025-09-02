@@ -32,7 +32,7 @@ export default factories.createCoreController("api::palette.palette", ({ strapi 
 
     const count = await strapi.db.query("api::palette.palette").count();
 
-    const allPages = Math.ceil(count / pageSize);
+    const allPages = Math.ceil(count / 2 / pageSize);
 
     const offset = Math.floor(Math.random() * allPages);
 
