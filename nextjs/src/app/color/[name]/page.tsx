@@ -38,8 +38,8 @@ export default async function CategoryPage({
   return (
     <>
       <Hero
-        title={decodeURIComponent(name)}
-        description={` ${palettes_connection.pageInfo.total} color palettes in ${decodeURIComponent(name)} category`}
+        title={decodeURIComponent(name) + "color palettes"}
+        description={` ${palettes_connection.pageInfo.total} color palettes in ${decodeURIComponent(name)} color name.`}
       />
 
       <div className="container space-y-24">
@@ -61,7 +61,7 @@ export async function generateMetadata({
 
   return {
     title: `${categoryName} Color Palettes – Page ${page} | AniColors`,
-    description: `Page ${page} of beautiful ${categoryName} color palettes from characters and scenes.`,
+    description: `Page ${page} of beautiful ${categoryName} color palettes.`,
     alternates: {
       canonical: `/color/${categoryName}${page > 1 ? `?page=${page}` : ""}`,
     },
