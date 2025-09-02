@@ -56,6 +56,7 @@ export async function generateMetadata({
 }: CategoryPageProps): Promise<Metadata> {
   const { name } = await params;
   const page = parseInt((await searchParams).page ?? "1");
+  const { palettes_connection } = await getPalettesList(name, page);
   const categoryName = decodeURIComponent(name);
 
   return {
@@ -63,6 +64,10 @@ export async function generateMetadata({
     description: `Page ${page} of beautiful ${categoryName} color palettes from characters and scenes.`,
     alternates: {
       canonical: `/color/${categoryName}${page > 1 ? `?page=${page}` : ""}`,
+    },
+    robots: {
+      index: palettes_connection.pageInfo.total > 24,
+      follow: true,
     },
   };
 }
