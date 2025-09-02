@@ -2,7 +2,7 @@
 
 import { Button } from "@/components/ui/button";
 import { getAssetUrl } from "@/lib/utils";
-import type { Palette } from "@/query/palette";
+import type { Palette, PaletteListItem } from "@/query/palette";
 import { Separator } from "@/components/ui/separator";
 import { TwitterIcon } from "lucide-react";
 import Link from "next/link";
@@ -11,8 +11,17 @@ import { MoreList } from "./more-list";
 import { useEffect } from "react";
 import { CommonBreadcrumb } from "@/components/common-breadcrumb";
 import Color from "color";
+import { Columns } from "@/components/columns";
 
-export const FragmentPage = ({ palette }: { palette: Palette }) => {
+export const FragmentPage = ({
+  palette,
+}: {
+  palette: Palette & {
+    mostLikes: PaletteListItem[];
+    mostViews: PaletteListItem[];
+    latests: PaletteListItem[];
+  };
+}) => {
   useEffect(() => {
     const header = document.querySelector("#header");
     header?.classList.remove("bg-background/90");
@@ -168,6 +177,21 @@ export const FragmentPage = ({ palette }: { palette: Palette }) => {
               );
             })}
           </div>
+        </div>
+
+        <div className="bg-background/95 prose container mx-auto rounded-md border p-4 shadow-md backdrop-blur">
+          <h2>Trending Anime Color Palettes</h2>
+          <Columns palettes={palette.mostLikes} />
+        </div>
+
+        <div className="bg-background/95 prose container mx-auto rounded-md border p-4 shadow-md backdrop-blur">
+          <h2>Popular Anime Color Palettes</h2>
+          <Columns palettes={palette.mostViews} />
+        </div>
+
+        <div className="bg-background/95 prose container mx-auto rounded-md border p-4 shadow-md backdrop-blur">
+          <h2>Latest Anime Color Palettes</h2>
+          <Columns palettes={palette.latests} />
         </div>
 
         <div className="bg-background/95 prose container mx-auto rounded-md border p-4 shadow-md backdrop-blur">

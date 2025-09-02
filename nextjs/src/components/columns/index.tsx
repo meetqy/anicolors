@@ -11,7 +11,7 @@ export const Columns = ({ palettes }: { palettes: PaletteListItem[] }) => {
         data-cfasync="false"
         src="//immoderatebreathtaking.com/31eff1937586d0b5565373f161001d47/invoke.js"
       />
-      <div className="grid grid-cols-1 gap-x-4 gap-y-8 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+      <div className="not-prose grid grid-cols-1 gap-x-4 gap-y-8 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
         {palettes.slice(0, 8).map((palette) => (
           <ColumnItem key={palette.documentId} palette={palette} />
         ))}
