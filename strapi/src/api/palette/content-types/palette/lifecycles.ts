@@ -62,6 +62,13 @@ export default {
     await Promise.all([connectColorName(event), syncCategory(event)]);
   },
 
+  async afterFindOne(event) {
+    const { result } = event;
+    if (result.points) {
+      await strapi.db.connection("palettes").where("id", result.id).increment("views", 1);
+    }
+  },
+
   async beforeUpdate(event) {
     await Promise.all([connectColorName(event), syncCategory(event)]);
   },

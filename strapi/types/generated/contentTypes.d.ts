@@ -481,7 +481,7 @@ export interface ApiPalettePalette extends Struct.CollectionTypeSchema {
     singularName: 'palette';
   };
   options: {
-    draftAndPublish: true;
+    draftAndPublish: false;
   };
   attributes: {
     avatar: Schema.Attribute.Media<'images'>;
