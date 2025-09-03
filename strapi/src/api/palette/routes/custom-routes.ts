@@ -11,6 +11,15 @@ export default {
     },
     {
       method: "GET",
+      path: "/palettes/:documentId/incViews",
+      handler: "api::palette.palette.incViews",
+      config: {
+        auth: false,
+        policies: [],
+      },
+    },
+    {
+      method: "GET",
       path: "/palettes/randomList",
       handler: "api::palette.palette.randomList",
       config: {

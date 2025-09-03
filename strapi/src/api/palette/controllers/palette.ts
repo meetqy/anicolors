@@ -3,6 +3,7 @@
  */
 
 import { factories } from "@strapi/strapi";
+import { Await } from "react-router-dom";
 
 export default factories.createCoreController("api::palette.palette", ({ strapi }) => ({
   async toggleLike(ctx) {
@@ -24,6 +25,14 @@ export default factories.createCoreController("api::palette.palette", ({ strapi 
     });
 
     return result;
+  },
+
+  async incViews(ctx) {
+    const { documentId } = ctx.params;
+
+    const knex = strapi.db.connection("palettes");
+
+    return knex.where("document_id", documentId).increment("views", 1);
   },
 
   async randomList(ctx) {
