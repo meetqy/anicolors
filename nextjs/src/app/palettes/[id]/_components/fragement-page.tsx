@@ -22,6 +22,13 @@ export const FragmentPage = ({
     latests: PaletteListItem[];
   };
 }) => {
+  void (
+    palette &&
+    fetch(
+      `${env.NEXT_PUBLIC_API_URL}/api/palettes/${palette.documentId}/incViews`,
+    )
+  );
+
   useEffect(() => {
     const header = document.querySelector("#header");
     header?.classList.remove("bg-background/90");
