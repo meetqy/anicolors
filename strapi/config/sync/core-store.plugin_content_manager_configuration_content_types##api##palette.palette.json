@@ -375,11 +375,10 @@
       "list": [
         "id",
         "name",
-        "category",
-        "colors",
-        "createdAt",
         "cover",
-        "views"
+        "views",
+        "likes",
+        "updatedBy"
       ]
     },
     "uid": "api::palette.palette"
