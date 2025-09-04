@@ -18,6 +18,19 @@ export default {
    * run jobs, or perform some special logic.
    */
   async bootstrap({ strapi }: { strapi: Core.Strapi }) {
+    const palettes = await strapi.db.query("api::palette.palette").findMany({
+      where: { views: null },
+    });
+
+    await Promise.all(
+      palettes.map(async (palette) =>
+        strapi.db.query("api::palette.palette").update({
+          where: { id: palette.id },
+          data: { views: 0 },
+        })
+      )
+    );
+
     if ((await strapi.db.query("api::color.color").count()) > 0) {
       return;
     }
