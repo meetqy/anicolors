@@ -38,8 +38,8 @@ export default async function CategoryPage({
   return (
     <>
       <Hero
-        title={decodeURIComponent(name) + " color palettes"}
-        description={` ${palettes_connection.pageInfo.total} color palettes including "${decodeURIComponent(name)}".`}
+        title={decodeURIComponent(name) + " anime color palettes"}
+        description={` ${palettes_connection.pageInfo.total} anime color palettes including "${decodeURIComponent(name)}".`}
       />
 
       <div className="container space-y-24">
