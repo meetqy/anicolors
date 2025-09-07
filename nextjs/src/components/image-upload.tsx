@@ -11,7 +11,7 @@ import { ImageIcon, X } from "lucide-react";
 import Image from "next/image";
 
 interface UploadProps {
-  onImageChange?: (imageDataUrl: string | null) => void;
+  onImageChange?: (imageDataUrl: string | null, file: File | null) => void;
   className?: string;
   showRemoveButton?: boolean;
   placeholder?: string;
@@ -38,9 +38,9 @@ export const ImageUpload = forwardRef<UploadRef, UploadProps>(
     const fileInputRef = useRef<HTMLInputElement>(null);
 
     const handleImageChange = useCallback(
-      (imageDataUrl: string | null) => {
+      (imageDataUrl: string | null, file: File | null) => {
         setImage(imageDataUrl);
-        onImageChange?.(imageDataUrl);
+        onImageChange?.(imageDataUrl, file);
       },
       [onImageChange],
     );
@@ -51,7 +51,7 @@ export const ImageUpload = forwardRef<UploadRef, UploadProps>(
         if (file) {
           const reader = new FileReader();
           reader.onload = () => {
-            handleImageChange(reader.result as string);
+            handleImageChange(reader.result as string, file);
           };
           reader.readAsDataURL(file);
         }
@@ -74,7 +74,7 @@ export const ImageUpload = forwardRef<UploadRef, UploadProps>(
       if (file) {
         const reader = new FileReader();
         reader.onload = () => {
-          handleImageChange(reader.result as string);
+          handleImageChange(reader.result as string, file);
         };
         reader.readAsDataURL(file);
       }
@@ -85,7 +85,7 @@ export const ImageUpload = forwardRef<UploadRef, UploadProps>(
     }, []);
 
     const removeImage = useCallback(() => {
-      handleImageChange(null);
+      handleImageChange(null, null);
       if (fileInputRef.current) {
         fileInputRef.current.value = "";
       }

@@ -34,6 +34,7 @@
     "@t3-oss/env-nextjs": "^0.12.0",
     "@tanstack/react-table": "^8.21.3",
     "@types/mdx": "^2.0.13",
+    "axios": "^1.11.0",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "color": "^5.0.0",
