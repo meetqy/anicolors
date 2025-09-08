@@ -1,4 +1,4 @@
-import { categoryRedirects } from "@/redirects/category";
+import categoryRedirects from "@/redirects/category.json";
 import { permanentRedirect } from "next/navigation";
 
 export default async function CategoryLayout({
@@ -11,10 +11,10 @@ export default async function CategoryLayout({
   const { slug } = await params;
   const decodedSlug = decodeURIComponent(slug);
   const redirectSlug =
-    categoryRedirects[decodedSlug as keyof typeof categoryRedirects] || "";
+    categoryRedirects[decodedSlug as keyof typeof categoryRedirects];
 
   if (redirectSlug) {
-    permanentRedirect(`/category/${redirectSlug as string}`);
+    permanentRedirect(`/category/${redirectSlug}`);
   }
 
   return <>{children}</>;
