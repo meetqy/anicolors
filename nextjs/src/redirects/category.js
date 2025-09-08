@@ -1,0 +1,62 @@
+export const categoryRedirects = {
+  "Scooped Up by an S-Rank Adventurer!": "scooped-up-by-an-s-rank-adventurer",
+  Browndust2: "browndust2",
+  "Lost Sword": "lost-sword",
+  "chainsaw man": "chainsaw-man",
+  "THE IDOLM@STER: Shiny Colors": "the-idolm-ster-shiny-colors",
+  "Nukitashi the Animation": "nukitashi-the-animation",
+  "takopi's original sin": "takopi-s-original-sin",
+  "genshin impact": "genshin-impact",
+  Clevatess: "clevatess",
+  "zenless zone zero": "zenless-zone-zero",
+  "Kantai Collection": "kantai-collection",
+  "Blue Lock": "blue-lock",
+  "My Dress-Up Darling": "my-dress-up-darling",
+  "Please Put Them On, Takamine-san": "please-put-them-on-takamine-san",
+  "Toilet-Bound Hanako-kun": "toilet-bound-hanako-kun",
+  "Anime Vanguards": "anime-vanguards",
+  "Tomodachi no Imouto ga Ore ni dake Uzai":
+    "tomodachi-no-imouto-ga-ore-ni-dake-uzai",
+  "Silent Witch: Chinmoku no Majo no Kakushigoto":
+    "silent-witch-chinmoku-no-majo-no-kakushigoto",
+  "Ansatsusha de Aru Ore no Status ga Yuusha yori mo Akiraka ni Tsuyoi no da ga":
+    "ansatsusha-de-aru-ore-no-status-ga-yuusha-yori-mo-akiraka-ni-tsuyoi-no-da-ga",
+  "Demon Slayer: Kimetsu no Yaiba": "demon-slayer-kimetsu-no-yaiba",
+  "Yandere Dark Elf: She Chased Me All the Way From Another World!":
+    "yandere-dark-elf-she-chased-me-all-the-way-from-another-world",
+  "Dragon Ball": "dragon-ball",
+  "Tougen Anki: Legend of the Cursed Blood":
+    "tougen-anki-legend-of-the-cursed-blood",
+  "Grand Blue Dreaming": "grand-blue-dreaming",
+  "Honkai: Star Rail": "honkai-star-rail",
+  "Anime Rangers X": "anime-rangers-x",
+  fate: "fate",
+  "neon genesis evangelion": "neon-genesis-evangelion",
+  "chuhai lips canned flavor of married women":
+    "chuhai-lips-canned-flavor-of-married-women",
+  "cookie run kingdom": "cookie-run-kingdom",
+  "grok ani": "grok-ani",
+  "One Piece": "one-piece",
+  "Apocalypse Bringer Mynoghra": "apocalypse-bringer-mynoghra",
+  "Betrothed to My Sister's Ex": "betrothed-to-my-sister-s-ex",
+  "The Water Magician": "the-water-magician",
+  "Panty & Stocking with Garterbelt": "panty-and-stocking-with-garterbelt",
+  "Honkai: Nexus Anima": "honkai-star-rail",
+  "My Neighbour Totoro": "my-neighbour-totoro",
+  "I Was Reincarnated as the 7th Prince so I Can Take My Time Perfecting My Magical Ability":
+    "i-was-reincarnated-as-the-7th-prince-so-i-can-take-my-time-perfecting-my-magical-ability",
+  "Amnesia (anime)": "amnesia-anime",
+  "Fairy Tail": "fairy-tail",
+  "Gachiakuta world takeover": "gachiakuta-world-takeover",
+  "Kakuriyo: Bed & Breakfast for Spirits":
+    "kakuriyo-bed-and-breakfast-for-spirits",
+  "Tomodachi no Imōto ga Ore ni Dake Uzai":
+    "tomodachi-no-imoto-ga-ore-ni-dake-uzai",
+  "There's No Freaking Way I'll Be Your Lover! Unless":
+    "there-s-no-freaking-way-i-ll-be-your-lover-unless",
+  "Spirited Away": "spirited-away",
+  "Sekiro: Shadows Die Twice": "sekiro-shadows-die-twice",
+  "Tsuihousha Shokudou e Youkoso!": "tsuihousha-shokudou-e-youkoso",
+  "The Fragrant Flower Blooms With Dignity":
+    "the-fragrant-flower-blooms-with-dignity",
+};

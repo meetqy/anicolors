@@ -6,6 +6,7 @@ import "./src/env.js";
 import createMDX from "@next/mdx";
 import remarkGfm from "remark-gfm";
 import bundleAnalyzer from "@next/bundle-analyzer";
+import { categoryRedirects } from "./src/redirects/category.js";
 
 const withBundleAnalyzer = bundleAnalyzer({
   enabled: process.env.ANALYZE === "true",

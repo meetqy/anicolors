@@ -95,7 +95,10 @@ export const GET_PALETTE_LIST = gql`
       nodes {
         likes
         name
-        category
+        categoryExtend {
+          name
+          slug
+        }
         points
         type
         image {
@@ -138,7 +141,7 @@ export type CategoriesResponse = {
 
 export type PaletteListItem = {
   name: string;
-  category: string;
+  categoryExtend: { name: string; slug: string };
   likes: number;
   image: { url: string };
   cover: { url: string; width: number; height: number };
