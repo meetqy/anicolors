@@ -54,6 +54,7 @@ export default factories.createCoreController("api::palette.palette", ({ strapi 
       limit: pageSize,
       populate: {
         image: true,
+        categoryExtend: true,
       },
     });
 
@@ -61,6 +62,10 @@ export default factories.createCoreController("api::palette.palette", ({ strapi 
       nodes: palettes.map((e) => {
         e.image = e.image && {
           url: e.image.url,
+        };
+        e.categoryExtend = e.categoryExtend && {
+          name: e.categoryExtend.name,
+          slug: e.categoryExtend.slug,
         };
 
         delete e.extend;
