@@ -5,9 +5,10 @@ import { useEffect, useState } from "react";
 
 interface AdminWrapperProps {
   onSubmit?: () => void;
+  disabled?: boolean;
 }
 
-export const AdminWrapper = ({ onSubmit }: AdminWrapperProps) => {
+export const AdminWrapper = ({ onSubmit, disabled }: AdminWrapperProps) => {
   const [token, setToken] = useState("");
 
   useEffect(() => {
@@ -22,7 +23,11 @@ export const AdminWrapper = ({ onSubmit }: AdminWrapperProps) => {
   }
 
   return (
-    <Button className="fixed right-2 bottom-2 z-[101]" onClick={onSubmit}>
+    <Button
+      className="fixed right-2 bottom-2 z-[101]"
+      onClick={onSubmit}
+      disabled={disabled}
+    >
       Submit
     </Button>
   );

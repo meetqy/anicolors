@@ -21,6 +21,7 @@ const CreateCinematicGenerator = () => {
     width: number;
     height: number;
   }>();
+  const [loading, setLoading] = useState(false);
 
   const paletteRef = useRef<SaveableCardRef>(null);
 
@@ -63,15 +64,23 @@ const CreateCinematicGenerator = () => {
   );
 
   const upload = async () => {
+    if (loading) return;
+    setLoading(true);
     if (paletteRef.current) {
       const blob = await paletteRef.current.getImageBlob();
       if (!imageFile) {
+        toast.error("No image file to upload");
+        setLoading(false);
         return;
       }
 
       const [categorySlug, name] = imageFile.name.split("#");
 
-      if (!categorySlug || !name) return;
+      if (!categorySlug || !name) {
+        toast.error("Image name must be in the format category#name.ext");
+        setLoading(false);
+        return;
+      }
 
       const { data } = await strapiUpload([
         new File([blob], `${name}-palette.png`, { type: blob.type }),
@@ -91,7 +100,9 @@ const CreateCinematicGenerator = () => {
         }),
         imageIds: data.map((item: { id: number }) => item.id),
       });
+      setLoading(false);
     }
+    setLoading(false);
   };
 
   // 复制颜色数组
@@ -146,7 +157,7 @@ const CreateCinematicGenerator = () => {
         )}
       </div>
 
-      <AdminWrapper onSubmit={upload} />
+      <AdminWrapper onSubmit={upload} disabled={loading} />
     </div>
   );
 };
