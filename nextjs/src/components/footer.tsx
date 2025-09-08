@@ -38,6 +38,7 @@ export const Footer = () => {
       name: "Indie.Deals",
       url: "https://indie.deals?ref=https%3A%2F%2Fanicolors.com",
     },
+    { name: "MidjourneySREF", url: "https://midjourneysref.com/" },
   ];
 
   return (
