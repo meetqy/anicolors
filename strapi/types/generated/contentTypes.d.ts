@@ -466,6 +466,7 @@ export interface ApiColorColor extends Struct.CollectionTypeSchema {
       Schema.Attribute.Unique;
     palettes: Schema.Attribute.Relation<'manyToMany', 'api::palette.palette'>;
     publishedAt: Schema.Attribute.DateTime;
+    slug: Schema.Attribute.UID<'name'>;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;

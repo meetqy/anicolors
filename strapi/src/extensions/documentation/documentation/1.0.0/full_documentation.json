@@ -14,7 +14,7 @@
       "name": "Apache 2.0",
       "url": "https://www.apache.org/licenses/LICENSE-2.0.html"
     },
-    "x-generation-date": "2025-09-09T02:27:20.323Z"
+    "x-generation-date": "2025-09-09T02:55:38.458Z"
   },
   "x-strapi-config": {
     "plugins": [
@@ -4222,6 +4222,9 @@
                       "views": {
                         "type": "integer"
                       },
+                      "slug": {
+                        "type": "string"
+                      },
                       "createdAt": {
                         "type": "string",
                         "format": "date-time"
@@ -7117,6 +7120,9 @@
                       "views": {
                         "type": "integer"
                       },
+                      "slug": {
+                        "type": "string"
+                      },
                       "createdAt": {
                         "type": "string",
                         "format": "date-time"
@@ -8662,6 +8668,9 @@
               "views": {
                 "type": "integer"
               },
+              "slug": {
+                "type": "string"
+              },
               "locale": {
                 "type": "string"
               },
@@ -8775,6 +8784,9 @@
                       },
                       "views": {
                         "type": "integer"
+                      },
+                      "slug": {
+                        "type": "string"
                       },
                       "createdAt": {
                         "type": "string",
@@ -10693,6 +10705,9 @@
           },
           "views": {
             "type": "integer"
+          },
+          "slug": {
+            "type": "string"
           },
           "createdAt": {
             "type": "string",
@@ -12872,6 +12887,9 @@
                 "views": {
                   "type": "integer"
                 },
+                "slug": {
+                  "type": "string"
+                },
                 "createdAt": {
                   "type": "string",
                   "format": "date-time"
@@ -14487,6 +14505,9 @@
                             },
                             "views": {
                               "type": "integer"
+                            },
+                            "slug": {
+                              "type": "string"
                             },
                             "createdAt": {
                               "type": "string",
