@@ -32,7 +32,7 @@ export const CharacterPage = ({ palette }: { palette: Palette }) => {
             size="sm"
             asChild
           >
-            <Link href={`/category/${palette.category}`}>
+            <Link href={`/categories/${palette.category}`}>
               <Shapes className="size-4" />
               {palette.category}
             </Link>
@@ -45,7 +45,7 @@ export const CharacterPage = ({ palette }: { palette: Palette }) => {
               key={index}
               size="sm"
             >
-              <Link href={`/color/${item.name}`}>
+              <Link href={`/colors/${item.name}`}>
                 <div
                   className="size-4 rounded-full"
                   style={{ backgroundColor: item.color }}

@@ -88,7 +88,7 @@ export async function generateMetadata(
     openGraph: { images },
     twitter: { images },
     alternates: {
-      canonical: `/category/${category.slug}${pageInfo.page > 1 ? `?page=${pageInfo.page}` : ""}`,
+      canonical: `/categories/${category.slug}${pageInfo.page > 1 ? `?page=${pageInfo.page}` : ""}`,
     },
   };
 }

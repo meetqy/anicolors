@@ -63,7 +63,7 @@ export async function generateMetadata({
     title: `${colorName} Color Palettes – Page ${page} | AniColors`,
     description: `Page ${page} of beautiful ${colorName} color palettes.`,
     alternates: {
-      canonical: `/color/${colorName}${page > 1 ? `?page=${page}` : ""}`,
+      canonical: `/colors/${colorName}${page > 1 ? `?page=${page}` : ""}`,
     },
     robots: {
       index: palettes_connection.pageInfo.total > 24,

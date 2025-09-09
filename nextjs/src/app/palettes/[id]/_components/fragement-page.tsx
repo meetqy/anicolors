@@ -67,7 +67,7 @@ export const FragmentPage = ({
                     { label: "Home", href: "/" },
                     {
                       label: palette.category,
-                      href: `/category/${palette.category}`,
+                      href: `/categories/${palette.category}`,
                     },
                     { label: palette.name },
                   ]}
@@ -77,7 +77,7 @@ export const FragmentPage = ({
                 <div className="not-prose grid w-full grid-cols-4 gap-x-2 gap-y-4">
                   {palette.points.map((p, index) => (
                     <Link
-                      href={`/color/${p.name}`}
+                      href={`/colors/${p.name}`}
                       key={index}
                       className="relative"
                     >
@@ -120,7 +120,7 @@ export const FragmentPage = ({
                       <div className={`${textColor}`}>
                         <h3 className="text-2xl leading-7 font-black tracking-tight uppercase lg:text-3xl lg:leading-8">
                           <Link
-                            href={`/color/${p.name}`}
+                            href={`/colors/${p.name}`}
                             className={`${textColor} transition-opacity hover:opacity-80`}
                           >
                             {p.name}
