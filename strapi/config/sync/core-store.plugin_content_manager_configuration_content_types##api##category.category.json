@@ -188,10 +188,9 @@
       ],
       "list": [
         "id",
-        "views",
         "name",
         "cover",
-        "createdAt"
+        "views"
       ]
     },
     "uid": "api::category.category"

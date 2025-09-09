@@ -303,10 +303,10 @@
       ],
       "list": [
         "id",
-        "views",
         "title",
         "slug",
-        "palettes"
+        "cover",
+        "views"
       ]
     },
     "uid": "api::blog.blog"

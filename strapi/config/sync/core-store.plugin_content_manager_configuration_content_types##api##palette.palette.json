@@ -377,8 +377,7 @@
         "name",
         "cover",
         "views",
-        "likes",
-        "updatedBy"
+        "likes"
       ]
     },
     "uid": "api::palette.palette"

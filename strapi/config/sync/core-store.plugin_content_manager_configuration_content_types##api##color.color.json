@@ -62,6 +62,20 @@
           "sortable": true
         }
       },
+      "slug": {
+        "edit": {
+          "label": "slug",
+          "description": "",
+          "placeholder": "",
+          "visible": true,
+          "editable": true
+        },
+        "list": {
+          "label": "slug",
+          "searchable": true,
+          "sortable": true
+        }
+      },
       "createdAt": {
         "edit": {
           "label": "createdAt",
@@ -130,6 +144,12 @@
       }
     },
     "layouts": {
+      "list": [
+        "id",
+        "name",
+        "views",
+        "slug"
+      ],
       "edit": [
         [
           {
@@ -145,15 +165,12 @@
           {
             "name": "views",
             "size": 4
+          },
+          {
+            "name": "slug",
+            "size": 6
           }
         ]
-      ],
-      "list": [
-        "id",
-        "views",
-        "name",
-        "createdAt",
-        "updatedAt"
       ]
     },
     "uid": "api::color.color"
