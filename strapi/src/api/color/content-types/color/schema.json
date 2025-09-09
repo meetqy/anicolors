@@ -25,6 +25,10 @@
     "views": {
       "type": "integer",
       "default": 0
+    },
+    "slug": {
+      "type": "uid",
+      "targetField": "name"
     }
   }
 }

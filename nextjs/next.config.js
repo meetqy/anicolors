@@ -29,6 +29,16 @@ const nextConfig = {
         destination: "/blogs/genshin-impact-hair-colors-full-character-list",
         permanent: true,
       },
+      {
+        source: "/category/:slug",
+        destination: "/categories/:slug",
+        permanent: true,
+      },
+      {
+        source: "/color/:name",
+        destination: "/colors/:name",
+        permanent: true,
+      },
     ];
   },
   async rewrites() {

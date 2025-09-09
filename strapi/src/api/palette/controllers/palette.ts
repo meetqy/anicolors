@@ -3,7 +3,6 @@
  */
 
 import { factories } from "@strapi/strapi";
-import { Await } from "react-router-dom";
 
 export default factories.createCoreController("api::palette.palette", ({ strapi }) => ({
   async toggleLike(ctx) {

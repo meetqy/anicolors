@@ -69,7 +69,7 @@ export const ColumnItem = ({ palette, as }: PaletteCardProps) => {
             {palette.name}
           </Element>
           <Link
-            href={`/category/${palette.categoryExtend.slug}`}
+            href={`/categories/${palette.categoryExtend.slug}`}
             className="text-muted-foreground hover:text-foreground line-clamp-1 text-sm capitalize hover:underline"
           >
             {palette.categoryExtend.name}

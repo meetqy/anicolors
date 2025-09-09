@@ -40,7 +40,7 @@ export const Shades = ({ palette }: { palette: Palette }) => {
             <h3>
               <Link
                 className="border-b-2 font-bold no-underline"
-                href={`/color/${point.name}`}
+                href={`/colors/${point.name}`}
                 style={{ borderColor: color.hex() }}
               >
                 {point.name}

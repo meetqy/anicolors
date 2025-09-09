@@ -14,7 +14,7 @@ export default async function CategoryLayout({
     categoryRedirects[decodedSlug as keyof typeof categoryRedirects];
 
   if (redirectSlug) {
-    permanentRedirect(`/category/${redirectSlug}`);
+    permanentRedirect(`/categories/${redirectSlug}`);
   }
 
   return <>{children}</>;
