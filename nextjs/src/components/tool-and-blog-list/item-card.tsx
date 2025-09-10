@@ -26,9 +26,9 @@ export const BlogAndToolItemCard = ({
     >
       {showTypeIcon && (
         <div className="bg-background/50 absolute top-2 right-2 z-10 rounded-full p-1 backdrop-blur-lg">
-          {type === "blog" && <Rss className="text-background/80 size-4" />}
+          {type === "blog" && <Rss className="text-background/80 size-8" />}
           {type === "tool" && (
-            <ToolCase className="text-background/80 size-4" />
+            <ToolCase className="text-background/80 size-8" />
           )}
         </div>
       )}

@@ -23,6 +23,15 @@ export const GET_BLOG = gql`
         }
         documentId
       }
+      blogs {
+        title
+        slug
+        description
+        cover {
+          url
+        }
+        publishedAt
+      }
       palettes(pagination: $pagination) {
         documentId
         extend
@@ -45,6 +54,7 @@ export type BlogResponse = {
     description: string;
     cover: { url: string };
     tools: ToolListResponse["tools"];
+    blogs: BlogListResponse["blogs"];
     useTypes: string;
     markdown: string;
     content: string;

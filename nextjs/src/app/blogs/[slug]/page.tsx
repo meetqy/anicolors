@@ -75,6 +75,8 @@ export default async function Page({ params }: PageProps) {
 
   const { useTypes = "field" } = blog;
 
+  console.log(blog);
+
   return (
     <>
       <div className="container">
@@ -93,7 +95,7 @@ export default async function Page({ params }: PageProps) {
         </div>
 
         <div className="prose mx-auto max-w-screen-lg">
-          {useTypes === "markdown" && (
+          {useTypes.includes("markdown") && (
             <MDXRemote
               source={blog.markdown}
               options={{
@@ -102,7 +104,14 @@ export default async function Page({ params }: PageProps) {
             />
           )}
 
-          {useTypes === "field" && (
+          <MDXRemote
+            source={blog.markdown}
+            options={{
+              mdxOptions: { remarkPlugins: [remarkGfm] },
+            }}
+          />
+
+          {useTypes.includes("field") && (
             <Table className="not-prose text-base">
               <TableHeader>
                 <TableRow>
@@ -149,9 +158,16 @@ export default async function Page({ params }: PageProps) {
         </div>
 
         {blog.tools.length > 0 && (
-          <div className="prose mx-auto max-w-screen-xl">
+          <div className="prose mx-auto mt-24 max-w-screen-xl">
             <h2>Tools recommendation</h2>
-            <ToolsAndBlogsList data={blog.tools} type="tool" />
+            <ToolsAndBlogsList data={blog.tools} type="tool" showTypeIcon />
+          </div>
+        )}
+
+        {blog.blogs.length > 0 && (
+          <div className="prose mx-auto mt-24 max-w-screen-xl">
+            <h2>Blogs recommendation</h2>
+            <ToolsAndBlogsList data={blog.blogs} type="blog" showTypeIcon />
           </div>
         )}
       </article>
