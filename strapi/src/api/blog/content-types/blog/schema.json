@@ -26,7 +26,7 @@
     },
     "useTypes": {
       "type": "string",
-      "default": "fileds",
+      "default": "field",
       "required": true
     },
     "palettes": {
@@ -45,6 +45,7 @@
     },
     "field": {
       "type": "string",
+      "default": "extend.parts.hair",
       "required": false
     },
     "markdown": {
@@ -62,6 +63,18 @@
     "views": {
       "type": "integer",
       "default": 0
+    },
+    "moreBlogs": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::blog.blog",
+      "inversedBy": "blogs"
+    },
+    "blogs": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::blog.blog",
+      "mappedBy": "moreBlogs"
     }
   }
 }

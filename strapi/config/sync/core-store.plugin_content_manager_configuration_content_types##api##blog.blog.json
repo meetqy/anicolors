@@ -175,6 +175,36 @@
           "sortable": true
         }
       },
+      "moreBlogs": {
+        "edit": {
+          "label": "moreBlogs",
+          "description": "",
+          "placeholder": "",
+          "visible": true,
+          "editable": true,
+          "mainField": "title"
+        },
+        "list": {
+          "label": "moreBlogs",
+          "searchable": false,
+          "sortable": false
+        }
+      },
+      "blogs": {
+        "edit": {
+          "label": "blogs",
+          "description": "",
+          "placeholder": "",
+          "visible": true,
+          "editable": true,
+          "mainField": "title"
+        },
+        "list": {
+          "label": "blogs",
+          "searchable": false,
+          "sortable": false
+        }
+      },
       "createdAt": {
         "edit": {
           "label": "createdAt",
@@ -243,6 +273,13 @@
       }
     },
     "layouts": {
+      "list": [
+        "id",
+        "title",
+        "slug",
+        "cover",
+        "views"
+      ],
       "edit": [
         [
           {
@@ -299,14 +336,17 @@
             "name": "views",
             "size": 4
           }
+        ],
+        [
+          {
+            "name": "moreBlogs",
+            "size": 6
+          },
+          {
+            "name": "blogs",
+            "size": 6
+          }
         ]
-      ],
-      "list": [
-        "id",
-        "title",
-        "slug",
-        "cover",
-        "views"
       ]
     },
     "uid": "api::blog.blog"
