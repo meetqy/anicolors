@@ -14,7 +14,7 @@
       "name": "Apache 2.0",
       "url": "https://www.apache.org/licenses/LICENSE-2.0.html"
     },
-    "x-generation-date": "2025-09-10T02:29:28.979Z"
+    "x-generation-date": "2025-09-10T02:41:39.530Z"
   },
   "x-strapi-config": {
     "plugins": [
@@ -4096,20 +4096,6 @@
               "views": {
                 "type": "integer"
               },
-              "moreBlogs": {
-                "type": "array",
-                "items": {
-                  "oneOf": [
-                    {
-                      "type": "integer"
-                    },
-                    {
-                      "type": "string"
-                    }
-                  ],
-                  "example": "string or id"
-                }
-              },
               "blogs": {
                 "type": "array",
                 "items": {
@@ -5789,20 +5775,6 @@
                       "views": {
                         "type": "integer"
                       },
-                      "moreBlogs": {
-                        "type": "array",
-                        "items": {
-                          "type": "object",
-                          "properties": {
-                            "id": {
-                              "type": "number"
-                            },
-                            "documentId": {
-                              "type": "string"
-                            }
-                          }
-                        }
-                      },
                       "blogs": {
                         "type": "array",
                         "items": {
@@ -6348,20 +6320,6 @@
           },
           "views": {
             "type": "integer"
-          },
-          "moreBlogs": {
-            "type": "array",
-            "items": {
-              "type": "object",
-              "properties": {
-                "id": {
-                  "type": "number"
-                },
-                "documentId": {
-                  "type": "string"
-                }
-              }
-            }
           },
           "blogs": {
             "type": "array",
@@ -8273,20 +8231,6 @@
                       },
                       "views": {
                         "type": "integer"
-                      },
-                      "moreBlogs": {
-                        "type": "array",
-                        "items": {
-                          "type": "object",
-                          "properties": {
-                            "id": {
-                              "type": "number"
-                            },
-                            "documentId": {
-                              "type": "string"
-                            }
-                          }
-                        }
                       },
                       "blogs": {
                         "type": "array",
@@ -10435,20 +10379,6 @@
                       },
                       "views": {
                         "type": "integer"
-                      },
-                      "moreBlogs": {
-                        "type": "array",
-                        "items": {
-                          "type": "object",
-                          "properties": {
-                            "id": {
-                              "type": "number"
-                            },
-                            "documentId": {
-                              "type": "string"
-                            }
-                          }
-                        }
                       },
                       "blogs": {
                         "type": "array",
@@ -12644,20 +12574,6 @@
                             },
                             "views": {
                               "type": "integer"
-                            },
-                            "moreBlogs": {
-                              "type": "array",
-                              "items": {
-                                "type": "object",
-                                "properties": {
-                                  "id": {
-                                    "type": "number"
-                                  },
-                                  "documentId": {
-                                    "type": "string"
-                                  }
-                                }
-                              }
                             },
                             "blogs": {
                               "type": "array",
@@ -16045,20 +15961,6 @@
                 },
                 "views": {
                   "type": "integer"
-                },
-                "moreBlogs": {
-                  "type": "array",
-                  "items": {
-                    "type": "object",
-                    "properties": {
-                      "id": {
-                        "type": "number"
-                      },
-                      "documentId": {
-                        "type": "string"
-                      }
-                    }
-                  }
                 },
                 "blogs": {
                   "type": "array",

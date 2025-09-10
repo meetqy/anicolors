@@ -175,21 +175,6 @@
           "sortable": true
         }
       },
-      "moreBlogs": {
-        "edit": {
-          "label": "moreBlogs",
-          "description": "",
-          "placeholder": "",
-          "visible": true,
-          "editable": true,
-          "mainField": "title"
-        },
-        "list": {
-          "label": "moreBlogs",
-          "searchable": false,
-          "sortable": false
-        }
-      },
       "blogs": {
         "edit": {
           "label": "blogs",
@@ -338,10 +323,6 @@
           }
         ],
         [
-          {
-            "name": "moreBlogs",
-            "size": 6
-          },
           {
             "name": "blogs",
             "size": 6
