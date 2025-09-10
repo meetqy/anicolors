@@ -16,6 +16,7 @@ import {
 } from "@/components/ui/table";
 import Link from "next/link";
 import { CommonBreadcrumb } from "@/components/common-breadcrumb";
+import { fetchIncViews } from "@/lib/inc-views";
 
 /**
  * 通过路径字符串获取对象中的值
@@ -73,9 +74,9 @@ export default async function Page({ params }: PageProps) {
     };
   });
 
-  const { useTypes = "field" } = blog;
+  fetchIncViews(blog.documentId, "blogs");
 
-  console.log(blog);
+  const { useTypes = "field" } = blog;
 
   return (
     <>

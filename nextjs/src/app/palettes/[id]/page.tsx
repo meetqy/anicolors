@@ -9,7 +9,7 @@ import {
 import { type Metadata } from "next";
 import { CharacterPage } from "./_components/character-page";
 import { FragmentPage } from "./_components/fragement-page";
-import { env } from "@/env";
+import { fetchIncViews } from "@/lib/inc-views";
 
 const getPaletteData = async (id: string) => {
   const [res, mostLikes, mostViews, latests] = await Promise.all([
@@ -93,9 +93,7 @@ export default async function Page({
   const palette = await getPaletteData(id);
   const type = palette.type || "character";
 
-  void (
-    palette && fetch(`${env.NEXT_PUBLIC_API_URL}/api/palettes/${id}/incViews`)
-  );
+  fetchIncViews(id, "palettes");
 
   return type === "character" ? (
     <CharacterPage palette={palette} />

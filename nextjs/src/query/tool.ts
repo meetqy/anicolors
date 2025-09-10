@@ -4,6 +4,7 @@ import type { BlogListResponse } from "./blog";
 export const GET_TOOL = gql`
   query Tool($filters: ToolFiltersInput) {
     tools(filters: $filters) {
+      documentId
       slug
       name
       keywords
@@ -26,6 +27,7 @@ export const GET_TOOL = gql`
 
 export type ToolResponse = {
   tools: {
+    documentId: string;
     slug: string;
     name: string;
     keywords: string;

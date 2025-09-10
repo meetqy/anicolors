@@ -8,6 +8,7 @@ export const GET_CATEGORY_BY_SLUG = gql`
     $pagination: PaginationArg
   ) {
     categories(filters: $filters) {
+      documentId
       name
       slug
       cover {
@@ -51,5 +52,10 @@ export const GET_CATEGORY_BY_SLUG = gql`
 
 export type GetCategoryBySlugResponse = {
   palettes_connection: PaletteListResponse["palettes_connection"];
-  categories: { name: string; slug: string; cover: { url: string } }[];
+  categories: {
+    documentId: string;
+    name: string;
+    slug: string;
+    cover: { url: string };
+  }[];
 };

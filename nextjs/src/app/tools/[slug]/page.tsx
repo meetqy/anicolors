@@ -5,6 +5,7 @@ import { GET_TOOL, type ToolResponse } from "@/query/tool";
 import { ToolWrapper, type Tools } from "./tools/tool-wrapper";
 import { CommonBreadcrumb } from "@/components/common-breadcrumb";
 import { ToolHero } from "./tool-hero";
+import { fetchIncViews } from "@/lib/inc-views";
 
 type Props = {
   params: Promise<{ slug: string }>;
@@ -29,6 +30,7 @@ export const generateMetadata = async ({
   const { slug } = await params;
   const tool = await getToolData(slug);
   const images = tool.cover ? [getAssetUrl(tool.cover.url, 1200)] : [];
+  fetchIncViews(tool.documentId, "tools");
 
   return {
     title: tool.name,

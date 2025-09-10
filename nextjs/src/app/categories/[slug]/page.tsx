@@ -2,6 +2,7 @@ import { Columns } from "@/components/columns";
 import { Hero } from "@/components/hero";
 import { PaginationControls } from "@/components/pagination-controls";
 import { getClient } from "@/lib/apollo-client";
+import { fetchIncViews } from "@/lib/inc-views";
 import {
   GET_CATEGORY_BY_SLUG,
   type GetCategoryBySlugResponse,
@@ -54,8 +55,9 @@ const getCategory = async ({ params, searchParams }: CategoryPageProps) => {
 
 export default async function CategoryPage(props: CategoryPageProps) {
   const { category, palettes_connection } = await getCategory(props);
-
   const { nodes: palettes, pageInfo } = palettes_connection;
+
+  fetchIncViews(category.documentId, "categories");
 
   return (
     <>

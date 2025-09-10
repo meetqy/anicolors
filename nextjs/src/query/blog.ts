@@ -7,6 +7,7 @@ export const GET_BLOG = gql`
     blogs(filters: $filters, pagination: $pagination) {
       title
       field
+      documentId
       description
       useTypes
       markdown
@@ -49,6 +50,7 @@ export const GET_BLOG = gql`
 
 export type BlogResponse = {
   blogs: {
+    documentId: string;
     title: string;
     field: string;
     description: string;
