@@ -37,7 +37,7 @@ export default async function Page({
         description="Explore hair colors, eye colors, and outfit colors from your favorite anime and games. Find accurate HEX codes, color names, and design inspiration."
       />
       <div className="container mx-auto px-4 lg:px-0">
-        <ToolsAndBlogsList data={data} type="blog" />
+        <ToolsAndBlogsList data={data} type="blog" layout="columns" />
       </div>
     </>
   );
