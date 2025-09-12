@@ -20,163 +20,263 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 
+interface ImageItem {
+  file: File;
+  dataUrl: string;
+  colors: ColorData;
+  imageSize: { width: number; height: number };
+}
+
 const CreateCinematicGenerator = () => {
-  const [image, setImage] = useState<string | null>(null);
-  const [imageFile, setImageFile] = useState<File | null>(null);
-  const [colors, setColors] = useState<ColorData>([]);
-  const [imageSize, setImageSize] = useState<{
-    width: number;
-    height: number;
-  }>();
-  const [objectFit, setObjectFit] = useState<string>();
+  const [images, setImages] = useState<ImageItem[]>([]);
+  const [objectFit, setObjectFit] = useState<string>("cover");
   const [loading, setLoading] = useState(false);
 
-  const paletteRef = useRef<SaveableCardRef>(null);
+  const paletteRefs = useRef<(SaveableCardRef | null)[]>([]);
 
   // 提取颜色
-  const extractColors = useCallback((imageDataUrl: string) => {
-    const img = new Image();
+  const extractColorsFromDataUrl = useCallback(
+    async (
+      imageDataUrl: string,
+    ): Promise<{
+      colors: ColorData;
+      imageSize: { width: number; height: number };
+    }> => {
+      return new Promise((resolve, reject) => {
+        const img = new Image();
 
-    img.onload = async () => {
-      try {
-        setImageSize({ width: img.width, height: img.height });
-        const palette = await getPaletteWithPercentsFromImage(img, 12);
+        img.onload = async () => {
+          try {
+            const imageSize = { width: img.width, height: img.height };
+            const colors = await getPaletteWithPercentsFromImage(img, 12);
+            resolve({ colors, imageSize });
+          } catch (error) {
+            console.error("Color extraction error:", error);
+            reject(new Error("Failed to extract colors"));
+          }
+        };
 
-        setColors(palette);
-        return palette;
-      } catch (error) {
-        toast.error("Failed to extract colors from image");
-        console.error("Vibrant error:", error);
-      }
-    };
+        img.onerror = () => {
+          reject(new Error("Failed to load image"));
+        };
 
-    img.onerror = () => {
-      toast.error("Failed to load image");
-    };
-
-    img.src = imageDataUrl;
-  }, []);
-
-  // 处理图片变化
-  const handleImageChange = useCallback(
-    (imageDataUrl: string | null, file: File | null) => {
-      setImage(imageDataUrl);
-      setImageFile(file);
-      if (imageDataUrl) {
-        extractColors(imageDataUrl);
-      } else {
-        setColors([]);
-      }
+        img.src = imageDataUrl;
+      });
     },
-    [extractColors],
+    [],
   );
 
-  const upload = async () => {
-    if (loading) return;
-    setLoading(true);
-    if (paletteRef.current) {
-      const blob = await paletteRef.current.getImageBlob();
-      if (!imageFile) {
-        toast.error("No image file to upload");
-        setLoading(false);
+  // 处理批量图片处理
+  const processImages = useCallback(
+    async (imageDataUrls: string[], files: File[]) => {
+      if (imageDataUrls.length === 0) {
+        setImages([]);
         return;
       }
 
-      const [categorySlug, name] = imageFile.name.split("#");
+      const newImages: ImageItem[] = [];
+      const errors: string[] = [];
 
-      if (!categorySlug || !name) {
-        toast.error("Image name must be in the format category#name.ext");
-        setLoading(false);
-        return;
-      }
+      // 并行处理所有图片
+      const promises = imageDataUrls.map(async (dataUrl, index) => {
+        const file = files[index];
+        if (!file || !dataUrl) return null;
 
-      const { data } = await strapiUpload([
-        new File([blob], `${name}-palette.png`, { type: blob.type }),
-        imageFile,
-      ]);
-
-      await strapiCreatePalette({
-        name,
-        categorySlug,
-        points: colors.map((color) => {
-          const hex = color.hex;
-          return {
-            color: hex,
-            name: getColorName(hex)?.name || "Unknown",
-            percent: color.percent,
-          };
-        }),
-        imageIds: data.map((item: { id: number }) => item.id),
+        try {
+          const { colors, imageSize } = await extractColorsFromDataUrl(dataUrl);
+          return { file, dataUrl, colors, imageSize };
+        } catch (error) {
+          errors.push(file.name);
+          console.error(`Failed to process file ${file.name}:`, error);
+          return null;
+        }
       });
+
+      const results = await Promise.all(promises);
+
+      // 过滤掉失败的结果
+      results.forEach((result) => {
+        if (result) newImages.push(result);
+      });
+
+      if (newImages.length > 0) {
+        setImages(newImages);
+        // 重置 refs 数组
+        paletteRefs.current = new Array(newImages.length).fill(null);
+      }
+    },
+    [extractColorsFromDataUrl],
+  );
+
+  // 处理多个文件上传
+  const handleMultipleImagesChange = useCallback(
+    async (imageDataUrls: string[], files: File[]) => {
+      await processImages(imageDataUrls, files);
+    },
+    [processImages],
+  );
+
+  // 上传所有图片 - 使用 refs 批量获取
+  const uploadAll = useCallback(async () => {
+    if (loading || images.length === 0) return;
+
+    setLoading(true);
+
+    try {
+      const uploadPromises = images.map(async (image, index) => {
+        try {
+          // 使用对应的 ref 获取 blob
+          const paletteRef = paletteRefs.current[index];
+          if (!paletteRef) {
+            throw new Error(`Palette reference not found for image ${index}`);
+          }
+
+          const blob = await paletteRef.getImageBlob();
+
+          const fileName = image.file.name;
+          const [categorySlug, nameWithExt] = fileName.split("#");
+
+          if (!categorySlug || !nameWithExt) {
+            throw new Error(
+              `Image name must be in the format category#name.ext: ${fileName}`,
+            );
+          }
+
+          const name = nameWithExt.split(".")[0]!;
+
+          const { data } = await strapiUpload([
+            new File([blob], `${name}-palette.png`, { type: blob.type }),
+            image.file,
+          ]);
+
+          await strapiCreatePalette({
+            name,
+            categorySlug,
+            points: image.colors.map((color) => ({
+              color: color.hex,
+              name: getColorName(color.hex)?.name || "Unknown",
+              percent: color.percent,
+            })),
+            imageIds: data.map((item: { id: number }) => item.id),
+          });
+
+          return { success: true, name };
+        } catch (error) {
+          console.error(`Upload error for ${image.file.name}:`, error);
+          return {
+            success: false,
+            name: image.file.name,
+            error: error instanceof Error ? error.message : "Unknown error",
+          };
+        }
+      });
+
+      const results = await Promise.all(uploadPromises);
+
+      const successful = results.filter((r) => r.success);
+      const failed = results.filter((r) => !r.success);
+
+      if (successful.length > 0) {
+        toast.success(`Successfully uploaded ${successful.length} images`);
+      }
+
+      if (failed.length > 0) {
+        const errorMessages = failed
+          .map((f) => `${f.name}: ${f.error}`)
+          .join(", ");
+        toast.error(
+          `Failed to upload ${failed.length} images: ${errorMessages}`,
+        );
+      }
+    } catch (error) {
+      console.error("Batch upload error:", error);
+      toast.error("Failed to upload images");
+    } finally {
       setLoading(false);
     }
-    setLoading(false);
-  };
+  }, [loading, images]);
 
-  // 复制颜色数组
-  const copyColors = async () => {
-    const hexColors = colors.map((color) => {
-      const hex = color.hex;
-      return {
-        color: hex,
-        name: getColorName(hex)?.name,
+  // 复制所有颜色数组
+  const copyAllColors = useCallback(async () => {
+    if (images.length === 0) return;
+
+    const allColors = images.map((image, index) => ({
+      index: index + 1,
+      filename: image.file.name,
+      colors: image.colors.map((color) => ({
+        color: color.hex,
+        name: getColorName(color.hex)?.name || "Unknown",
         percent: color.percent,
-      };
-    });
+      })),
+    }));
 
-    const colorString = `${JSON.stringify(hexColors)}`;
+    const colorString = JSON.stringify(allColors, null, 2);
     await navigator.clipboard.writeText(colorString);
-    toast.success(`Copied ${hexColors.length} colors to clipboard`);
-  };
+    toast.success(`Copied colors from ${images.length} images to clipboard`);
+  }, [images]);
 
   return (
     <div className="flex aspect-video w-full">
       <div className="flex w-full max-w-sm flex-col justify-between pr-4">
-        <ImageUpload onImageChange={handleImageChange} />
+        <ImageUpload
+          multiple
+          onMultipleImagesChange={handleMultipleImagesChange}
+        />
 
         <div className="space-y-3">
-          <Select
-            onValueChange={(value) => setObjectFit(value)}
-            value={objectFit}
-          >
+          <Select onValueChange={setObjectFit} value={objectFit}>
             <SelectTrigger className="w-full">
               <SelectValue placeholder="Object Fit" />
             </SelectTrigger>
             <SelectContent>
-              {["cover", "contain"].map((fit) => (
-                <SelectItem key={fit} value={fit}>
-                  {fit}
-                </SelectItem>
-              ))}
+              <SelectItem value="cover">Cover</SelectItem>
+              <SelectItem value="contain">Contain</SelectItem>
             </SelectContent>
           </Select>
-          <Button onClick={copyColors} className="w-full gap-2">
+
+          <Button
+            onClick={copyAllColors}
+            className="w-full gap-2"
+            disabled={images.length === 0}
+          >
             <Copy className="h-4 w-4" />
-            Copy Colors
+            Copy All Colors
           </Button>
         </div>
       </div>
 
       <div className="bg-background flex h-full flex-1 items-center justify-center rounded-md border">
-        {image ? (
-          <SaveableContent
-            id="color-extractor"
-            imageSize={imageSize}
-            targetWidth={1920}
-            image={image}
-            colors={colors}
-            objectFit={objectFit as "cover" | "contain"}
-            ref={paletteRef}
-          />
+        {images.length > 0 ? (
+          <div className="h-full w-full overflow-y-auto">
+            <div className="space-y-2">
+              {images.map((image, index) => (
+                <SaveableContent
+                  key={index}
+                  id={`color-extractor-${index}`}
+                  imageSize={image.imageSize}
+                  targetWidth={1920}
+                  image={image.dataUrl}
+                  colors={image.colors}
+                  objectFit={objectFit as "cover" | "contain"}
+                  ref={(el) => {
+                    paletteRefs.current[index] = el;
+                  }}
+                />
+              ))}
+            </div>
+          </div>
         ) : (
           <Empty
-            title="No image uploaded"
-            description="Please upload an image to extract colors."
+            title="No images uploaded"
+            description="Please upload images to extract colors."
           />
         )}
       </div>
 
-      <AdminWrapper onSubmit={upload} disabled={loading} />
+      <AdminWrapper
+        onSubmit={uploadAll}
+        disabled={loading || images.length === 0}
+      />
     </div>
   );
 };

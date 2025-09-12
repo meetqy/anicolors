@@ -179,3 +179,17 @@ export const aspectRatios = [
     description: "1128x191 LinkedIn Company Cover Image",
   },
 ];
+
+export const fileToDataUrl = (file: File): Promise<string> => {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onload = () => {
+      resolve(reader.result as string);
+    };
+    reader.onerror = (error) => {
+      console.error("fileToDataUrl error:", error);
+      reject(new Error("fileToDataUrl failed"));
+    };
+    reader.readAsDataURL(file);
+  });
+};

@@ -9,14 +9,17 @@ import { useDropzone } from "react-dropzone";
 import { Button } from "@/components/ui/button";
 import { ImageIcon, X } from "lucide-react";
 import Image from "next/image";
+import { fileToDataUrl } from "@/lib/utils";
 
 interface UploadProps {
   onImageChange?: (imageDataUrl: string | null, file: File | null) => void;
+  onMultipleImagesChange?: (imageDataUrls: string[], files: File[]) => void;
   className?: string;
   showRemoveButton?: boolean;
   placeholder?: string;
   dropzoneText?: string;
   buttonText?: string;
+  multiple?: boolean;
 }
 
 export interface UploadRef {
@@ -28,35 +31,72 @@ export const ImageUpload = forwardRef<UploadRef, UploadProps>(
   (
     {
       onImageChange,
+      onMultipleImagesChange,
       className = "",
       showRemoveButton = true,
       dropzoneText = "Drag and drop your image or click to browse",
+      multiple = false,
     },
     ref,
   ) => {
     const [image, setImage] = React.useState<string | null>(null);
+    const [files, setFiles] = React.useState<File[]>([]);
     const fileInputRef = useRef<HTMLInputElement>(null);
 
     const handleImageChange = useCallback(
       (imageDataUrl: string | null, file: File | null) => {
         setImage(imageDataUrl);
+        setFiles(file ? [file] : []); // 确保单文件模式下也更新 files 数组
         onImageChange?.(imageDataUrl, file);
       },
       [onImageChange],
     );
 
-    const onDrop = useCallback(
-      (acceptedFiles: File[]) => {
-        const file = acceptedFiles[0];
-        if (file) {
-          const reader = new FileReader();
-          reader.onload = () => {
-            handleImageChange(reader.result as string, file);
-          };
-          reader.readAsDataURL(file);
+    const handleMultipleFiles = useCallback(
+      async (acceptedFiles: File[]) => {
+        if (acceptedFiles.length === 0) return;
+
+        setFiles(acceptedFiles);
+
+        // 显示第一张图片的预览
+        const firstFile = acceptedFiles[0]!;
+        const firstDataUrl = await fileToDataUrl(firstFile);
+        setImage(firstDataUrl);
+
+        // 转换所有文件为 DataURL
+        const imageDataUrls: string[] = [];
+        for (const file of acceptedFiles) {
+          const dataUrl = await fileToDataUrl(file);
+          imageDataUrls.push(dataUrl);
+        }
+
+        // 通知父组件，传递 DataURL 数组和文件数组
+        onMultipleImagesChange?.(imageDataUrls, acceptedFiles);
+
+        // 如果有单文件回调，也传递第一张图片
+        if (onImageChange) {
+          onImageChange(firstDataUrl, firstFile);
         }
       },
-      [handleImageChange],
+      [onMultipleImagesChange, onImageChange],
+    );
+
+    const onDrop = useCallback(
+      (acceptedFiles: File[]) => {
+        if (multiple) {
+          void handleMultipleFiles(acceptedFiles);
+        } else {
+          const file = acceptedFiles[0];
+          if (file) {
+            void fileToDataUrl(file).then((dataUrl) => {
+              handleImageChange(dataUrl, file);
+            });
+          }
+        }
+
+        return files;
+      },
+      [handleImageChange, handleMultipleFiles, multiple, files],
     );
 
     const { getRootProps, getInputProps, isDragActive } = useDropzone({
@@ -64,19 +104,25 @@ export const ImageUpload = forwardRef<UploadRef, UploadProps>(
       accept: {
         "image/*": [".jpeg", ".jpg", ".png", ".gif", ".bmp", ".webp"],
       },
-      multiple: false,
+      multiple,
       noClick: false,
       noKeyboard: false,
     });
 
     const handleFileInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-      const file = e.target.files?.[0];
-      if (file) {
-        const reader = new FileReader();
-        reader.onload = () => {
-          handleImageChange(reader.result as string, file);
-        };
-        reader.readAsDataURL(file);
+      const selectedFiles = Array.from(e.target.files || []);
+
+      if (multiple) {
+        void handleMultipleFiles(selectedFiles);
+      } else {
+        const file = selectedFiles[0];
+        if (file) {
+          const reader = new FileReader();
+          reader.onload = () => {
+            handleImageChange(reader.result as string, file);
+          };
+          reader.readAsDataURL(file);
+        }
       }
     };
 
@@ -86,6 +132,7 @@ export const ImageUpload = forwardRef<UploadRef, UploadProps>(
 
     const removeImage = useCallback(() => {
       handleImageChange(null, null);
+      setFiles([]);
       if (fileInputRef.current) {
         fileInputRef.current.value = "";
       }
@@ -100,6 +147,8 @@ export const ImageUpload = forwardRef<UploadRef, UploadProps>(
       }),
       [openFileDialog, removeImage],
     );
+
+    const fileCount = files.length;
 
     return (
       <div className={className}>
@@ -127,6 +176,14 @@ export const ImageUpload = forwardRef<UploadRef, UploadProps>(
                   style={{ maxHeight: "200px", width: "auto" }}
                   unoptimized
                 />
+
+                {/* 多文件计数显示 */}
+                {multiple && fileCount > 1 && (
+                  <div className="bg-primary text-primary-foreground absolute -right-2 -bottom-2 flex h-8 w-8 items-center justify-center rounded-full text-sm font-medium">
+                    {fileCount}
+                  </div>
+                )}
+
                 {showRemoveButton && (
                   <Button
                     size="sm"
@@ -141,16 +198,6 @@ export const ImageUpload = forwardRef<UploadRef, UploadProps>(
                   </Button>
                 )}
               </div>
-              <div>
-                <h4 className="font-medium">
-                  {isDragActive ? "Drop new image here" : "Upload new image"}
-                </h4>
-                <p className="text-muted-foreground mt-1 text-sm">
-                  {isDragActive
-                    ? "Release to replace current image"
-                    : dropzoneText}
-                </p>
-              </div>
             </div>
           ) : (
             // 无图片时显示上传区域
@@ -161,10 +208,20 @@ export const ImageUpload = forwardRef<UploadRef, UploadProps>(
                 }`}
               />
               <h4 className="mt-4 font-medium">
-                {isDragActive ? "Drop your image here" : "Upload an image"}
+                {isDragActive
+                  ? multiple
+                    ? "Drop your images here"
+                    : "Drop your image here"
+                  : multiple
+                    ? "Upload images"
+                    : "Upload an image"}
               </h4>
               <p className="text-muted-foreground mt-1 text-sm">
-                {isDragActive ? "Release to upload your file" : dropzoneText}
+                {isDragActive
+                  ? multiple
+                    ? "Release to upload your files"
+                    : "Release to upload your file"
+                  : dropzoneText}
               </p>
             </div>
           )}
@@ -175,6 +232,7 @@ export const ImageUpload = forwardRef<UploadRef, UploadProps>(
           ref={fileInputRef}
           type="file"
           accept="image/*"
+          multiple={multiple}
           onChange={handleFileInputChange}
           className="hidden"
         />

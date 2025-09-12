@@ -2,7 +2,10 @@ import { env } from "@/env";
 import axios from "axios";
 
 export const axiosInstance = axios.create({
-  baseURL: env.NEXT_PUBLIC_API_URL,
+  baseURL:
+    process.env.NODE_ENV === "development"
+      ? "http://localhost:1337"
+      : env.NEXT_PUBLIC_API_URL,
 });
 
 axiosInstance.interceptors.request.use((config) => {
