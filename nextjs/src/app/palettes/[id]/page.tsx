@@ -78,7 +78,7 @@ export const generateMetadata = async ({
     robots: {
       follow: true,
       index: !(
-        new Date(palette.createdAt).getTime() > new Date("2025-09-01").getTime()
+        new Date(palette.createdAt).getTime() > new Date("2025-09-07").getTime()
       ),
     },
   };
