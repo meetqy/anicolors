@@ -12,6 +12,13 @@ import Empty from "@/components/empty";
 import { AdminWrapper } from "./admin";
 import type { SaveableCardRef } from "@/components/card/with-save";
 import { strapiCreatePalette, strapiUpload } from "./admin/axios";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 
 const CreateCinematicGenerator = () => {
   const [image, setImage] = useState<string | null>(null);
@@ -21,6 +28,7 @@ const CreateCinematicGenerator = () => {
     width: number;
     height: number;
   }>();
+  const [objectFit, setObjectFit] = useState<string>();
   const [loading, setLoading] = useState(false);
 
   const paletteRef = useRef<SaveableCardRef>(null);
@@ -127,12 +135,22 @@ const CreateCinematicGenerator = () => {
         <ImageUpload onImageChange={handleImageChange} />
 
         <div className="space-y-3">
-          <Button
-            variant={"outline"}
-            onClick={copyColors}
-            size={"lg"}
-            className="w-full gap-2"
+          <Select
+            onValueChange={(value) => setObjectFit(value)}
+            value={objectFit}
           >
+            <SelectTrigger className="w-full">
+              <SelectValue placeholder="Object Fit" />
+            </SelectTrigger>
+            <SelectContent>
+              {["cover", "contain"].map((fit) => (
+                <SelectItem key={fit} value={fit}>
+                  {fit}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+          <Button onClick={copyColors} className="w-full gap-2">
             <Copy className="h-4 w-4" />
             Copy Colors
           </Button>
@@ -147,6 +165,7 @@ const CreateCinematicGenerator = () => {
             targetWidth={1920}
             image={image}
             colors={colors}
+            objectFit={objectFit as "cover" | "contain"}
             ref={paletteRef}
           />
         ) : (
