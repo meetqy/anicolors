@@ -4,16 +4,12 @@ import type { ColorData } from "./utils";
 const Content = ({
   image,
   colors,
-  imageSize,
   objectFit,
 }: {
   image: string;
   colors: ColorData;
-  imageSize: { width: number; height: number } | undefined;
   objectFit?: "cover" | "contain";
 }) => {
-  const aspectRatio = imageSize ? imageSize.width / imageSize.height : 1;
-
   return (
     <div className="flex aspect-[4/3] w-full flex-col bg-white p-1">
       <img
@@ -21,7 +17,7 @@ const Content = ({
         alt="Uploaded"
         className="aspect-[16/9] w-full object-center"
         style={{
-          objectFit: objectFit || (aspectRatio > 1 ? "cover" : "contain"),
+          objectFit: objectFit,
           backgroundColor: colors[0]?.hex,
         }}
       />

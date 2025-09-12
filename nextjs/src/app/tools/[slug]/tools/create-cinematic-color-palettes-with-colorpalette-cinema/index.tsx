@@ -24,7 +24,6 @@ interface ImageItem {
   file: File;
   dataUrl: string;
   colors: ColorData;
-  imageSize: { width: number; height: number };
 }
 
 const CreateCinematicGenerator = () => {
@@ -36,20 +35,14 @@ const CreateCinematicGenerator = () => {
 
   // 提取颜色
   const extractColorsFromDataUrl = useCallback(
-    async (
-      imageDataUrl: string,
-    ): Promise<{
-      colors: ColorData;
-      imageSize: { width: number; height: number };
-    }> => {
+    async (imageDataUrl: string): Promise<ColorData> => {
       return new Promise((resolve, reject) => {
         const img = new Image();
 
         img.onload = async () => {
           try {
-            const imageSize = { width: img.width, height: img.height };
             const colors = await getPaletteWithPercentsFromImage(img, 12);
-            resolve({ colors, imageSize });
+            resolve(colors);
           } catch (error) {
             console.error("Color extraction error:", error);
             reject(new Error("Failed to extract colors"));
@@ -83,8 +76,8 @@ const CreateCinematicGenerator = () => {
         if (!file || !dataUrl) return null;
 
         try {
-          const { colors, imageSize } = await extractColorsFromDataUrl(dataUrl);
-          return { file, dataUrl, colors, imageSize };
+          const colors = await extractColorsFromDataUrl(dataUrl);
+          return { file, dataUrl, colors };
         } catch (error) {
           errors.push(file.name);
           console.error(`Failed to process file ${file.name}:`, error);
@@ -103,6 +96,16 @@ const CreateCinematicGenerator = () => {
         setImages(newImages);
         // 重置 refs 数组
         paletteRefs.current = new Array(newImages.length).fill(null);
+
+        if (errors.length > 0) {
+          toast.error(
+            `Failed to process ${errors.length} files: ${errors.join(", ")}`,
+          );
+        }
+
+        toast.success(`Successfully processed ${newImages.length} images`);
+      } else {
+        toast.error("No images could be processed");
       }
     },
     [extractColorsFromDataUrl],
@@ -253,7 +256,6 @@ const CreateCinematicGenerator = () => {
                 <SaveableContent
                   key={index}
                   id={`color-extractor-${index}`}
-                  imageSize={image.imageSize}
                   targetWidth={1920}
                   image={image.dataUrl}
                   colors={image.colors}
