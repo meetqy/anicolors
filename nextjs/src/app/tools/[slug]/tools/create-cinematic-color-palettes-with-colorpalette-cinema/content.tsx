@@ -5,10 +5,12 @@ const Content = ({
   image,
   colors,
   imageSize,
+  objectFit,
 }: {
   image: string;
   colors: ColorData;
   imageSize: { width: number; height: number } | undefined;
+  objectFit?: "cover" | "contain";
 }) => {
   const aspectRatio = imageSize ? imageSize.width / imageSize.height : 1;
 
@@ -19,7 +21,7 @@ const Content = ({
         alt="Uploaded"
         className="aspect-[16/9] w-full object-center"
         style={{
-          objectFit: aspectRatio > 1 ? "cover" : "contain",
+          objectFit: objectFit || (aspectRatio > 1 ? "cover" : "contain"),
           backgroundColor: colors[0]?.hex,
         }}
       />
