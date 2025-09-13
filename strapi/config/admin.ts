@@ -18,4 +18,16 @@ export default ({ env }) => ({
     promoteEE: env.bool("FLAG_PROMOTE_EE", true),
   },
   watchIgnoreFiles: ["**/config/sync/**"],
+  preview: {
+    enable: true,
+    config: {
+      allowedOrigins: env("CLIENT_URL"),
+      async handler(uid, { documentId, locale, status }) {
+        const document = await strapi.documents(uid).findOne({ documentId });
+        const pathname = `/blogs/${document.slug}`;
+
+        return `${env("CLIENT_URL")}${pathname}`;
+      },
+    },
+  },
 });
