@@ -17,6 +17,7 @@ export const GET_PALETTE = gql`
         name
       }
       likes
+      views
       image {
         url
       }
@@ -64,6 +65,7 @@ export type Palette = {
   createdAt: string;
   image: { url: string };
   likes: number;
+  views: number;
   extend?: {
     suitableUse?: string[];
     colorMeanings?: string[];
@@ -94,6 +96,7 @@ export const GET_PALETTE_LIST = gql`
     ) {
       nodes {
         likes
+        views
         name
         categoryExtend {
           name
@@ -143,6 +146,7 @@ export type PaletteListItem = {
   name: string;
   categoryExtend: { name: string; slug: string };
   likes: number;
+  views: number;
   image: { url: string };
   cover: { url: string; width: number; height: number };
   points: ColorPoint[];

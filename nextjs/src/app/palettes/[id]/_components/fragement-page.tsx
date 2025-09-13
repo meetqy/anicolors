@@ -1,10 +1,10 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import { getAssetUrl } from "@/lib/utils";
+import { cn, getAssetUrl } from "@/lib/utils";
 import type { Palette, PaletteListItem } from "@/query/palette";
 import { Separator } from "@/components/ui/separator";
-import { TwitterIcon } from "lucide-react";
+import { EyeIcon, Heart, TwitterIcon } from "lucide-react";
 import Link from "next/link";
 import { env } from "@/env";
 import { MoreList } from "./more-list";
@@ -12,6 +12,7 @@ import { useEffect } from "react";
 import { CommonBreadcrumb } from "@/components/common-breadcrumb";
 import Color from "color";
 import { Columns } from "@/components/columns";
+import { useToggleLike } from "@/hooks/use-toggle-like";
 
 export const FragmentPage = ({
   palette,
@@ -22,6 +23,10 @@ export const FragmentPage = ({
     latests: PaletteListItem[];
   };
 }) => {
+  const { likes, isLiked, isLoading, toggleLike } = useToggleLike({
+    paletteId: palette.documentId,
+    initialLikes: palette.likes,
+  });
   useEffect(() => {
     const header = document.querySelector("#header");
     header?.classList.remove("bg-background/90");
@@ -41,7 +46,7 @@ export const FragmentPage = ({
         {/* 背景图片 - 降低透明度并添加模糊效果 */}
         <img
           src={getAssetUrl(palette.image.url, 960)}
-          alt={`${palette.name} color palette`}
+          alt={`${palette.name} transparent background png`}
           className="fixed top-0 left-0 -z-10 size-full scale-105 object-cover blur-xl"
           style={{
             backgroundColor: palette.points[0]?.color,
@@ -61,7 +66,7 @@ export const FragmentPage = ({
                 />
               </div>
 
-              <div className="flex-1 p-4">
+              <div className="flex flex-1 flex-col p-4 pb-0">
                 <CommonBreadcrumb
                   items={[
                     { label: "Home", href: "/" },
@@ -73,7 +78,7 @@ export const FragmentPage = ({
                   ]}
                 />
 
-                <h1 className="mt-8">{title}</h1>
+                <h1 className="mt-8 line-clamp-2">{title}</h1>
                 <div className="not-prose grid w-full grid-cols-4 gap-x-2 gap-y-4">
                   {palette.points.map((p, index) => (
                     <Link
@@ -93,11 +98,82 @@ export const FragmentPage = ({
                     </Link>
                   ))}
                 </div>
+
+                <div className="flex flex-1 items-end justify-end">
+                  <div className="flex items-center">
+                    <Button variant="ghost" disabled>
+                      <EyeIcon className="size-4" />{" "}
+                      <span>{palette.views} views</span>
+                    </Button>
+
+                    <Button
+                      variant="ghost"
+                      onClick={toggleLike}
+                      disabled={isLoading}
+                    >
+                      <Heart
+                        className={cn("size-4", {
+                          "text-red-500": isLiked,
+                          "text-muted-foreground": !isLiked,
+                        })}
+                        fill={isLiked ? "currentColor" : "none"}
+                      />
+                      {likes} likes
+                    </Button>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
 
           <Separator className="my-4" />
+          <div className="mb-4 flex flex-wrap justify-end gap-4 px-4 lg:mb-8">
+            <Button variant="default" asChild>
+              <Link
+                href={palette.cover.url}
+                className="no-underline"
+                download={`anicolors-${palette.name}`}
+              >
+                Download Color Palette
+              </Link>
+            </Button>
+            <Button variant="outline" asChild>
+              <Link
+                href={palette.image.url}
+                className="no-underline"
+                download={`anicolors-${palette.name}`}
+              >
+                Download transparent PNG
+              </Link>
+            </Button>
+            <Button variant="outline" asChild>
+              <Link
+                href={`/create?id=${palette.documentId}`}
+                className="no-underline"
+                aria-label="Create a custom color palette"
+              >
+                Customize color extraction
+              </Link>
+            </Button>
+            <Button variant="outline" asChild>
+              <Link
+                href={`/tools/create-cinematic-color-palettes-with-colorpalette-cinema?id=${palette.documentId}`}
+                className="no-underline"
+                aria-label="Create a custom color palette"
+              >
+                Customize make color palette
+              </Link>
+            </Button>
+            <Button variant="outline" asChild>
+              <Link
+                target="_blank"
+                className="no-underline"
+                href={`https://twitter.com/intent/tweet?text=${encodeURIComponent(palette.name + " Fragment Color Palette")}&url=${encodeURIComponent(`${env.NEXT_PUBLIC_SITE_URL}/palettes/${palette.documentId}`)}`}
+              >
+                <TwitterIcon /> Twitter
+              </Link>
+            </Button>
+          </div>
 
           <div className="prose max-w-full">
             <h2>Colors in Palette </h2>
@@ -150,46 +226,6 @@ export const FragmentPage = ({
                 );
               })}
             </div>
-          </div>
-
-          <Separator className="my-4" />
-          <div className="flex justify-end gap-4 px-4">
-            <Button variant="default" asChild>
-              <Link
-                href={palette.cover.url}
-                className="no-underline"
-                download={`anicolors-${palette.name}`}
-              >
-                Download Color Palette
-              </Link>
-            </Button>
-            <Button variant="outline" asChild>
-              <Link
-                href={`/create?id=${palette.documentId}`}
-                className="no-underline"
-                aria-label="Create a custom color palette"
-              >
-                Customize the color extraction
-              </Link>
-            </Button>
-            <Button variant="outline" asChild>
-              <Link
-                href={`/tools/create-cinematic-color-palettes-with-colorpalette-cinema?id=${palette.documentId}`}
-                className="no-underline"
-                aria-label="Create a custom color palette"
-              >
-                Customize make color palette
-              </Link>
-            </Button>
-            <Button variant="outline" asChild>
-              <Link
-                target="_blank"
-                className="no-underline"
-                href={`https://twitter.com/intent/tweet?text=${encodeURIComponent(palette.name + " Fragment Color Palette")}&url=${encodeURIComponent(`${env.NEXT_PUBLIC_SITE_URL}/palettes/${palette.documentId}`)}`}
-              >
-                <TwitterIcon /> Twitter
-              </Link>
-            </Button>
           </div>
         </div>
 
