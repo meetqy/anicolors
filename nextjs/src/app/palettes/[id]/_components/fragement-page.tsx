@@ -63,6 +63,10 @@ export const FragmentPage = ({
                   src={getAssetUrl(palette.cover.url, 960)}
                   alt={`${palette.name} color palette`}
                   className="size-full"
+                  srcSet={`
+              ${getAssetUrl(palette.cover.url, 960)} 1x,
+              ${getAssetUrl(palette.cover.url, 1280)} 2x
+            `}
                 />
               </div>
 
