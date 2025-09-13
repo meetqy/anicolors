@@ -28,7 +28,7 @@ interface ImageItem {
 
 const CreateCinematicGenerator = () => {
   const [images, setImages] = useState<ImageItem[]>([]);
-  const [objectFit, setObjectFit] = useState<string>("cover");
+  const [objectFit, setObjectFit] = useState<string>("contain");
   const [loading, setLoading] = useState(false);
 
   const paletteRefs = useRef<(SaveableCardRef | null)[]>([]);
