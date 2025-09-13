@@ -3,8 +3,12 @@ import type { Palette } from "./palette";
 import type { ToolListResponse } from "./tool";
 
 export const GET_BLOG = gql`
-  query Query($filters: BlogFiltersInput, $pagination: PaginationArg) {
-    blogs(filters: $filters, pagination: $pagination) {
+  query Query(
+    $filters: BlogFiltersInput
+    $pagination: PaginationArg
+    $status: PublicationStatus
+  ) {
+    blogs(filters: $filters, pagination: $pagination, status: $status) {
       title
       field
       documentId
