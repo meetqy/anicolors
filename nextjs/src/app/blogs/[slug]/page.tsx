@@ -49,6 +49,7 @@ const getData = async (slug: string) => {
     variables: {
       filters: { slug: { eqi: slug } },
       pagination: { pageSize: 999, page: 1 },
+      status: null,
     },
   });
 
