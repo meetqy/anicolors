@@ -22,11 +22,11 @@ export default ({ env }) => ({
     enable: true,
     config: {
       allowedOrigins: env("CLIENT_URL"),
-      async handler(uid, { documentId, locale, status }) {
+      async handler(uid, { documentId }) {
         const document = await strapi.documents(uid).findOne({ documentId });
         const pathname = `/blogs/${document.slug}`;
 
-        return `${env("CLIENT_URL")}${pathname}`;
+        return `${env("CLIENT_URL")}${pathname}?preview=true`;
       },
     },
   },

@@ -43,13 +43,21 @@ function getValueByPath<T = unknown>(
   }, obj as unknown) as T | undefined;
 }
 
-const getData = async (slug: string) => {
+type PageProps = {
+  searchParams: Promise<{ preview?: string }>;
+  params: Promise<{ slug: string }>;
+};
+
+const getData = async ({ params, searchParams }: PageProps) => {
+  const { slug } = await params;
+  const { preview } = await searchParams;
+
   const res = await getClient().query<BlogResponse>({
     query: GET_BLOG,
     variables: {
       filters: { slug: { eqi: slug } },
       pagination: { pageSize: 999, page: 1 },
-      status: null,
+      status: preview ? "DRAFT" : "PUBLISHED",
     },
   });
 
@@ -60,11 +68,8 @@ const getData = async (slug: string) => {
   return res.data.blogs[0]!;
 };
 
-type PageProps = { params: Promise<{ slug: string }> };
-
-export default async function Page({ params }: PageProps) {
-  const { slug } = await params;
-  const blog = await getData(slug);
+export default async function Page(props: PageProps) {
+  const blog = await getData(props);
   const data = blog.palettes.map((palette) => {
     return {
       ...getValueByPath<{ color: string; name: string }>(palette, blog.field),
@@ -177,11 +182,9 @@ export default async function Page({ params }: PageProps) {
   );
 }
 
-export async function generateMetadata({
-  params,
-}: PageProps): Promise<Metadata> {
-  const { slug } = await params;
-  const blog = await getData(slug);
+export async function generateMetadata(props: PageProps): Promise<Metadata> {
+  const { slug } = await props.params;
+  const blog = await getData(props);
   const images = blog?.cover?.url && [getAssetUrl(blog.cover.url, 1200)];
 
   return {
