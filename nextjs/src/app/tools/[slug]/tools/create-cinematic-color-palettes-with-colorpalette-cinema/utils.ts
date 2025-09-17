@@ -1,3 +1,4 @@
+import { sortColors } from "@/lib/sort-colors";
 import quantize, { type RgbPixel } from "quantize";
 
 export type ColorData = Awaited<
@@ -53,16 +54,24 @@ export async function getPaletteWithPercentsFromImage(
   }
 
   const total = counts.reduce((a, b) => a + b, 0) || 1;
-  return palette
-    .map((rgb, i) => ({
-      rgb,
-      hex:
-        "#" +
-        rgb
-          .map((v) => v.toString(16).padStart(2, "0"))
-          .join("")
-          .toUpperCase(),
-      percent: +((counts[i] / total) * 100).toFixed(2),
-    }))
-    .sort((a, b) => b.percent - a.percent);
+
+  const colors = palette.map((rgb, i) => ({
+    rgb,
+    hex:
+      "#" +
+      rgb
+        .map((v) => v.toString(16).padStart(2, "0"))
+        .join("")
+        .toUpperCase(),
+    percent: +((counts[i] / total) * 100).toFixed(2),
+  }));
+
+  // 将颜色数据转换为 sortColorsByLightness 期望的格式
+  const colorsForSorting = colors.map((color) => color.hex);
+  const sortedHexColors = sortColors(colorsForSorting);
+
+  // 根据排序后的hex顺序重新排列colors数组
+  return sortedHexColors.map(
+    (hex) => colors.find((color) => color.hex === hex)!,
+  );
 }
