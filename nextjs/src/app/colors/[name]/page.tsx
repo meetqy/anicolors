@@ -56,7 +56,6 @@ export async function generateMetadata({
 }: CategoryPageProps): Promise<Metadata> {
   const { name } = await params;
   const page = parseInt((await searchParams).page ?? "1");
-  const { palettes_connection } = await getPalettesList(name, page);
   const colorName = decodeURIComponent(name);
 
   return {
@@ -66,7 +65,7 @@ export async function generateMetadata({
       canonical: `/colors/${colorName}${page > 1 ? `?page=${page}` : ""}`,
     },
     robots: {
-      index: palettes_connection.pageInfo.total > 24,
+      index: true,
       follow: true,
     },
   };
