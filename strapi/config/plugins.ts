@@ -36,4 +36,13 @@ module.exports = ({ env }) => ({
           },
         }
       : {},
+
+  "users-permissions": {
+    config: {
+      jwtManagement: "legacy-support",
+      jwt: {
+        expiresIn: "14d", // Traditional JWT expiry
+      },
+    },
+  },
 });

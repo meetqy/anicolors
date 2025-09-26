@@ -1,7 +1,9 @@
-import type { StrapiApp } from '@strapi/strapi/admin';
+import type { StrapiApp } from "@strapi/strapi/admin";
 
 export default {
   config: {
+    tutorials: false,
+    notifications: { releases: false },
     locales: [
       // 'ar',
       // 'fr',
