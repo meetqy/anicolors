@@ -76,7 +76,7 @@ export const FragmentPage = ({
                     { label: "Home", href: "/" },
                     {
                       label: palette.category,
-                      href: `/categories/${palette.category}`,
+                      href: `/categories/${palette.categoryExtend.slug}`,
                     },
                     { label: palette.name },
                   ]}

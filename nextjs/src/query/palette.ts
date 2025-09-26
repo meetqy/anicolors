@@ -10,6 +10,10 @@ export const GET_PALETTE = gql`
     palette(documentId: $documentId) {
       documentId
       category
+      categoryExtend {
+        name
+        slug
+      }
       gallery(pagination: $pagination) {
         width
         url
@@ -60,6 +64,7 @@ export type Palette = {
   documentId: string;
   name: string;
   category: string;
+  categoryExtend: { name: string; slug: string };
   publishedAt: string;
   updatedAt: string;
   createdAt: string;
