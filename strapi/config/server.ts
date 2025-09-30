@@ -5,5 +5,11 @@ export default ({ env }) => ({
   app: {
     keys: env.array("APP_KEYS"),
   },
+  auth: {
+    secret: env("ADMIN_JWT_SECRET"),
+    sessions: {
+      secure: true,
+    },
+  },
   proxy: { koa: true },
 });
