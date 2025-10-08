@@ -7,8 +7,8 @@
       "searchable": true,
       "pageSize": 10,
       "mainField": "name",
-      "defaultSortBy": "name",
-      "defaultSortOrder": "ASC"
+      "defaultSortBy": "id",
+      "defaultSortOrder": "DESC"
     },
     "metadatas": {
       "id": {
@@ -40,7 +40,7 @@
           "placeholder": "",
           "visible": true,
           "editable": true,
-          "mainField": "name"
+          "mainField": "documentId"
         },
         "list": {
           "label": "palettes",
@@ -147,8 +147,8 @@
       "list": [
         "id",
         "name",
-        "palettes",
-        "views"
+        "views",
+        "slug"
       ],
       "edit": [
         [

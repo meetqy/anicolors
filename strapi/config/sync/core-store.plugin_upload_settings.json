@@ -1,10 +1,9 @@
 {
   "key": "plugin_upload_settings",
   "value": {
-    "sizeOptimization": true,
-    "responsiveDimensions": true,
-    "autoOrientation": false,
-    "aiMetadata": true
+    "sizeOptimization": false,
+    "responsiveDimensions": false,
+    "autoOrientation": false
   },
   "type": "object",
   "environment": null,
