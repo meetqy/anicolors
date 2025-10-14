@@ -7,8 +7,8 @@
       "searchable": true,
       "pageSize": 10,
       "mainField": "title",
-      "defaultSortBy": "title",
-      "defaultSortOrder": "ASC"
+      "defaultSortBy": "id",
+      "defaultSortOrder": "DESC"
     },
     "metadatas": {
       "id": {
@@ -65,7 +65,7 @@
         "edit": {
           "label": "useTypes",
           "description": "",
-          "placeholder": "",
+          "placeholder": "palette filed, content, markd",
           "visible": true,
           "editable": true
         },
@@ -261,28 +261,33 @@
       "list": [
         "id",
         "title",
-        "description",
-        "slug"
+        "slug",
+        "cover",
+        "views"
       ],
       "edit": [
         [
           {
             "name": "title",
-            "size": 6
+            "size": 4
           },
           {
-            "name": "description",
-            "size": 6
+            "name": "slug",
+            "size": 4
+          },
+          {
+            "name": "field",
+            "size": 4
           }
         ],
         [
           {
-            "name": "slug",
-            "size": 6
+            "name": "useTypes",
+            "size": 4
           },
           {
-            "name": "useTypes",
-            "size": 6
+            "name": "description",
+            "size": 4
           }
         ],
         [
@@ -292,12 +297,6 @@
           },
           {
             "name": "cover",
-            "size": 6
-          }
-        ],
-        [
-          {
-            "name": "field",
             "size": 6
           }
         ],

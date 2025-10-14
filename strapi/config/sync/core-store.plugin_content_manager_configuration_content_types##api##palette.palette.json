@@ -6,9 +6,9 @@
       "filterable": true,
       "searchable": true,
       "pageSize": 10,
-      "mainField": "name",
-      "defaultSortBy": "name",
-      "defaultSortOrder": "ASC"
+      "mainField": "documentId",
+      "defaultSortBy": "id",
+      "defaultSortOrder": "DESC"
     },
     "metadatas": {
       "id": {
@@ -300,13 +300,35 @@
       }
     },
     "layouts": {
-      "list": [
-        "id",
-        "colors",
-        "image",
-        "name"
-      ],
       "edit": [
+        [
+          {
+            "name": "image",
+            "size": 4
+          },
+          {
+            "name": "cover",
+            "size": 4
+          },
+          {
+            "name": "gallery",
+            "size": 4
+          }
+        ],
+        [
+          {
+            "name": "name",
+            "size": 4
+          },
+          {
+            "name": "type",
+            "size": 4
+          },
+          {
+            "name": "categoryExtend",
+            "size": 4
+          }
+        ],
         [
           {
             "name": "points",
@@ -315,48 +337,18 @@
         ],
         [
           {
-            "name": "colors",
-            "size": 6
-          },
-          {
-            "name": "image",
-            "size": 6
+            "name": "extend",
+            "size": 12
           }
         ],
         [
-          {
-            "name": "name",
-            "size": 6
-          },
           {
             "name": "category",
             "size": 6
-          }
-        ],
-        [
-          {
-            "name": "likes",
-            "size": 4
           },
           {
-            "name": "gallery",
+            "name": "colors",
             "size": 6
-          }
-        ],
-        [
-          {
-            "name": "cover",
-            "size": 6
-          },
-          {
-            "name": "categoryExtend",
-            "size": 6
-          }
-        ],
-        [
-          {
-            "name": "extend",
-            "size": 12
           }
         ],
         [
@@ -375,16 +367,17 @@
             "size": 6
           },
           {
-            "name": "type",
-            "size": 6
-          }
-        ],
-        [
-          {
             "name": "views",
             "size": 4
           }
         ]
+      ],
+      "list": [
+        "id",
+        "name",
+        "cover",
+        "views",
+        "likes"
       ]
     },
     "uid": "api::palette.palette"

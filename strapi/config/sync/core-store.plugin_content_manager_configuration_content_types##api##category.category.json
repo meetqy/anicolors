@@ -7,8 +7,8 @@
       "searchable": true,
       "pageSize": 10,
       "mainField": "name",
-      "defaultSortBy": "name",
-      "defaultSortOrder": "ASC"
+      "defaultSortBy": "id",
+      "defaultSortOrder": "DESC"
     },
     "metadatas": {
       "id": {
@@ -158,26 +158,10 @@
       }
     },
     "layouts": {
-      "list": [
-        "id",
-        "name",
-        "slug",
-        "cover"
-      ],
       "edit": [
         [
           {
             "name": "name",
-            "size": 6
-          },
-          {
-            "name": "slug",
-            "size": 6
-          }
-        ],
-        [
-          {
-            "name": "cover",
             "size": 6
           },
           {
@@ -187,10 +171,26 @@
         ],
         [
           {
+            "name": "cover",
+            "size": 6
+          },
+          {
+            "name": "slug",
+            "size": 6
+          }
+        ],
+        [
+          {
             "name": "views",
             "size": 4
           }
         ]
+      ],
+      "list": [
+        "id",
+        "name",
+        "cover",
+        "views"
       ]
     },
     "uid": "api::category.category"
