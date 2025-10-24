@@ -4,9 +4,8 @@ import { Button } from "@/components/ui/button";
 import { cn, getAssetUrl } from "@/lib/utils";
 import type { Palette, PaletteListItem } from "@/query/palette";
 import { Separator } from "@/components/ui/separator";
-import { EyeIcon, Heart, TwitterIcon } from "lucide-react";
+import { EyeIcon, Heart } from "lucide-react";
 import Link from "next/link";
-import { env } from "@/env";
 import { MoreList } from "./more-list";
 import { useEffect } from "react";
 import { CommonBreadcrumb } from "@/components/common-breadcrumb";
@@ -56,6 +55,35 @@ export const FragmentPage = ({
 
       <div className="relative z-10 container mx-auto space-y-4 pt-4 lg:space-y-12">
         <div className="bg-background/95 prose container rounded-md p-4 shadow-md backdrop-blur">
+          <div className="mb-4 flex flex-wrap items-center justify-between gap-4 px-4">
+            <div className="flex gap-2">
+              <span className="text-sm font-medium">Download: </span>
+              <Link
+                href={palette.image.url}
+                className="text-muted-foreground text-sm"
+                download={`anicolors-${palette.name}`}
+              >
+                Transparent PNG
+              </Link>
+              <Link
+                href={palette.cover.url}
+                className="text-muted-foreground text-sm"
+                download={`anicolors-${palette.name}`}
+              >
+                Color Palette
+              </Link>
+            </div>
+            <Button variant="destructive" asChild>
+              <Link
+                href={`/create?id=${palette.documentId}`}
+                className="no-underline"
+                aria-label="Create a custom color palette"
+              >
+                Customize color extraction
+              </Link>
+            </Button>
+          </div>
+
           <div className="max-w-full overflow-hidden">
             <div className="flex flex-col justify-between lg:flex-row">
               <div className="not-prose relative aspect-[4/3] w-full lg:w-3/5">
@@ -131,53 +159,6 @@ export const FragmentPage = ({
           </div>
 
           <Separator className="my-4" />
-          <div className="mb-4 flex flex-wrap justify-end gap-4 px-4 lg:mb-8">
-            <Button variant="default" asChild>
-              <Link
-                href={palette.cover.url}
-                className="no-underline"
-                download={`anicolors-${palette.name}`}
-              >
-                Download Color Palette
-              </Link>
-            </Button>
-            <Button variant="outline" asChild>
-              <Link
-                href={palette.image.url}
-                className="no-underline"
-                download={`anicolors-${palette.name}`}
-              >
-                Download transparent PNG
-              </Link>
-            </Button>
-            <Button variant="outline" asChild>
-              <Link
-                href={`/create?id=${palette.documentId}`}
-                className="no-underline"
-                aria-label="Create a custom color palette"
-              >
-                Customize color extraction
-              </Link>
-            </Button>
-            <Button variant="outline" asChild>
-              <Link
-                href={`/tools/create-cinematic-color-palettes-with-colorpalette-cinema?id=${palette.documentId}`}
-                className="no-underline"
-                aria-label="Create a custom color palette"
-              >
-                Customize make color palette
-              </Link>
-            </Button>
-            <Button variant="outline" asChild>
-              <Link
-                target="_blank"
-                className="no-underline"
-                href={`https://twitter.com/intent/tweet?text=${encodeURIComponent(palette.name + " Fragment Color Palette")}&url=${encodeURIComponent(`${env.NEXT_PUBLIC_SITE_URL}/palettes/${palette.documentId}`)}`}
-              >
-                <TwitterIcon /> Twitter
-              </Link>
-            </Button>
-          </div>
 
           <div className="prose max-w-full">
             <h2>Colors in Palette </h2>

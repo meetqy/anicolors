@@ -8,7 +8,10 @@ export const CharacterInfo = ({ palette }: { palette: Palette }) => {
       <CommonBreadcrumb
         items={[
           { label: "Home", href: "/" },
-          { label: palette.category, href: `/categories/${palette.category}` },
+          {
+            label: palette.category,
+            href: `/categories/${palette.categoryExtend.slug}`,
+          },
           { label: palette.name },
         ]}
       />
@@ -20,7 +23,7 @@ export const CharacterInfo = ({ palette }: { palette: Palette }) => {
         from{" "}
         <Link
           className="capitalize underline"
-          href={`/categories/${palette.category}`}
+          href={`/categories/${palette.categoryExtend.slug}`}
         >
           {palette.category}
         </Link>
