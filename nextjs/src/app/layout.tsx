@@ -50,6 +50,12 @@ export default function RootLayout({
         <div className="fixed bottom-0 left-0 z-50 flex w-full justify-center">
           <AdsBanner728_90 />
         </div>
+        {/* Social Bar */}
+        <script
+          async
+          type="text/javascript"
+          src="//seedlingsaudacious.com/7a/26/a1/7a26a12ca243707d1711039ba5bd05f0.js"
+        />
       </body>
       <GoogleAnalytics gaId="G-CZV2BT21C2" />
     </html>
