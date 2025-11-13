@@ -86,12 +86,7 @@ export const Gallery = ({ palette }: { palette: Palette }) => {
                   <img
                     {...props}
                     alt={`${palette.name} color palette from ${palette.category} ${props.alt}`}
-                    src={getAssetUrl(src, 320)}
-                    srcSet={`
-              ${getAssetUrl(src, 320)} 1x,
-              ${getAssetUrl(src, 640)} 2x,
-              ${getAssetUrl(src, 960)} 3x
-            `}
+                    src={getAssetUrl(src, 640)}
                   />
                 </div>
               );

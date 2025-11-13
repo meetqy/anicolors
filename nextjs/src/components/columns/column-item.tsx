@@ -39,12 +39,7 @@ export const ColumnItem = ({ palette, as }: PaletteCardProps) => {
             className="absolute inset-0 rounded-md opacity-100 transition-opacity duration-300 group-hover:opacity-0"
           />
           <img
-            src={getAssetUrl(palette.image.url, 320)}
-            srcSet={`
-              ${getAssetUrl(palette.image.url, 320)} 1x,
-              ${getAssetUrl(palette.image.url, 640)} 2x,
-              ${getAssetUrl(palette.image.url, 960)} 3x
-            `}
+            src={getAssetUrl(palette.image.url, 640)}
             alt={palette.name}
             className={cn(
               "relative z-10 aspect-square w-full object-contain transition-transform duration-300 group-hover:z-20 group-hover:translate-y-[-60px] group-hover:scale-130 group-hover:rotate-x-[15deg] group-hover:drop-shadow-2xl",

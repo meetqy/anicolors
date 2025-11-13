@@ -88,13 +88,9 @@ export const FragmentPage = ({
             <div className="flex flex-col justify-between lg:flex-row">
               <div className="not-prose relative aspect-[4/3] w-full lg:w-3/5">
                 <img
-                  src={getAssetUrl(palette.cover.url, 960)}
+                  src={getAssetUrl(palette.cover.url, 1280)}
                   alt={`${palette.name} color palette`}
                   className="size-full"
-                  srcSet={`
-              ${getAssetUrl(palette.cover.url, 960)} 1x,
-              ${getAssetUrl(palette.cover.url, 1280)} 2x
-            `}
                 />
               </div>
 

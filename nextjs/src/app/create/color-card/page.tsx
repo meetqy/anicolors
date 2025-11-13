@@ -269,13 +269,8 @@ export default function Page() {
                 <div className="overflow-hidden rounded-md border" key={item}>
                   <img
                     alt="Example color card"
-                    srcSet={`
-${getAssetUrl(url, 320)} 1x,
-${getAssetUrl(url, 640)} 2x,
-${getAssetUrl(url, 960)} 3x
-`}
                     className="aspect-[5/4] w-full"
-                    src={getAssetUrl(url, 320)}
+                    src={getAssetUrl(url, 640)}
                   />
                 </div>
               );
