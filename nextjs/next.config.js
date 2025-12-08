@@ -18,8 +18,18 @@ const nextConfig = {
 
   images: {
     remotePatterns: [
-      new URL("http://localhost:1337/**/*"),
-      new URL("https://r2.hicolors.org/**/*"),
+      {
+        protocol: "http",
+        hostname: "localhost", // Replace with your image host
+        port: "1337",
+        pathname: "/**", // Optional: specify a path pattern
+      },
+      {
+        protocol: "https",
+        hostname: "r2.hicolors.org",
+        port: "",
+        pathname: "/**", // Optional: specify a path pattern
+      },
     ],
   },
   redirects: async () => {
